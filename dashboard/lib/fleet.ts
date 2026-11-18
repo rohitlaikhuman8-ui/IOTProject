@@ -12,6 +12,9 @@ export const event = z.object({
   sensitivity: z.number().min(0.01).max(100),
   resetReason: z.number().int().nonnegative(),
   version: z.string().max(64),
+  bootId: z.string().regex(/^[a-f0-9]{32}$/).optional(),
+  kind: z.enum(['sample', 'movement']).default('sample'),
+  movementDelta: z.number().finite().min(0).optional(),
   sensor: z.literal('ADXL345').optional(),
   unit: z.literal('m/s2').optional(),
   acceleration: z.object({
@@ -33,12 +36,20 @@ export const heartbeat = z.object({
   sensorReady: z.boolean(),
   logRecords: z.number().int().min(0).max(256),
   neighbors: z.array(nodeId).max(16),
+  bootId: z.string().regex(/^[a-f0-9]{32}$/).optional(),
+  pendingRecords: z.number().int().min(0).max(256).optional(),
+  timeSynced: z.boolean().optional(),
+  mode: z.enum(['running', 'setup', 'updating']).optional(),
+  acceleration: z.object({ x: z.number().finite(), y: z.number().finite(), z: z.number().finite() }).optional(),
+  value: z.number().finite().optional(),
 });
 export type NodeState = z.infer<typeof heartbeat> & {
   _id: string; lastSeen: Date;
   lastMeasurement?: z.infer<typeof event>;
   lastMeasurementAt?: Date;
 };
+type Notice = { _id: string; nodeId: string; kind: 'movement' | 'startup' | 'online' | 'offline';
+  at: Date; message: string; eventId?: string; value?: number; movementDelta?: number };
 let client: MongoClient | undefined;
 
 function database() {
@@ -50,6 +61,8 @@ function database() {
 
 export function events() { return database().collection<TelemetryRecord>('events'); }
 export function nodes() { return database().collection<NodeState>('nodes'); }
+export function notifications() { return database().collection<Notice>('notifications'); }
+export const ONLINE_TIMEOUT_MS = 90000;
 
 export function nodeSecrets(): Record<string, string> {
   return z.record(nodeId, z.string().min(24)).parse(JSON.parse(process.env.NODE_SECRETS_JSON || '{}'));

@@ -42,8 +42,8 @@ with connection as port:
         port.rts = False
     drain(port, 4)
     if args.config:
-        # Pause synchronous network work before sending a configuration larger
-        # than the default UART receive buffer on older firmware.
+        # Open setup before sending paced configuration. Older single-loop
+        # firmware also paused its network work while setup was active.
         port.write(b"\nportal\n")
         portal_ready = False
         for attempt in range(12):

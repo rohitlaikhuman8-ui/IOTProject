@@ -19,10 +19,12 @@ Local builds use version `usb-dev`. The release workflow generates a Git-ignored
 | Function | Responsibility |
 | --- | --- |
 | `setup()` | Identity, NVS, filesystem, portal routes, rollback state |
-| `loop()` | Watchdog, touch, sampling, portal, Wi-Fi, uploads, OTA |
+| `loop()` | Watchdog, touch, acquisition, local sampling, portal and Wi-Fi |
+| `fleetUpload` task | Telemetry retries and OTA, with its own watchdog subscription |
+| `fleetStatus` task | Independent heartbeat scheduling and watchdog subscription |
 | `saveSettings()` | Validate and persist one configuration record |
 | `saveSample()` | Create and commit a local telemetry record |
-| `scanLog()` | Find oldest pending/acknowledged records and highest sequence |
+| `scanLog()` | Rebuild filename index at boot, then select pending/acknowledged records in RAM |
 | `uploadOne()` | Upload one event and record local acknowledgment |
 | `startPortal()` | Start temporary AP and captive DNS |
 | `exportLog()` | Stream local committed records |
@@ -34,20 +36,26 @@ Local builds use version `usb-dev`. The release workflow generates a Git-ignored
 - The AP expires after 15 minutes and accepts one client.
 - Wi-Fi reconnects start every 30 seconds.
 - Upload failures retry from five seconds to five minutes with jitter.
-- The first OTA check is scheduled around 20–80 seconds after boot.
+- The first OTA check is scheduled around 60–120 seconds after boot.
 - Successful OTA checks schedule the next check after 15 minutes plus up to 30 seconds of jitter.
-- Failed OTA checks retry after one minute plus jitter.
+- Failed OTA checks retry after two minutes plus up to 30 seconds of jitter.
 - The task watchdog timeout is 45 seconds.
 - The loop task stack is explicitly 16 KiB. OTA manifest and transfer buffers are heap-allocated to leave stack space for TLS.
 - Hardware brownout detection is enabled by the board framework.
 
-Synchronous HTTP and filesystem work can delay sampling and touch detection. The application feeds the watchdog between work phases and image chunks.
+An independent status task reports presence while the upload task handles telemetry and OTA. The main loop services the sensor, touch and portal. Filesystem operations are mutex protected. Cloud POSTs use the ESP-IDF HTTP client with bounded timeouts, and OTA uses the pinned Arduino transport.
 
 ## Persistence
 
-The device writes a complete event to `/littlefs/new.tmp`, flushes, syncs, closes, and renames it to `/p-<20-digit sequence>`. After a 2xx acknowledgment, it renames that file to `/s-<sequence>`.
+The device writes a complete event to `/littlefs/new.tmp`, flushes, syncs, closes, and renames it to `/p-<20-digit sequence>` for a sample or `/m-<20-digit sequence>` for movement. After a 2xx acknowledgment, it renames that file to `/s-<sequence>`. Pending movement is selected ahead of ordinary samples. A mutex-protected RAM index is rebuilt from committed filenames on each boot and updated after successful file changes.
 
 Up to 256 records are retained. Acknowledged history is reclaimed first. An all-pending log skips new samples. An interrupted temporary file is ignored on restart. NVS namespace `fleet` stores `config` and the previously attempted OTA version.
+
+Committed records are read in bounded blocks of at most 1024 bytes. The portal renders at most 30 recent records without retaining 30 parsed JSON documents simultaneously. Full-log export builds `/export.tmp` on flash under the filesystem mutex, then streams that immutable snapshot with a known Content-Length and releases the mutex for delivery. It avoids copying all filenames in RAM or sending hundreds of tiny TCP chunks. The temporary file is removed after delivery and ignored as history after a power cut. Insufficient snapshot space returns 503 and preserves committed records.
+
+Portal status/log polling waits for each request cycle to finish before scheduling the next one. This avoids overlapping requests when a flash operation or a slow client delays a response.
+
+The recent-log response reserves bounded output space while holding the TLS budget mutex. A failed reservation or a busy update returns 503 for retry instead of emitting incomplete JSON. Sorting uses filename indices rather than a duplicate string list.
 
 ## OTA release procedure
 

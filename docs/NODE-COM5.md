@@ -20,7 +20,7 @@
 | ADXL345 mode | Full resolution, ±16 g, 100 Hz output data rate |
 | Test SSID | `Sensor Testing` |
 | Sample interval | 10 seconds for commissioning |
-| Heartbeat interval | 15 seconds |
+| Heartbeat interval | Five seconds, independent task |
 | Sensitivity | 1 |
 | Touch threshold | 30, calibrate for the attached pad |
 
@@ -66,7 +66,7 @@ The actual observed build and uploads used PlatformIO's pinned Arduino framework
 
 ## Configuration and diagnostics
 
-SSID and Wi-Fi password are editable in the captive portal on every node. Hold the GPIO 4 pad for four seconds, read the temporary AP password on USB serial, join the setup AP, and open `http://192.168.4.1/`.
+SSID and Wi-Fi password are editable in every node's captive portal. Hold GPIO 4 for four seconds, use the saved per-node AP password, and open `http://192.168.4.1/`. Setup retains station Wi-Fi, shows logs and supports AP-password changes. See the [complete manual](OPERATING_MANUAL.md).
 
 The commissioning credentials were supplied privately and persisted in NVS. Wi-Fi passwords, the individual API secret, and the discovery group key are excluded from Git.
 

@@ -1,4 +1,4 @@
-import { event, events, nodes, secretMatches } from '../../../lib/fleet';
+import { event, events, nodes, notifications, secretMatches } from '../../../lib/fleet';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
@@ -17,16 +17,25 @@ export async function POST(request: Request) {
       return Response.json({ error: 'unauthorized' }, { status: 401 });
     }
     const _id = data.data.nodeId + ':' + data.data.eventId;
+    const now = new Date();
     try {
-      await events().updateOne({ _id }, { $setOnInsert: { ...data.data, receivedAt: new Date() } },
+      await events().updateOne({ _id }, { $setOnInsert: { ...data.data, receivedAt: now } },
         { upsert: true, writeConcern: { w: 'majority' } });
     } catch (error) {
       if ((error as { code?: number }).code !== 11000) throw error;
     }
     await nodes().updateOne({ _id: data.data.nodeId }, {
-      $set: { lastMeasurement: data.data, lastMeasurementAt: new Date() },
+      $set: { lastMeasurement: data.data, lastMeasurementAt: now },
     });
-    return Response.json({ accepted: true });
+    if (data.data.kind === 'movement') {
+      const stored = await events().findOne({ _id }, { projection: { receivedAt: 1 } });
+      await notifications().updateOne({ _id: 'movement:' + _id }, { $setOnInsert: {
+        nodeId: data.data.nodeId, kind: 'movement', eventId: data.data.eventId,
+        at: stored?.receivedAt || now, message: 'Movement detected by ADXL345',
+        value: data.data.value, movementDelta: data.data.movementDelta,
+      } }, { upsert: true });
+    }
+    return Response.json({ accepted: true, serverTime: now.getTime(), timezone: 'Asia/Kolkata' });
   } catch (error) {
     console.error('Telemetry unavailable', (error as Error).name);
     return Response.json({ error: 'temporarily unavailable' }, { status: 503, headers: { 'Retry-After': '15' } });

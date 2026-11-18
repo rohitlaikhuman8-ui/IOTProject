@@ -1,5 +1,7 @@
 # Troubleshooting
 
+See the [complete operations and safety manual](OPERATING_MANUAL.md) for the full scenario matrix, credential changes, node lifecycle and recovery procedures.
+
 ## USB and build
 
 | Symptom | Check and action |
@@ -7,6 +9,7 @@
 | Board absent from port list | Try a data USB cable, another USB port, and the correct USB-serial driver |
 | Port busy | Close serial monitors before upload |
 | Upload waits at Connecting | Hold BOOT while connecting, release after writing starts, consult board reset sequence |
+| Upload stops midway | Retry at 115200 baud, check cable and stable power, keep other serial clients closed |
 | Dependency download fails | Restore network access and rerun PlatformIO, inspect proxy and certificate configuration |
 | Firmware exceeds OTA slot | Inspect build size, reduce code or plan a deliberate partition-layout migration |
 
@@ -22,7 +25,7 @@
 | Save returns 400 | Check origin/path, password lengths, secret length, numeric limits |
 | Save returns 403 | Reload the panel for its current form token |
 | Device stays offline | Check 2.4 GHz network, SSID/password, signal, router, DHCP |
-| Touch responds late | HTTP operations can block the loop until their timeout |
+| Touch responds late | Local flash writes or a slow portal client can delay the main loop; check storage and serial diagnostics |
 
 ## Uploads
 

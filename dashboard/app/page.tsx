@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { randomBytes } from 'node:crypto';
-import { events, nodeId, secretMatches } from '../lib/fleet';
+import { nodeId, secretMatches } from '../lib/fleet';
 import { signature, authenticated } from '../lib/session';
 import Topology from './topology';
 
@@ -36,35 +36,9 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ n
     </form></main>;
   }
   const selected = nodeId.safeParse(node);
-  const db = events();
-  const [nodes, rows] = await Promise.all([
-    db.aggregate<{ _id: string; lastSeen: Date; value: number; version: string; count: number }>([
-      { $sort: { receivedAt: -1 } },
-      { $group: { _id: '$nodeId', lastSeen: { $first: '$receivedAt' },
-        value: { $first: '$value' }, version: { $first: '$version' }, count: { $sum: 1 } } },
-      { $sort: { lastSeen: -1 } }, { $limit: 200 },
-    ]).toArray(),
-    db.find(selected.success ? { nodeId: selected.data } : {}).sort({ receivedAt: -1 }).limit(100).toArray(),
-  ]);
-  const date = (value: Date) => value.toISOString().replace('T', ' ').slice(0, 19);
   return <main>
     <form action={signOut}><button>Sign out</button></form>
     <h1>ESP32 fleet</h1>
-    <Topology />
-    <h2>Nodes</h2>
-    <table cellPadding="8"><thead><tr><th>Node</th><th>Last upload (UTC)</th><th>Value</th><th>Firmware</th><th>Samples</th></tr></thead>
-      <tbody>{nodes.map(n => <tr key={n._id}><td><a href={'/?node=' + n._id}>{n._id}</a></td>
-        <td>{date(n.lastSeen)}</td><td>{n.value}</td><td>{n.version.slice(0, 12)}</td><td>{n.count}</td></tr>)}</tbody></table>
-    {!nodes.length && <p>No nodes have uploaded telemetry yet.</p>}
-    <h2>{selected.success ? selected.data : 'Recent telemetry'}</h2>
-    {selected.success && <a href="/">Show all nodes</a>}
-    <table cellPadding="8"><thead><tr><th>Received (UTC)</th><th>Sampled (UTC)</th><th>Node</th><th>Value</th><th>Unit</th><th>X</th><th>Y</th><th>Z</th><th>Uptime (ms)</th><th>Reset code</th></tr></thead>
-      <tbody>{rows.map(row => <tr key={row._id}><td>{date(row.receivedAt)}</td>
-        <td>{row.sampledAt ? date(new Date(row.sampledAt * 1000)) : 'Unavailable'}</td>
-        <td>{row.nodeId}</td><td>{row.value}</td><td>{row.unit || '—'}</td>
-        <td>{row.acceleration?.x.toFixed(3) ?? '—'}</td>
-        <td>{row.acceleration?.y.toFixed(3) ?? '—'}</td>
-        <td>{row.acceleration?.z.toFixed(3) ?? '—'}</td>
-        <td>{row.uptimeMs}</td><td>{row.resetReason}</td></tr>)}</tbody></table>
+    <Topology selectedNode={selected.success ? selected.data : undefined} />
   </main>;
 }

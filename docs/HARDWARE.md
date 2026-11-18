@@ -42,7 +42,7 @@ An illustrative serial transcript follows. These values are placeholders.
 
 ```text
 Node esp32-012345abcdef, firmware usb-dev, reset 1
-Setup Wi-Fi ESP32-Setup-abcdef password <temporary-password>, open http://192.168.4.1
+Setup Wi-Fi ESP32-Setup-abcdef password <saved-private-password>, open http://192.168.4.1
 ```
 
 The AP password changes each time setup mode starts. The Node ID remains stable. If `LittleFS unavailable` appears before initial filesystem provisioning, finish the filesystem upload and reset.

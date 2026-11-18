@@ -2,11 +2,11 @@
 
 ## Scheduling
 
-The loop feeds the watchdog, checks touch, records scheduled samples, and services either provisioning or network work. Wi-Fi reconnect attempts start every 30 seconds when saved credentials exist. Setup mode disconnects station Wi-Fi and starts a one-client AP.
+The main loop handles sensor, touch, local logging and the portal. Separate heartbeat and upload/OTA tasks isolate status reporting from slow transfers. Wi-Fi reconnect attempts start every 30 seconds. Setup uses a one-client AP alongside station Wi-Fi.
 
-Sampling defaults to 60 seconds and accepts 10 through 86,400 seconds. Network calls are synchronous and can delay sampling and touch checks. This implementation suits slow telemetry. A strict sampling clock requires an independent acquisition task.
+Periodic sampling defaults to 60 seconds and accepts 10 through 86,400 seconds. Motion is polled about every 20 ms with a configurable threshold and two-second cooldown. Flash operations can still delay acquisition. Strict sampling guarantees require a dedicated acquisition design.
 
-SNTP starts after Wi-Fi connects. Upload and OTA wait until the clock is plausible. A pending OTA image checks storage, Wi-Fi, and time before confirming boot.
+SNTP starts after Wi-Fi connects. Cloud reporting can start immediately and synchronize time from the verified server Date header. IST is configured on every boot. A pending OTA image checks storage, sensor, network, time and successful cloud reporting.
 
 ## Identity and authentication
 
@@ -51,13 +51,13 @@ NVS and LittleFS reduce exposure to interrupted writes. An in-progress sample ca
 
 The API checks Content-Length, validates one record, authenticates the node, and upserts it. The MongoDB client is reused within a warm function instance with a pool size of five.
 
-The dashboard aggregates up to 200 nodes and displays the latest 100 events, optionally filtered by node. Counts reflect records currently stored in Atlas. Page navigation or reload fetches new data. UTC is used for displayed times.
+The dashboard polls status, the latest 100 telemetry events and the latest 100 notifications. History can be filtered by node. Server timestamps are stored as UTC instants and displayed in IST.
 
 ## Current boundaries
 
 | Area | Behavior |
 | --- | --- |
-| Portal access | Temporary random AP password on USB serial, one client, 15-minute lifetime |
+| Portal access | Saved random per-node AP password on serial, one client, 15-minute lifetime |
 | Portal requests | HTTP on the setup AP, settings form uses a random token |
 | At-rest device secrets | NVS with no enabled flash encryption |
 | Upload and OTA transport | Certificate-verified HTTPS |
@@ -74,4 +74,4 @@ See [operations](OPERATIONS.md) and [troubleshooting](TROUBLESHOOTING.md) for pr
 
 ## Live presence and radio discovery
 
-Authenticated heartbeats update the Atlas `nodes` collection every 15 seconds. The signed-in dashboard polls `/api/topology` every 3 seconds. Per-node direct Wi-Fi uplinks allow reporting without a radio neighbor. ESP-NOW broadcasts identify authenticated same-channel neighbors. See [topology](TOPOLOGY.md) for actual link semantics and limits.
+Heartbeats update Atlas every five seconds. The dashboard polls every three seconds and uses a 90-second presence window. Direct uplinks operate independently of radio neighbors. Startup, connection, movement and observed timeout events persist in `notifications`. See [topology](TOPOLOGY.md).

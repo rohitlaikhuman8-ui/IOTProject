@@ -67,8 +67,22 @@ The repaired firmware downloaded and verified the 1,150,416-byte GitHub image, t
 
 Final serial status confirmed `pendingVerification: false`, `wifiConnected: true`, `storageReady: true`, ADXL345 address 83 (0x53), 133 retained records, 9,692 bytes minimum free loop stack, and 219,112 bytes free heap. The final Atlas-backed topology reported the same release version and healthy sensor/storage.
 
-A subsequent release-manifest lookup encountered a transient TLS error and deferred its check safely. Cloud heartbeats recovered with 200 and the accepted firmware continued running. Long synchronous OTA transfers can temporarily expire the heartbeat timeout, as documented in the topology guide.
+A subsequent release-manifest lookup encountered a transient TLS error and deferred its check safely. Cloud heartbeats recovered with 200 and the accepted firmware continued running. That earlier single-loop firmware could expire the presence timeout during synchronous OTA work. The later revision below separates status reporting.
 
 ## Offline presence check
 
 Entering the actual setup AP paused the node's station networking while local samples continued. The dashboard showed zero online nodes with a heartbeat age of 88,293 ms, and its offline graph was captured. This exercised real node disconnection rather than a simulated browser fixture.
+
+## Presence, IST and movement revision
+
+The November 18 follow-up separates sensor/portal work, telemetry/OTA, and status reporting. Presence uses accepted server reports with a 90-second window. The browser polls every three seconds and formats timestamps in Asia/Kolkata. Server response dates and SNTP synchronize the node on boot without blocking initial uploads.
+
+Bench development exposed watchdog resets with the initial Arduino cloud transport and allocation failures when two TLS handshakes ran together. Cloud POSTs now use the native ESP-IDF HTTP client and share a handshake mutex. Repeated LittleFS directory walks were also replaced by a boot-rebuilt filename index. Those failed development builds were not published as fleet OTA releases.
+
+The physical tilt test produced three movement records in Atlas with server receive times 16:53:06, 16:53:10 and 16:53:15 IST. Their movement deltas were approximately 2.666, 9.349 and 11.028 m/s². The authenticated live dashboard returned matching movement notifications and telemetry. These are real sensor events, not inserted fixtures.
+
+The production dashboard build reached Ready with live node status, IST history, highlighted motion and per-node filtering. The documentation screenshot tool rendered the current portal HTML with sample values. The real AP returned HTTP 200 status, settings and recent logs. A full 256-record export exceeded the first 60-second check. The export path was changed to bounded bulk reads and short filesystem lock periods. Physical portal acceptance is recorded separately when completed.
+
+A 460800-baud USB transfer stopped midway during development. Several retries at 115200 completed and verified flash hashes, but later 115200 transfers also stopped with “chip stopped responding.” A cable/USB-power check was requested before further recovery flashing. The configured upload speed is 115200. Successful transfers did not require BOOT-button intervention.
+
+The latest portal memory guard and snapshot-export source compiles successfully. Physical acceptance of that exact build remains pending because its USB upload failed. Until a complete recovery image is verified, the board can remain offline with an incomplete application. No filesystem upload or full-chip erase was used during these application recovery attempts.

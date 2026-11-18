@@ -18,7 +18,7 @@ The API authenticates against the entry for the payload's ID in `NODE_SECRETS_JS
 ```json
 {
   "nodeId": "esp32-012345abcdef",
-  "eventId": "0123456789abcdef0123456789abcdef",
+  "eventId": "aabbccddaabbccddaabbccddaabbccdd",
   "uptimeMs": 60000,
   "sampledAt": 1794546000,
   "value": 42.5,
@@ -38,8 +38,15 @@ The API authenticates against the entry for the payload's ID in `NODE_SECRETS_JS
 | sensitivity | Required number, 0.01–100 |
 | resetReason | Required nonnegative ESP reset code |
 | version | Required string, up to 64 characters |
+| kind | Optional `sample` or `movement`, defaults to sample |
+| bootId | Optional 32 lowercase hex digits identifying one boot |
+| movementDelta | Optional nonnegative acceleration change in m/s² |
 
 Atlas adds a BSON date `receivedAt` and `_id = nodeId:eventId`.
+
+Server-generated receive times are authoritative and displayed in IST. API responses include serverTime epoch milliseconds and timezone Asia/Kolkata. The verified HTTP Date header also allows the node to synchronize without reading a response body or waiting for SNTP.
+
+The heartbeat accepts bootId, mode (running/setup/updating), timeSynced, pendingRecords and current acceleration/value. The live API returns the latest 100 persisted notifications and telemetry events, plus Online/Last-seen metadata based on the latest accepted server report.
 
 ADXL345 events additionally include `sensor: "ADXL345"`, `unit: "m/s2"`, and `acceleration: {x, y, z}` with finite numbers. These fields are optional for compatibility with older events. The summary value is magnitude times sensitivity. Authenticated heartbeats use `POST /v1/heartbeat`, and signed-in topology reads use `GET /api/topology`. See [topology](TOPOLOGY.md).
 
@@ -94,6 +101,8 @@ Repeat the last request without generating a new event ID to check deduplication
 | `GET /settings` | Nonsecret settings, Node ID, version, form token |
 | `POST /settings` | Form-urlencoded settings with current token |
 | `GET /log` | Committed pending and acknowledged records as NDJSON |
+| `GET /logs` | Latest 30 committed records as JSON |
+| `GET /status` | Current connection, IST time, storage and pending count |
 | Other paths | Redirect to portal origin |
 
 These routes run on the setup AP.

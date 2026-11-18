@@ -38,13 +38,16 @@ async function main() {
       node: 'esp32-012345abcdef', version: 'usb-dev', ssid: 'YOUR_WIFI_SSID',
       base: origin, endpoint: '/v1/telemetry',
       ota: 'https://github.com/rohitlaikhuman8-ui/IOTProject/releases/download/firmware-latest/manifest.json',
-      sensitivity: 1, touch: 30, interval: 60, token: 'documentation-fixture',
+      sensitivity: 1, touch: 30, motionThreshold: 1.5, interval: 60, token: 'documentation-fixture',
     };
     await page.route('http://portal.docs/**', route => {
-      const settings = route.request().url().endsWith('/settings');
+      const endpoint = new URL(route.request().url()).pathname;
+      const data = endpoint === '/settings' ? fixture : endpoint === '/status'
+        ? { nodeId: fixture.node, connection: 'Cloud connected', timeIst: '2026-11-18 17:00:00 IST', pending: 0 }
+        : endpoint === '/logs' ? [] : null;
       return route.fulfill({
-        status: 200, contentType: settings ? 'application/json' : 'text/html',
-        body: settings ? JSON.stringify(fixture) : html,
+        status: 200, contentType: data ? 'application/json' : 'text/html',
+        body: data ? JSON.stringify(data) : html,
       });
     });
     await page.goto('http://portal.docs/', { waitUntil: 'networkidle' });

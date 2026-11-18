@@ -4,9 +4,9 @@ Each node establishes its own Wi-Fi connection and sends authenticated HTTPS dat
 
 ## Live status
 
-- Nodes send an authenticated heartbeat every 15 seconds.
+- Nodes schedule authenticated heartbeats every five seconds in a dedicated task.
 - The signed-in dashboard fetches status every 3 seconds.
-- Last heartbeat older than 45 seconds marks a node offline.
+- After 90 seconds without an accepted heartbeat or telemetry report, the node shows Last seen with a server timestamp in IST.
 - After 15 seconds without fresh dashboard data, the view marks the snapshot stale.
 - The client retries failed fetches with backoff and cleans up timers and requests when leaving the page.
 - Hardware status reports current sensor response, filesystem availability, retained record count, Wi-Fi RSSI, channel, and firmware version.
@@ -14,7 +14,7 @@ Each node establishes its own Wi-Fi connection and sends authenticated HTTPS dat
 
 This is near-real-time polling. End-to-end delay includes the heartbeat interval, dashboard polling, and network latency.
 
-The current synchronous OTA transfer pauses ordinary heartbeat work while an image downloads. A long transfer may temporarily appear offline until the new image reconnects. Treat update-time gaps separately when reviewing availability.
+The status task runs independently of uploads and OTA. Setup retains station connectivity. Actual network outages still expire presence, and browser API failures mark the snapshot stale.
 
 ## Radio links
 
@@ -49,5 +49,7 @@ Validate two or more physical nodes on a shared channel before relying on neighb
 A healthy online dot proves a recent heartbeat. It cannot by itself prove measurement calibration, complete RF coverage, or long-term availability.
 
 The first node's offline timeout was exercised by placing it in setup AP mode. Local samples continued and the dashboard correctly marked its expired heartbeat offline.
+
+The image below records the older AP-only behavior. Current setup uses AP+station mode and retains cloud reporting while station Wi-Fi is available.
 
 ![Physical node offline during setup mode](images/dashboard-offline.png)

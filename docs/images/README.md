@@ -5,6 +5,7 @@
 | `dashboard-login.png` | Live deployed application sign-in on November 18, 2026 |
 | `dashboard-nodes.png` | Live authenticated dashboard with the physical ADXL345 node |
 | `dashboard-topology.png` | Live topology and sensor-health view |
+| `dashboard-ist-history.png` | Live IST telemetry and movement notification history |
 | `dashboard-offline.png` | Physical node offline after its cloud uplink was paused in setup mode |
 | `provisioning-reference.png` | Actual `PortalPage` HTML extracted from firmware, rendered with sample settings |
 

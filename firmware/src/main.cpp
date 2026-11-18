@@ -13,6 +13,11 @@
 #include <esp_now.h>
 #include <mbedtls/md.h>
 #include <memory>
+#include <atomic>
+#include <algorithm>
+#include <vector>
+#include <esp_crt_bundle.h>
+#include <esp_http_client.h>
 #include <esp_task_wdt.h>
 #include <esp_ota_ops.h>
 #include <mbedtls/sha256.h>
@@ -25,10 +30,14 @@
 #ifndef FLEET_VERSION
 #define FLEET_VERSION "usb-dev"
 #endif
+#ifndef FLEET_ALLOW_OTA
+#define FLEET_ALLOW_OTA 1
+#endif
 
 SET_LOOP_TASK_STACK_SIZE(16384);
 
 extern const uint8_t caBundle[] asm("_binary_x509_crt_bundle_start");
+extern "C" esp_err_t esp_crt_bundle_attach(void *conf);
 extern "C" bool verifyRollbackLater() { return true; }
 constexpr int TouchPin = 4;
 constexpr int SensorSda = 21;
@@ -36,6 +45,41 @@ constexpr int SensorScl = 22;
 constexpr float AccelerationScale = 0.0039f * 9.80665f;
 constexpr size_t LogLimit = 256;
 constexpr uint32_t PortalLifetime = 15 * 60 * 1000UL;
+constexpr int StatusLed = 2;
+constexpr uint32_t HeartbeatInterval = 5000;
+constexpr uint32_t CloudTimeout = 90000;
+
+SemaphoreHandle_t filesystemMutex, handshakeMutex;
+TaskHandle_t networkTaskHandle, heartbeatTaskHandle;
+class FilesystemLock {
+public:
+  FilesystemLock() { xSemaphoreTakeRecursive(filesystemMutex, portMAX_DELAY); }
+  ~FilesystemLock() { xSemaphoreGiveRecursive(filesystemMutex); }
+};
+
+class TransportBudget {
+public:
+  bool acquired;
+  TransportBudget() : acquired(xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(15000)) == pdTRUE) {}
+  ~TransportBudget() { if (acquired) xSemaphoreGive(handshakeMutex); }
+};
+
+// Arduino 2.0.17 rebuilds the global trust bundle on setCACertBundle().
+// Initialize it once and serialize TLS handshakes while allowing concurrent transfers.
+class VerifiedClient : public WiFiClientSecure {
+public:
+  VerifiedClient() { _use_ca_bundle = true; }
+  int connect(const char *host, uint16_t port, int32_t timeout) override {
+    if (xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(1000)) != pdTRUE) return 0;
+    IPAddress address;
+    if (!WiFi.hostByName(host, address)) { xSemaphoreGive(handshakeMutex); return 0; }
+    esp_task_wdt_reset();
+    _timeout = timeout;
+    int result = WiFiClientSecure::connect(address, port, host, _CA_cert, _cert, _private_key);
+    xSemaphoreGive(handshakeMutex);
+    return result;
+  }
+};
 
 Preferences settings;
 WebServer portal(80);
@@ -43,10 +87,11 @@ DNSServer dns;
 JsonDocument config;
 String nodeId;
 String formToken;
-bool storageReady, portalActive, touched, ntpStarted;
-bool pendingVerification;
-bool cloudHealthy;
-uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, nextOta;
+bool storageReady, touched, ntpStarted;
+std::atomic<bool> portalActive{false}, pendingVerification{false}, cloudHealthy{false}, otaActive{false};
+std::atomic<uint32_t> lastCloudSuccess{0};
+String bootId, apPassword;
+uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, nextOta, wifiLostAt;
 uint32_t retryDelay = 5000;
 uint64_t nextSequence = 1;
 uint8_t sensorAddress = 0;
@@ -59,6 +104,54 @@ struct Neighbor { char id[19]; uint32_t seen; };
 Neighbor neighbors[16] = {};
 struct Beacon { uint32_t magic; uint32_t timestamp; uint8_t mac[6]; uint8_t digest[32]; };
 QueueHandle_t beaconQueue;
+portMUX_TYPE readingMux = portMUX_INITIALIZER_UNLOCKED;
+struct SensorReading { float x, y, z, delta; bool valid; };
+SensorReading latestReading = {};
+uint32_t nextSensorRead, lastMovementAt;
+bool movementPrimed, movementWarm;
+float baselineX, baselineY, baselineZ, pendingMovementPeak;
+uint32_t bootMotionReady;
+
+SensorReading currentReading() {
+  portENTER_CRITICAL(&readingMux);
+  SensorReading result = latestReading;
+  portEXIT_CRITICAL(&readingMux);
+  return result;
+}
+
+String timeInIst(time_t timestamp) {
+  if (timestamp < 1577836800) return "Waiting for time sync";
+  struct tm local;
+  localtime_r(&timestamp, &local);
+  char output[40];
+  strftime(output, sizeof(output), "%Y-%m-%d %H:%M:%S IST", &local);
+  return output;
+}
+
+void syncFromServerDate(const String &header) {
+  int day, year, hour, minute, second;
+  char month[4] = {};
+  if (sscanf(header.c_str(), "%*3s, %d %3s %d %d:%d:%d GMT", &day, month, &year, &hour, &minute, &second) != 6) return;
+  const char *months = "JanFebMarAprMayJunJulAugSepOctNovDec";
+  const char *match = strstr(months, month);
+  if (!match || year < 2020 || year > 2037 || day < 1 || day > 31 ||
+      hour < 0 || hour > 23 || minute < 0 || minute > 59 || second < 0 || second > 59) return;
+  struct tm date = {};
+  date.tm_year = year - 1900;
+  date.tm_mon = (match - months) / 3;
+  date.tm_mday = day;
+  date.tm_hour = hour;
+  date.tm_min = minute;
+  date.tm_sec = second;
+  // mktime interprets the fields in IST. The HTTP Date fields are GMT.
+  time_t server = mktime(&date) + 19800;
+  int64_t difference = static_cast<int64_t>(server) - time(nullptr);
+  if (difference > 2 || difference < -2) {
+    timeval now = { server, 0 };
+    settimeofday(&now, nullptr);
+    Serial.printf("Time synchronized from server: %s\n", timeInIst(now.tv_sec).c_str());
+  }
+}
 
 void discoveryDigest(const Beacon &beacon, uint8_t *digest) {
   String key = config["discovery"] | "";
@@ -99,11 +192,14 @@ void serviceDiscovery() {
     snprintf(id, sizeof(id), "esp32-%02x%02x%02x%02x%02x%02x",
       beacon.mac[5], beacon.mac[4], beacon.mac[3], beacon.mac[2], beacon.mac[1], beacon.mac[0]);
     for (auto &neighbor : neighbors) {
+      portENTER_CRITICAL(&readingMux);
       if (!neighbor.id[0] || !strcmp(neighbor.id, id) || millis() - neighbor.seen > 45000) {
         strncpy(neighbor.id, id, sizeof(neighbor.id));
         neighbor.seen = millis();
+        portEXIT_CRITICAL(&readingMux);
         break;
       }
+      portEXIT_CRITICAL(&readingMux);
     }
   }
   if (due(millis(), nextBeacon)) {
@@ -190,11 +286,54 @@ bool https(const String &url, size_t maximumLength = 300) {
 
 bool configureHttp(HTTPClient &http, WiFiClientSecure &tls, const String &url, size_t maximumLength = 300) {
   if (!https(url, maximumLength)) return false;
-  tls.setCACertBundle(caBundle);
-  tls.setHandshakeTimeout(12);
-  http.setConnectTimeout(7000);
-  http.setTimeout(10000);
+  tls.setHandshakeTimeout(8);
+  http.setConnectTimeout(5000);
+  http.setTimeout(5000);
+  http.setReuse(false);
+  http.useHTTP10(true);
+  const char *headers[] = {"Date"};
+  http.collectHeaders(headers, 1);
   return http.begin(tls, url);
+}
+
+int postToCloud(const String &path, const String &body) {
+  String url = config["base"].as<String>() + path;
+  if (!https(url)) return -1;
+  // ESP32 TLS handshakes need a large contiguous allocation. Serialize cloud
+  // requests with OTA handshakes so simultaneous handshakes cannot exhaust it.
+  if (xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(15000)) != pdTRUE) return -1;
+  String date;
+  esp_http_client_config_t options = {};
+  options.url = url.c_str();
+  options.timeout_ms = 5000;
+  options.crt_bundle_attach = esp_crt_bundle_attach;
+  options.disable_auto_redirect = true;
+  options.user_data = &date;
+  options.event_handler = [](esp_http_client_event_t *event) -> esp_err_t {
+    if (event->event_id == HTTP_EVENT_ON_HEADER && event->header_key &&
+        !strcasecmp(event->header_key, "Date")) {
+      *static_cast<String *>(event->user_data) = event->header_value;
+    }
+    return ESP_OK;
+  };
+  auto client = esp_http_client_init(&options);
+  if (!client) { xSemaphoreGive(handshakeMutex); return -1; }
+  String authorization = "Bearer " + config["secret"].as<String>();
+  esp_http_client_set_method(client, HTTP_METHOD_POST);
+  esp_http_client_set_header(client, "Content-Type", "application/json");
+  esp_http_client_set_header(client, "Authorization", authorization.c_str());
+  esp_http_client_set_post_field(client, body.c_str(), body.length());
+  esp_task_wdt_reset();
+  auto result = esp_http_client_perform(client);
+  int status = result == ESP_OK ? esp_http_client_get_status_code(client) : -1;
+  esp_http_client_cleanup(client);
+  xSemaphoreGive(handshakeMutex);
+  esp_task_wdt_reset();
+  if (status >= 200 && status < 300) {
+    syncFromServerDate(date);
+    lastCloudSuccess = millis();
+  }
+  return status;
 }
 
 const char PortalPage[] PROGMEM = R"HTML(
@@ -208,6 +347,7 @@ button{padding:.6rem 1rem}a{display:inline-block;margin-right:1rem}
 <input type="hidden" name="token">
 <label>Wi-Fi SSID<input name="ssid" maxlength="32" required></label>
 <label>Wi-Fi password<input name="password" type="password" maxlength="64"></label>
+<label>Setup AP password (blank keeps existing)<input name="apPassword" type="password" minlength="8" maxlength="63"></label>
 <label><input style="display:inline;width:auto" name="openWifi" type="checkbox" value="1"> Use an open Wi-Fi network</label>
 <label>Backend base URL<input name="base" placeholder="https://your-project.vercel.app" required></label>
 <label>Ingest endpoint<input name="endpoint" required></label>
@@ -216,14 +356,26 @@ button{padding:.6rem 1rem}a{display:inline-block;margin-right:1rem}
 <label>OTA manifest URL<input name="ota" placeholder="https://github.com/.../manifest.json"></label>
 <label>Sensitivity<input name="sensitivity" type="number" step="any" min=".01" max="100" required></label>
 <label>Touch threshold<input name="touch" type="number" min="1" max="65535" required></label>
+<label>Movement threshold (m/s²)<input name="motionThreshold" type="number" step=".1" min=".2" max="100"></label>
 <label>Sample interval (seconds)<input name="interval" type="number" min="10" max="86400" required></label>
 <p>Leave passwords blank to keep the saved values.</p><button>Save and restart</button></form>
 <p><a href="/log">Download local log</a></p>
+<h2>Device status and logs</h2><p id="state">Loading…</p><pre id="logs" style="white-space:pre-wrap"></pre>
 <script>
-fetch('/settings').then(r=>r.json()).then(s=>{
+async function loadSettings(){const s=await fetch('/settings').then(r=>r.json());
   document.querySelector('#node').textContent=s.node+' / '+s.version;
   for(const field of document.forms[0].elements) if(field.name in s) field.value=s[field.name];
-});
+}
+async function refreshLogs(){
+  try{
+    const s=await fetch('/status').then(r=>r.json());
+    document.querySelector('#state').textContent=s.nodeId+' | '+s.connection+' | '+s.timeIst+' | '+s.pending+' pending records';
+    const records=await fetch('/logs').then(r=>r.json());
+    document.querySelector('#logs').textContent=records.map(r=>(r.sampledAt?new Intl.DateTimeFormat('en-IN',{timeZone:'Asia/Kolkata',dateStyle:'medium',timeStyle:'medium'}).format(new Date(r.sampledAt*1000)):'Time pending')+' | '+(r.kind||'sample')+' | '+Number(r.value).toFixed(3)+' m/s²').join('\n')||'No committed records yet.';
+  }catch(e){document.querySelector('#state').textContent='Reconnecting to device…';}
+  finally{setTimeout(refreshLogs,3000);}
+}
+loadSettings().catch(()=>{document.querySelector('#node').textContent='Reload this page to retry loading settings.';}).finally(refreshLogs);
 </script>
 )HTML";
 
@@ -235,6 +387,11 @@ void saveSettings() {
   String ssid = portal.arg("ssid"), password = portal.arg("password");
   String base = portal.arg("base"), path = portal.arg("endpoint"), ota = portal.arg("ota");
   String secret = portal.arg("secret");
+  String nextApPassword = portal.arg("apPassword");
+  if (nextApPassword.length() && (nextApPassword.length() < 8 || nextApPassword.length() > 63)) {
+    portal.send(400, "text/plain", "Setup AP password must contain 8 to 63 characters.");
+    return;
+  }
   String discovery = portal.arg("discovery");
   if (!discovery.length()) discovery = config["discovery"] | "";
   if (portal.hasArg("openWifi")) password = "";
@@ -242,6 +399,7 @@ void saveSettings() {
   if (!secret.length()) secret = config["secret"].as<String>();
   while (base.endsWith("/")) base.remove(base.length() - 1);
   float sensitivity = portal.arg("sensitivity").toFloat();
+  float motionThreshold = portal.hasArg("motionThreshold") ? portal.arg("motionThreshold").toFloat() : (config["motionThreshold"] | 1.5f);
   long threshold = portal.arg("touch").toInt(), interval = portal.arg("interval").toInt();
   if (!ssid.length() || ssid.length() > 32 ||
       (password.length() && (password.length() < 8 || password.length() > 64)) ||
@@ -256,6 +414,10 @@ void saveSettings() {
     portal.send(400, "text/plain", "Invalid settings. Go back and check each field.");
     return;
   }
+  if (!(motionThreshold >= .2f && motionThreshold <= 100.0f)) {
+    portal.send(400, "text/plain", "Movement threshold must be between 0.2 and 100 m/s².");
+    return;
+  }
   JsonDocument updated;
   updated["ssid"] = ssid;
   updated["password"] = password;
@@ -267,10 +429,15 @@ void saveSettings() {
   updated["sensitivity"] = sensitivity;
   updated["touch"] = threshold;
   updated["interval"] = interval;
+  updated["motionThreshold"] = motionThreshold;
   String data;
   serializeJson(updated, data);
   if (settings.putString("config", data) != data.length()) {
     portal.send(500, "text/plain", "Could not persist settings.");
+    return;
+  }
+  if (nextApPassword.length() && settings.putString("apKey", nextApPassword) != nextApPassword.length()) {
+    portal.send(500, "text/plain", "Could not persist setup AP password. Reopen setup and retry.");
     return;
   }
   portal.send(200, "text/plain", "Settings saved. Restarting.");
@@ -279,19 +446,44 @@ void saveSettings() {
 
 struct LogState {
   String pending, acknowledged;
+  String movement;
   uint64_t pendingSequence = UINT64_MAX, acknowledgedSequence = UINT64_MAX, maxSequence = 0;
+  uint64_t movementSequence = UINT64_MAX;
   size_t count = 0;
+  size_t pendingCount = 0;
 };
 
+std::vector<String> logPaths;
+bool logIndexLoaded = false;
+
+void forgetLogPath(const String &path) {
+  logPaths.erase(std::remove(logPaths.begin(), logPaths.end(), path), logPaths.end());
+}
+
 LogState scanLog() {
+  FilesystemLock lock;
   LogState result;
-  File dir = LittleFS.open("/");
-  for (File f = dir.openNextFile(); f; f = dir.openNextFile()) {
-    String name = f.path();
-    if (!name.startsWith("/p-") && !name.startsWith("/s-")) continue;
+  // Rebuild from durable filenames once per boot. Repeated directory walks on
+  // flash stall heartbeat and sensor tasks as the retained journal grows.
+  if (!logIndexLoaded) {
+    File dir = LittleFS.open("/");
+    for (File f = dir.openNextFile(); f; f = dir.openNextFile()) {
+      String name = f.path();
+      if (name.startsWith("/p-") || name.startsWith("/s-") || name.startsWith("/m-")) logPaths.push_back(name);
+      esp_task_wdt_reset();
+    }
+    logIndexLoaded = true;
+  }
+  for (const String &name : logPaths) {
+    if (!name.startsWith("/p-") && !name.startsWith("/s-") && !name.startsWith("/m-")) continue;
     uint64_t sequence = strtoull(name.c_str() + 3, nullptr, 10);
     result.maxSequence = max(result.maxSequence, sequence);
     ++result.count;
+    if (name.startsWith("/p-") || name.startsWith("/m-")) ++result.pendingCount;
+    if (name.startsWith("/m-") && sequence < result.movementSequence) {
+      result.movement = name;
+      result.movementSequence = sequence;
+    }
     if (name.startsWith("/p-") && sequence < result.pendingSequence) {
       result.pending = name;
       result.pendingSequence = sequence;
@@ -302,24 +494,31 @@ LogState scanLog() {
     }
     esp_task_wdt_reset();
   }
+  if (result.movement.length()) result.pending = result.movement;
   return result;
 }
 
-void saveSample() {
+void saveSample(const char *kind = "sample", float movementDelta = 0) {
   if (!storageReady) return;
-  float x, y, z;
-  if (!readAcceleration(x, y, z)) {
+  SensorReading reading = currentReading();
+  if (!reading.valid) {
     Serial.println("Sensor read failed; sample skipped");
     return;
   }
+  float x = reading.x, y = reading.y, z = reading.z;
+  FilesystemLock lock;
   auto log = scanLog();
   if (log.count >= LogLimit && (!log.acknowledged.length() || !LittleFS.remove(log.acknowledged))) {
     Serial.println("Log full; unsent records preserved");
     return;
   }
+  if (log.count >= LogLimit) forgetLogPath(log.acknowledged);
   JsonDocument event;
   event["nodeId"] = nodeId;
   event["eventId"] = randomHex(16);
+  event["bootId"] = bootId;
+  event["kind"] = kind;
+  event["movementDelta"] = movementDelta;
   event["uptimeMs"] = millis();
   time_t now = time(nullptr);
   if (now >= 1577836800) event["sampledAt"] = now;
@@ -341,11 +540,45 @@ void saveSample() {
     fflush(file) == 0 && fsync(fileno(file)) == 0;
   complete = fclose(file) == 0 && complete;
   char path[32];
-  snprintf(path, sizeof(path), "/p-%020llu", static_cast<unsigned long long>(nextSequence++));
+  snprintf(path, sizeof(path), "/%c-%020llu", !strcmp(kind, "movement") ? 'm' : 'p', static_cast<unsigned long long>(nextSequence++));
   if (!complete || !LittleFS.rename("/new.tmp", path)) {
     Serial.println("Cannot commit local log record");
   } else {
-    Serial.printf("Sample committed: x=%.4f y=%.4f z=%.4f magnitude=%.4f m/s2\n", x, y, z, event["value"].as<float>());
+    logPaths.push_back(String(path));
+    Serial.printf("%s committed: x=%.4f y=%.4f z=%.4f magnitude=%.4f m/s2 %s\n", kind, x, y, z, event["value"].as<float>(), timeInIst(now).c_str());
+  }
+}
+
+void serviceSensor(uint32_t now) {
+  if (!due(now, nextSensorRead)) return;
+  nextSensorRead = now + 20;
+  float x = 0, y = 0, z = 0;
+  bool valid = readAcceleration(x, y, z);
+  float delta = 0;
+  if (valid) {
+    if (!movementPrimed) {
+      baselineX = x; baselineY = y; baselineZ = z;
+      movementPrimed = true;
+      bootMotionReady = now + 2000;
+    }
+    delta = sqrtf(powf(x-baselineX,2) + powf(y-baselineY,2) + powf(z-baselineZ,2));
+    baselineX += .05f * (x - baselineX);
+    baselineY += .05f * (y - baselineY);
+    baselineZ += .05f * (z - baselineZ);
+  }
+  portENTER_CRITICAL(&readingMux);
+  latestReading = {x, y, z, delta, valid};
+  portEXIT_CRITICAL(&readingMux);
+  if (!movementWarm && movementPrimed && due(now, bootMotionReady)) movementWarm = true;
+  if (!valid || !movementWarm) return;
+  float threshold = config["motionThreshold"] | 1.5f;
+  if (delta >= threshold) {
+    pendingMovementPeak = max(pendingMovementPeak, delta);
+    if (now - lastMovementAt >= 2000) {
+      saveSample("movement", pendingMovementPeak);
+      pendingMovementPeak = 0;
+      lastMovementAt = now;
+    }
   }
 }
 
@@ -393,14 +626,19 @@ void serviceSerial() {
       status["ssid"] = config["ssid"] | "";
       status["rssi"] = WiFi.RSSI();
       status["ip"] = WiFi.localIP().toString();
-      status["portalActive"] = portalActive;
+      status["portalActive"] = portalActive.load();
       status["touchRaw"] = touchRead(TouchPin);
       status["logRecords"] = storageReady ? scanLog().count : 0;
       status["stackFreeBytes"] = uxTaskGetStackHighWaterMark(nullptr);
       status["freeHeap"] = ESP.getFreeHeap();
-      status["pendingVerification"] = pendingVerification;
-      serializeJson(status, Serial);
-      Serial.println();
+      status["pendingVerification"] = pendingVerification.load();
+      status["ledOn"] = digitalRead(StatusLed) == HIGH;
+      status["timeIst"] = timeInIst(time(nullptr));
+      status["pendingRecords"] = storageReady ? scanLog().pendingCount : 0;
+      status["lastCloudAgeMs"] = lastCloudSuccess.load() ? millis() - lastCloudSuccess.load() : 0;
+      String output;
+      serializeJson(status, output);
+      Serial.println(output);
     } else if (serialCommand == "sensor") {
       float x, y, z;
       if (readAcceleration(x, y, z)) {
@@ -417,28 +655,38 @@ void serviceSerial() {
   }
 }
 
+String readCommittedRecord(File &file) {
+  size_t length = file ? file.size() : 0;
+  if (!length || length > 1024) return "";
+  char bytes[1025];
+  if (file.read(reinterpret_cast<uint8_t *>(bytes), length) != length) return "";
+  bytes[length] = 0;
+  return String(bytes);
+}
+
 void uploadOne() {
   if (!storageReady || !config["base"].is<const char *>()) return;
   String path = scanLog().pending;
   if (!path.length()) { nextUpload = millis() + 2000; return; }
-  File entry = LittleFS.open(path);
-  if (!entry) { nextUpload = millis() + 10000; return; }
-  String line = entry.readString();
-  entry.close();
-  WiFiClientSecure tls;
-  HTTPClient request;
-  int status = -1;
-  if (configureHttp(request, tls, config["base"].as<String>() + config["endpoint"].as<String>())) {
-    request.addHeader("Content-Type", "application/json");
-    request.addHeader("Authorization", "Bearer " + config["secret"].as<String>());
-    status = request.POST(line);
-    request.end();
+  String line;
+  {
+    FilesystemLock lock;
+    File entry = LittleFS.open(path);
+    if (!entry) { nextUpload = millis() + 10000; return; }
+    line = readCommittedRecord(entry);
+    entry.close();
   }
+  int status = postToCloud(config["endpoint"].as<String>(), line);
   String acknowledged = "/s-" + path.substring(3);
-  if (status >= 200 && status < 300 && LittleFS.rename(path, acknowledged)) {
-    retryDelay = 5000;
-    nextUpload = millis() + 500;
-    return;
+  Serial.printf("Telemetry HTTP %d\n", status);
+  if (status >= 200 && status < 300) {
+    FilesystemLock lock;
+    if (LittleFS.rename(path, acknowledged)) {
+      for (String &stored : logPaths) if (stored == path) { stored = acknowledged; break; }
+      retryDelay = 5000;
+      nextUpload = millis() + 100;
+      return;
+    }
   }
   Serial.printf("Upload deferred (HTTP %d)\n", status);
   nextUpload = millis() + retryDelay + esp_random() % 3000;
@@ -446,63 +694,89 @@ void uploadOne() {
 }
 
 void sendHeartbeat() {
-  nextHeartbeat = millis() + 15000;
+  nextHeartbeat = millis() + HeartbeatInterval;
   if (!config["base"].is<const char *>()) return;
   JsonDocument heartbeat;
   heartbeat["nodeId"] = nodeId;
+  heartbeat["bootId"] = bootId;
   heartbeat["uptimeMs"] = millis();
   heartbeat["version"] = FLEET_VERSION;
   heartbeat["ssid"] = config["ssid"] | "";
   heartbeat["rssi"] = WiFi.RSSI();
   heartbeat["channel"] = WiFi.channel();
   heartbeat["storageReady"] = storageReady;
-  float x, y, z;
-  heartbeat["sensorReady"] = readAcceleration(x, y, z);
-  heartbeat["logRecords"] = storageReady ? scanLog().count : 0;
+  SensorReading reading = currentReading();
+  heartbeat["sensorReady"] = reading.valid;
+  heartbeat["timeSynced"] = time(nullptr) >= 1577836800;
+  heartbeat["mode"] = otaActive.load() ? "updating" : portalActive.load() ? "setup" : "running";
+  if (reading.valid) {
+    heartbeat["acceleration"]["x"] = reading.x;
+    heartbeat["acceleration"]["y"] = reading.y;
+    heartbeat["acceleration"]["z"] = reading.z;
+    heartbeat["value"] = sqrtf(reading.x*reading.x+reading.y*reading.y+reading.z*reading.z);
+  }
+  auto state = storageReady ? scanLog() : LogState{};
+  heartbeat["logRecords"] = state.count;
+  heartbeat["pendingRecords"] = state.pendingCount;
   auto peers = heartbeat["neighbors"].to<JsonArray>();
-  for (auto &neighbor : neighbors) {
+  portENTER_CRITICAL(&readingMux);
+  Neighbor copy[16];
+  memcpy(copy, neighbors, sizeof(copy));
+  portEXIT_CRITICAL(&readingMux);
+  for (auto &neighbor : copy) {
     if (neighbor.id[0] && millis() - neighbor.seen <= 45000) peers.add(neighbor.id);
   }
   String body;
   serializeJson(heartbeat, body);
-  WiFiClientSecure tls;
-  HTTPClient request;
-  if (configureHttp(request, tls, config["base"].as<String>() + "/v1/heartbeat")) {
-    request.addHeader("Content-Type", "application/json");
-    request.addHeader("Authorization", "Bearer " + config["secret"].as<String>());
-    int status = request.POST(body);
-    cloudHealthy = status == 200;
-    Serial.printf("Heartbeat HTTP %d\n", status);
-    request.end();
-  }
+  int status = postToCloud("/v1/heartbeat", body);
+  cloudHealthy = status == 200;
+  Serial.printf("Heartbeat HTTP %d\n", status);
 }
 
 void exportLog() {
   if (!storageReady) { portal.send(503, "text/plain", "Local log unavailable"); return; }
-  portal.sendHeader("Content-Disposition", "attachment; filename=esp32-log.ndjson");
-  portal.setContentLength(CONTENT_LENGTH_UNKNOWN);
-  portal.send(200, "application/x-ndjson", "");
-  File dir = LittleFS.open("/");
-  for (File entry = dir.openNextFile(); entry; entry = dir.openNextFile()) {
-    String path = entry.path();
-    if (path.startsWith("/p-") || path.startsWith("/s-")) portal.sendContent(entry.readString() + "\n");
-    esp_task_wdt_reset();
+  bool complete = true;
+  {
+    FilesystemLock lock;
+    File snapshot = LittleFS.open("/export.tmp", "w");
+    complete = bool(snapshot);
+    for (const String &path : logPaths) {
+      if (!complete) break;
+      File entry = LittleFS.open(path);
+      String line = readCommittedRecord(entry);
+      if (line.length()) {
+        complete = snapshot.write(reinterpret_cast<const uint8_t *>(line.c_str()), line.length()) == line.length()
+          && snapshot.write(static_cast<uint8_t>('\n')) == 1;
+      }
+      esp_task_wdt_reset();
+    }
+    snapshot.flush();
+    snapshot.close();
   }
-  portal.sendContent("");
+  if (!complete) {
+    FilesystemLock lock;
+    LittleFS.remove("/export.tmp");
+    portal.send(503, "text/plain", "Export needs free filesystem space. Records remain intact.");
+    return;
+  }
+  // A file snapshot has a known Content-Length and avoids per-record TCP chunks
+  // and a second RAM copy of all filenames during a concurrent TLS handshake.
+  File snapshot = LittleFS.open("/export.tmp");
+  portal.sendHeader("Content-Disposition", "attachment; filename=esp32-log.ndjson");
+  portal.streamFile(snapshot, "application/x-ndjson");
+  snapshot.close();
+  { FilesystemLock lock; LittleFS.remove("/export.tmp"); }
 }
 
 void startPortal() {
-  if (radioReady) { esp_now_deinit(); radioReady = false; }
-  WiFi.disconnect();
-  WiFi.mode(WIFI_AP);
+  WiFi.mode(WIFI_AP_STA);
   String name = "ESP32-Setup-" + nodeId.substring(12);
-  String password = randomHex(8);
-  if (!WiFi.softAP(name.c_str(), password.c_str(), 1, false, 1)) {
+  if (!WiFi.softAP(name.c_str(), apPassword.c_str(), 1, false, 1)) {
     WiFi.mode(WIFI_STA);
     return;
   }
   formToken = randomHex(16);
-  Serial.printf("Setup Wi-Fi %s password %s, open http://192.168.4.1\n", name.c_str(), password.c_str());
+  Serial.printf("Setup Wi-Fi %s password %s, open http://192.168.4.1\n", name.c_str(), apPassword.c_str());
   dns.start(53, "*", WiFi.softAPIP());
   portal.begin();
   portalActive = true;
@@ -540,10 +814,11 @@ bool assetGet(HTTPClient &http, WiFiClientSecure &tls, String url) {
 }
 
 bool checkOta() {
+  if (!FLEET_ALLOW_OTA) return true;
   String manifest = config["ota"].as<String>();
   if (!manifest.length()) return true;
   Serial.println("OTA checking manifest");
-  WiFiClientSecure tls;
+  VerifiedClient tls;
   HTTPClient http;
   if (!assetGet(http, tls, manifest)) return false;
   JsonDocument data;
@@ -595,13 +870,27 @@ bool checkOta() {
 void setup() {
   Serial.setRxBufferSize(4096);
   Serial.begin(115200);
+  filesystemMutex = xSemaphoreCreateRecursiveMutex();
+  handshakeMutex = xSemaphoreCreateMutex();
+  if (!filesystemMutex || !handshakeMutex) { Serial.println("Mutex initialization failed"); ESP.restart(); }
+  arduino_esp_crt_bundle_set(caBundle);
+  esp_crt_bundle_attach(nullptr);
+  setenv("TZ", "IST-5:30", 1);
+  tzset();
+  pinMode(StatusLed, OUTPUT);
   esp_task_wdt_init(45, true);
   esp_task_wdt_add(nullptr);
   char id[20];
   snprintf(id, sizeof(id), "esp32-%012llx", static_cast<unsigned long long>(ESP.getEfuseMac()));
   nodeId = id;
+  bootId = randomHex(16);
   Serial.printf("Node %s, firmware %s, reset %d\n", id, FLEET_VERSION, esp_reset_reason());
   settings.begin("fleet", false);
+  apPassword = settings.getString("apKey", "");
+  if (apPassword.length() < 8) {
+    apPassword = randomHex(8);
+    settings.putString("apKey", apPassword);
+  }
   deserializeJson(config, settings.getString("config", "{}"));
   beginSensor();
   storageReady = LittleFS.begin(false);
@@ -612,14 +901,19 @@ void setup() {
   else Serial.println("LittleFS unavailable; see first-flash instructions");
   WiFi.persistent(false);
   WiFi.mode(WIFI_STA);
-  portal.on("/", HTTP_GET, [] { portal.send_P(200, "text/html", PortalPage); });
+  portal.on("/", HTTP_GET, [] {
+    if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
+    portal.send_P(200, "text/html", PortalPage);
+  });
   portal.on("/settings", HTTP_GET, [] {
+    if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
     JsonDocument view;
     for (auto key : {"ssid", "base", "ota"}) view[key] = config[key] | "";
     view["endpoint"] = config["endpoint"] | "/v1/telemetry";
     view["sensitivity"] = config["sensitivity"] | 1.0f;
     view["touch"] = config["touch"] | 30;
     view["interval"] = config["interval"] | 60;
+    view["motionThreshold"] = config["motionThreshold"] | 1.5f;
     view["token"] = formToken;
     view["node"] = nodeId;
     view["version"] = FLEET_VERSION;
@@ -628,20 +922,110 @@ void setup() {
     portal.sendHeader("Cache-Control", "no-store");
     portal.send(200, "application/json", body);
   });
-  portal.on("/settings", HTTP_POST, saveSettings);
-  portal.on("/log", HTTP_GET, exportLog);
+  portal.on("/settings", HTTP_POST, [] {
+    if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
+    saveSettings();
+  });
+  portal.on("/log", HTTP_GET, [] {
+    if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
+    exportLog();
+  });
+  portal.on("/status", HTTP_GET, [] {
+    if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
+    JsonDocument status;
+    status["nodeId"] = nodeId;
+    status["timeIst"] = timeInIst(time(nullptr));
+    status["pending"] = storageReady ? scanLog().pendingCount : 0;
+    bool reported = lastCloudSuccess.load() && millis()-lastCloudSuccess.load() < CloudTimeout;
+    status["connection"] = reported ? "Cloud connected" : WiFi.status()==WL_CONNECTED ? "Wi-Fi connected; cloud pending" : "Wi-Fi reconnecting";
+    String response;
+    serializeJson(status, response);
+    portal.sendHeader("Cache-Control", "no-store");
+    portal.send(200, "application/json", response);
+  });
+  portal.on("/logs", HTTP_GET, [] {
+    if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
+    if (otaActive) { portal.send(503, "text/plain", "Firmware update in progress. Retry shortly."); return; }
+    TransportBudget budget;
+    if (!budget.acquired) { portal.send(503); return; }
+    // Keep only one parsed record in RAM, leaving room for cloud TLS.
+    String body;
+    if (!body.reserve(32768)) { portal.send(503, "text/plain", "Retry when memory is available."); return; }
+    body = "[";
+    bool first = true;
+    if (storageReady) {
+      FilesystemLock lock;
+      std::vector<size_t> paths;
+      for (size_t i = 0; i < logPaths.size(); ++i) paths.push_back(i);
+      std::sort(paths.begin(), paths.end(), [](size_t a, size_t b) { return logPaths[a].substring(3) > logPaths[b].substring(3); });
+      for (size_t i = 0; i < paths.size() && i < 30; ++i) {
+        File file = LittleFS.open(logPaths[paths[i]]);
+        JsonDocument record;
+        String line = readCommittedRecord(file);
+        if (line.length() && !deserializeJson(record, line)) {
+          if (!first) body += ',';
+          body += line;
+          first = false;
+        }
+        esp_task_wdt_reset();
+      }
+    }
+    body += ']';
+    portal.sendHeader("Cache-Control", "no-store");
+    portal.send(200, "application/json", body);
+  });
   portal.onNotFound([] {
+    if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
     portal.sendHeader("Location", "http://192.168.4.1/");
     portal.send(302, "text/plain", "");
   });
   if (!config["ssid"].is<const char *>()) startPortal();
-  nextOta = millis() + 20000 + esp_random() % 60000;
+  nextOta = millis() + 60000 + esp_random() % 60000;
+  xTaskCreatePinnedToCore([](void *) {
+    esp_task_wdt_add(nullptr);
+    for (;;) {
+      esp_task_wdt_reset();
+      if (WiFi.status() == WL_CONNECTED) {
+        if (due(millis(), nextUpload)) uploadOne();
+        esp_task_wdt_reset();
+        if (!pendingVerification.load() && time(nullptr) >= 1577836800 && due(millis(), nextOta)) {
+          otaActive = true;
+          bool ok = checkOta();
+          otaActive = false;
+          nextOta = millis() + (ok ? 900000UL : 120000UL) + esp_random() % 30000;
+        }
+      }
+      vTaskDelay(pdMS_TO_TICKS(50));
+    }
+  }, "fleetUpload", 16384, nullptr, 1, &networkTaskHandle, 1);
+  xTaskCreatePinnedToCore([](void *) {
+    esp_task_wdt_add(nullptr);
+    for (;;) {
+      esp_task_wdt_reset();
+      if (WiFi.status() == WL_CONNECTED && due(millis(), nextHeartbeat)) sendHeartbeat();
+      vTaskDelay(pdMS_TO_TICKS(50));
+    }
+  }, "fleetStatus", 16384, nullptr, 1, &heartbeatTaskHandle, 1);
+  if (!networkTaskHandle || !heartbeatTaskHandle) { Serial.println("Network task initialization failed"); ESP.restart(); }
+  auto timer = xTimerCreate("statusLED", pdMS_TO_TICKS(50), pdTRUE, nullptr, [](TimerHandle_t) {
+    uint32_t phase = millis() % 2000;
+    bool reported = lastCloudSuccess.load() && millis()-lastCloudSuccess.load() < CloudTimeout;
+    bool on;
+    if (portalActive.load()) on = phase % 250 < 125;
+    else if (!currentReading().valid || !storageReady) on = phase < 100 || (phase >=200 && phase<300) || (phase>=400 && phase<500);
+    else if (WiFi.status() != WL_CONNECTED) on = phase % 1000 < 500;
+    else if (!reported) on = phase < 120 || (phase >=250 && phase <370);
+    else on = true;
+    digitalWrite(StatusLed, on ? HIGH : LOW);
+  });
+  if (timer) xTimerStart(timer, 0);
 }
 
 void loop() {
   esp_task_wdt_reset();
   serviceSerial();
   uint32_t now = millis();
+  serviceSensor(now);
   if (pendingVerification) {
     if (storageReady && sensorAddress && cloudHealthy && WiFi.status() == WL_CONNECTED &&
         time(nullptr) >= 1577836800 && now >= 20000) {
@@ -663,29 +1047,24 @@ void loop() {
     if (now - portalStarted >= PortalLifetime && !restartAt) {
       portal.stop();
       dns.stop();
-      WiFi.softAPdisconnect(true);
+      WiFi.softAPdisconnect(false);
       WiFi.mode(WIFI_STA);
       portalActive = false;
       touched = false;
       nextWifi = millis();
     }
-  } else if (WiFi.status() == WL_CONNECTED) {
+  }
+  if (WiFi.status() == WL_CONNECTED) {
+    wifiLostAt = 0;
     serviceDiscovery();
-    if (!ntpStarted) { configTime(0, 0, "pool.ntp.org", "time.google.com"); ntpStarted = true; }
-    if (time(nullptr) >= 1577836800) {
-      if (due(now, nextHeartbeat)) sendHeartbeat();
-      esp_task_wdt_reset();
-      if (due(now, nextUpload)) uploadOne();
-      esp_task_wdt_reset();
-      if (!pendingVerification && due(now, nextOta)) {
-        bool ok = checkOta();
-        Serial.printf("OTA check %s; stack free=%u bytes\n", ok ? "OK" : "deferred", uxTaskGetStackHighWaterMark(nullptr));
-        nextOta = millis() + (ok ? 900000UL : 60000UL) + esp_random() % 30000;
-      }
-    }
+    if (!ntpStarted) { configTzTime("IST-5:30", "pool.ntp.org", "time.google.com"); ntpStarted = true; }
   } else if (due(now, nextWifi) && config["ssid"].is<const char *>()) {
     WiFi.begin(config["ssid"].as<const char *>(), config["password"] | "");
     nextWifi = now + 30000;
+  }
+  if (WiFi.status() != WL_CONNECTED) {
+    if (!wifiLostAt) wifiLostAt = now;
+    if (!portalActive && now - wifiLostAt > 30000) startPortal();
   }
   delay(20);
 }

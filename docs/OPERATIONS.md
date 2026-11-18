@@ -1,9 +1,11 @@
 # Operating procedures
 
+The comprehensive reference is the [operating, configuration, troubleshooting and safety manual](OPERATING_MANUAL.md), covering all supported settings, node lifecycle and recovery.
+
 ## Commission a node
 
 1. Complete the first USB application and filesystem flash in [hardware](HARDWARE.md).
-2. Read the Node ID and temporary AP password from USB serial at 115200 baud.
+2. Read the Node ID and saved private AP password from USB serial at 115200 baud.
 3. Generate an individual random secret.
 4. Add the exact ID and secret to Vercel's Production `NODE_SECRETS_JSON`, preserving other entries.
 5. Redeploy Vercel and wait for Ready.
@@ -15,18 +17,18 @@
 11. Check its value, firmware version, timestamps, and reset reason.
 12. Record commissioning details in the private inventory.
 
-The first sample is scheduled immediately. Upload waits for Wi-Fi and time sync. Events recorded before synchronization omit sample time, while the API adds server receive time.
+The first sample is scheduled immediately. Upload starts when Wi-Fi is connected. Events recorded before synchronization omit sample time, while the API adds server receive time. SNTP and accepted HTTPS response dates synchronize the node clock independently.
 
 ## Configure a running node
 
-1. Connect USB serial to read the temporary AP password.
+1. Use the node's saved private AP password, or read it locally through USB serial.
 2. Hold the GPIO 4 pad continuously for four seconds.
 3. Join the printed setup network and open the panel.
 4. Modify settings, save, and wait for the restart.
 
 Blank Wi-Fi password retains the old password when the SSID is unchanged. Blank API secret retains the old secret. Select the explicit checkbox to use an open Wi-Fi network.
 
-The AP allows one client and expires after 15 minutes. Setup mode pauses station networking, uploads, and OTA. Sampling continues. Normal networking resumes after the AP expires.
+The AP allows one client and expires after 15 minutes. Station networking and cloud reports continue when the saved network is available. Configuration and logs are restricted to the setup-AP interface.
 
 | Setting | Accepted value |
 | --- | --- |
@@ -52,7 +54,7 @@ Open the production URL and sign in using the operator password. Sessions expire
 - Reload fetches current data.
 - Sign out removes the session cookie.
 
-The view limits nodes to 200 and events to 100. Displayed times use UTC. Last upload is server receive time, so a newly received backlog may contain older measurements.
+The live view displays the latest 100 telemetry events and notifications. Server receipt times are formatted in IST. Each node shows Online or Last seen from its latest accepted server report.
 
 ## Export local logs
 
@@ -77,7 +79,7 @@ Restore Wi-Fi and watch the dashboard count increase as the backlog drains. Retr
 ## Rotate a node secret
 
 1. Generate a new secret privately.
-2. Enter it in the device portal while setup mode pauses uploads.
+2. Enter it in the device portal, keeping the previous value privately until deployment succeeds.
 3. Update the matching Vercel Production node-map entry and redeploy.
 4. Save the device settings and let it restart.
 5. Confirm queued records upload and retire the previous secret.

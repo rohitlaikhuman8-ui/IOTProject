@@ -4,6 +4,8 @@ An ESP32 connects to Wi-Fi, records telemetry locally, uploads it over HTTPS, an
 
 The hardware target is a **classic ESP32 DevKit with 4 MB flash** and an ADXL345 connected over I²C. X/Y/Z acceleration is reported in m/s², and the summary value is acceleration magnitude multiplied by sensitivity. GPIO 4 remains the capacitive setup input.
 
+The current presence/IST/portal revision is under bench validation on `fix/presence-ist-portal`. Saved settings survive reboots. The cloud dashboard is updated, while intermittent portal requests and full-log export acceptance remain open before publishing this firmware to the fleet. See the [session checkpoint and next steps](docs/VERIFICATION.md#session-checkpoint-and-next-work).
+
 ## Connected node and wiring
 
 | Item | Value |

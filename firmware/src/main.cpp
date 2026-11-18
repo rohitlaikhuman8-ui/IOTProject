@@ -736,20 +736,33 @@ void sendHeartbeat() {
 void exportLog() {
   if (!storageReady) { portal.send(503, "text/plain", "Local log unavailable"); return; }
   bool complete = true;
+  File snapshot;
+  size_t count = 0;
   {
     FilesystemLock lock;
-    File snapshot = LittleFS.open("/export.tmp", "w");
+    snapshot = LittleFS.open("/export.tmp", "w");
     complete = bool(snapshot);
-    for (const String &path : logPaths) {
-      if (!complete) break;
-      File entry = LittleFS.open(path);
+    count = logPaths.size();
+  }
+  Serial.printf("Log snapshot started: %u records\n", count);
+  // Only the main loop appends/reclaims index entries. While this handler runs,
+  // workers can acknowledge a path at the same index under the mutex.
+  for (size_t i = 0; i < count && complete; ++i) {
+    {
+      FilesystemLock lock;
+      File entry = LittleFS.open(logPaths[i]);
       String line = readCommittedRecord(entry);
       if (line.length()) {
         complete = snapshot.write(reinterpret_cast<const uint8_t *>(line.c_str()), line.length()) == line.length()
           && snapshot.write(static_cast<uint8_t>('\n')) == 1;
       }
-      esp_task_wdt_reset();
     }
+    esp_task_wdt_reset();
+    vTaskDelay(pdMS_TO_TICKS(1));
+    if ((i + 1) % 32 == 0) Serial.printf("Log snapshot progress: %u/%u\n", i + 1, count);
+  }
+  {
+    FilesystemLock lock;
     snapshot.flush();
     snapshot.close();
   }
@@ -761,7 +774,7 @@ void exportLog() {
   }
   // A file snapshot has a known Content-Length and avoids per-record TCP chunks
   // and a second RAM copy of all filenames during a concurrent TLS handshake.
-  File snapshot = LittleFS.open("/export.tmp");
+  snapshot = LittleFS.open("/export.tmp");
   portal.sendHeader("Content-Disposition", "attachment; filename=esp32-log.ndjson");
   portal.streamFile(snapshot, "application/x-ndjson");
   snapshot.close();

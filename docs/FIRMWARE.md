@@ -51,7 +51,7 @@ The device writes a complete event to `/littlefs/new.tmp`, flushes, syncs, close
 
 Up to 256 records are retained. Acknowledged history is reclaimed first. An all-pending log skips new samples. An interrupted temporary file is ignored on restart. NVS namespace `fleet` stores `config` and the previously attempted OTA version.
 
-Committed records are read in bounded blocks of at most 1024 bytes. The portal renders at most 30 recent records without retaining 30 parsed JSON documents simultaneously. Full-log export builds `/export.tmp` on flash under the filesystem mutex, then streams that immutable snapshot with a known Content-Length and releases the mutex for delivery. It avoids copying all filenames in RAM or sending hundreds of tiny TCP chunks. The temporary file is removed after delivery and ignored as history after a power cut. Insufficient snapshot space returns 503 and preserves committed records.
+Committed records are read in bounded blocks of at most 1024 bytes. The portal renders at most 30 recent records without retaining 30 parsed JSON documents simultaneously. Full-log export builds `/export.tmp` on flash, releasing the filesystem mutex between records, then streams that immutable snapshot with a known Content-Length. It avoids copying all filenames in RAM or sending hundreds of tiny TCP chunks. The temporary file is removed after delivery and ignored as history after a power cut. Insufficient snapshot space returns 503 and preserves committed records.
 
 Portal status/log polling waits for each request cycle to finish before scheduling the next one. This avoids overlapping requests when a flash operation or a slow client delays a response.
 

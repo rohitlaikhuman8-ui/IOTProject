@@ -230,6 +230,8 @@ In the portal, status and the latest 30 committed records refresh every three se
 
 The full download first creates a temporary snapshot on flash, then streams it to the client. If export returns 503 for insufficient space, the committed records remain intact. Avoid repeated parallel downloads and keep the client connected until completion. A power-cut temporary snapshot is ignored as telemetry and overwritten on the next export.
 
+Snapshot preparation can take time on a full filesystem. Cloud status runs independently, but the main-loop sensor acquisition can pause during this manual operation. Export during maintenance when uninterrupted acquisition is not required. A dedicated acquisition task and storage design would be needed for strict continuous-capture guarantees.
+
 ```powershell
 Invoke-WebRequest http://192.168.4.1/log -OutFile .\esp32-log.ndjson
 $records = Get-Content .\esp32-log.ndjson | ForEach-Object { $_ | ConvertFrom-Json }

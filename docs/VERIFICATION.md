@@ -85,4 +85,18 @@ The production dashboard build reached Ready with live node status, IST history,
 
 A 460800-baud USB transfer stopped midway during development. Several retries at 115200 completed and verified flash hashes, but later 115200 transfers also stopped with “chip stopped responding.” A cable/USB-power check was requested before further recovery flashing. The configured upload speed is 115200. Successful transfers did not require BOOT-button intervention.
 
-The latest portal memory guard and snapshot-export source compiles successfully. Physical acceptance of that exact build remains pending because its USB upload failed. Until a complete recovery image is verified, the board can remain offline with an incomplete application. No filesystem upload or full-chip erase was used during these application recovery attempts.
+After the operator reseated the USB connection, recovery uploads completed and verified the image hashes. The node resumed authenticated heartbeat and telemetry reporting with saved settings and 256 retained local records. No filesystem upload or full-chip erase was used during these application recovery attempts.
+
+The recent-log endpoint returned 30 valid records. A subsequent full export exposed a status-task watchdog timeout while the filesystem mutex was held. The latest uploaded revision releases the mutex between snapshot records and reports snapshot progress on serial. Its OTA-enabled configuration also compiles, using 50,436 bytes RAM and 1,212,613 bytes application flash. Complete physical export acceptance remains open. Portal requests were still intermittent during the last laptop/AP check.
+
+## Session checkpoint and next work
+
+At the operator's request, repeated portal tests stopped. Wi-Fi credentials and settings remain saved in NVS, and committed local records remain in LittleFS. The bench image identifies itself as `usb-dev-ist-motion` and has fleet OTA checks disabled while under validation. The deployed dashboard already includes IST, Online/Last-seen status and movement notification history. The candidate firmware and documentation are saved on `fix/presence-ist-portal`; the stable main OTA channel has not been replaced by these test builds.
+
+Next session:
+
+1. Confirm the existing Wi-Fi connection and fresh cloud status without reopening setup.
+2. Diagnose intermittent AP HTTP requests and complete one full export with uninterrupted heartbeats and no watchdog reset.
+3. Perform one save/reboot check through setup, preserving blank password/secret fields, and restore the production OTA manifest URL.
+4. Rebuild with OTA enabled, publish the verified changes to main, observe GitHub Actions, and install/confirm the release on the physical node.
+5. Update this verification record and capture the final real portal screenshot. Sensor calibration, additional-node tests and controlled power-cut/rollback checks remain separate deployment acceptance work.

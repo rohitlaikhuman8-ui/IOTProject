@@ -44,7 +44,7 @@ with connection as port:
     if args.config:
         # Pause synchronous network work before sending a configuration larger
         # than the default UART receive buffer on older firmware.
-        port.write(b"portal\n")
+        port.write(b"\nportal\n")
         portal_ready = False
         for attempt in range(12):
             port.write(b"status\n")
@@ -56,8 +56,13 @@ with connection as port:
         if not portal_ready:
             raise RuntimeError("Setup portal did not acknowledge USB provisioning")
         configuration = json.loads(Path(args.config).read_text())
-        port.write(("configure " + json.dumps(configuration, separators=(",", ":")) + "\n").encode())
-        drain(port, 6)
+        payload = ("configure " + json.dumps(configuration, separators=(",", ":")) + "\n").encode()
+        for offset in range(0, len(payload), 16):
+            port.write(payload[offset:offset + 16])
+            time.sleep(0.05)
+        reply = drain(port, 12)
+        if not any("Configuration persisted; restarting" in line for line in reply):
+            raise RuntimeError("Device did not acknowledge persistent configuration")
     if args.command:
         port.write((args.command + "\n").encode())
         drain(port, 2)

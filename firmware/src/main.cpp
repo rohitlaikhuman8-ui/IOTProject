@@ -593,6 +593,7 @@ bool checkOta() {
 }
 
 void setup() {
+  Serial.setRxBufferSize(4096);
   Serial.begin(115200);
   esp_task_wdt_init(45, true);
   esp_task_wdt_add(nullptr);

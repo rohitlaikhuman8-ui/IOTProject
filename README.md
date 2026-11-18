@@ -164,4 +164,4 @@ IOTProject/
 - The current telemetry value is a touch reading. The dashboard presents tables and refreshes on navigation or reload.
 - OTA verifies HTTPS, board type, length, and SHA-256. Independent image signing and Secure Boot need a separate manufacturing setup.
 
-The classic ESP32 firmware compiled locally on November 13, 2026. The Vercel application deployed successfully. Hardware commissioning, sensor integration, touch calibration, power-cut behavior, and OTA rollback still require bench checks. See the [verification record](docs/VERIFICATION.md).
+The classic ESP32 firmware compiled locally on November 13, 2026 and in GitHub Actions on November 18. The first OTA release is published, and the Vercel application deployed successfully. Hardware commissioning, sensor integration, touch calibration, power-cut behavior, and OTA rollback still require bench checks. See the [verification record](docs/VERIFICATION.md).

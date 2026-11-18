@@ -8,12 +8,17 @@
 | 2026-11-13 | Vercel production build | Ready |
 | 2026-11-18 | Atlas cluster inspection | Free cluster active and unpaused |
 | 2026-11-18 | Repository inspection | Public repository, initial README-only main preserved as parent history |
+| 2026-11-18 | GitHub main publication | Project published in commit `594619c41076f64f949307df7f92d6f9651bf479` |
+| 2026-11-18 | GitHub firmware release | Build and publish job completed successfully in [run 44276342243](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/44276342243) |
+| 2026-11-18 | Published OTA integrity | Downloaded public manifest and 1,111,296-byte binary, matching size and SHA-256 |
 | 2026-11-18 | Browser documentation capture | Actual sign-in and authenticated empty fleet view captured through temporary authorized Vercel access |
 | 2026-11-18 | Portal screenshot | Firmware HTML rendered with sample settings, without a connected board |
 
 The dashboard currently has no real node telemetry in the captured view. The browser capture demonstrates sign-in and a successful empty database query. It does not demonstrate hardware ingestion.
 
-The source was compiled successfully before this documentation handoff. The GitHub main push triggers a release build whose status is visible in Actions.
+The source compiled successfully before this documentation handoff and again in GitHub Actions. The first OTA release and stable manifest have been published.
+
+The verified release SHA-256 is `ec15b44494bf3353a998856138118cfa1ece8f37f4b0b6f1bd06e5f52eb59a62`. It identifies the binary for commit `594619c41076f64f949307df7f92d6f9651bf479`.
 
 ## Bench acceptance procedure
 

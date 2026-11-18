@@ -14,7 +14,7 @@
 | 2026-11-18 | Browser documentation capture | Actual sign-in and authenticated empty fleet view captured through temporary authorized Vercel access |
 | 2026-11-18 | Portal screenshot | Firmware HTML rendered with sample settings, without a connected board |
 
-The dashboard currently has no real node telemetry in the captured view. The browser capture demonstrates sign-in and a successful empty database query. It does not demonstrate hardware ingestion.
+The original screenshots captured an empty fleet. The refreshed screenshots show the connected ADXL345 node after commissioning.
 
 The source compiled successfully before this documentation handoff and again in GitHub Actions. The first OTA release and stable manifest have been published.
 
@@ -40,9 +40,13 @@ Record the board model, Node ID, commit SHA, expected behavior, observed behavio
 
 ## Outstanding deployment work
 
-- Register actual Node IDs and secrets in the Production environment.
-- Flash and calibrate the first physical node.
-- Integrate the selected sensor driver.
+- Calibrate the ADXL345 with a reference and multiple orientations.
 - Complete the bench checks above.
 - Link the existing Vercel project to GitHub if automatic dashboard deployments are desired.
-- Configure production protection so the ESP32 can reach the ingest endpoint without interactive Vercel sign-in.
+- Validate additional physical nodes and independent networks before relying on radio-neighbor links.
+
+## COM5 hardware observations
+
+The connected ESP32-D0WD-V3 uses Node ID `esp32-d01de2f4e9d4`. ADXL345 responded at 0x53 with DEVID 0xE5. Firmware and initial LittleFS uploads verified their flash hashes. BOOT was not required. The node persisted configuration and records across reset, connected to Sensor Testing, and received HTTP 200 for heartbeats. Sensor values responded to orientation changes, but calibration remains open.
+
+The Atlas-backed browser check found the node with working sensor and storage, an active independent uplink on Wi-Fi channel 1, and no radio neighbors. Replaying its actual latest measurement returned 200 while the recorded event count stayed at 41. An unsigned request to the topology endpoint returned 401.

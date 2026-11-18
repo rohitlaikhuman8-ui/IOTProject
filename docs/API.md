@@ -41,6 +41,8 @@ The API authenticates against the entry for the payload's ID in `NODE_SECRETS_JS
 
 Atlas adds a BSON date `receivedAt` and `_id = nodeId:eventId`.
 
+ADXL345 events additionally include `sensor: "ADXL345"`, `unit: "m/s2"`, and `acceleration: {x, y, z}` with finite numbers. These fields are optional for compatibility with older events. The summary value is magnitude times sensitivity. Authenticated heartbeats use `POST /v1/heartbeat`, and signed-in topology reads use `GET /api/topology`. See [topology](TOPOLOGY.md).
+
 ## Responses
 
 | HTTP | Meaning | Action |

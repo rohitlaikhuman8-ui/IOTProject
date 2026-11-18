@@ -8,6 +8,10 @@
 #include <WebServer.h>
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
+#include <Wire.h>
+#include <math.h>
+#include <esp_now.h>
+#include <mbedtls/md.h>
 #include <esp_task_wdt.h>
 #include <esp_ota_ops.h>
 #include <mbedtls/sha256.h>
@@ -24,6 +28,9 @@
 extern const uint8_t caBundle[] asm("_binary_x509_crt_bundle_start");
 extern "C" bool verifyRollbackLater() { return true; }
 constexpr int TouchPin = 4;
+constexpr int SensorSda = 21;
+constexpr int SensorScl = 22;
+constexpr float AccelerationScale = 0.0039f * 9.80665f;
 constexpr size_t LogLimit = 256;
 constexpr uint32_t PortalLifetime = 15 * 60 * 1000UL;
 
@@ -38,6 +45,124 @@ bool pendingVerification;
 uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, nextOta;
 uint32_t retryDelay = 5000;
 uint64_t nextSequence = 1;
+uint8_t sensorAddress = 0;
+String serialCommand;
+void startPortal();
+bool due(uint32_t now, uint32_t target);
+uint32_t nextHeartbeat, nextBeacon;
+bool radioReady;
+struct Neighbor { char id[19]; uint32_t seen; };
+Neighbor neighbors[16] = {};
+struct Beacon { uint32_t magic; uint32_t timestamp; uint8_t mac[6]; uint8_t digest[32]; };
+QueueHandle_t beaconQueue;
+
+void discoveryDigest(const Beacon &beacon, uint8_t *digest) {
+  String key = config["discovery"] | "";
+  mbedtls_md_hmac(mbedtls_md_info_from_type(MBEDTLS_MD_SHA256),
+    reinterpret_cast<const uint8_t *>(key.c_str()), key.length(),
+    reinterpret_cast<const uint8_t *>(&beacon), offsetof(Beacon, digest), digest);
+}
+
+void receiveBeacon(const uint8_t *mac, const uint8_t *data, int length) {
+  if (!beaconQueue || length != sizeof(Beacon)) return;
+  Beacon beacon;
+  memcpy(&beacon, data, sizeof(beacon));
+  if (memcmp(mac, beacon.mac, 6) == 0) xQueueSend(beaconQueue, &beacon, 0);
+}
+
+void serviceDiscovery() {
+  if (WiFi.status() != WL_CONNECTED || String(config["discovery"] | "").length() < 32 ||
+      time(nullptr) < 1577836800) return;
+  if (!radioReady) {
+    if (!beaconQueue) beaconQueue = xQueueCreate(8, sizeof(Beacon));
+    if (!beaconQueue || esp_now_init() != ESP_OK) return;
+    esp_now_register_recv_cb(receiveBeacon);
+    esp_now_peer_info_t peer = {};
+    memset(peer.peer_addr, 255, 6);
+    peer.ifidx = WIFI_IF_STA;
+    if (esp_now_add_peer(&peer) != ESP_OK) { esp_now_deinit(); return; }
+    radioReady = true;
+  }
+  Beacon beacon;
+  while (xQueueReceive(beaconQueue, &beacon, 0) == pdTRUE) {
+    uint8_t digest[32];
+    discoveryDigest(beacon, digest);
+    uint8_t difference = 0;
+    for (size_t i = 0; i < 32; ++i) difference |= digest[i] ^ beacon.digest[i];
+    int64_t age = static_cast<int64_t>(time(nullptr)) - beacon.timestamp;
+    if (beacon.magic != 0x464c5431 || difference || age < -10 || age > 30) continue;
+    char id[19];
+    snprintf(id, sizeof(id), "esp32-%02x%02x%02x%02x%02x%02x",
+      beacon.mac[5], beacon.mac[4], beacon.mac[3], beacon.mac[2], beacon.mac[1], beacon.mac[0]);
+    for (auto &neighbor : neighbors) {
+      if (!neighbor.id[0] || !strcmp(neighbor.id, id) || millis() - neighbor.seen > 45000) {
+        strncpy(neighbor.id, id, sizeof(neighbor.id));
+        neighbor.seen = millis();
+        break;
+      }
+    }
+  }
+  if (due(millis(), nextBeacon)) {
+    nextBeacon = millis() + 5000 + esp_random() % 1000;
+    Beacon outgoing = {};
+    outgoing.magic = 0x464c5431;
+    outgoing.timestamp = time(nullptr);
+    WiFi.macAddress(outgoing.mac);
+    discoveryDigest(outgoing, outgoing.digest);
+    const uint8_t broadcast[6] = {255,255,255,255,255,255};
+    esp_now_send(broadcast, reinterpret_cast<uint8_t *>(&outgoing), sizeof(outgoing));
+  }
+}
+
+bool readRegisters(uint8_t address, uint8_t reg, uint8_t *bytes, size_t count) {
+  Wire.beginTransmission(address);
+  Wire.write(reg);
+  if (Wire.endTransmission(false) != 0 ||
+      Wire.requestFrom(address, static_cast<uint8_t>(count)) != count) return false;
+  for (size_t i = 0; i < count; ++i) bytes[i] = Wire.read();
+  return true;
+}
+
+bool writeRegister(uint8_t reg, uint8_t value) {
+  Wire.beginTransmission(sensorAddress);
+  Wire.write(reg);
+  Wire.write(value);
+  return Wire.endTransmission() == 0;
+}
+
+bool beginSensor() {
+  Wire.begin(SensorSda, SensorScl, 100000);
+  Wire.setTimeOut(50);
+  for (uint8_t address : {0x53, 0x1d}) {
+    uint8_t id;
+    if (readRegisters(address, 0x00, &id, 1) && id == 0xe5) {
+      sensorAddress = address;
+      bool ok = writeRegister(0x2d, 0x00) && writeRegister(0x31, 0x0b) &&
+        writeRegister(0x2c, 0x0a) && writeRegister(0x2d, 0x08);
+      uint8_t format, rate, power;
+      ok = ok && readRegisters(address, 0x31, &format, 1) && format == 0x0b &&
+        readRegisters(address, 0x2c, &rate, 1) && rate == 0x0a &&
+        readRegisters(address, 0x2d, &power, 1) && power == 0x08;
+      if (ok) {
+        Serial.printf("ADXL345 ready: address=0x%02x DEVID=0xe5 SDA=21 SCL=22 full-resolution=16g ODR=100Hz\n", address);
+        delay(20);
+        return true;
+      }
+    }
+  }
+  sensorAddress = 0;
+  Serial.println("ADXL345 unavailable: check SDA=21 SCL=22, 3V3, GND, CS high and SDO address strap");
+  return false;
+}
+
+bool readAcceleration(float &x, float &y, float &z) {
+  uint8_t bytes[6];
+  if (!sensorAddress || !readRegisters(sensorAddress, 0x32, bytes, sizeof(bytes))) return false;
+  x = static_cast<int16_t>(bytes[0] | (bytes[1] << 8)) * AccelerationScale;
+  y = static_cast<int16_t>(bytes[2] | (bytes[3] << 8)) * AccelerationScale;
+  z = static_cast<int16_t>(bytes[4] | (bytes[5] << 8)) * AccelerationScale;
+  return true;
+}
 
 bool due(uint32_t now, uint32_t target) {
   return static_cast<int32_t>(now - target) >= 0;
@@ -83,6 +208,7 @@ button{padding:.6rem 1rem}a{display:inline-block;margin-right:1rem}
 <label>Backend base URL<input name="base" placeholder="https://your-project.vercel.app" required></label>
 <label>Ingest endpoint<input name="endpoint" required></label>
 <label>Node API secret<input name="secret" type="password" maxlength="128"></label>
+<label>Fleet discovery key<input name="discovery" type="password" maxlength="128"></label>
 <label>OTA manifest URL<input name="ota" placeholder="https://github.com/.../manifest.json"></label>
 <label>Sensitivity<input name="sensitivity" type="number" step="any" min=".01" max="100" required></label>
 <label>Touch threshold<input name="touch" type="number" min="1" max="65535" required></label>
@@ -105,6 +231,8 @@ void saveSettings() {
   String ssid = portal.arg("ssid"), password = portal.arg("password");
   String base = portal.arg("base"), path = portal.arg("endpoint"), ota = portal.arg("ota");
   String secret = portal.arg("secret");
+  String discovery = portal.arg("discovery");
+  if (!discovery.length()) discovery = config["discovery"] | "";
   if (portal.hasArg("openWifi")) password = "";
   else if (!password.length() && ssid == config["ssid"].as<String>()) password = config["password"].as<String>();
   if (!secret.length()) secret = config["secret"].as<String>();
@@ -118,6 +246,7 @@ void saveSettings() {
       !path.startsWith("/") || path.startsWith("//") || path.length() > 100 ||
       path.indexOf(' ') >= 0 || path.indexOf('\r') >= 0 || path.indexOf('\n') >= 0 ||
       secret.length() < 24 || secret.length() > 128 || secret.indexOf('\r') >= 0 || secret.indexOf('\n') >= 0 ||
+      (discovery.length() && (discovery.length() < 32 || discovery.length() > 128)) ||
       (ota.length() && !https(ota)) || !(sensitivity >= .01 && sensitivity <= 100) ||
       threshold < 1 || threshold > 65535 || interval < 10 || interval > 86400) {
     portal.send(400, "text/plain", "Invalid settings. Go back and check each field.");
@@ -129,6 +258,7 @@ void saveSettings() {
   updated["base"] = base;
   updated["endpoint"] = path;
   updated["secret"] = secret;
+  updated["discovery"] = discovery;
   updated["ota"] = ota;
   updated["sensitivity"] = sensitivity;
   updated["touch"] = threshold;
@@ -173,6 +303,11 @@ LogState scanLog() {
 
 void saveSample() {
   if (!storageReady) return;
+  float x, y, z;
+  if (!readAcceleration(x, y, z)) {
+    Serial.println("Sensor read failed; sample skipped");
+    return;
+  }
   auto log = scanLog();
   if (log.count >= LogLimit && (!log.acknowledged.length() || !LittleFS.remove(log.acknowledged))) {
     Serial.println("Log full; unsent records preserved");
@@ -185,7 +320,12 @@ void saveSample() {
   time_t now = time(nullptr);
   if (now >= 1577836800) event["sampledAt"] = now;
   float sensitivity = config["sensitivity"] | 1.0f;
-  event["value"] = touchRead(TouchPin) * sensitivity; // Replace with the actual sensor reading.
+  event["value"] = sqrtf(x * x + y * y + z * z) * sensitivity;
+  event["sensor"] = "ADXL345";
+  event["unit"] = "m/s2";
+  event["acceleration"]["x"] = x;
+  event["acceleration"]["y"] = y;
+  event["acceleration"]["z"] = z;
   event["sensitivity"] = sensitivity;
   event["resetReason"] = static_cast<int>(esp_reset_reason());
   event["version"] = FLEET_VERSION;
@@ -198,7 +338,76 @@ void saveSample() {
   complete = fclose(file) == 0 && complete;
   char path[32];
   snprintf(path, sizeof(path), "/p-%020llu", static_cast<unsigned long long>(nextSequence++));
-  if (!complete || !LittleFS.rename("/new.tmp", path)) Serial.println("Cannot commit local log record");
+  if (!complete || !LittleFS.rename("/new.tmp", path)) {
+    Serial.println("Cannot commit local log record");
+  } else {
+    Serial.printf("Sample committed: x=%.4f y=%.4f z=%.4f magnitude=%.4f m/s2\n", x, y, z, event["value"].as<float>());
+  }
+}
+
+void serviceSerial() {
+  while (Serial.available()) {
+    char byte = Serial.read();
+    if (byte == '\r') continue;
+    if (byte != '\n') {
+      if (serialCommand.length() < 2048) serialCommand += byte;
+      continue;
+    }
+    serialCommand.trim();
+    if (serialCommand.startsWith("configure ")) {
+      JsonDocument incoming;
+      auto error = deserializeJson(incoming, serialCommand.substring(10));
+      String ssid = incoming["ssid"] | "", password = incoming["password"] | "";
+      String secret = incoming["secret"] | "", discovery = incoming["discovery"] | "";
+      String base = incoming["base"] | "", endpoint = incoming["endpoint"] | "";
+      String ota = incoming["ota"] | "";
+      unsigned interval = incoming["interval"] | 60U;
+      float sensitivity = incoming["sensitivity"] | 1.0f;
+      int threshold = incoming["touch"] | 30;
+      if (error || ssid.isEmpty() || ssid.length() > 32 || password.length() < 8 || password.length() > 64 ||
+          secret.length() < 24 || secret.length() > 128 || !https(base) || base.indexOf('/', 8) >= 0 ||
+          endpoint != "/v1/telemetry" || (ota.length() && !https(ota)) ||
+          (discovery.length() && (discovery.length() < 32 || discovery.length() > 128)) ||
+          interval < 10 || interval > 86400 || !(sensitivity >= .01 && sensitivity <= 100) ||
+          threshold < 1 || threshold > 65535) {
+        Serial.println("Configuration rejected");
+      } else {
+        String stored;
+        serializeJson(incoming, stored);
+        if (settings.putString("config", stored) == stored.length()) {
+          Serial.println("Configuration persisted; restarting");
+          restartAt = millis() + 1000;
+        } else Serial.println("Configuration persistence failed");
+      }
+    } else if (serialCommand == "status") {
+      JsonDocument status;
+      status["nodeId"] = nodeId;
+      status["version"] = FLEET_VERSION;
+      status["storageReady"] = storageReady;
+      status["sensorAddress"] = sensorAddress;
+      status["wifiConnected"] = WiFi.status() == WL_CONNECTED;
+      status["ssid"] = config["ssid"] | "";
+      status["rssi"] = WiFi.RSSI();
+      status["ip"] = WiFi.localIP().toString();
+      status["portalActive"] = portalActive;
+      status["touchRaw"] = touchRead(TouchPin);
+      status["logRecords"] = storageReady ? scanLog().count : 0;
+      serializeJson(status, Serial);
+      Serial.println();
+    } else if (serialCommand == "sensor") {
+      float x, y, z;
+      if (readAcceleration(x, y, z)) {
+        Serial.printf("ADXL345 x=%.4f y=%.4f z=%.4f magnitude=%.4f m/s2\n", x, y, z, sqrtf(x*x+y*y+z*z));
+      } else Serial.println("ADXL345 read failed");
+    } else if (serialCommand == "sample") {
+      saveSample();
+    } else if (serialCommand == "portal") {
+      if (!portalActive) startPortal();
+    } else if (serialCommand.length()) {
+      Serial.println("Commands: status, sensor, sample, portal");
+    }
+    serialCommand = "";
+  }
 }
 
 void uploadOne() {
@@ -229,6 +438,37 @@ void uploadOne() {
   retryDelay = min(300000UL, static_cast<unsigned long>(retryDelay) * 2);
 }
 
+void sendHeartbeat() {
+  nextHeartbeat = millis() + 15000;
+  if (!config["base"].is<const char *>()) return;
+  JsonDocument heartbeat;
+  heartbeat["nodeId"] = nodeId;
+  heartbeat["uptimeMs"] = millis();
+  heartbeat["version"] = FLEET_VERSION;
+  heartbeat["ssid"] = config["ssid"] | "";
+  heartbeat["rssi"] = WiFi.RSSI();
+  heartbeat["channel"] = WiFi.channel();
+  heartbeat["storageReady"] = storageReady;
+  float x, y, z;
+  heartbeat["sensorReady"] = readAcceleration(x, y, z);
+  heartbeat["logRecords"] = storageReady ? scanLog().count : 0;
+  auto peers = heartbeat["neighbors"].to<JsonArray>();
+  for (auto &neighbor : neighbors) {
+    if (neighbor.id[0] && millis() - neighbor.seen <= 45000) peers.add(neighbor.id);
+  }
+  String body;
+  serializeJson(heartbeat, body);
+  WiFiClientSecure tls;
+  HTTPClient request;
+  if (configureHttp(request, tls, config["base"].as<String>() + "/v1/heartbeat")) {
+    request.addHeader("Content-Type", "application/json");
+    request.addHeader("Authorization", "Bearer " + config["secret"].as<String>());
+    int status = request.POST(body);
+    Serial.printf("Heartbeat HTTP %d\n", status);
+    request.end();
+  }
+}
+
 void exportLog() {
   if (!storageReady) { portal.send(503, "text/plain", "Local log unavailable"); return; }
   portal.sendHeader("Content-Disposition", "attachment; filename=esp32-log.ndjson");
@@ -244,6 +484,7 @@ void exportLog() {
 }
 
 void startPortal() {
+  if (radioReady) { esp_now_deinit(); radioReady = false; }
   WiFi.disconnect();
   WiFi.mode(WIFI_AP);
   String name = "ESP32-Setup-" + nodeId.substring(12);
@@ -343,6 +584,7 @@ void setup() {
   Serial.printf("Node %s, firmware %s, reset %d\n", id, FLEET_VERSION, esp_reset_reason());
   settings.begin("fleet", false);
   deserializeJson(config, settings.getString("config", "{}"));
+  beginSensor();
   storageReady = LittleFS.begin(false);
   esp_ota_img_states_t state;
   pendingVerification = esp_ota_get_state_partition(esp_ota_get_running_partition(), &state) == ESP_OK &&
@@ -379,6 +621,7 @@ void setup() {
 
 void loop() {
   esp_task_wdt_reset();
+  serviceSerial();
   uint32_t now = millis();
   if (pendingVerification) {
     if (storageReady && WiFi.status() == WL_CONNECTED && time(nullptr) >= 1577836800 && now >= 20000) {
@@ -406,8 +649,11 @@ void loop() {
       nextWifi = millis();
     }
   } else if (WiFi.status() == WL_CONNECTED) {
+    serviceDiscovery();
     if (!ntpStarted) { configTime(0, 0, "pool.ntp.org", "time.google.com"); ntpStarted = true; }
     if (time(nullptr) >= 1577836800) {
+      if (due(now, nextHeartbeat)) sendHeartbeat();
+      esp_task_wdt_reset();
       if (due(now, nextUpload)) uploadOne();
       esp_task_wdt_reset();
       if (!pendingVerification && due(now, nextOta)) {

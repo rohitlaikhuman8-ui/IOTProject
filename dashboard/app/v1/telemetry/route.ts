@@ -1,4 +1,4 @@
-import { event, events, secretMatches } from '../../../lib/fleet';
+import { event, events, nodes, secretMatches } from '../../../lib/fleet';
 
 export const runtime = 'nodejs';
 export const maxDuration = 30;
@@ -23,6 +23,9 @@ export async function POST(request: Request) {
     } catch (error) {
       if ((error as { code?: number }).code !== 11000) throw error;
     }
+    await nodes().updateOne({ _id: data.data.nodeId }, {
+      $set: { lastMeasurement: data.data, lastMeasurementAt: new Date() },
+    });
     return Response.json({ accepted: true });
   } catch (error) {
     console.error('Telemetry unavailable', (error as Error).name);

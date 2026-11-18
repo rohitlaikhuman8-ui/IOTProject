@@ -3,7 +3,8 @@
 | File | Source |
 | --- | --- |
 | `dashboard-login.png` | Live deployed application sign-in on November 18, 2026 |
-| `dashboard-nodes.png` | Live authenticated dashboard with the current empty fleet |
+| `dashboard-nodes.png` | Live authenticated dashboard with the physical ADXL345 node |
+| `dashboard-topology.png` | Live topology and sensor-health view |
 | `provisioning-reference.png` | Actual `PortalPage` HTML extracted from firmware, rendered with sample settings |
 
 The portal image is a documentation reference captured without a connected ESP32. It shows placeholder identity and SSID values. Screenshot capture avoids showing passwords, access links, or authentication cookies.

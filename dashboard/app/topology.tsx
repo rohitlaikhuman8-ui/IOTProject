@@ -1,0 +1,120 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+
+type Node = {
+  nodeId: string; lastSeen: string | null; version?: string; rssi?: number; ssid?: string;
+  channel?: number; storageReady?: boolean; sensorReady?: boolean; logRecords?: number; neighbors?: string[];
+  lastMeasurement?: { value: number; unit?: string; acceleration?: { x: number; y: number; z: number } };
+};
+type Snapshot = { serverTime: number; nodes: Node[] };
+
+export default function Topology() {
+  const [snapshot, setSnapshot] = useState<Snapshot | null>(null);
+  const [error, setError] = useState('');
+  const [clock, setClock] = useState(0);
+  const [received, setReceived] = useState(0);
+  useEffect(() => {
+    const controller = new AbortController();
+    let timer: ReturnType<typeof setTimeout>;
+    let failures = 0;
+    async function refresh() {
+      try {
+        const response = await fetch('/api/topology', { cache: 'no-store', signal: controller.signal });
+        if (!response.ok) throw new Error(response.status === 401 ? 'Session expired. Reload to sign in.' : 'Live connection unavailable. Retrying.');
+        const data: Snapshot = await response.json();
+        if (!Array.isArray(data.nodes) || !Number.isFinite(data.serverTime)) throw new Error('Invalid status response.');
+        setSnapshot(data);
+        setReceived(performance.now());
+        setError('');
+        failures = 0;
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        setError((error as Error).message);
+        failures++;
+      }
+      if (!controller.signal.aborted) timer = setTimeout(refresh, Math.min(30000, 3000 * 2 ** Math.min(failures, 4)));
+    }
+    refresh();
+    const tick = setInterval(() => setClock(performance.now()), 1000);
+    return () => { controller.abort(); clearTimeout(timer); clearInterval(tick); };
+  }, []);
+
+  const nodes = snapshot?.nodes || [];
+  const now = (snapshot?.serverTime || 0) + Math.max(0, clock - received);
+  const stale = Boolean(snapshot && clock - received > 15000);
+  const online = (node: Node) => Boolean(!stale && node.lastSeen && now - Date.parse(node.lastSeen) < 45000);
+  const healthy = (node: Node) => node.sensorReady && node.storageReady;
+  const color = (node: Node) => !online(node) ? '#64748b' : healthy(node) ? '#067647' : '#b54708';
+  const status = (node: Node) => !node.lastSeen ? 'Awaiting first heartbeat' :
+    !online(node) ? 'Offline or status expired' : healthy(node) ? 'Online' : 'Online · check hardware';
+  const positions = new Map(nodes.map((node, i) => [node.nodeId,
+    { x: 140 + i % 4 * 240, y: 230 + Math.floor(i / 4) * 190 }]));
+  const height = Math.max(440, 330 + Math.ceil(nodes.length / 4) * 190);
+  const edges: { from: string; to: string; mutual: boolean }[] = [];
+  const seen = new Set<string>();
+  for (const node of nodes) {
+    if (!online(node)) continue;
+    for (const peer of node.neighbors || []) {
+      const target = nodes.find(n => n.nodeId === peer);
+      const key = [node.nodeId, peer].sort().join(':');
+      if (!target || !online(target) || seen.has(key)) continue;
+      seen.add(key);
+      edges.push({ from: node.nodeId, to: peer, mutual: Boolean(target.neighbors?.includes(node.nodeId)) });
+    }
+  }
+
+  return <section aria-labelledby="topology-title">
+    <h2 id="topology-title">Live network topology</h2>
+    <p role="status">{error || (!snapshot ? 'Connecting…' : stale ? 'Status is stale.' :
+      nodes.filter(online).length + ' of ' + nodes.length + ' registered nodes online')}</p>
+    <p>Every node connects directly to Vercel through its own Wi-Fi network. Green lines show a recent cloud heartbeat.
+      Purple lines show authenticated ESP-NOW radio neighbors on the same channel.</p>
+    <div style={{ overflowX: 'auto', border: '1px solid #d0d5dd', borderRadius: 12, background: '#f8fafc' }}>
+      <svg role="img" aria-label="Cloud uplinks and observed radio neighbor connections"
+        viewBox={'0 0 1000 ' + height} style={{ width: '100%', minWidth: 740, display: 'block' }}>
+        <title>ESP32 fleet network topology</title>
+        <rect x="380" y="25" width="240" height="68" rx="14" fill="#152a45" />
+        <text x="500" y="53" textAnchor="middle" fill="white" fontSize="19">Vercel dashboard</text>
+        <text x="500" y="77" textAnchor="middle" fill="#cbd5e1" fontSize="13">Independent cloud uplinks</text>
+        {nodes.map(node => {
+          const p = positions.get(node.nodeId)!;
+          return <line key={node.nodeId} x1="500" y1="93" x2={p.x} y2={p.y - 40}
+            stroke={color(node)} strokeWidth="2" strokeOpacity=".55" strokeDasharray={online(node) ? undefined : '6 6'} />;
+        })}
+        {edges.map(edge => {
+          const a = positions.get(edge.from)!, b = positions.get(edge.to)!;
+          return <line key={edge.from + edge.to} x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+            stroke="#7f56d9" strokeWidth="3" strokeDasharray={edge.mutual ? undefined : '5 5'} />;
+        })}
+        {nodes.map(node => {
+          const p = positions.get(node.nodeId)!;
+          return <g key={node.nodeId}>
+            <rect x={p.x - 110} y={p.y - 40} width="220" height="110" rx="12" fill="white" stroke={color(node)} strokeWidth="2"/>
+            <text x={p.x} y={p.y - 16} textAnchor="middle" fontSize="13" fontWeight="bold">{node.nodeId}</text>
+            <text x={p.x} y={p.y + 7} textAnchor="middle" fontSize="13" fill={color(node)}>{status(node)}</text>
+            <text x={p.x} y={p.y + 30} textAnchor="middle" fontSize="12">{node.ssid || 'Wi-Fi not reported'}</text>
+            <text x={p.x} y={p.y + 50} textAnchor="middle" fontSize="12">
+              {node.rssi !== undefined ? node.rssi + ' dBm · channel ' + node.channel : 'No signal report'}</text>
+          </g>;
+        })}
+        {!nodes.length && <text x="500" y="220" textAnchor="middle" fill="#475467">Register a node to start monitoring.</text>}
+      </svg>
+    </div>
+    <p>Heartbeats every 15 seconds · view refresh every 3 seconds · offline after 45 seconds.
+      A node with no radio neighbors can still upload independently.</p>
+    <div style={{ overflowX: 'auto' }}>
+      <table cellPadding="8"><thead><tr><th>Node</th><th>Status</th><th>Sensor</th><th>Storage</th><th>Local records</th><th>Magnitude (m/s²)</th><th>X/Y/Z (m/s²)</th><th>Last heartbeat (UTC)</th></tr></thead>
+        <tbody>{nodes.map(node => <tr key={node.nodeId}>
+          <td>{node.nodeId}</td><td>{status(node)}</td>
+          <td>{node.sensorReady === undefined ? 'Unknown' : node.sensorReady ? 'Responding' : 'Check sensor'}</td>
+          <td>{node.storageReady === undefined ? 'Unknown' : node.storageReady ? 'Ready' : 'Check flash'}</td>
+          <td>{node.logRecords ?? '—'}</td><td>{node.lastMeasurement?.value.toFixed(3) ?? '—'}</td>
+          <td>{node.lastMeasurement?.acceleration ? [
+            node.lastMeasurement.acceleration.x, node.lastMeasurement.acceleration.y,
+            node.lastMeasurement.acceleration.z].map(n => n.toFixed(3)).join(' / ') : '—'}</td>
+          <td>{node.lastSeen ? new Date(node.lastSeen).toISOString() : 'Never'}</td>
+        </tr>)}</tbody></table>
+    </div>
+  </section>;
+}

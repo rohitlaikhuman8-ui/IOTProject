@@ -66,8 +66,12 @@ The dashboard aggregates up to 200 nodes and displays the latest 100 events, opt
 | Dashboard authentication | Shared operator password, no application rate limiter |
 | Database network | Owner-approved all-IPv4 access for dynamic egress, database authentication required |
 | Fleet settings | Configured locally per node |
-| Sensor value | Demonstration touch reading |
+| Sensor value | ADXL345 X/Y/Z in m/s² and scaled magnitude |
 | Deep sleep | No sleep schedule implemented |
 | Hardware support | Classic ESP32, other families need adaptation |
 
 See [operations](OPERATIONS.md) and [troubleshooting](TROUBLESHOOTING.md) for procedures.
+
+## Live presence and radio discovery
+
+Authenticated heartbeats update the Atlas `nodes` collection every 15 seconds. The signed-in dashboard polls `/api/topology` every 3 seconds. Per-node direct Wi-Fi uplinks allow reporting without a radio neighbor. ESP-NOW broadcasts identify authenticated same-channel neighbors. See [topology](TOPOLOGY.md) for actual link semantics and limits.

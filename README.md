@@ -2,7 +2,27 @@
 
 An ESP32 connects to Wi-Fi, records telemetry locally, uploads it over HTTPS, and receives firmware releases through OTA. A Next.js application on Vercel authenticates each node, writes samples to MongoDB Atlas, and provides a password-protected dashboard.
 
-The hardware target is a **classic ESP32 DevKit with 4 MB flash**. The current sample measures capacitive touch on GPIO 4 and multiplies the reading by sensitivity. Replace that expression with the actual sensor driver when the sensor is selected.
+The hardware target is a **classic ESP32 DevKit with 4 MB flash** and an ADXL345 connected over I²C. X/Y/Z acceleration is reported in m/s², and the summary value is acceleration magnitude multiplied by sensitivity. GPIO 4 remains the capacitive setup input.
+
+## Connected node and wiring
+
+| Item | Value |
+| --- | --- |
+| Commissioned Node ID | `esp32-d01de2f4e9d4` |
+| USB port | COM5 |
+| Chip | ESP32-D0WD-V3 revision 3.1 |
+| ADXL345 SDA | GPIO 21 |
+| ADXL345 SCL | GPIO 22 |
+| ADXL345 VCC | 3V3 |
+| ADXL345 GND | GND |
+| Detected I²C address and identity | `0x53`, DEVID `0xE5` |
+| Test Wi-Fi SSID | `Sensor Testing` |
+| Commissioning sample interval | 10 seconds |
+| Sensor mode | Full-resolution ±16 g, 100 Hz ODR |
+
+See the [COM5 commissioning procedure](docs/NODE-COM5.md) for exact USB upload commands, Arduino IDE export, settings, diagnostics, and observed sensor-calibration limits. Passwords and node secrets remain private. Each ESP32's SSID and password can be changed in its captive portal.
+
+The live dashboard shows each node's direct cloud uplink and authenticated ESP-NOW neighbor sightings. Every node can independently upload through its configured Wi-Fi network. Heartbeats arrive every 15 seconds, and the graph polls every 3 seconds. See [topology](docs/TOPOLOGY.md) for link meanings, channel restrictions, and validation limits.
 
 | Resource | Address |
 | --- | --- |
@@ -17,6 +37,8 @@ The hardware target is a **classic ESP32 DevKit with 4 MB flash**. The current s
 | Guide | Contents |
 | --- | --- |
 | [Hardware and first flash](docs/HARDWARE.md) | Board, wiring, tool installation, USB flashing, touch calibration |
+| [COM5 node record](docs/NODE-COM5.md) | Actual chip, Node ID, ADXL345 wiring, upload, private provisioning |
+| [Live topology](docs/TOPOLOGY.md) | Independent cloud uplinks, heartbeats, authenticated radio neighbors |
 | [Deployment](docs/DEPLOYMENT.md) | Atlas, Vercel, environment variables, local development |
 | [Operating procedures](docs/OPERATIONS.md) | Commissioning, provisioning, dashboard, exports, credential rotation |
 | [Firmware and OTA](docs/FIRMWARE.md) | Scheduling, persistence, watchdog, brownout, releases, rollback |
@@ -95,9 +117,11 @@ The dashboard uses `DASHBOARD_PASSWORD` from Vercel's server environment. The ex
 
 ### Fleet dashboard
 
-The signed-in view lists nodes, firmware versions, last uploads, sample counts, and the latest 100 events. Click a Node ID to filter the events. Reload the page to fetch current data. Displayed times use UTC.
+The live topology and health table refresh automatically. The historical tables list nodes, firmware versions, last uploads, sample counts, and the latest 100 events. Click a Node ID to filter history, and reload to refresh those historical tables. Displayed times use UTC.
 
 ![Authenticated deployed dashboard](docs/images/dashboard-nodes.png)
+
+![Live cloud uplink and physical sensor-node status](docs/images/dashboard-topology.png)
 
 ### Device setup panel
 
@@ -161,7 +185,7 @@ IOTProject/
 - An all-pending log skips new samples until acknowledged records can be reclaimed.
 - Upload retries grow from five seconds to five minutes with jitter. A stable event ID lets Atlas deduplicate delivery retries.
 - Brownout detection and a 45-second task watchdog provide reset recovery. Power loss can interrupt an uncommitted measurement. Bench validation remains necessary.
-- The current telemetry value is a touch reading. The dashboard presents tables and refreshes on navigation or reload.
+- Telemetry contains ADXL345 X/Y/Z and magnitude. Topology and latest sensor status refresh automatically. Historical tables refresh on navigation or reload.
 - OTA verifies HTTPS, board type, length, and SHA-256. Independent image signing and Secure Boot need a separate manufacturing setup.
 
-The classic ESP32 firmware compiled locally on November 13, 2026 and in GitHub Actions on November 18. The first OTA release is published, and the Vercel application deployed successfully. Hardware commissioning, sensor integration, touch calibration, power-cut behavior, and OTA rollback still require bench checks. See the [verification record](docs/VERIFICATION.md).
+The ADXL345 firmware has been built and flashed on the connected COM5 board. Sensor identity, live reads, Wi-Fi, and persistent local storage were exercised. Calibration, multiple-node radio behavior, controlled power cuts, and failed-image rollback still need targeted bench checks. See the [verification record](docs/VERIFICATION.md).

@@ -1,13 +1,11 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { createHmac, randomBytes } from 'node:crypto';
+import { randomBytes } from 'node:crypto';
 import { events, nodeId, secretMatches } from '../lib/fleet';
+import { signature, authenticated } from '../lib/session';
+import Topology from './topology';
 
 export const dynamic = 'force-dynamic';
-
-function signature(payload: string) {
-  return createHmac('sha256', process.env.DASHBOARD_PASSWORD || '').update(payload).digest('hex');
-}
 
 async function signIn(form: FormData) {
   'use server';
@@ -31,10 +29,7 @@ async function signOut() {
 
 export default async function Page({ searchParams }: { searchParams: Promise<{ node?: string; error?: string }> }) {
   const { node, error } = await searchParams;
-  const token = (await cookies()).get('fleet_session')?.value || '';
-  const [expires, nonce, mac] = token.split('.');
-  if (!process.env.DASHBOARD_PASSWORD || !nonce || !(Number(expires) > Date.now()) ||
-      !secretMatches(signature(expires + '.' + nonce), mac)) {
+  if (!await authenticated()) {
     return <main><h1>ESP32 fleet</h1><form action={signIn}>
       <label>Dashboard password <input name="password" type="password" required /></label>{' '}
       <button>Sign in</button>{error && <p role="alert">Password rejected.</p>}
@@ -55,6 +50,7 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ n
   return <main>
     <form action={signOut}><button>Sign out</button></form>
     <h1>ESP32 fleet</h1>
+    <Topology />
     <h2>Nodes</h2>
     <table cellPadding="8"><thead><tr><th>Node</th><th>Last upload (UTC)</th><th>Value</th><th>Firmware</th><th>Samples</th></tr></thead>
       <tbody>{nodes.map(n => <tr key={n._id}><td><a href={'/?node=' + n._id}>{n._id}</a></td>
@@ -62,9 +58,13 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ n
     {!nodes.length && <p>No nodes have uploaded telemetry yet.</p>}
     <h2>{selected.success ? selected.data : 'Recent telemetry'}</h2>
     {selected.success && <a href="/">Show all nodes</a>}
-    <table cellPadding="8"><thead><tr><th>Received (UTC)</th><th>Sampled (UTC)</th><th>Node</th><th>Value</th><th>Uptime (ms)</th><th>Reset code</th></tr></thead>
+    <table cellPadding="8"><thead><tr><th>Received (UTC)</th><th>Sampled (UTC)</th><th>Node</th><th>Value</th><th>Unit</th><th>X</th><th>Y</th><th>Z</th><th>Uptime (ms)</th><th>Reset code</th></tr></thead>
       <tbody>{rows.map(row => <tr key={row._id}><td>{date(row.receivedAt)}</td>
         <td>{row.sampledAt ? date(new Date(row.sampledAt * 1000)) : 'Unavailable'}</td>
-        <td>{row.nodeId}</td><td>{row.value}</td><td>{row.uptimeMs}</td><td>{row.resetReason}</td></tr>)}</tbody></table>
+        <td>{row.nodeId}</td><td>{row.value}</td><td>{row.unit || '—'}</td>
+        <td>{row.acceleration?.x.toFixed(3) ?? '—'}</td>
+        <td>{row.acceleration?.y.toFixed(3) ?? '—'}</td>
+        <td>{row.acceleration?.z.toFixed(3) ?? '—'}</td>
+        <td>{row.uptimeMs}</td><td>{row.resetReason}</td></tr>)}</tbody></table>
   </main>;
 }

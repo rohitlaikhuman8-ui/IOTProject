@@ -23,6 +23,11 @@ async function main() {
     await page.getByLabel('Dashboard password').fill(password);
     await page.getByRole('button', { name: 'Sign in', exact: true }).click();
     await page.getByRole('heading', { name: 'Nodes', exact: true }).waitFor();
+    const topology = page.locator('section[aria-labelledby="topology-title"]');
+    if (await topology.count()) {
+      await page.getByRole('status').filter({ hasText: /registered nodes online/ }).waitFor();
+      await topology.screenshot({ path: path.join(output, 'dashboard-topology.png') });
+    }
     await page.screenshot({ path: path.join(output, 'dashboard-nodes.png'), fullPage: true });
     console.log('Captured the deployed sign-in and authenticated dashboard.');
 

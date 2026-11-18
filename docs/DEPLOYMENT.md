@@ -61,7 +61,7 @@ Atlas's default unique `_id` index provides ingestion deduplication. The additio
 6. Redeploy and wait for Ready.
 7. Open the production URL, sign in, and confirm the Nodes and Recent telemetry sections render.
 
-The ESP32 must reach the production ingest function. Deployment Protection can intercept requests before the function, so check protection settings if the device receives a Vercel sign-in page.
+Production access was changed with owner approval so ESP32 requests can reach the application. Preview deployments retain Vercel authentication. The dashboard still requires its password, and telemetry/heartbeats still require individual node secrets.
 
 ## Local development
 

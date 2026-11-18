@@ -12,16 +12,47 @@ export const event = z.object({
   sensitivity: z.number().min(0.01).max(100),
   resetReason: z.number().int().nonnegative(),
   version: z.string().max(64),
+  sensor: z.literal('ADXL345').optional(),
+  unit: z.literal('m/s2').optional(),
+  acceleration: z.object({
+    x: z.number().finite(),
+    y: z.number().finite(),
+    z: z.number().finite(),
+  }).optional(),
 });
 
-type Record = z.infer<typeof event> & { _id: string; receivedAt: Date };
+type TelemetryRecord = z.infer<typeof event> & { _id: string; receivedAt: Date };
+export const heartbeat = z.object({
+  nodeId,
+  uptimeMs: z.number().int().nonnegative(),
+  version: z.string().min(1).max(64),
+  ssid: z.string().max(32),
+  rssi: z.number().int().min(-127).max(0),
+  channel: z.number().int().min(1).max(14),
+  storageReady: z.boolean(),
+  sensorReady: z.boolean(),
+  logRecords: z.number().int().min(0).max(256),
+  neighbors: z.array(nodeId).max(16),
+});
+export type NodeState = z.infer<typeof heartbeat> & {
+  _id: string; lastSeen: Date;
+  lastMeasurement?: z.infer<typeof event>;
+  lastMeasurementAt?: Date;
+};
 let client: MongoClient | undefined;
 
-export function events() {
+function database() {
   const uri = process.env.MONGODB_URI;
   if (!uri) throw new Error('MONGODB_URI is missing');
   client ??= new MongoClient(uri, { maxPoolSize: 5, serverSelectionTimeoutMS: 8000 });
-  return client.db(process.env.MONGODB_DATABASE || 'esp32_fleet').collection<Record>('events');
+  return client.db(process.env.MONGODB_DATABASE || 'esp32_fleet');
+}
+
+export function events() { return database().collection<TelemetryRecord>('events'); }
+export function nodes() { return database().collection<NodeState>('nodes'); }
+
+export function nodeSecrets(): Record<string, string> {
+  return z.record(nodeId, z.string().min(24)).parse(JSON.parse(process.env.NODE_SECRETS_JSON || '{}'));
 }
 
 export function secretMatches(expected: unknown, supplied: string) {

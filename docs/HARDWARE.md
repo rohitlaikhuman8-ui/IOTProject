@@ -60,12 +60,12 @@ Sensitivity multiplies the telemetry value. The touch threshold independently co
 
 ## Sensor integration
 
-The measurement currently comes from:
+The configured ADXL345 uses SDA GPIO 21, SCL GPIO 22, 3V3 and GND. The driver probes 0x53 and 0x1D, checks DEVID 0xE5, and reads six consecutive axis-data bytes. Its summary measurement comes from:
 
 ```cpp
-event["value"] = touchRead(TouchPin) * sensitivity;
+event["value"] = sqrtf(x * x + y * y + z * z) * sensitivity;
 ```
 
-Replace this expression in `saveSample()` with a finite numeric measurement. Initialize the actual sensor in `setup()` and preserve GPIO 4 for provisioning. Multiple values or explicit units require changes to the API schema and dashboard.
+The API preserves `acceleration.x/y/z`, sensor `ADXL345`, and unit `m/s2`. See the [connected node record](NODE-COM5.md) for the observed device and calibration notes. If the breakout exposes CS, it must be high for I²C mode. SDO determines whether the sensor uses 0x53 or 0x1D. GPIO 4 remains available for provisioning.
 
 Record each node's ID, board model, firmware SHA, sensor type, location, sample interval, touch threshold, and commissioning date in a private inventory. Keep its API secret in a password manager.

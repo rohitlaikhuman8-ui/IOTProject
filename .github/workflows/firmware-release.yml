@@ -1,0 +1,58 @@
+name: Publish ESP32 fleet update
+on:
+  push:
+    branches: [main]
+    paths: ['firmware/**', '.github/workflows/firmware-release.yml']
+permissions:
+  contents: write
+concurrency:
+  group: esp32-fleet-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install platformio==6.1.18
+      - name: Build and stage OTA release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          bin="esp32dev-$GITHUB_SHA.bin"
+          if gh release view "fleet-$GITHUB_SHA" >/dev/null 2>&1; then
+            gh release download "fleet-$GITHUB_SHA" --pattern "$bin"
+          else
+            printf '#define FLEET_VERSION "%s"\n' "$GITHUB_SHA" > firmware/src/release-version.h
+            pio run -d firmware
+            cp firmware/.pio/build/esp32dev/firmware.bin "$bin"
+          fi
+          jq -n --arg version "$GITHUB_SHA" \
+            --arg url "https://github.com/$GITHUB_REPOSITORY/releases/download/fleet-$GITHUB_SHA/$bin" \
+            --arg sha256 "$(sha256sum "$bin" | cut -d ' ' -f1)" \
+            --argjson size "$(wc -c < "$bin")" \
+            '{board:"esp32dev", $version, $url, $sha256, $size}' > manifest.json
+      - name: Publish binary then switch fleet manifest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          firmware_head="$(gh api --method GET "repos/$GITHUB_REPOSITORY/commits" -f sha=main -f path=firmware -F per_page=1 --jq '.[0].sha')"
+          if [[ "$firmware_head" != "$GITHUB_SHA" ]] &&
+             [[ "$(gh api "repos/$GITHUB_REPOSITORY/compare/$GITHUB_SHA...$firmware_head" --jq .status)" == "ahead" ]]; then
+            echo "A newer firmware commit is already on main."
+            exit 0
+          fi
+          tag="fleet-$GITHUB_SHA"
+          bin="esp32dev-$GITHUB_SHA.bin"
+          if ! gh release view "$tag" >/dev/null 2>&1; then
+            gh release create "$tag" "$bin" --target "$GITHUB_SHA" --latest=false --title "$tag"
+          fi
+          if gh release view firmware-latest >/dev/null 2>&1; then
+            gh release upload firmware-latest manifest.json --clobber
+          else
+            gh release create firmware-latest manifest.json --target "$GITHUB_SHA" --latest=false --title "ESP32 fleet channel"
+          fi

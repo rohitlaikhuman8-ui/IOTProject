@@ -1,0 +1,17 @@
+.pio/
+.build/
+.venv/
+firmware/src/release-version.h
+**/node_modules/
+**/.next/
+backend/.env
+dashboard/.env.local
+work/
+**/.env
+**/.env.*
+!**/.env.example
+**/.vercel/
+**/next-env.d.ts
+**/*.tsbuildinfo
+**/__pycache__/
+*.log

@@ -1,0 +1,122 @@
+# Firmware and OTA
+
+## Build configuration
+
+| Component | Version or target |
+| --- | --- |
+| PlatformIO Core | 6.1.18 in GitHub Actions |
+| Espressif32 platform | 6.10.0 |
+| Framework | Arduino ESP32 2.0.17 family supplied by the platform |
+| Board | Classic `esp32dev`, 4 MB flash |
+| ArduinoJson | 7.3.1 |
+| Filesystem | LittleFS |
+| Serial baud | 115200 |
+
+Local builds use version `usb-dev`. The release workflow generates a Git-ignored header containing the exact commit SHA.
+
+## Source responsibilities
+
+| Function | Responsibility |
+| --- | --- |
+| `setup()` | Identity, NVS, filesystem, portal routes, rollback state |
+| `loop()` | Watchdog, touch, sampling, portal, Wi-Fi, uploads, OTA |
+| `saveSettings()` | Validate and persist one configuration record |
+| `saveSample()` | Create and commit a local telemetry record |
+| `scanLog()` | Find oldest pending/acknowledged records and highest sequence |
+| `uploadOne()` | Upload one event and record local acknowledgment |
+| `startPortal()` | Start temporary AP and captive DNS |
+| `exportLog()` | Stream local committed records |
+| `checkOta()` | Fetch manifest and verify the new application |
+
+## Timing
+
+- Touch activates setup after four continuous seconds.
+- The AP expires after 15 minutes and accepts one client.
+- Wi-Fi reconnects start every 30 seconds.
+- Upload failures retry from five seconds to five minutes with jitter.
+- The first OTA check is scheduled around 20–80 seconds after boot.
+- Successful OTA checks schedule the next check after 15 minutes plus up to 30 seconds of jitter.
+- Failed OTA checks retry after one minute plus jitter.
+- The task watchdog timeout is 45 seconds.
+- Hardware brownout detection is enabled by the board framework.
+
+Synchronous HTTP and filesystem work can delay sampling and touch detection. The application feeds the watchdog between work phases and image chunks.
+
+## Persistence
+
+The device writes a complete event to `/littlefs/new.tmp`, flushes, syncs, closes, and renames it to `/p-<20-digit sequence>`. After a 2xx acknowledgment, it renames that file to `/s-<sequence>`.
+
+Up to 256 records are retained. Acknowledged history is reclaimed first. An all-pending log skips new samples. An interrupted temporary file is ignored on restart. NVS namespace `fleet` stores `config` and the previously attempted OTA version.
+
+## OTA release procedure
+
+The release workflow runs for firmware or release-workflow changes pushed to `main`. The initial project push qualifies. Documentation-only commits do not publish firmware.
+
+1. Checkout the commit and install pinned PlatformIO.
+2. Generate the version header with the commit SHA.
+3. Build the application.
+4. Calculate SHA-256 and byte count.
+5. Publish `esp32dev-<sha>.bin` under tag `fleet-<sha>`.
+6. Publish or replace `manifest.json` under stable tag `firmware-latest`.
+
+A rerun reuses an already published commit-specific binary. The workflow uses GitHub's `GITHUB_TOKEN` with `contents: write`. Actions must be enabled and permitted to create releases.
+
+Example manifest, with placeholders and illustrative size:
+
+```json
+{
+  "board": "esp32dev",
+  "version": "<40-character commit SHA>",
+  "url": "https://github.com/rohitlaikhuman8-ui/IOTProject/releases/download/fleet-<sha>/esp32dev-<sha>.bin",
+  "sha256": "<64-character SHA-256>",
+  "size": 1111376
+}
+```
+
+Provision this stable URL on nodes:
+
+```text
+https://github.com/rohitlaikhuman8-ui/IOTProject/releases/download/firmware-latest/manifest.json
+```
+
+Public release assets download without a GitHub credential on devices.
+
+## Inspect a release
+
+Open the GitHub Actions run and inspect the build and publish steps. After completion, verify the published asset locally:
+
+```powershell
+$manifestUrl = 'https://github.com/rohitlaikhuman8-ui/IOTProject/releases/download/firmware-latest/manifest.json'
+$manifest = Invoke-RestMethod $manifestUrl
+$manifest | Format-List
+Invoke-WebRequest $manifest.url -OutFile firmware-release.bin
+$hash = (Get-FileHash firmware-release.bin -Algorithm SHA256).Hash.ToLowerInvariant()
+if ($hash -ne $manifest.sha256) { throw 'Firmware hash mismatch' }
+if ((Get-Item firmware-release.bin).Length -ne $manifest.size) { throw 'Firmware length mismatch' }
+```
+
+Compare the dashboard firmware prefixes to the release SHA after a node update window.
+
+## Device update and confirmation
+
+The firmware follows at most five verified HTTPS redirect hops. It rejects the wrong board, unchanged version, a previously attempted failed version, incorrect length, or incorrect hash. It writes the inactive application slot and selects it only after a complete validated download.
+
+A pending boot checks readable storage, Wi-Fi, and plausible time. It confirms after at least 20 seconds. If conditions remain unmet after three minutes, it requests rollback. Reset before confirmation can also cause bootloader rollback.
+
+The health check does not exercise every sensor or confirm an Atlas write. Verify rollback on the exact board and bootloader being used.
+
+## Rollback
+
+For a confirmed faulty release, create a new commit that reverts it:
+
+```powershell
+git switch -c fix/revert-firmware
+git revert <bad-firmware-commit>
+git push -u origin fix/revert-firmware
+```
+
+Review and merge to publish a distinct SHA. A failed attempted version is suppressed locally, so publishing a corrected new SHA provides recovery.
+
+USB recovery should export logs first when possible and upload only the application. Keep the partition layout unchanged to preserve NVS and LittleFS.
+
+OTA updates the application image. Changes to the bootloader, partition layout, hardware family, Secure Boot, or flash encryption need a separate compatibility procedure.

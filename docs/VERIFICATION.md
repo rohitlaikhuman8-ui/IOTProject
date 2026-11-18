@@ -59,6 +59,16 @@ The serial diagnostic tool leaves RTS/DTR inactive when opening the port and onl
 
 The next physical check exposed a separate URL validation limit on GitHub's long signed asset redirects. The download path was updated to accept up to 4096 characters while retaining HTTPS and certificate checks. Operator-configured URLs keep their existing limit.
 
+A private USB configuration command also timed out during commissioning. The firmware's UART receive buffer was enlarged to 4 KiB. The helper pauses network work in setup mode, paces long commands, and requires an explicit persistence acknowledgment.
+
+## Successful physical OTA
+
+The repaired firmware downloaded and verified the 1,150,416-byte GitHub image, then rebooted the COM5 board into version `7f9ae6336ce4fc26ab20ef4d680910cf4e18ab63`. Serial output confirmed the new version, ADXL345 detection, continued sampling, and a successful HTTP 200 cloud heartbeat. This exercised the actual GitHub redirect, image transfer, SHA-256 verification, flash selection, and reboot.
+
+Final serial status confirmed `pendingVerification: false`, `wifiConnected: true`, `storageReady: true`, ADXL345 address 83 (0x53), 133 retained records, 9,692 bytes minimum free loop stack, and 219,112 bytes free heap. The final Atlas-backed topology reported the same release version and healthy sensor/storage.
+
+A subsequent release-manifest lookup encountered a transient TLS error and deferred its check safely. Cloud heartbeats recovered with 200 and the accepted firmware continued running. Long synchronous OTA transfers can temporarily expire the heartbeat timeout, as documented in the topology guide.
+
 ## Offline presence check
 
 Entering the actual setup AP paused the node's station networking while local samples continued. The dashboard showed zero online nodes with a heartbeat age of 88,293 ms, and its offline graph was captured. This exercised real node disconnection rather than a simulated browser fixture.

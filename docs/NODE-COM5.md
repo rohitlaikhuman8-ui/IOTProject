@@ -89,6 +89,8 @@ The private `configure {JSON}` command is intended for USB commissioning. It val
 
 The script masks temporary AP passwords in its output. To test reboot persistence:
 
+The USB helper enters setup mode before transmitting private settings, paces long commands, and requires a persistence acknowledgment. The firmware uses a 4 KiB UART receive buffer so settings can arrive while local log writes are active.
+
 ```powershell
 .\.venv\Scripts\python.exe scripts/serial-check.py --port COM5 --reset --wait 20 --samples 5
 ```
@@ -106,3 +108,11 @@ Sensitivity scales only the summary magnitude. It is not a per-axis calibration.
 The registered node connected to Sensor Testing, sent successful 200 heartbeats, and appeared in the live graph with a direct Vercel uplink. The Atlas-backed view preserved its X/Y/Z readings. Replaying a recorded event returned 200 without increasing the event count. An unsigned topology request returned 401.
 
 Only one physical ESP32 has been connected for these checks. Multi-node neighbor discovery still needs additional boards on the same radio channel. The current system provides independent uplinks and authenticated neighbor sightings. Multi-hop data forwarding is outside the implemented behavior.
+
+## OTA installed on this board
+
+The physical node successfully downloaded, verified, and booted GitHub release `7f9ae6336ce4fc26ab20ef4d680910cf4e18ab63`. The image size was 1,150,416 bytes. Following reboot, serial identified the same Node ID and ADXL345, sampling resumed, and Vercel acknowledged the heartbeat with 200.
+
+Earlier bench tests exposed and corrected TLS stack usage and long GitHub redirect handling. The current build uses a 16 KiB loop stack, heap-backed OTA buffers, and verified HTTPS redirects up to 4096 characters. Settings and local history remained available across the update.
+
+The final status check showed `pendingVerification: false`, healthy storage and sensor, the configured SSID, 133 local records, 9,692 bytes minimum free stack, and approximately 219 KiB free heap. No BOOT-button intervention was required.

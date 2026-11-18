@@ -14,6 +14,8 @@ Each node establishes its own Wi-Fi connection and sends authenticated HTTPS dat
 
 This is near-real-time polling. End-to-end delay includes the heartbeat interval, dashboard polling, and network latency.
 
+The current synchronous OTA transfer pauses ordinary heartbeat work while an image downloads. A long transfer may temporarily appear offline until the new image reconnects. Treat update-time gaps separately when reviewing availability.
+
 ## Radio links
 
 The firmware sends ESP-NOW discovery beacons every approximately five seconds on its current station Wi-Fi channel. Beacons contain the source MAC, timestamp, protocol magic, and HMAC-SHA256 using a shared fleet discovery key.

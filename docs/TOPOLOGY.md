@@ -45,3 +45,7 @@ A radio line is an observed neighbor relationship. This implementation does not 
 Validate two or more physical nodes on a shared channel before relying on neighbor edges. Validate independent uplinks on different networks, router loss, RF separation, and eventual recovery. Finite local retention, sensor calibration, free-tier quotas, and operator authentication controls must match the deployment's requirements.
 
 A healthy online dot proves a recent heartbeat. It cannot by itself prove measurement calibration, complete RF coverage, or long-term availability.
+
+The first node's offline timeout was exercised by placing it in setup AP mode. Local samples continued and the dashboard correctly marked its expired heartbeat offline.
+
+![Physical node offline during setup mode](images/dashboard-offline.png)

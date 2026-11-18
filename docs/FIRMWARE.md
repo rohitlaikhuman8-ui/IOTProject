@@ -82,6 +82,8 @@ https://github.com/rohitlaikhuman8-ui/IOTProject/releases/download/firmware-late
 
 Public release assets download without a GitHub credential on devices.
 
+GitHub asset redirects include long signed URLs. The download path permits verified HTTPS redirect URLs up to 4096 characters, while operator-configured origins and manifest URLs retain the shorter configuration limit. Every redirect is still certificate verified.
+
 ## Inspect a release
 
 Open the GitHub Actions run and inspect the build and publish steps. After completion, verify the published asset locally:

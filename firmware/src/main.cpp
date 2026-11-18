@@ -182,14 +182,14 @@ String randomHex(size_t count) {
   return output;
 }
 
-bool https(const String &url) {
-  return url.startsWith("https://") && url.length() > 8 && url.length() <= 300 &&
+bool https(const String &url, size_t maximumLength = 300) {
+  return url.startsWith("https://") && url.length() > 8 && url.length() <= maximumLength &&
     url.indexOf('@') < 0 && url.indexOf(' ') < 0 && url.indexOf('\r') < 0 &&
     url.indexOf('\n') < 0 && url.indexOf('#') < 0;
 }
 
-bool configureHttp(HTTPClient &http, WiFiClientSecure &tls, const String &url) {
-  if (!https(url)) return false;
+bool configureHttp(HTTPClient &http, WiFiClientSecure &tls, const String &url, size_t maximumLength = 300) {
+  if (!https(url, maximumLength)) return false;
   tls.setCACertBundle(caBundle);
   tls.setHandshakeTimeout(12);
   http.setConnectTimeout(7000);
@@ -521,11 +521,15 @@ void checkTouch(uint32_t now) {
 // GitHub asset redirects may change hosts. Every hop must use verified HTTPS.
 bool assetGet(HTTPClient &http, WiFiClientSecure &tls, String url) {
   for (int hop = 0; hop < 5; ++hop) {
-    if (!configureHttp(http, tls, url)) return false;
+    if (!configureHttp(http, tls, url, 4096)) {
+      Serial.println("OTA rejected download URL");
+      return false;
+    }
     const char *headers[] = {"Location"};
     http.collectHeaders(headers, 1);
     http.useHTTP10(true);
     int status = http.GET();
+    Serial.printf("OTA HTTPS hop=%d status=%d length=%d\n", hop, status, http.getSize());
     if (status == 200) return true;
     url = http.header("Location");
     http.end();

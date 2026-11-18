@@ -18,13 +18,16 @@ args = parser.parse_args()
 
 def drain(port, seconds):
     deadline = time.monotonic() + seconds
+    observed = []
     while time.monotonic() < deadline:
         line = port.readline().decode("utf-8", errors="replace").strip()
         if line:
+            observed.append(line)
             # Keep temporary AP passwords out of captured diagnostic output.
             if "Setup Wi-Fi " in line and " password " in line:
                 line = line.split(" password ")[0] + " password [available on local serial]"
             print(line, flush=True)
+    return observed
 
 connection = serial.Serial(port=None, baudrate=115200, timeout=0.2)
 connection.port = args.port
@@ -39,6 +42,19 @@ with connection as port:
         port.rts = False
     drain(port, 4)
     if args.config:
+        # Pause synchronous network work before sending a configuration larger
+        # than the default UART receive buffer on older firmware.
+        port.write(b"portal\n")
+        portal_ready = False
+        for attempt in range(12):
+            port.write(b"status\n")
+            for line in drain(port, 3):
+                if line.startswith("Setup Wi-Fi ") or '"portalActive":true' in line:
+                    portal_ready = True
+            if portal_ready:
+                break
+        if not portal_ready:
+            raise RuntimeError("Setup portal did not acknowledge USB provisioning")
         configuration = json.loads(Path(args.config).read_text())
         port.write(("configure " + json.dumps(configuration, separators=(",", ":")) + "\n").encode())
         drain(port, 6)

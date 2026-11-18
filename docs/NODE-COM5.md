@@ -100,3 +100,9 @@ X/Y/Z are physical acceleration estimates in m/s², including gravity, using the
 The first stationary observations were around 8.2–8.4 m/s². A calibrated stationary accelerometer should be near local gravity, about 9.81 m/s². The initial reading therefore needs a proper six-orientation calibration and reference check before quantitative deployment. Motion changes the measured magnitude.
 
 Sensitivity scales only the summary magnitude. It is not a per-axis calibration. No calibration constants were fabricated from one board orientation.
+
+## Observed cloud verification
+
+The registered node connected to Sensor Testing, sent successful 200 heartbeats, and appeared in the live graph with a direct Vercel uplink. The Atlas-backed view preserved its X/Y/Z readings. Replaying a recorded event returned 200 without increasing the event count. An unsigned topology request returned 401.
+
+Only one physical ESP32 has been connected for these checks. Multi-node neighbor discovery still needs additional boards on the same radio channel. The current system provides independent uplinks and authenticated neighbor sightings. Multi-hop data forwarding is outside the implemented behavior.

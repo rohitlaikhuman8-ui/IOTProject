@@ -13,6 +13,7 @@ parser.add_argument("--reset", action="store_true")
 parser.add_argument("--samples", type=int, default=5)
 parser.add_argument("--config", help="Private JSON configuration file, never committed")
 parser.add_argument("--wait", type=int, default=0)
+parser.add_argument("--command", choices=["status", "sensor", "sample", "portal"])
 args = parser.parse_args()
 
 def drain(port, seconds):
@@ -25,7 +26,12 @@ def drain(port, seconds):
                 line = line.split(" password ")[0] + " password [available on local serial]"
             print(line, flush=True)
 
-with serial.Serial(args.port, 115200, timeout=0.2) as port:
+connection = serial.Serial(port=None, baudrate=115200, timeout=0.2)
+connection.port = args.port
+connection.dtr = False
+connection.rts = False
+connection.open()
+with connection as port:
     if args.reset:
         port.dtr = False
         port.rts = True
@@ -36,6 +42,9 @@ with serial.Serial(args.port, 115200, timeout=0.2) as port:
         configuration = json.loads(Path(args.config).read_text())
         port.write(("configure " + json.dumps(configuration, separators=(",", ":")) + "\n").encode())
         drain(port, 6)
+    if args.command:
+        port.write((args.command + "\n").encode())
+        drain(port, 2)
     if args.wait:
         drain(port, args.wait)
     for command in ["status"] + ["sensor"] * args.samples + ["sample", "status"]:

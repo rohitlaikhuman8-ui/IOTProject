@@ -8,6 +8,8 @@ Atlas contains the free `esp32-fleet` cluster in `US_EAST_1`. Database user `esp
 
 The original Vercel deployment used a source upload through the API. A Git push alone does not link that Vercel project to GitHub. Follow the Git connection steps below for subsequent automatic dashboard deployments.
 
+During COM5 commissioning, linking the repository returned a Vercel error requiring a GitHub Login Connection. Connect GitHub in Vercel account authentication settings, then retry the existing project's Git connection. The current live application was deployed through a source upload. Root Directory is configured as `dashboard` for repository builds.
+
 ## Environment variables
 
 | Variable | Purpose |

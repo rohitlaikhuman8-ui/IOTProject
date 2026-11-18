@@ -38,6 +38,7 @@ Local builds use version `usb-dev`. The release workflow generates a Git-ignored
 - Successful OTA checks schedule the next check after 15 minutes plus up to 30 seconds of jitter.
 - Failed OTA checks retry after one minute plus jitter.
 - The task watchdog timeout is 45 seconds.
+- The loop task stack is explicitly 16 KiB. OTA manifest and transfer buffers are heap-allocated to leave stack space for TLS.
 - Hardware brownout detection is enabled by the board framework.
 
 Synchronous HTTP and filesystem work can delay sampling and touch detection. The application feeds the watchdog between work phases and image chunks.
@@ -101,9 +102,9 @@ Compare the dashboard firmware prefixes to the release SHA after a node update w
 
 The firmware follows at most five verified HTTPS redirect hops. It rejects the wrong board, unchanged version, a previously attempted failed version, incorrect length, or incorrect hash. It writes the inactive application slot and selects it only after a complete validated download.
 
-A pending boot checks readable storage, Wi-Fi, and plausible time. It confirms after at least 20 seconds. If conditions remain unmet after three minutes, it requests rollback. Reset before confirmation can also cause bootloader rollback.
+A pending boot checks readable storage, the sensor identity, Wi-Fi, plausible time, and a successful cloud heartbeat. It confirms after at least 20 seconds. If conditions remain unmet after three minutes, it requests rollback. Reset before confirmation can also cause bootloader rollback.
 
-The health check does not exercise every sensor or confirm an Atlas write. Verify rollback on the exact board and bootloader being used.
+The cloud heartbeat uses an acknowledged Atlas status write. This health check still does not verify sensor calibration or every device operation. Verify failed-image rollback on the exact board and bootloader being used.
 
 ## Rollback
 

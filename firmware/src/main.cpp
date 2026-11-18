@@ -12,6 +12,7 @@
 #include <math.h>
 #include <esp_now.h>
 #include <mbedtls/md.h>
+#include <memory>
 #include <esp_task_wdt.h>
 #include <esp_ota_ops.h>
 #include <mbedtls/sha256.h>
@@ -24,6 +25,8 @@
 #ifndef FLEET_VERSION
 #define FLEET_VERSION "usb-dev"
 #endif
+
+SET_LOOP_TASK_STACK_SIZE(16384);
 
 extern const uint8_t caBundle[] asm("_binary_x509_crt_bundle_start");
 extern "C" bool verifyRollbackLater() { return true; }
@@ -42,6 +45,7 @@ String nodeId;
 String formToken;
 bool storageReady, portalActive, touched, ntpStarted;
 bool pendingVerification;
+bool cloudHealthy;
 uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, nextOta;
 uint32_t retryDelay = 5000;
 uint64_t nextSequence = 1;
@@ -392,6 +396,9 @@ void serviceSerial() {
       status["portalActive"] = portalActive;
       status["touchRaw"] = touchRead(TouchPin);
       status["logRecords"] = storageReady ? scanLog().count : 0;
+      status["stackFreeBytes"] = uxTaskGetStackHighWaterMark(nullptr);
+      status["freeHeap"] = ESP.getFreeHeap();
+      status["pendingVerification"] = pendingVerification;
       serializeJson(status, Serial);
       Serial.println();
     } else if (serialCommand == "sensor") {
@@ -464,6 +471,7 @@ void sendHeartbeat() {
     request.addHeader("Content-Type", "application/json");
     request.addHeader("Authorization", "Bearer " + config["secret"].as<String>());
     int status = request.POST(body);
+    cloudHealthy = status == 200;
     Serial.printf("Heartbeat HTTP %d\n", status);
     request.end();
   }
@@ -530,16 +538,19 @@ bool assetGet(HTTPClient &http, WiFiClientSecure &tls, String url) {
 bool checkOta() {
   String manifest = config["ota"].as<String>();
   if (!manifest.length()) return true;
+  Serial.println("OTA checking manifest");
   WiFiClientSecure tls;
   HTTPClient http;
   if (!assetGet(http, tls, manifest)) return false;
   JsonDocument data;
   // Parse through a small fixed buffer so an invalid manifest cannot exhaust RAM.
-  char json[2048];
+  std::unique_ptr<char[]> json(new (std::nothrow) char[2048]);
+  if (!json) return false;
   int manifestSize = http.getSize();
-  if (manifestSize <= 0 || manifestSize >= static_cast<int>(sizeof(json)) ||
-      http.getStream().readBytes(json, manifestSize) != static_cast<size_t>(manifestSize)) return false;
-  auto error = deserializeJson(data, json, manifestSize);
+  if (manifestSize <= 0 || manifestSize >= 2048 ||
+      http.getStream().readBytes(json.get(), manifestSize) != static_cast<size_t>(manifestSize)) return false;
+  auto error = deserializeJson(data, json.get(), manifestSize);
+  json.reset();
   http.end();
   if (error || data["board"].as<String>() != "esp32dev") return false;
   String version = data["version"].as<String>(), hash = data["sha256"].as<String>();
@@ -551,13 +562,15 @@ bool checkOta() {
   mbedtls_sha256_context digest;
   mbedtls_sha256_init(&digest);
   mbedtls_sha256_starts_ret(&digest, 0);
-  uint8_t block[1024], actual[32];
+  std::unique_ptr<uint8_t[]> block(new (std::nothrow) uint8_t[1024]);
+  if (!block) { Update.abort(); mbedtls_sha256_free(&digest); return false; }
+  uint8_t actual[32];
   int remaining = size;
   while (remaining) {
-    size_t requested = min(remaining, static_cast<int>(sizeof(block)));
-    size_t received = http.getStream().readBytes(block, requested);
-    if (received != requested || Update.write(block, received) != received) break;
-    mbedtls_sha256_update_ret(&digest, block, received);
+    size_t requested = min(remaining, 1024);
+    size_t received = http.getStream().readBytes(block.get(), requested);
+    if (received != requested || Update.write(block.get(), received) != received) break;
+    mbedtls_sha256_update_ret(&digest, block.get(), received);
     remaining -= received;
     esp_task_wdt_reset();
   }
@@ -570,6 +583,7 @@ bool checkOta() {
     return false;
   }
   settings.putString("attempted", version);
+  Serial.printf("OTA verified version=%s bytes=%d; restarting\n", version.c_str(), size);
   ESP.restart();
   return true;
 }
@@ -624,8 +638,10 @@ void loop() {
   serviceSerial();
   uint32_t now = millis();
   if (pendingVerification) {
-    if (storageReady && WiFi.status() == WL_CONNECTED && time(nullptr) >= 1577836800 && now >= 20000) {
+    if (storageReady && sensorAddress && cloudHealthy && WiFi.status() == WL_CONNECTED &&
+        time(nullptr) >= 1577836800 && now >= 20000) {
       pendingVerification = esp_ota_mark_app_valid_cancel_rollback() != ESP_OK;
+      if (!pendingVerification) Serial.println("OTA boot confirmed: storage, sensor and cloud heartbeat healthy");
     } else if (now >= 180000) {
       esp_ota_mark_app_invalid_rollback_and_reboot();
     }
@@ -658,6 +674,7 @@ void loop() {
       esp_task_wdt_reset();
       if (!pendingVerification && due(now, nextOta)) {
         bool ok = checkOta();
+        Serial.printf("OTA check %s; stack free=%u bytes\n", ok ? "OK" : "deferred", uxTaskGetStackHighWaterMark(nullptr));
         nextOta = millis() + (ok ? 900000UL : 60000UL) + esp_random() % 30000;
       }
     }

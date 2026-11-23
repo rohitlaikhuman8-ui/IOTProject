@@ -279,6 +279,8 @@ https://github.com/rohitlaikhuman8-ui/IOTProject/releases/download/firmware-late
 
 Before a fleet release, test a bench node, preserve logs, check slot size, and coordinate the update window. Nodes follow the configured channel when connected. A failed check retries later.
 
+During an OTA download the node first reports `updating`, then defers cloud heartbeats to reserve memory for verified HTTPS and flash buffers. Local sampling continues. A long transfer can temporarily show Last seen after 90 seconds; allow the update/reboot to finish before diagnosing Wi-Fi. Serial `ota-check` requests a check without opening setup or resetting saved credentials. Progress is printed every 128 KiB. Allocation, transfer and validation failures are reported on serial; the existing application remains selected until a complete image passes validation. Keep USB/power connected throughout.
+
 The image is checked for board, length and SHA-256 over verified HTTPS. A pending image must reach healthy storage, sensor, time and cloud reporting before accepting boot. For a confirmed faulty image, publish a corrected new commit or a new commit reverting it. For an unreachable board, use USB application recovery and retain the filesystem where possible.
 
 After migration to `/log0`–`/log7`, use only firmware that understands storage schema 2. Its manifest must include `storageSchema: 2`. Reverting unrelated features must retain that storage support; an old root-only image cannot read the migrated history. Migration preserves records without formatting and can resume after interrupted renames.

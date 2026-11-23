@@ -314,6 +314,12 @@ int postToCloud(const String &path, const String &body) {
   // ESP32 TLS handshakes need a large contiguous allocation. Serialize cloud
   // requests with OTA handshakes so simultaneous handshakes cannot exhaust it.
   if (xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(15000)) != pdTRUE) return -1;
+  // A heartbeat already waiting for this mutex must also defer once OTA starts.
+  // Keep only one TLS session alive while the download and flash buffer coexist.
+  if (otaActive.load() && xTaskGetCurrentTaskHandle() != networkTaskHandle) {
+    xSemaphoreGive(handshakeMutex);
+    return -1;
+  }
   cloudDate = "";
   esp_http_client_config_t options = {};
   options.url = url.c_str();
@@ -1008,20 +1014,36 @@ bool checkOta() {
   if (version == settings.getString("attempted", "")) return false;
   if (version.length() != 40 || hash.length() != 64 || !assetGet(http, tls, data["url"].as<String>())) return false;
   int size = http.getSize();
-  if (size <= 0 || size != (data["size"] | 0) || !Update.begin(size)) return false;
+  if (size <= 0 || size != (data["size"] | 0)) {
+    Serial.println("OTA rejected: binary length differs from manifest");
+    return false;
+  }
+  if (!Update.begin(size)) {
+    Serial.printf("OTA flash allocation failed: error=%u heap=%u\n", Update.getError(), ESP.getFreeHeap());
+    return false;
+  }
   mbedtls_sha256_context digest;
   mbedtls_sha256_init(&digest);
   mbedtls_sha256_starts_ret(&digest, 0);
   std::unique_ptr<uint8_t[]> block(new (std::nothrow) uint8_t[1024]);
-  if (!block) { Update.abort(); mbedtls_sha256_free(&digest); return false; }
+  if (!block) { Serial.println("OTA download buffer allocation failed"); Update.abort(); mbedtls_sha256_free(&digest); return false; }
   uint8_t actual[32];
   int remaining = size;
+  int nextProgress = 128 * 1024;
   while (remaining) {
     size_t requested = min(remaining, 1024);
     size_t received = http.getStream().readBytes(block.get(), requested);
-    if (received != requested || Update.write(block.get(), received) != received) break;
+    if (received != requested || Update.write(block.get(), received) != received) {
+      Serial.printf("OTA transfer stopped: remaining=%d received=%u requested=%u flashError=%u\n",
+                    remaining, received, requested, Update.getError());
+      break;
+    }
     mbedtls_sha256_update_ret(&digest, block.get(), received);
     remaining -= received;
+    if (size - remaining >= nextProgress) {
+      Serial.printf("OTA download %d/%d bytes\n", size - remaining, size);
+      nextProgress += 128 * 1024;
+    }
     esp_task_wdt_reset();
   }
   mbedtls_sha256_finish_ret(&digest, actual);
@@ -1029,6 +1051,7 @@ bool checkOta() {
   char hex[65];
   for (size_t i = 0; i < sizeof(actual); ++i) snprintf(hex + 2 * i, 3, "%02x", actual[i]);
   if (remaining || hash != hex || !Update.end()) {
+    Serial.printf("OTA validation failed: remaining=%d hashMatch=%d flashError=%u\n", remaining, hash == hex, Update.getError());
     Update.abort();
     return false;
   }
@@ -1161,6 +1184,9 @@ void setup() {
         esp_task_wdt_reset();
         if (!pendingVerification.load() && time(nullptr) >= 1577836800 && due(millis(), nextOta)) {
           otaActive = true;
+          // Publish the update state before releasing cloud TLS memory. The
+          // heartbeat task defers until the download ends or the device reboots.
+          sendHeartbeat();
           { TransportBudget budget; }
           esp_task_wdt_reset();
           bool ok = checkOta();
@@ -1175,7 +1201,7 @@ void setup() {
     esp_task_wdt_add(nullptr);
     for (;;) {
       esp_task_wdt_reset();
-      if (WiFi.status() == WL_CONNECTED && due(millis(), nextHeartbeat)) sendHeartbeat();
+      if (!otaActive.load() && WiFi.status() == WL_CONNECTED && due(millis(), nextHeartbeat)) sendHeartbeat();
       vTaskDelay(pdMS_TO_TICKS(50));
     }
   }, "fleetStatus", 16384, nullptr, 1, &heartbeatTaskHandle, 1);

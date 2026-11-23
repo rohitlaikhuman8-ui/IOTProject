@@ -1032,7 +1032,7 @@ bool checkOta() {
   int nextProgress = 128 * 1024;
   uint32_t downloadStarted = millis(), lastByteAt = millis();
   while (remaining) {
-    if (millis() - downloadStarted >= 180000 || millis() - lastByteAt >= 15000) {
+    if (millis() - downloadStarted >= 600000 || millis() - lastByteAt >= 30000) {
       Serial.printf("OTA download timeout: remaining=%d\n", remaining);
       break;
     }
@@ -1199,12 +1199,15 @@ void setup() {
         esp_task_wdt_reset();
         if (!pendingVerification.load() && time(nullptr) >= 1577836800 && due(millis(), nextOta)) {
           otaActive = true;
+          wifi_ps_type_t previousWifiSleep = WiFi.getSleep();
+          WiFi.setSleep(false);
           // Publish the update state before releasing cloud TLS memory. The
           // heartbeat task defers until the download ends or the device reboots.
           sendHeartbeat();
           { TransportBudget budget; }
           esp_task_wdt_reset();
           bool ok = checkOta();
+          WiFi.setSleep(previousWifiSleep);
           otaActive = false;
           nextOta = millis() + (ok ? 900000UL : 120000UL) + esp_random() % 30000;
         }

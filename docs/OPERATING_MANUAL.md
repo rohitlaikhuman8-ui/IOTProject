@@ -151,6 +151,10 @@ node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 
 Store the generated value privately. Use the exact lowercase Node ID. A replacement board receives a different ID. Do not copy the old board's identity or share its individual API secret.
 
+### Returning an existing board
+
+Read its hardware Node ID/MAC before provisioning. A reused COM port does not imply a new device. If the ID is already registered, keep its identity, API secret and cloud history. Check the installed version, sensor, Wi-Fi, local-record count and pending count. Back up settings and logs where possible, verify the compatible partition layout and release checksum, and perform an application recovery update without `uploadfs` or full-chip erase. Set the saved OTA channel and confirm the device's save acknowledgment/reboot. Check migrated records, authenticated heartbeat/telemetry, live time, sensor health and a new movement notification. Historical pending records can continue retrying after the board comes online; Online does not mean its queue is empty. Record the remaining backlog explicitly.
+
 ## 11. Rotate a node API secret
 
 1. Generate and privately store a new secret.

@@ -1,6 +1,20 @@
 # Commissioning record for COM5
 
-This is the November 18 historical record for `esp32-d01de2f4e9d4`. On November 23, COM5 was connected to a different board, `esp32-7839a3f4e9d4`. A COM port is not a device identity. See [the newer commissioning record](NODE-7839A3.md).
+This record covers the November 18 commissioning and November 23 return of `esp32-d01de2f4e9d4`. Earlier on November 23, COM5 held a different board, `esp32-7839a3f4e9d4`; later the operator swapped it back to this board. A COM port is not a device identity. See [the other board record](NODE-7839A3.md).
+
+## November 23 return and upgrade
+
+The board returned on COM5 running `usb-dev-ist-motion`, already connected to Sensor Testing and sending HTTP 200 with 256 local records and 98 pending. Its existing registration and individual API secret were retained. It was not registered as a third node.
+
+Before writing, the partition/NVS/boot-selection area from `0x8000` for `0x8000` bytes was backed up privately. The partition table confirmed two 1,310,720-byte application slots and the existing filesystem at `0x290000`. The verified public release `408a075bcb8b8eb4366a380ffc283637349bcc57` is 1,224,352 bytes with SHA-256 `98ac1d523cb4ef7c1d1bd43e0d99c17891815059c50a3254bea62eaced0bb6e1`.
+
+USB bootstrap wrote only the application at `0x10000` and the standard app0 boot-selection data at `0xe000`; NVS, bootloader, partition table and LittleFS were not erased or rewritten. The first attempt stopped near 95% with “chip stopped responding.” A retry at 115200 baud completed and verified hashes without requiring BOOT.
+
+At 21:17:07 IST all 256 legacy records had migrated into the eight-directory layout without formatting. The device resumed authenticated telemetry/heartbeat reporting. It acknowledged permanent configuration at 21:18:06 and rebooted, retaining Sensor Testing and its original individual secret. Its OTA manifest is now `https://esp32-fleet-iot-project3.vercel.app/v1/firmware`; its setup SSID is `ESP32-Setup-d01de2f4e9d4`, using the saved private AP password.
+
+A read-only check at 21:19:05 validated all 256 retained records with zero invalid records in 29,355 ms. At 21:21:07 an automatic OTA check fetched the Vercel manifest and confirmed advertised/running versions were both `408a075`, without another image installation. The operator's subsequent tilt produced fresh local movement records. Cloud acceptance and backlog state are recorded in [verification](VERIFICATION.md). Older queued samples retain their original captured timestamps; server-received times identify later backfill uploads.
+
+The physical tilt was verified end to end: Atlas contained five matching movement events captured between 21:23:44 and 21:24:02 IST, with corresponding notifications received between 21:24:05 and 21:24:14. For example, event `c648afa86be2443b56ef8b7471c6384b` was captured at 21:23:48 and received at 21:24:10, with movement delta 17.9351 m/s². The authenticated dashboard API returned those notifications, current sensor readings and release `408a075`. Its 21:39 snapshot showed 111 pending records; these decreased to nine at 21:44 and zero by 21:45:30 IST. Atlas confirmed online reporting, healthy sensor/storage, synchronized time and 256 retained records at the final checkpoint. Intermittent transport timeouts had retried while committed data stayed local. The other board was unplugged and retained Last-seen history.
 
 ## Hardware identity and wiring
 
@@ -109,9 +123,9 @@ Sensitivity scales only the summary magnitude. It is not a per-axis calibration.
 
 The registered node connected to Sensor Testing, sent successful 200 heartbeats, and appeared in the live graph with a direct Vercel uplink. The Atlas-backed view preserved its X/Y/Z readings. Replaying a recorded event returned 200 without increasing the event count. An unsigned topology request returned 401.
 
-Only one physical ESP32 has been connected for these checks. Multi-node neighbor discovery still needs additional boards on the same radio channel. The current system provides independent uplinks and authenticated neighbor sightings. Multi-hop data forwarding is outside the implemented behavior.
+At the original November 18 checkpoint, only this physical ESP32 had been tested. By November 23, both registered boards had been tested individually. Simultaneous multi-node neighbor discovery still needs additional powered boards on the same radio channel. The current system provides independent uplinks and authenticated neighbor sightings. Multi-hop data forwarding is outside the implemented behavior.
 
-## OTA installed on this board
+## Historical OTA installed on this board
 
 The physical node successfully downloaded, verified, and booted GitHub release `7f9ae6336ce4fc26ab20ef4d680910cf4e18ab63`. The image size was 1,150,416 bytes. Following reboot, serial identified the same Node ID and ADXL345, sampling resumed, and Vercel acknowledged the heartbeat with 200.
 

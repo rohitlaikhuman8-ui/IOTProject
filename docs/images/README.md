@@ -3,9 +3,9 @@
 | File | Source |
 | --- | --- |
 | `dashboard-login.png` | Live deployed application sign-in on November 23, 2026 |
-| `dashboard-nodes.png` | Live authenticated dashboard after the November 23 OTA acceptance |
-| `dashboard-topology.png` | Live topology with the current node online and older node last seen |
-| `dashboard-ist-history.png` | Live IST telemetry and movement history on verified release 408a075 |
+| `dashboard-nodes.png` | Live authenticated dashboard after the returning d01de2 board's November 23 upgrade |
+| `dashboard-topology.png` | Live topology with d01de2 online and the unplugged 7839a3 board last seen |
+| `dashboard-ist-history.png` | Live IST telemetry and movement history with the returning board on release 408a075 |
 | `dashboard-offline.png` | Physical node offline after its cloud uplink was paused in setup mode |
 | `provisioning-reference.png` | Actual `PortalPage` HTML extracted from firmware, rendered with sample settings |
 | `portal-live.png` | Real November 23 node, live settings/status/recent logs, password fields left blank |
@@ -24,6 +24,8 @@ node scripts/capture-docs.cjs
 ```
 
 The script reads the local ignored `dashboard/.env.local` for its dashboard password. It never writes the value into screenshot content or console output. Keep that local file private.
+
+If Chromium navigation times out while direct HTTP requests succeed, use `$env:DOCS_HTTP_TRANSPORT='api'` before capture. This optional transport forwards real same-origin requests through Playwright's request client; the normal password login, session and live API still apply. It does not inject sample dashboard data or bypass authentication. Navigation waits for DOM readiness and relevant UI elements instead of waiting for all network activity to stop during polling.
 
 For a protected deployment, obtain an authorized temporary Vercel share link and place it in an ignored JSON file such as `work/capture-access.json`:
 

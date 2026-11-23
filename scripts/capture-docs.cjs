@@ -9,11 +9,18 @@ async function main() {
   const browser = await chromium.launch({ headless: true });
   try {
     const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+    page.setDefaultTimeout(60000);
     const origin = process.env.DASHBOARD_URL || 'https://esp32-fleet-iot-project3.vercel.app';
+    if (process.env.DOCS_HTTP_TRANSPORT === 'api') {
+      await page.route(origin + '/**', async route => {
+        const response = await page.request.fetch(route.request(), { timeout: 60000, maxRedirects: 0 });
+        await route.fulfill({ response });
+      });
+    }
     const accessFile = process.env.DOCS_ACCESS_FILE;
     const access = accessFile ? JSON.parse(fs.readFileSync(accessFile, 'utf8')) : null;
-    await page.goto(access?.url || origin, { waitUntil: 'networkidle' });
-    await page.goto(origin, { waitUntil: 'networkidle' });
+    await page.goto(access?.url || origin, { waitUntil: 'domcontentloaded' });
+    await page.goto(origin, { waitUntil: 'domcontentloaded' });
     await page.getByLabel('Dashboard password').waitFor();
     await page.screenshot({ path: path.join(output, 'dashboard-login.png'), fullPage: true });
 

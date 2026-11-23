@@ -4,14 +4,14 @@ An ESP32 connects to Wi-Fi, records telemetry locally, uploads it over HTTPS, an
 
 The hardware target is a **classic ESP32 DevKit with 4 MB flash** and an ADXL345 connected over I²C. X/Y/Z acceleration is reported in m/s², and the summary value is acceleration magnitude multiplied by sensitivity. GPIO 4 remains the capacitive setup input.
 
-The November 23 node retains its settings across reboots, reports independently to Atlas, and appears in the live IST dashboard. Captive-portal saving, 30 recent local records, and a complete 256-record download have been verified on hardware. See the [verification record](docs/VERIFICATION.md) for release status and remaining hardware acceptance checks.
+Both registered boards have been updated to release `408a075`, retaining their separate identities and settings. Online/Last-seen reflects each board's actual reporting. Captive-portal saving, 30 recent local records, and a complete 256-record download were verified on `esp32-7839a3f4e9d4`. See the [verification record](docs/VERIFICATION.md) for release status and remaining hardware acceptance checks.
 
 ## Connected node and wiring
 
 | Item | Value |
 | --- | --- |
-| Current COM5 Node ID | `esp32-7839a3f4e9d4` (November 23 board) |
-| Previous Node ID | `esp32-d01de2f4e9d4` (November 18 board, history retained) |
+| Current COM5 Node ID | `esp32-d01de2f4e9d4` (November 18 board, returned November 23) |
+| Other configured Node ID | `esp32-7839a3f4e9d4` (separate identity and history retained) |
 | USB port | COM5 |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |
@@ -23,7 +23,7 @@ The November 23 node retains its settings across reboots, reports independently 
 | Commissioning sample interval | 10 seconds |
 | Sensor mode | Full-resolution ±16 g, 100 Hz ODR |
 
-See the [current board record](docs/NODE-7839A3.md), [historical COM5 procedure](docs/NODE-COM5.md), and [operating manual](docs/OPERATING_MANUAL.md) for USB upload commands, Arduino IDE export, settings, diagnostics, and sensor-calibration limits. Passwords and node secrets remain private. Each ESP32's SSID and password can be changed in its captive portal.
+See the [current board record and COM5 procedure](docs/NODE-COM5.md), [other board record](docs/NODE-7839A3.md), and [operating manual](docs/OPERATING_MANUAL.md) for USB upload commands, Arduino IDE export, settings, diagnostics, and sensor-calibration limits. Passwords and node secrets remain private. Each ESP32's SSID and password can be changed in its captive portal. Identify boards by Node ID/MAC; COM5 can be reused by different boards.
 
 The live dashboard shows each node's direct cloud uplink and authenticated ESP-NOW neighbor sightings. Every node independently uploads through its configured Wi-Fi network. A dedicated task reports every five seconds while upload and OTA work run separately. The graph refreshes every three seconds and shows Online or Last seen in IST from accepted server reports. See [topology](docs/TOPOLOGY.md).
 
@@ -218,3 +218,5 @@ OTA can follow GitHub directly or use the Vercel manifest at `https://esp32-flee
 The ADXL345 firmware has been built and flashed on the connected COM5 board. Sensor identity, live reads, Wi-Fi, and persistent local storage were exercised. Calibration, multiple-node radio behavior, controlled power cuts, and failed-image rollback still need targeted bench checks. See the [verification record](docs/VERIFICATION.md).
 
 On November 23, 2026, node `esp32-7839a3f4e9d4` installed release `408a075` remotely through Vercel, verified and rebooted successfully, retained 256 records, and resumed reporting with zero backlog. The 1,224,352-byte binary transfer took 41 seconds. Its Wi-Fi and OTA settings remained saved; setup AP was inactive. The dashboard confirmed the new version, online status, IST telemetry and movement notifications.
+
+Later that evening, `esp32-d01de2f4e9d4` returned on COM5 and received the same checksum-verified release over USB. All 256 existing records migrated without formatting and passed a read-only integrity check with zero invalid records. Its original Node ID/secret were retained, and its saved Vercel OTA channel was checked successfully. The operator's tilt produced five verified cloud movement notifications. Its historical backlog finished uploading, reaching zero pending records by 21:45:30 IST.

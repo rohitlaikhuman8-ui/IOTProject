@@ -1030,16 +1030,31 @@ bool checkOta() {
   uint8_t actual[32];
   int remaining = size;
   int nextProgress = 128 * 1024;
+  uint32_t downloadStarted = millis(), lastByteAt = millis();
   while (remaining) {
+    if (millis() - downloadStarted >= 180000 || millis() - lastByteAt >= 15000) {
+      Serial.printf("OTA download timeout: remaining=%d\n", remaining);
+      break;
+    }
     size_t requested = min(remaining, 1024);
     size_t received = http.getStream().readBytes(block.get(), requested);
-    if (received != requested || Update.write(block.get(), received) != received) {
+    esp_task_wdt_reset();
+    if (!received) {
+      if (WiFi.status() != WL_CONNECTED || !http.getStream().connected()) {
+        Serial.printf("OTA connection closed: remaining=%d\n", remaining);
+        break;
+      }
+      vTaskDelay(pdMS_TO_TICKS(10));
+      continue;
+    }
+    if (Update.write(block.get(), received) != received) {
       Serial.printf("OTA transfer stopped: remaining=%d received=%u requested=%u flashError=%u\n",
                     remaining, received, requested, Update.getError());
       break;
     }
     mbedtls_sha256_update_ret(&digest, block.get(), received);
     remaining -= received;
+    lastByteAt = millis();
     if (size - remaining >= nextProgress) {
       Serial.printf("OTA download %d/%d bytes\n", size - remaining, size);
       nextProgress += 128 * 1024;

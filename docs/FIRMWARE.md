@@ -123,6 +123,8 @@ Compare the dashboard firmware prefixes to the release SHA after a node update w
 
 The firmware follows at most five verified HTTPS redirect hops. It rejects the wrong board, unchanged version, a previously attempted failed version, incorrect length, or incorrect hash. It writes the inactive application slot and selects it only after a complete validated download.
 
+The download accepts partial stream reads, writes and hashes exactly the bytes received, and tolerates temporary zero-byte reads while the connection remains open. It aborts after 15 seconds without data or a three-minute total download deadline. A closed connection, write failure or incomplete image keeps the existing application selected. The watchdog is serviced during transfer waits.
+
 A pending boot checks readable storage, the sensor identity, Wi-Fi, plausible time, and a successful cloud heartbeat. It confirms after at least 20 seconds. If conditions remain unmet after three minutes, it requests rollback. Reset before confirmation can also cause bootloader rollback.
 
 The cloud heartbeat uses an acknowledged Atlas status write. This health check still does not verify sensor calibration or every device operation. Verify failed-image rollback on the exact board and bootloader being used.

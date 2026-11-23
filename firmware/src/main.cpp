@@ -83,7 +83,10 @@ public:
     if (!WiFi.hostByName(host, address)) { xSemaphoreGive(handshakeMutex); return 0; }
     esp_task_wdt_reset();
     _timeout = timeout;
+    uint32_t started = millis();
     int result = WiFiClientSecure::connect(address, port, host, _CA_cert, _cert, _private_key);
+    if (!result) Serial.printf("OTA connect failed: host=%s ip=%s elapsed=%lu ms heap=%u\n",
+                               host, address.toString().c_str(), millis() - started, ESP.getFreeHeap());
     xSemaphoreGive(handshakeMutex);
     return result;
   }
@@ -298,8 +301,8 @@ bool https(const String &url, size_t maximumLength = 300) {
 
 bool configureHttp(HTTPClient &http, WiFiClientSecure &tls, const String &url, size_t maximumLength = 300) {
   if (!https(url, maximumLength)) return false;
-  tls.setHandshakeTimeout(8);
-  http.setConnectTimeout(5000);
+  tls.setHandshakeTimeout(12);
+  http.setConnectTimeout(15000);
   http.setTimeout(5000);
   http.setReuse(false);
   http.useHTTP10(true);

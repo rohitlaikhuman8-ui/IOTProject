@@ -283,6 +283,8 @@ During an OTA download the node first reports `updating`, then defers cloud hear
 
 Temporary partial reads are normal network behavior and are accumulated. The download aborts after 30 seconds without bytes or ten minutes overall, then retries later. Wi-Fi power saving is temporarily disabled during OTA to improve transfer continuity. If it repeatedly fails, record the serial reason and remaining byte count, check signal/power and try a stable network. Do not erase saved settings or logs to fix a network transfer.
 
+For `OTA connect failed`, record the hostname, IP and elapsed time. Connections allow 15 seconds and TLS handshakes 12 seconds. Confirm that the network permits GitHub and its release-asset hosts, that DNS resolves them, and that the node clock is synchronized. Working telemetry proves access to Vercel; it does not prove access to GitHub's download hosts. A blocked download host requires correcting the router/network policy or using an approved reachable firmware origin. Never disable TLS verification as a workaround.
+
 The image is checked for board, length and SHA-256 over verified HTTPS. A pending image must reach healthy storage, sensor, time and cloud reporting before accepting boot. For a confirmed faulty image, publish a corrected new commit or a new commit reverting it. For an unreachable board, use USB application recovery and retain the filesystem where possible.
 
 After migration to `/log0`–`/log7`, use only firmware that understands storage schema 2. Its manifest must include `storageSchema: 2`. Reverting unrelated features must retain that storage support; an old root-only image cannot read the migrated history. Migration preserves records without formatting and can resume after interrupted renames.

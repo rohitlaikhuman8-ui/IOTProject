@@ -1013,6 +1013,7 @@ bool checkOta() {
     return false;
   }
   String version = data["version"].as<String>(), hash = data["sha256"].as<String>();
+  Serial.printf("OTA manifest version=%s running=%s\n", version.c_str(), FLEET_VERSION);
   if (version == FLEET_VERSION) return true;
   if (version == settings.getString("attempted", "")) return false;
   if (version.length() != 40 || hash.length() != 64 || !assetGet(http, tls, data["url"].as<String>())) return false;

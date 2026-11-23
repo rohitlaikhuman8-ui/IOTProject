@@ -285,6 +285,8 @@ Temporary partial reads are normal network behavior and are accumulated. The dow
 
 For `OTA connect failed`, record the hostname, IP and elapsed time. Connections allow 15 seconds and TLS handshakes 12 seconds. Confirm that the network permits GitHub and its release-asset hosts, that DNS resolves them, and that the node clock is synchronized. Working telemetry proves access to Vercel; it does not prove access to GitHub's download hosts. A blocked download host requires correcting the router/network policy or using an approved reachable firmware origin. Never disable TLS verification as a workaround.
 
+If Actions succeeded but a manual manifest request still shows an older version, compare the stable release asset's update time with a fresh request such as `manifest.json?verify=<new-commit-sha>`. A cached redirect can temporarily return the old asset after replacement. Allow propagation and request another `ota-check`; keep the configured stable channel URL. Do not erase a node or republish a working image just because a cached response is stale.
+
 The image is checked for board, length and SHA-256 over verified HTTPS. A pending image must reach healthy storage, sensor, time and cloud reporting before accepting boot. For a confirmed faulty image, publish a corrected new commit or a new commit reverting it. For an unreachable board, use USB application recovery and retain the filesystem where possible.
 
 After migration to `/log0`–`/log7`, use only firmware that understands storage schema 2. Its manifest must include `storageSchema: 2`. Reverting unrelated features must retain that storage support; an old root-only image cannot read the migrated history. Migration preserves records without formatting and can resume after interrupted renames.

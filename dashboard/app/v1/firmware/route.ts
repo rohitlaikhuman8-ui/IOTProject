@@ -60,6 +60,7 @@ export async function GET(request: Request) {
         'Content-Type': 'application/octet-stream',
         'Content-Length': String(bytes.length),
         'Cache-Control': 'public, max-age=31536000, immutable',
+        'Vercel-CDN-Cache-Control': 'public, s-maxage=31536000, immutable',
         'X-Content-Type-Options': 'nosniff',
       } });
     }

@@ -139,6 +139,8 @@ The download accepts partial stream reads, writes and hashes exactly the bytes r
 
 OTA requests use HTTP/1.0. Origins may close the response instead of supplying Content-Length. Unknown-length manifests are read into the same bounded 2 KiB buffer; unknown-length binaries are limited to the validated manifest size and one application slot. A supplied length must match. Exact received length, SHA-256 and complete-image validation are still required before boot selection. This supports Vercel Function responses without accepting an unbounded download.
 
+Manifest and image reads use available TLS bytes in bulk instead of the framework's byte-at-a-time `Stream::readBytes()`. Manifest reads have a 15-second total/5-second idle bound. Image reads retain the 30-second idle/ten-minute total bound. All waits service the watchdog and yield; image writes yield briefly so sensor/status tasks can run.
+
 A pending boot checks readable storage, the sensor identity, Wi-Fi, plausible time, and a successful cloud heartbeat. It confirms after at least 20 seconds. If conditions remain unmet after three minutes, it requests rollback. Reset before confirmation can also cause bootloader rollback.
 
 The cloud heartbeat uses an acknowledged Atlas status write. This health check still does not verify sensor calibration or every device operation. Verify failed-image rollback on the exact board and bootloader being used.

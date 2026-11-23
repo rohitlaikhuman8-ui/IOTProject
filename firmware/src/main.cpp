@@ -1005,8 +1005,21 @@ bool checkOta() {
   if (manifestSize == 0 || manifestSize >= 2048) return false;
   // HTTP/1.0 origins may delimit a response by closing the connection instead
   // of advertising Content-Length. Bound unknown manifests to the same buffer.
-  size_t manifestBytes = http.getStream().readBytes(json.get(), manifestSize > 0 ? manifestSize : 2047);
-  esp_task_wdt_reset();
+  size_t manifestBytes = 0;
+  size_t manifestLimit = manifestSize > 0 ? manifestSize : 2047;
+  uint32_t manifestStarted = millis(), lastManifestByte = millis();
+  auto &manifestStream = http.getStream();
+  while (manifestBytes < manifestLimit) {
+    esp_task_wdt_reset();
+    if (millis() - manifestStarted >= 15000 || millis() - lastManifestByte >= 5000) return false;
+    int available = manifestStream.available();
+    if (available > 0) {
+      int received = manifestStream.read(reinterpret_cast<uint8_t *>(json.get()) + manifestBytes,
+                                        min(static_cast<size_t>(available), manifestLimit - manifestBytes));
+      if (received > 0) { manifestBytes += received; lastManifestByte = millis(); }
+    } else if (!manifestStream.connected()) break;
+    vTaskDelay(pdMS_TO_TICKS(2));
+  }
   if (!manifestBytes || manifestBytes >= 2047 ||
       (manifestSize > 0 && manifestBytes != static_cast<size_t>(manifestSize))) return false;
   auto error = deserializeJson(data, json.get(), manifestBytes);
@@ -1047,10 +1060,10 @@ bool checkOta() {
       Serial.printf("OTA download timeout: remaining=%d\n", remaining);
       break;
     }
-    size_t requested = min(remaining, 1024);
-    size_t received = http.getStream().readBytes(block.get(), requested);
     esp_task_wdt_reset();
-    if (!received) {
+    auto &stream = http.getStream();
+    int available = stream.available();
+    if (available <= 0) {
       if (WiFi.status() != WL_CONNECTED || !http.getStream().connected()) {
         Serial.printf("OTA connection closed: remaining=%d\n", remaining);
         break;
@@ -1058,6 +1071,9 @@ bool checkOta() {
       vTaskDelay(pdMS_TO_TICKS(10));
       continue;
     }
+    size_t requested = min(remaining, min(available, 1024));
+    int received = stream.read(block.get(), requested);
+    if (received <= 0) { vTaskDelay(pdMS_TO_TICKS(2)); continue; }
     if (Update.write(block.get(), received) != received) {
       Serial.printf("OTA transfer stopped: remaining=%d received=%u requested=%u flashError=%u\n",
                     remaining, received, requested, Update.getError());
@@ -1071,6 +1087,7 @@ bool checkOta() {
       nextProgress += 128 * 1024;
     }
     esp_task_wdt_reset();
+    vTaskDelay(pdMS_TO_TICKS(1));
   }
   mbedtls_sha256_finish_ret(&digest, actual);
   mbedtls_sha256_free(&digest);

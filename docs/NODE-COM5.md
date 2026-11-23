@@ -1,5 +1,7 @@
 # Commissioning record for COM5
 
+This is the November 18 historical record for `esp32-d01de2f4e9d4`. On November 23, COM5 was connected to a different board, `esp32-7839a3f4e9d4`. A COM port is not a device identity. See [the newer commissioning record](NODE-7839A3.md).
+
 ## Hardware identity and wiring
 
 | Item | Observed or configured value |

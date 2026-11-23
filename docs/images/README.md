@@ -8,6 +8,7 @@
 | `dashboard-ist-history.png` | Live IST telemetry and movement notification history |
 | `dashboard-offline.png` | Physical node offline after its cloud uplink was paused in setup mode |
 | `provisioning-reference.png` | Actual `PortalPage` HTML extracted from firmware, rendered with sample settings |
+| `portal-live.png` | Real November 23 node, live settings/status/recent logs, password fields left blank |
 
 The portal image is a documentation reference captured without a connected ESP32. It shows placeholder identity and SSID values. Screenshot capture avoids showing passwords, access links, or authentication cookies.
 

@@ -8,7 +8,8 @@ This is the operating reference for the classic ESP32 Dev Module with an ADXL345
 | --- | --- |
 | Repository | https://github.com/rohitlaikhuman8-ui/IOTProject |
 | Dashboard | https://esp32-fleet-iot-project3.vercel.app/ |
-| Connected node | `esp32-d01de2f4e9d4` |
+| Current COM5 node | `esp32-7839a3f4e9d4` |
+| Previous node | `esp32-d01de2f4e9d4`, history retained |
 | USB port | COM5, rediscover if Windows changes it |
 | Sensor wiring | GPIO 21 → SDA, GPIO 22 → SCL, 3V3 → VCC, GND → GND |
 | Sensor identity | ADXL345 at 0x53, device ID 0xE5 |
@@ -54,7 +55,7 @@ Setup indication takes priority while the AP is active. GPIO 2 and active-high b
 1. Keep the ESP32 powered.
 2. Hold the GPIO 4 capacitive pad continuously for four seconds. The mechanical BOOT button is a different input.
 3. Observe the fast status blink.
-4. Join `ESP32-Setup-f4e9d4` for the known node. Other nodes use their own ID suffix.
+4. Join `ESP32-Setup-7839a3f4e9d4` for the current board. Each setup name includes all 12 hardware ID digits. Older firmware used a shorter suffix that could collide between boards from the same vendor.
 5. Use that node's private setup AP password. It is generated and saved at first setup and printed on USB serial when the AP opens.
 6. Stay on the setup Wi-Fi even if the phone warns that it has no internet.
 7. Open a browser at `http://192.168.4.1/` if no captive popup appears.
@@ -64,6 +65,8 @@ Setup indication takes priority while the AP is active. GPIO 2 and active-high b
 11. Reconnect the phone/computer to its usual network and confirm the node reports again.
 
 The AP allows one client and expires after 15 minutes. Its current station connection remains active when the router is available, so entering setup does not deliberately stop cloud reporting. Configuration and logs are accepted only through the setup-AP interface. They are rejected through the station IP.
+
+![Physical node setup panel and local logs](images/portal-live.png)
 
 If there is no touch pad, open USB Serial Monitor at 115200 baud with newline endings and send `portal`. On a first boot with no saved SSID, setup starts automatically.
 
@@ -228,9 +231,9 @@ The latest 100 notifications and 100 telemetry events are displayed. Older histo
 
 In the portal, status and the latest 30 committed records refresh every three seconds. Download local log exports all retained pending and acknowledged records as NDJSON.
 
-The full download first creates a temporary snapshot on flash, then streams it to the client. If export returns 503 for insufficient space, the committed records remain intact. Avoid repeated parallel downloads and keep the client connected until completion. A power-cut temporary snapshot is ignored as telemetry and overwritten on the next export.
+The full download streams the retained records directly with a known byte count. Avoid repeated parallel downloads and keep the client connected until completion. If a client leaves setup Wi-Fi, cancels or stops reading, the transfer is stopped without deleting history. Retry an interrupted download rather than treating a partial file as a complete backup.
 
-Snapshot preparation can take time on a full filesystem. Cloud status runs independently, but the main-loop sensor acquisition can pause during this manual operation. Export during maintenance when uninterrupted acquisition is not required. A dedicated acquisition task and storage design would be needed for strict continuous-capture guarantees.
+Reading a full filesystem can take time. Cloud status runs independently, but the main-loop sensor acquisition can pause during this manual operation. Export during maintenance when uninterrupted acquisition is not required. A dedicated acquisition task and storage design would be needed for strict continuous-capture guarantees.
 
 ```powershell
 Invoke-WebRequest http://192.168.4.1/log -OutFile .\esp32-log.ndjson
@@ -278,6 +281,8 @@ Before a fleet release, test a bench node, preserve logs, check slot size, and c
 
 The image is checked for board, length and SHA-256 over verified HTTPS. A pending image must reach healthy storage, sensor, time and cloud reporting before accepting boot. For a confirmed faulty image, publish a corrected new commit or a new commit reverting it. For an unreachable board, use USB application recovery and retain the filesystem where possible.
 
+After migration to `/log0`–`/log7`, use only firmware that understands storage schema 2. Its manifest must include `storageSchema: 2`. Reverting unrelated features must retain that storage support; an old root-only image cannot read the migrated history. Migration preserves records without formatting and can resume after interrupted renames.
+
 Changing partition layouts, bootloaders, Secure Boot or flash encryption requires a separately planned migration.
 
 ## 21. Serial diagnosis
@@ -290,6 +295,8 @@ Open Serial Monitor at 115200 baud with newline endings.
 | sensor | Current X/Y/Z and magnitude |
 | sample | Commit a manual sensor sample |
 | portal | Open setup without touching GPIO 4 |
+| portal-close | Close setup without clearing saved settings or rebooting |
+| storage-check | Read and validate retained JSON records, report latency, filesystem usage and heap capacity |
 
 The repository's `scripts/serial-check.py` supports explicit reset and private JSON commissioning. Its configuration helper opens setup, paces commands and requires acknowledgment. Cloud reporting continues on the current firmware. Keep its private configuration file out of Git. Opening serial for observation should not intentionally reset the board.
 
@@ -313,6 +320,7 @@ The repository's `scripts/serial-check.py` supports explicit reset and private J
 | Portal save returns 400 | Check field lengths, HTTPS origin/path and numeric ranges |
 | Portal save returns 500 | Check NVS persistence, capture diagnostics, retry before assuming settings changed |
 | Portal logs return 503 | Let an OTA or busy request finish, retry, and check memory diagnostics; history remains on flash |
+| Download interrupted or reset | Stay on the ESP32 setup Wi-Fi until completion; disable automatic network switching/mobile-data fallback for this session, and retry the download after reconnecting |
 | Wrong SSID/password | Reopen setup and correct both values |
 | Router password changed | Save the new password on every affected node |
 | Wi-Fi good but no cloud | Check WAN/DNS, endpoint, API secret, hosting protection and LED cloud-pending pattern |

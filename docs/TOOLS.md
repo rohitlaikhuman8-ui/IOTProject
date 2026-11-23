@@ -16,6 +16,10 @@ See [screenshot instructions](images/README.md) for installation and authorized 
 
 An explicit `--reset` toggles the reset line. USB serial drivers or board reset circuits may also react to port opening. Use a single persistent Serial Monitor session when observing long-running behavior.
 
+The firmware also accepts `storage-check` for a read-only JSON/latency/heap check of retained records, and `portal-close` to finish maintenance without clearing configuration or rebooting. Type these commands in Serial Monitor with newline endings.
+
+An explicit `--command` runs only that command, with no automatic sample afterward. Without `--command`, the helper retains its commissioning sequence of status, sensor readings, one manual sample, and final status.
+
 Private JSON provisioning enters setup mode, paces long UART writes and requires a save acknowledgment. Use the portal for routine settings changes.
 
 ## Arduino IDE export

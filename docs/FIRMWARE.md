@@ -28,6 +28,8 @@ Local builds use version `usb-dev`. The release workflow generates a Git-ignored
 | `uploadOne()` | Upload one event and record local acknowledgment |
 | `startPortal()` | Start temporary AP and captive DNS |
 | `exportLog()` | Stream local committed records |
+| `diagnoseStorage()` | Validate retained JSON and measure read latency without opening the AP |
+| `closePortal()` | Close AP/DNS/server while retaining NVS settings and station Wi-Fi |
 | `checkOta()` | Fetch manifest and verify the new application |
 
 ## Timing
@@ -47,11 +49,15 @@ An independent status task reports presence while the upload task handles teleme
 
 ## Persistence
 
-The device writes a complete event to `/littlefs/new.tmp`, flushes, syncs, closes, and renames it to `/p-<20-digit sequence>` for a sample or `/m-<20-digit sequence>` for movement. After a 2xx acknowledgment, it renames that file to `/s-<sequence>`. Pending movement is selected ahead of ordinary samples. A mutex-protected RAM index is rebuilt from committed filenames on each boot and updated after successful file changes.
+The device writes a complete event to `/littlefs/new.tmp`, flushes, syncs, closes, and renames it to a `p-<20-digit sequence>` file for a sample or `m-<20-digit sequence>` for movement. After a 2xx acknowledgment, it renames that file to `s-<sequence>` in the same directory. Pending movement is selected ahead of ordinary samples. A mutex-protected RAM index is rebuilt from committed filenames on each boot and updated after successful file changes.
+
+Storage schema 2 distributes these filenames across `/log0` through `/log7`, selected by sequence modulo eight. This bounds each directory to roughly 32 records at the 256-record limit. On first boot, legacy root records are moved by atomic rename without changing content, sequence or acknowledgment state. Interrupted migration is resumed by scanning both layouts; failed moves and collisions preserve the original file. No formatting is used for migration.
+
+OTA manifests for this revision must include `storageSchema: 2`. Older updaters can install this revision, but the new updater rejects manifests lacking the compatible schema. This prevents automatic downgrade to old firmware that ignores the new directories. A rollback must retain schema-2 storage support. The three-minute boot-health window starts after setup and migration finish.
 
 Up to 256 records are retained. Acknowledged history is reclaimed first. An all-pending log skips new samples. An interrupted temporary file is ignored on restart. NVS namespace `fleet` stores `config` and the previously attempted OTA version.
 
-Committed records are read in bounded blocks of at most 1024 bytes. The portal renders at most 30 recent records without retaining 30 parsed JSON documents simultaneously. Full-log export builds `/export.tmp` on flash, releasing the filesystem mutex between records, then streams that immutable snapshot with a known Content-Length. It avoids copying all filenames in RAM or sending hundreds of tiny TCP chunks. The temporary file is removed after delivery and ignored as history after a power cut. Insufficient snapshot space returns 503 and preserves committed records.
+Committed records are read in bounded blocks of at most 1024 bytes. The portal renders at most 30 recent records without retaining 30 parsed JSON documents simultaneously. The RAM index also tracks file sizes, allowing full-log export to send a Content-Length header immediately and stream each record using bulk reads/writes. During the handler, main-loop logging/reclamation pauses and workers may only rename acknowledgment markers, so the indexed record contents and sizes remain stable. Filesystem locks are released between records. Disconnected clients, short writes or a three-minute transfer deadline stop delivery without changing history. Old temporary export files are removed on boot.
 
 Portal status/log polling waits for each request cycle to finish before scheduling the next one. This avoids overlapping requests when a flash operation or a slow client delays a response.
 
@@ -75,6 +81,7 @@ Example manifest, with placeholders and illustrative size:
 ```json
 {
   "board": "esp32dev",
+  "storageSchema": 2,
   "version": "<40-character commit SHA>",
   "url": "https://github.com/rohitlaikhuman8-ui/IOTProject/releases/download/fleet-<sha>/esp32dev-<sha>.bin",
   "sha256": "<64-character SHA-256>",

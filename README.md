@@ -4,13 +4,14 @@ An ESP32 connects to Wi-Fi, records telemetry locally, uploads it over HTTPS, an
 
 The hardware target is a **classic ESP32 DevKit with 4 MB flash** and an ADXL345 connected over I²C. X/Y/Z acceleration is reported in m/s², and the summary value is acceleration magnitude multiplied by sensitivity. GPIO 4 remains the capacitive setup input.
 
-The current presence/IST/portal revision is under bench validation on `fix/presence-ist-portal`. Saved settings survive reboots. The cloud dashboard is updated, while intermittent portal requests and full-log export acceptance remain open before publishing this firmware to the fleet. See the [session checkpoint and next steps](docs/VERIFICATION.md#session-checkpoint-and-next-work).
+The November 23 node retains its settings across reboots, reports independently to Atlas, and appears in the live IST dashboard. Captive-portal saving, 30 recent local records, and a complete 256-record download have been verified on hardware. See the [verification record](docs/VERIFICATION.md) for release status and remaining hardware acceptance checks.
 
 ## Connected node and wiring
 
 | Item | Value |
 | --- | --- |
-| Commissioned Node ID | `esp32-d01de2f4e9d4` |
+| Current COM5 Node ID | `esp32-7839a3f4e9d4` (November 23 board) |
+| Previous Node ID | `esp32-d01de2f4e9d4` (November 18 board, history retained) |
 | USB port | COM5 |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |
@@ -22,7 +23,7 @@ The current presence/IST/portal revision is under bench validation on `fix/prese
 | Commissioning sample interval | 10 seconds |
 | Sensor mode | Full-resolution ±16 g, 100 Hz ODR |
 
-See the [COM5 commissioning procedure](docs/NODE-COM5.md) for exact USB upload commands, Arduino IDE export, settings, diagnostics, and observed sensor-calibration limits. Passwords and node secrets remain private. Each ESP32's SSID and password can be changed in its captive portal.
+See the [current board record](docs/NODE-7839A3.md), [historical COM5 procedure](docs/NODE-COM5.md), and [operating manual](docs/OPERATING_MANUAL.md) for USB upload commands, Arduino IDE export, settings, diagnostics, and sensor-calibration limits. Passwords and node secrets remain private. Each ESP32's SSID and password can be changed in its captive portal.
 
 The live dashboard shows each node's direct cloud uplink and authenticated ESP-NOW neighbor sightings. Every node independently uploads through its configured Wi-Fi network. A dedicated task reports every five seconds while upload and OTA work run separately. The graph refreshes every three seconds and shows Online or Last seen in IST from accepted server reports. See [topology](docs/TOPOLOGY.md).
 
@@ -41,6 +42,7 @@ The live dashboard shows each node's direct cloud uplink and authenticated ESP-N
 | [Complete operating manual](docs/OPERATING_MANUAL.md) | Adding/removing nodes, changing every setting, credentials, recovery, troubleshooting, safety and maintenance |
 | [Hardware and first flash](docs/HARDWARE.md) | Board, wiring, tool installation, USB flashing, touch calibration |
 | [COM5 node record](docs/NODE-COM5.md) | Actual chip, Node ID, ADXL345 wiring, upload, private provisioning |
+| [November 23 node](docs/NODE-7839A3.md) | Current board identity, backup, independent registration and commissioning |
 | [Live topology](docs/TOPOLOGY.md) | Independent cloud uplinks, heartbeats, authenticated radio neighbors |
 | [Deployment](docs/DEPLOYMENT.md) | Atlas, Vercel, environment variables, local development |
 | [Operating procedures](docs/OPERATIONS.md) | Commissioning, provisioning, dashboard, exports, credential rotation |
@@ -122,7 +124,7 @@ The GPIO 2 status LED shows solid for recent cloud contact, slow blink for Wi-Fi
 ## Captive portal procedure
 
 1. Hold the GPIO 4 touch pad for four seconds, or send `portal` through USB Serial Monitor at 115200 baud with newline endings.
-2. Join `ESP32-Setup-f4e9d4` for this node using its private saved AP password.
+2. Join `ESP32-Setup-7839a3f4e9d4` for the current board using its private saved AP password. The complete hardware-derived ID makes setup network names unique.
 3. Open `http://192.168.4.1/` if the captive popup does not appear.
 4. Change SSID, Wi-Fi password, setup AP password, endpoint, secrets, thresholds or sample interval as needed. Blank password/secret fields preserve the saved values as described in the manual.
 5. Review current IST time, connection state, pending records and recent local logs. Download the retained NDJSON log before destructive recovery.

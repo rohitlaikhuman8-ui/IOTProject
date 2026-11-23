@@ -13,7 +13,7 @@ parser.add_argument("--reset", action="store_true")
 parser.add_argument("--samples", type=int, default=5)
 parser.add_argument("--config", help="Private JSON configuration file, never committed")
 parser.add_argument("--wait", type=int, default=0)
-parser.add_argument("--command", choices=["status", "sensor", "sample", "portal"])
+parser.add_argument("--command", choices=["status", "sensor", "sample", "portal", "portal-close", "storage-check"])
 args = parser.parse_args()
 
 def drain(port, seconds):
@@ -68,6 +68,7 @@ with connection as port:
         drain(port, 2)
     if args.wait:
         drain(port, args.wait)
-    for command in ["status"] + ["sensor"] * args.samples + ["sample", "status"]:
-        port.write((command + "\n").encode())
-        drain(port, 1.5)
+    if not args.command:
+        for command in ["status"] + ["sensor"] * args.samples + ["sample", "status"]:
+            port.write((command + "\n").encode())
+            drain(port, 1.5)

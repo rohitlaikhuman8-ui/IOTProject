@@ -91,6 +91,8 @@ The recent-log endpoint returned 30 valid records. A subsequent full export expo
 
 ## Session checkpoint and next work
 
+This is the historical November 18 checkpoint. The November 23 results below supersede its pending portal/export checks.
+
 At the operator's request, repeated portal tests stopped. Wi-Fi credentials and settings remain saved in NVS, and committed local records remain in LittleFS. The bench image identifies itself as `usb-dev-ist-motion` and has fleet OTA checks disabled while under validation. The deployed dashboard already includes IST, Online/Last-seen status and movement notification history. The candidate firmware and documentation are saved on `fix/presence-ist-portal`; the stable main OTA channel has not been replaced by these test builds.
 
 Next session:
@@ -100,3 +102,17 @@ Next session:
 3. Perform one save/reboot check through setup, preserving blank password/secret fields, and restore the production OTA manifest URL.
 4. Rebuild with OTA enabled, publish the verified changes to main, observe GitHub Actions, and install/confirm the release on the physical node.
 5. Update this verification record and capture the final real portal screenshot. Sensor calibration, additional-node tests and controlled power-cut/rollback checks remain separate deployment acceptance work.
+
+## November 23 hardware verification
+
+COM5 held a different ESP32, `esp32-7839a3f4e9d4`, initially running a standalone ADXL345 sketch. Its boot/settings/application region was backed up in verified smaller reads; the original application's checksum and validation SHA both passed. Long serial reads failed at both 460800 and 115200 baud, while smaller sections succeeded with a retry. The private backup is excluded from Git.
+
+The new node received a distinct API secret and registration, preserving the older node and its history. The production Vercel redeployment reached Ready. Firmware and initial filesystem uploads verified their flash hashes without needing BOOT. Permanent USB configuration was acknowledged, followed by reboot, automatic Wi-Fi association, HTTP 200 telemetry/heartbeat, healthy ADXL345 at 0x53, and IST synchronization.
+
+Manual sensor sampling exercised retention. A read-only check validated 231 records in 114,817 ms. The revised storage loader migrated 253 existing files into eight directories without formatting. A subsequent check validated all 256 retained records with zero errors in 36,340 ms, while cloud acknowledgments continued. Node-specific AP names now include all 12 ID digits, avoiding same-vendor suffix collisions.
+
+An interrupted export exposed blocking in the framework's generic file-stream helper. The replacement sends Content-Length immediately from cached file sizes, uses bulk record reads and bounded writes, and stops on disconnect. Controlled cancellation completed without reboot or record deletion. A full real download then transferred 256 unique records in 28,345 ms. The browser displayed 30 recent records and live IST/cloud status. The real screenshot is `images/portal-live.png`.
+
+The settings form was submitted with the existing SSID and blank password/API-secret fields. It returned “Settings saved. Restarting.” The node rebooted and resumed authenticated reporting with saved credentials. The laptop was restored to Sensor Testing. Earlier download interruptions coincided with manual Windows reconnection to the router during the transfer; the successful test left the laptop on the AP until completion.
+
+The tested application has OTA support compiled in, with the manifest URL left empty until the verified schema-2 release is published. Final release/OTA results are appended after publication. Calibration, additional physical radio peers, and controlled power-cut/failed-image rollback acceptance remain open.

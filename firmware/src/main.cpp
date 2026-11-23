@@ -94,9 +94,12 @@ String bootId, apPassword;
 uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, nextOta, wifiLostAt;
 uint32_t retryDelay = 5000;
 uint64_t nextSequence = 1;
+uint32_t verificationStarted;
 uint8_t sensorAddress = 0;
 String serialCommand;
 void startPortal();
+void closePortal();
+void diagnoseStorage();
 bool due(uint32_t now, uint32_t target);
 uint32_t nextHeartbeat, nextBeacon;
 bool radioReady;
@@ -454,41 +457,108 @@ struct LogState {
 };
 
 std::vector<String> logPaths;
+std::vector<size_t> logSizes;
 bool logIndexLoaded = false;
+bool logDirectoriesReady = false;
+
+const char *recordName(const String &path) {
+  const char *slash = strrchr(path.c_str(), '/');
+  return slash ? slash + 1 : path.c_str();
+}
+
+bool isRecordPath(const String &path) {
+  const char *name = recordName(path);
+  if (strlen(name) != 22 || name[1] != '-' ||
+      (name[0] != 'p' && name[0] != 's' && name[0] != 'm')) return false;
+  for (size_t i = 2; i < 22; ++i) if (name[i] < '0' || name[i] > '9') return false;
+  return true;
+}
+
+uint64_t recordSequence(const String &path) {
+  return strtoull(recordName(path) + 2, nullptr, 10);
+}
+
+String recordPath(char marker, uint64_t sequence) {
+  char path[40];
+  if (logDirectoriesReady) snprintf(path, sizeof(path), "/log%u/%c-%020llu",
+    static_cast<unsigned>(sequence % 8), marker, static_cast<unsigned long long>(sequence));
+  else snprintf(path, sizeof(path), "/%c-%020llu", marker, static_cast<unsigned long long>(sequence));
+  return String(path);
+}
+
+void loadLogIndex() {
+  struct LegacyRecord { String path; size_t size; };
+  std::vector<LegacyRecord> legacy;
+  {
+    File root = LittleFS.open("/");
+    for (File file = root.openNextFile(); file; file = root.openNextFile()) {
+      if (!file.isDirectory() && isRecordPath(file.path())) legacy.push_back({String(file.path()), file.size()});
+      esp_task_wdt_reset();
+    }
+  }
+  logDirectoriesReady = true;
+  for (unsigned i = 0; i < 8; ++i) {
+    String directory = "/log" + String(i);
+    if (!LittleFS.exists(directory) && !LittleFS.mkdir(directory)) logDirectoriesReady = false;
+    File dir = LittleFS.open(directory);
+    if (dir && dir.isDirectory()) {
+      for (File file = dir.openNextFile(); file; file = dir.openNextFile()) {
+        if (isRecordPath(file.path())) {
+          logPaths.push_back(String(file.path()));
+          logSizes.push_back(file.size());
+        }
+        esp_task_wdt_reset();
+      }
+    } else logDirectoriesReady = false;
+    esp_task_wdt_reset();
+  }
+  size_t moved = 0;
+  for (const auto &entry : legacy) {
+    const String &path = entry.path;
+    String target = recordPath(recordName(path)[0], recordSequence(path));
+    // Never overwrite a collision or delete an original on a failed migration.
+    if (logDirectoriesReady && !LittleFS.exists(target) && LittleFS.rename(path, target)) {
+      logPaths.push_back(target);
+      ++moved;
+    } else logPaths.push_back(path);
+    logSizes.push_back(entry.size);
+    esp_task_wdt_reset();
+    if (moved && moved % 32 == 0) Serial.printf("Log layout migration: %u/%u\n", moved, legacy.size());
+  }
+  Serial.printf("Log index ready: %u records, %u migrated, sharded=%d\n", logPaths.size(), moved, logDirectoriesReady);
+  LittleFS.remove("/export.tmp");
+  logIndexLoaded = true;
+}
 
 void forgetLogPath(const String &path) {
-  logPaths.erase(std::remove(logPaths.begin(), logPaths.end(), path), logPaths.end());
+  for (size_t i = 0; i < logPaths.size(); ++i) {
+    if (logPaths[i] == path) {
+      logPaths.erase(logPaths.begin() + i);
+      logSizes.erase(logSizes.begin() + i);
+      return;
+    }
+  }
 }
 
 LogState scanLog() {
   FilesystemLock lock;
   LogState result;
-  // Rebuild from durable filenames once per boot. Repeated directory walks on
-  // flash stall heartbeat and sensor tasks as the retained journal grows.
-  if (!logIndexLoaded) {
-    File dir = LittleFS.open("/");
-    for (File f = dir.openNextFile(); f; f = dir.openNextFile()) {
-      String name = f.path();
-      if (name.startsWith("/p-") || name.startsWith("/s-") || name.startsWith("/m-")) logPaths.push_back(name);
-      esp_task_wdt_reset();
-    }
-    logIndexLoaded = true;
-  }
+  if (!logIndexLoaded) loadLogIndex();
   for (const String &name : logPaths) {
-    if (!name.startsWith("/p-") && !name.startsWith("/s-") && !name.startsWith("/m-")) continue;
-    uint64_t sequence = strtoull(name.c_str() + 3, nullptr, 10);
+    const char marker = recordName(name)[0];
+    uint64_t sequence = recordSequence(name);
     result.maxSequence = max(result.maxSequence, sequence);
     ++result.count;
-    if (name.startsWith("/p-") || name.startsWith("/m-")) ++result.pendingCount;
-    if (name.startsWith("/m-") && sequence < result.movementSequence) {
+    if (marker == 'p' || marker == 'm') ++result.pendingCount;
+    if (marker == 'm' && sequence < result.movementSequence) {
       result.movement = name;
       result.movementSequence = sequence;
     }
-    if (name.startsWith("/p-") && sequence < result.pendingSequence) {
+    if (marker == 'p' && sequence < result.pendingSequence) {
       result.pending = name;
       result.pendingSequence = sequence;
     }
-    if (name.startsWith("/s-") && sequence < result.acknowledgedSequence) {
+    if (marker == 's' && sequence < result.acknowledgedSequence) {
       result.acknowledged = name;
       result.acknowledgedSequence = sequence;
     }
@@ -539,12 +609,12 @@ void saveSample(const char *kind = "sample", float movementDelta = 0) {
   bool complete = fwrite(line.c_str(), 1, line.length(), file) == line.length() &&
     fflush(file) == 0 && fsync(fileno(file)) == 0;
   complete = fclose(file) == 0 && complete;
-  char path[32];
-  snprintf(path, sizeof(path), "/%c-%020llu", !strcmp(kind, "movement") ? 'm' : 'p', static_cast<unsigned long long>(nextSequence++));
+  String path = recordPath(!strcmp(kind, "movement") ? 'm' : 'p', nextSequence++);
   if (!complete || !LittleFS.rename("/new.tmp", path)) {
     Serial.println("Cannot commit local log record");
   } else {
     logPaths.push_back(String(path));
+    logSizes.push_back(line.length());
     Serial.printf("%s committed: x=%.4f y=%.4f z=%.4f magnitude=%.4f m/s2 %s\n", kind, x, y, z, event["value"].as<float>(), timeInIst(now).c_str());
   }
 }
@@ -648,10 +718,16 @@ void serviceSerial() {
       saveSample();
     } else if (serialCommand == "portal") {
       if (!portalActive) startPortal();
+    } else if (serialCommand == "portal-close") {
+      closePortal();
+    } else if (serialCommand == "storage-check") {
+      diagnoseStorage();
     } else if (serialCommand.length()) {
-      Serial.println("Commands: status, sensor, sample, portal");
+      Serial.println("Commands: status, sensor, sample, portal, portal-close, storage-check");
     }
     serialCommand = "";
+    // Bound diagnostic work so queued serial commands cannot starve acquisition.
+    break;
   }
 }
 
@@ -662,6 +738,47 @@ String readCommittedRecord(File &file) {
   if (file.read(reinterpret_cast<uint8_t *>(bytes), length) != length) return "";
   bytes[length] = 0;
   return String(bytes);
+}
+
+void diagnoseStorage() {
+  JsonDocument result;
+  result["diagnostic"] = "storage-check";
+  result["nodeId"] = nodeId;
+  if (!storageReady) {
+    result["error"] = "LittleFS unavailable";
+  } else {
+    uint32_t started = millis(), maximumRead = 0;
+    size_t count;
+    { FilesystemLock lock; count = logPaths.size(); }
+    size_t valid = 0, invalid = 0;
+    for (size_t i = 0; i < count; ++i) {
+      String line;
+      uint32_t readStarted = millis();
+      {
+        FilesystemLock lock;
+        File file = LittleFS.open(logPaths[i]);
+        line = readCommittedRecord(file);
+      }
+      maximumRead = max(maximumRead, static_cast<uint32_t>(millis() - readStarted));
+      JsonDocument record;
+      if (line.length() && !deserializeJson(record, line)) ++valid;
+      else ++invalid;
+      esp_task_wdt_reset();
+      vTaskDelay(pdMS_TO_TICKS(1));
+    }
+    result["records"] = count;
+    result["valid"] = valid;
+    result["invalid"] = invalid;
+    result["elapsedMs"] = millis() - started;
+    result["maximumReadMs"] = maximumRead;
+    result["usedBytes"] = LittleFS.usedBytes();
+    result["totalBytes"] = LittleFS.totalBytes();
+  }
+  result["freeHeap"] = ESP.getFreeHeap();
+  result["largestAllocation"] = ESP.getMaxAllocHeap();
+  String output;
+  serializeJson(result, output);
+  Serial.println(output);
 }
 
 void uploadOne() {
@@ -677,7 +794,8 @@ void uploadOne() {
     entry.close();
   }
   int status = postToCloud(config["endpoint"].as<String>(), line);
-  String acknowledged = "/s-" + path.substring(3);
+  String acknowledged = path;
+  acknowledged.setCharAt(acknowledged.lastIndexOf('/') + 1, 's');
   Serial.printf("Telemetry HTTP %d\n", status);
   if (status >= 200 && status < 300) {
     FilesystemLock lock;
@@ -735,55 +853,50 @@ void sendHeartbeat() {
 
 void exportLog() {
   if (!storageReady) { portal.send(503, "text/plain", "Local log unavailable"); return; }
-  bool complete = true;
-  File snapshot;
-  size_t count = 0;
+  size_t count = 0, totalBytes = 0;
   {
     FilesystemLock lock;
-    snapshot = LittleFS.open("/export.tmp", "w");
-    complete = bool(snapshot);
     count = logPaths.size();
+    for (size_t size : logSizes) totalBytes += size + 1;
   }
-  Serial.printf("Log snapshot started: %u records\n", count);
+  WiFiClient peer = portal.client();
+  peer.setNoDelay(true);
+  portal.sendHeader("Content-Disposition", "attachment; filename=esp32-log.ndjson");
+  portal.setContentLength(totalBytes);
+  portal.send(200, "application/x-ndjson", "");
+  uint32_t started = millis();
+  size_t sent = 0;
+  bool complete = true;
+  Serial.printf("Log export started: %u records, %u bytes\n", count, totalBytes);
   // Only the main loop appends/reclaims index entries. While this handler runs,
-  // workers can acknowledge a path at the same index under the mutex.
+  // workers may rename acknowledgments, leaving record bytes and sizes unchanged.
   for (size_t i = 0; i < count && complete; ++i) {
+    if (!peer.connected() || millis() - started > 180000) { complete = false; break; }
+    String line;
+    size_t expected;
     {
       FilesystemLock lock;
       File entry = LittleFS.open(logPaths[i]);
-      String line = readCommittedRecord(entry);
-      if (line.length()) {
-        complete = snapshot.write(reinterpret_cast<const uint8_t *>(line.c_str()), line.length()) == line.length()
-          && snapshot.write(static_cast<uint8_t>('\n')) == 1;
-      }
+      line = readCommittedRecord(entry);
+      expected = logSizes[i];
     }
     esp_task_wdt_reset();
+    if (line.length() != expected || !line.length()) { complete = false; break; }
+    line += '\n';
+    size_t written = peer.write(reinterpret_cast<const uint8_t *>(line.c_str()), line.length());
+    sent += written;
+    complete = written == line.length();
+    esp_task_wdt_reset();
     vTaskDelay(pdMS_TO_TICKS(1));
-    if ((i + 1) % 32 == 0) Serial.printf("Log snapshot progress: %u/%u\n", i + 1, count);
+    if ((i + 1) % 32 == 0) Serial.printf("Log export progress: %u/%u\n", i + 1, count);
   }
-  {
-    FilesystemLock lock;
-    snapshot.flush();
-    snapshot.close();
-  }
-  if (!complete) {
-    FilesystemLock lock;
-    LittleFS.remove("/export.tmp");
-    portal.send(503, "text/plain", "Export needs free filesystem space. Records remain intact.");
-    return;
-  }
-  // A file snapshot has a known Content-Length and avoids per-record TCP chunks
-  // and a second RAM copy of all filenames during a concurrent TLS handshake.
-  snapshot = LittleFS.open("/export.tmp");
-  portal.sendHeader("Content-Disposition", "attachment; filename=esp32-log.ndjson");
-  portal.streamFile(snapshot, "application/x-ndjson");
-  snapshot.close();
-  { FilesystemLock lock; LittleFS.remove("/export.tmp"); }
+  if (!complete || sent != totalBytes) peer.stop();
+  Serial.printf("Log export %s: %u/%u bytes in %lu ms\n", complete && sent == totalBytes ? "complete" : "canceled", sent, totalBytes, millis() - started);
 }
 
 void startPortal() {
   WiFi.mode(WIFI_AP_STA);
-  String name = "ESP32-Setup-" + nodeId.substring(12);
+  String name = "ESP32-Setup-" + nodeId.substring(6);
   if (!WiFi.softAP(name.c_str(), apPassword.c_str(), 1, false, 1)) {
     WiFi.mode(WIFI_STA);
     return;
@@ -794,6 +907,18 @@ void startPortal() {
   portal.begin();
   portalActive = true;
   portalStarted = millis();
+}
+
+void closePortal() {
+  if (!portalActive) return;
+  portal.stop();
+  dns.stop();
+  WiFi.softAPdisconnect(false);
+  WiFi.mode(WIFI_STA);
+  portalActive = false;
+  touched = false;
+  nextWifi = millis();
+  Serial.println("Setup AP closed; saved settings retained");
 }
 
 void checkTouch(uint32_t now) {
@@ -845,6 +970,10 @@ bool checkOta() {
   json.reset();
   http.end();
   if (error || data["board"].as<String>() != "esp32dev") return false;
+  if ((data["storageSchema"] | 0) != 2) {
+    Serial.println("OTA rejected: firmware must support log storage schema 2");
+    return false;
+  }
   String version = data["version"].as<String>(), hash = data["sha256"].as<String>();
   if (version == FLEET_VERSION) return true;
   if (version == settings.getString("attempted", "")) return false;
@@ -970,7 +1099,7 @@ void setup() {
       FilesystemLock lock;
       std::vector<size_t> paths;
       for (size_t i = 0; i < logPaths.size(); ++i) paths.push_back(i);
-      std::sort(paths.begin(), paths.end(), [](size_t a, size_t b) { return logPaths[a].substring(3) > logPaths[b].substring(3); });
+      std::sort(paths.begin(), paths.end(), [](size_t a, size_t b) { return recordSequence(logPaths[a]) > recordSequence(logPaths[b]); });
       for (size_t i = 0; i < paths.size() && i < 30; ++i) {
         File file = LittleFS.open(logPaths[paths[i]]);
         JsonDocument record;
@@ -1032,6 +1161,7 @@ void setup() {
     digitalWrite(StatusLed, on ? HIGH : LOW);
   });
   if (timer) xTimerStart(timer, 0);
+  verificationStarted = millis();
 }
 
 void loop() {
@@ -1041,10 +1171,10 @@ void loop() {
   serviceSensor(now);
   if (pendingVerification) {
     if (storageReady && sensorAddress && cloudHealthy && WiFi.status() == WL_CONNECTED &&
-        time(nullptr) >= 1577836800 && now >= 20000) {
+        time(nullptr) >= 1577836800 && now - verificationStarted >= 20000) {
       pendingVerification = esp_ota_mark_app_valid_cancel_rollback() != ESP_OK;
       if (!pendingVerification) Serial.println("OTA boot confirmed: storage, sensor and cloud heartbeat healthy");
-    } else if (now >= 180000) {
+    } else if (now - verificationStarted >= 180000) {
       esp_ota_mark_app_invalid_rollback_and_reboot();
     }
   }
@@ -1058,13 +1188,7 @@ void loop() {
     dns.processNextRequest();
     portal.handleClient();
     if (now - portalStarted >= PortalLifetime && !restartAt) {
-      portal.stop();
-      dns.stop();
-      WiFi.softAPdisconnect(false);
-      WiFi.mode(WIFI_STA);
-      portalActive = false;
-      touched = false;
-      nextWifi = millis();
+      closePortal();
     }
   }
   if (WiFi.status() == WL_CONNECTED) {

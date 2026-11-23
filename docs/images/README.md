@@ -2,15 +2,15 @@
 
 | File | Source |
 | --- | --- |
-| `dashboard-login.png` | Live deployed application sign-in on November 18, 2026 |
-| `dashboard-nodes.png` | Live authenticated dashboard with the physical ADXL345 node |
-| `dashboard-topology.png` | Live topology and sensor-health view |
-| `dashboard-ist-history.png` | Live IST telemetry and movement notification history |
+| `dashboard-login.png` | Live deployed application sign-in on November 23, 2026 |
+| `dashboard-nodes.png` | Live authenticated dashboard after the November 23 OTA acceptance |
+| `dashboard-topology.png` | Live topology with the current node online and older node last seen |
+| `dashboard-ist-history.png` | Live IST telemetry and movement history on verified release 408a075 |
 | `dashboard-offline.png` | Physical node offline after its cloud uplink was paused in setup mode |
 | `provisioning-reference.png` | Actual `PortalPage` HTML extracted from firmware, rendered with sample settings |
 | `portal-live.png` | Real November 23 node, live settings/status/recent logs, password fields left blank |
 
-The portal image is a documentation reference captured without a connected ESP32. It shows placeholder identity and SSID values. Screenshot capture avoids showing passwords, access links, or authentication cookies.
+`provisioning-reference.png` is a documentation reference rendered without hardware, with placeholder identity and SSID values. `portal-live.png` is the separate real-device capture. Screenshot capture avoids showing passwords, access links, or authentication cookies.
 
 ## Regenerate
 

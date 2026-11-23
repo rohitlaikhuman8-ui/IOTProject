@@ -1,5 +1,11 @@
 # Verification record
 
+## Latest verified state — November 23, 2026
+
+At approximately 21:00 IST, COM5 node `esp32-7839a3f4e9d4` was online on release `408a075bcb8b8eb4366a380ffc283637349bcc57`, installed remotely through the Vercel firmware origin. Pending boot was confirmed, sensor/storage were healthy, all 256 retained records were present, the upload queue was empty, IST matched host time, and setup AP was inactive. The authenticated dashboard showed fresh telemetry and movement notifications. The November 18 node retained its historical last-seen state. Detailed acceptance and earlier failures follow below.
+
+Calibration, multiple physical radio peers, controlled power cuts and failed-image rollback remain open. Successful OTA acceptance is verified; this is not a claim of full production acceptance.
+
 ## Recorded checks
 
 | Date | Check | Result |
@@ -162,3 +168,11 @@ The first close-delimited bootstrap upload stopped mid-write at 34% with “chip
 The device acknowledged saved Vercel provisioning at 20:48:44 IST and rebooted. At 20:49:31 it received an unknown-length HTTP 200 manifest, parsed the expected `f888f16` version, and received HTTP 200 for the image at 20:49:36. The transfer later stalled and aborted at the 30-second inactivity bound at 20:50:50, with 1,134,104 bytes remaining. The running application/history stayed intact. A further check failed before image download. Inspection of the pinned framework showed `Stream::readBytes()` calling `timedRead()` once per byte, so OTA reads were replaced by bounded bulk TLS reads with cooperative waits. This removes that overhead; it does not guarantee recovery from an unavailable internet connection.
 
 The operator confirmed that Sensor Testing is a mobile hotspot with stable internet. Device-side connection failures therefore remain ESP32/path observations, not proof of a general hotspot outage. The bulk-read build compiled with 50,476 bytes RAM and 1,217,905 bytes application flash. Its recovery upload verified hashes at 115200 baud and resumed authenticated heartbeat/telemetry without reopening setup. Final release and device results follow below.
+
+### Completed Vercel OTA acceptance
+
+Commit `408a075bcb8b8eb4366a380ffc283637349bcc57` passed [Actions run 45205127013](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45205127013). The live relay advertised 1,224,352 bytes and SHA-256 `98ac1d523cb4ef7c1d1bd43e0d99c17891815059c50a3254bea62eaced0bb6e1`. The node acknowledged persistent relay configuration at 20:57:40 IST and rebooted. It retrieved the correct manifest at 20:58:30 and began the unknown-length image response at 20:58:33. Bulk reads passed 918 KB in about 31 seconds. At 20:59:14 it verified the complete size/hash/image and rebooted into the published release: a 41-second binary transfer.
+
+The existing 256-record journal loaded at 20:59:27. Authenticated cloud reporting resumed and pending boot was confirmed at 20:59:50. Serial status at 21:00:15 reported the exact release, `pendingVerification=false`, zero pending records, healthy storage/sensor, saved Sensor Testing network, setup inactive, solid status LED, and `21:00:14 IST`. The authenticated production dashboard read at 21:00:33 confirmed the same version, mode running, zero backlog, fresh measurements, a new startup notification and movement notifications. The older node's historical last seen remained unchanged. No portal reopening, Wi-Fi re-entry or BOOT-button intervention was needed for this remote update.
+
+The deployed relay source is in `dpl_64bdeWVmQ81Mi8yuqqwbx6MiQ5Kq`; subsequent firmware/doc commits do not require rebuilding that unchanged route. New online nodes configured with its URL follow the Actions stable channel. Offline physical nodes have not been claimed as upgraded. The real dashboard screenshots were refreshed after acceptance; the real portal screenshot remains from the earlier controlled portal test.

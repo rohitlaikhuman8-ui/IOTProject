@@ -50,6 +50,8 @@ constexpr uint32_t HeartbeatInterval = 5000;
 constexpr uint32_t CloudTimeout = 90000;
 
 SemaphoreHandle_t filesystemMutex, handshakeMutex;
+esp_http_client_handle_t cloudClient = nullptr;
+String cloudDate;
 TaskHandle_t networkTaskHandle, heartbeatTaskHandle;
 class FilesystemLock {
 public:
@@ -60,7 +62,9 @@ public:
 class TransportBudget {
 public:
   bool acquired;
-  TransportBudget() : acquired(xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(15000)) == pdTRUE) {}
+  TransportBudget() : acquired(xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(15000)) == pdTRUE) {
+    if (acquired && cloudClient) esp_http_client_close(cloudClient);
+  }
   ~TransportBudget() { if (acquired) xSemaphoreGive(handshakeMutex); }
 };
 
@@ -70,7 +74,11 @@ class VerifiedClient : public WiFiClientSecure {
 public:
   VerifiedClient() { _use_ca_bundle = true; }
   int connect(const char *host, uint16_t port, int32_t timeout) override {
-    if (xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(1000)) != pdTRUE) return 0;
+    if (xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(15000)) != pdTRUE) {
+      Serial.println("OTA TLS deferred: transport busy");
+      return 0;
+    }
+    esp_task_wdt_reset();
     IPAddress address;
     if (!WiFi.hostByName(host, address)) { xSemaphoreGive(handshakeMutex); return 0; }
     esp_task_wdt_reset();
@@ -91,7 +99,8 @@ bool storageReady, touched, ntpStarted;
 std::atomic<bool> portalActive{false}, pendingVerification{false}, cloudHealthy{false}, otaActive{false};
 std::atomic<uint32_t> lastCloudSuccess{0};
 String bootId, apPassword;
-uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, nextOta, wifiLostAt;
+uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, wifiLostAt;
+std::atomic<uint32_t> nextOta{0};
 uint32_t retryDelay = 5000;
 uint64_t nextSequence = 1;
 uint32_t verificationStarted;
@@ -305,13 +314,13 @@ int postToCloud(const String &path, const String &body) {
   // ESP32 TLS handshakes need a large contiguous allocation. Serialize cloud
   // requests with OTA handshakes so simultaneous handshakes cannot exhaust it.
   if (xSemaphoreTake(handshakeMutex, pdMS_TO_TICKS(15000)) != pdTRUE) return -1;
-  String date;
+  cloudDate = "";
   esp_http_client_config_t options = {};
   options.url = url.c_str();
-  options.timeout_ms = 5000;
+  options.timeout_ms = 10000;
   options.crt_bundle_attach = esp_crt_bundle_attach;
   options.disable_auto_redirect = true;
-  options.user_data = &date;
+  options.user_data = &cloudDate;
   options.event_handler = [](esp_http_client_event_t *event) -> esp_err_t {
     if (event->event_id == HTTP_EVENT_ON_HEADER && event->header_key &&
         !strcasecmp(event->header_key, "Date")) {
@@ -319,23 +328,38 @@ int postToCloud(const String &path, const String &body) {
     }
     return ESP_OK;
   };
-  auto client = esp_http_client_init(&options);
+  if (!cloudClient) cloudClient = esp_http_client_init(&options);
+  auto client = cloudClient;
   if (!client) { xSemaphoreGive(handshakeMutex); return -1; }
+  if (esp_http_client_set_url(client, url.c_str()) != ESP_OK) {
+    esp_http_client_cleanup(client);
+    cloudClient = nullptr;
+    xSemaphoreGive(handshakeMutex);
+    return -1;
+  }
   String authorization = "Bearer " + config["secret"].as<String>();
   esp_http_client_set_method(client, HTTP_METHOD_POST);
   esp_http_client_set_header(client, "Content-Type", "application/json");
   esp_http_client_set_header(client, "Authorization", authorization.c_str());
   esp_http_client_set_post_field(client, body.c_str(), body.length());
   esp_task_wdt_reset();
+  uint32_t started = millis();
   auto result = esp_http_client_perform(client);
   int status = result == ESP_OK ? esp_http_client_get_status_code(client) : -1;
-  esp_http_client_cleanup(client);
-  xSemaphoreGive(handshakeMutex);
-  esp_task_wdt_reset();
+  esp_http_client_set_post_field(client, "", 0);
+  if (result != ESP_OK) {
+    esp_http_client_cleanup(client);
+    cloudClient = nullptr;
+  } else if (otaActive) esp_http_client_close(client);
   if (status >= 200 && status < 300) {
-    syncFromServerDate(date);
+    // Date is generated before the response arrives. A slow reply must not
+    // move an already valid SNTP clock backward by its transport/DB latency.
+    if (time(nullptr) < 1577836800 || millis() - started < 1000) syncFromServerDate(cloudDate);
     lastCloudSuccess = millis();
   }
+  Serial.printf("Cloud request %s: HTTP %d in %lu ms\n", path.c_str(), status, millis() - started);
+  xSemaphoreGive(handshakeMutex);
+  esp_task_wdt_reset();
   return status;
 }
 
@@ -526,7 +550,7 @@ void loadLogIndex() {
     if (moved && moved % 32 == 0) Serial.printf("Log layout migration: %u/%u\n", moved, legacy.size());
   }
   Serial.printf("Log index ready: %u records, %u migrated, sharded=%d\n", logPaths.size(), moved, logDirectoriesReady);
-  LittleFS.remove("/export.tmp");
+  if (access("/littlefs/export.tmp", F_OK) == 0) LittleFS.remove("/export.tmp");
   logIndexLoaded = true;
 }
 
@@ -722,8 +746,13 @@ void serviceSerial() {
       closePortal();
     } else if (serialCommand == "storage-check") {
       diagnoseStorage();
+    } else if (serialCommand == "ota-check") {
+      if (FLEET_ALLOW_OTA && config["ota"].as<String>().length()) {
+        nextOta = millis();
+        Serial.println("OTA check scheduled");
+      } else Serial.println("OTA is not configured");
     } else if (serialCommand.length()) {
-      Serial.println("Commands: status, sensor, sample, portal, portal-close, storage-check");
+      Serial.println("Commands: status, sensor, sample, portal, portal-close, storage-check, ota-check");
     }
     serialCommand = "";
     // Bound diagnostic work so queued serial commands cannot starve acquisition.
@@ -1132,6 +1161,8 @@ void setup() {
         esp_task_wdt_reset();
         if (!pendingVerification.load() && time(nullptr) >= 1577836800 && due(millis(), nextOta)) {
           otaActive = true;
+          { TransportBudget budget; }
+          esp_task_wdt_reset();
           bool ok = checkOta();
           otaActive = false;
           nextOta = millis() + (ok ? 900000UL : 120000UL) + esp_random() % 30000;

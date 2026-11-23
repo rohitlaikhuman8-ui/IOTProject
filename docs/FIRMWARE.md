@@ -47,6 +47,10 @@ Local builds use version `usb-dev`. The release workflow generates a Git-ignored
 
 An independent status task reports presence while the upload task handles telemetry and OTA. The main loop services the sensor, touch and portal. Filesystem operations are mutex protected. Cloud POSTs use the ESP-IDF HTTP client with bounded timeouts, and OTA uses the pinned Arduino transport.
 
+Cloud POSTs share a mutex-protected persistent HTTPS client, changing only the request path and payload between telemetry and heartbeat. Failed transports are discarded for retry. Cold connections allow ten seconds. OTA handshakes may wait up to fifteen seconds for the same transport budget, instead of failing while a cloud handshake is active. Idle cloud TLS state is released before OTA and memory-intensive portal logs; cloud requests also release their TLS connection after each response while OTA is active. The `ota-check` serial command schedules a check without changing credentials or bypassing manifest/image validation.
+
+This follows the [ESP-IDF persistent-connection API](https://docs.espressif.com/projects/esp-idf/en/v4.4.4/esp32/api-reference/protocols/esp_http_client.html#persistent-connections). Server Date can bootstrap an unset clock. Once time is plausible, only replies completed in under one second may correct it, preventing a delayed response from pulling a synchronized clock backward. Server receive timestamps in Atlas remain authoritative.
+
 ## Persistence
 
 The device writes a complete event to `/littlefs/new.tmp`, flushes, syncs, closes, and renames it to a `p-<20-digit sequence>` file for a sample or `m-<20-digit sequence>` for movement. After a 2xx acknowledgment, it renames that file to `s-<sequence>` in the same directory. Pending movement is selected ahead of ordinary samples. A mutex-protected RAM index is rebuilt from committed filenames on each boot and updated after successful file changes.

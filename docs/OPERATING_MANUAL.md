@@ -297,6 +297,7 @@ Open Serial Monitor at 115200 baud with newline endings.
 | portal | Open setup without touching GPIO 4 |
 | portal-close | Close setup without clearing saved settings or rebooting |
 | storage-check | Read and validate retained JSON records, report latency, filesystem usage and heap capacity |
+| ota-check | Schedule a manifest check on the network task without opening setup or resetting |
 
 The repository's `scripts/serial-check.py` supports explicit reset and private JSON commissioning. Its configuration helper opens setup, paces commands and requires acknowledgment. Cloud reporting continues on the current firmware. Keep its private configuration file out of Git. Opening serial for observation should not intentionally reset the board.
 

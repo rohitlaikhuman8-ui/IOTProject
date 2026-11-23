@@ -29,6 +29,8 @@ See the [complete operations and safety manual](OPERATING_MANUAL.md) for the ful
 
 ## Uploads
 
+If queued records drain slowly while heartbeats succeed, compare the serial request timings and pending count. Current firmware reuses HTTPS connections and resets failed transports for retry. A full all-pending log preserves existing records but cannot save new samples until delivery frees capacity. OTA checks that repeatedly fail to acquire the transport lock require the current transport-recovery firmware; `ota-check` schedules another check without opening the AP.
+
 Read the serial line `Upload deferred (HTTP ...)`. Codes below can come from the application or hosting layer.
 
 | Code or symptom | Action |

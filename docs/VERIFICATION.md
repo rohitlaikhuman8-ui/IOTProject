@@ -116,3 +116,11 @@ An interrupted export exposed blocking in the framework's generic file-stream he
 The settings form was submitted with the existing SSID and blank password/API-secret fields. It returned “Settings saved. Restarting.” The node rebooted and resumed authenticated reporting with saved credentials. The laptop was restored to Sensor Testing. Earlier download interruptions coincided with manual Windows reconnection to the router during the transfer; the successful test left the laptop on the AP until completion.
 
 The tested application has OTA support compiled in, with the manifest URL left empty until the verified schema-2 release is published. Final release/OTA results are appended after publication. Calibration, additional physical radio peers, and controlled power-cut/failed-image rollback acceptance remain open.
+
+## OTA transport recovery
+
+Commit `6ea5e313fba008d41d36ccc3795bf1bcdcc4b531` was published successfully by [Actions run 45153032416](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45153032416). Its 1,222,096-byte asset matched the public manifest SHA-256. Device installation did not complete during the first checks: the OTA transport could wait only one second for a mutex held by cloud requests.
+
+During a later network outage, all 256 slots became pending. Existing unsent records were preserved; new samples could not be retained once the finite buffer filled. Network restoration resumed authenticated reporting. The transport repair reuses verified cloud connections, allows longer cold connections, and gives OTA a fifteen-second lock wait. Idle cloud TLS state is released before OTA or memory-intensive portal logging. Slow HTTP Date replies cannot overwrite an already plausible clock.
+
+The repair build uploaded over USB with image-hash verification, without filesystem formatting or clearing settings. It retained all 256 records, reconnected automatically and returned 200 from both cloud endpoints. Warm requests were typically 0.6–0.9 seconds, and pending records decreased from 255 to 235 during initial observation. The final published repair and its OTA acceptance are recorded below after validation.

@@ -289,6 +289,8 @@ If Actions succeeded but a manual manifest request still shows an older version,
 
 If GitHub release hosts repeatedly time out while Vercel remains reachable, set the OTA manifest URL to `https://esp32-fleet-iot-project3.vercel.app/v1/firmware`. This fixed-repository relay follows the same GitHub Actions channel and serves verified binaries through the dashboard origin. Save once; the URL persists across reboots. A 502 indicates an upstream fetch/validation failure: wait and retry. Never replace the firmware URL with an untrusted origin or disable certificate/hash checks.
 
+Older images that require Content-Length need one application-only USB bootstrap to the firmware supporting close-delimited responses before using this relay. Keep NVS, LittleFS and partition layout. Subsequent updates follow the configured relay automatically. Confirm `Configuration persisted; restarting` when provisioning over serial; a host monitor with blocked output can delay a command. Check live device status after the reboot instead of assuming a host write was applied.
+
 The image is checked for board, length and SHA-256 over verified HTTPS. A pending image must reach healthy storage, sensor, time and cloud reporting before accepting boot. For a confirmed faulty image, publish a corrected new commit or a new commit reverting it. For an unreachable board, use USB application recovery and retain the filesystem where possible.
 
 After migration to `/log0`–`/log7`, use only firmware that understands storage schema 2. Its manifest must include `storageSchema: 2`. Reverting unrelated features must retain that storage support; an old root-only image cannot read the migrated history. Migration preserves records without formatting and can resume after interrupted renames.

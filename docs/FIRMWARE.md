@@ -137,6 +137,8 @@ Run `node scripts/test-firmware-origin.cjs` after installing dashboard dependenc
 
 The download accepts partial stream reads, writes and hashes exactly the bytes received, and tolerates temporary zero-byte reads while the connection remains open. It aborts after 30 seconds without data or a ten-minute total download deadline. Wi-Fi modem sleep is disabled during OTA and its previous mode is restored after a failed or unchanged-version check; reboot restores normal initialization after success. A closed connection, write failure or incomplete image keeps the existing application selected. The watchdog is serviced during transfer waits.
 
+OTA requests use HTTP/1.0. Origins may close the response instead of supplying Content-Length. Unknown-length manifests are read into the same bounded 2 KiB buffer; unknown-length binaries are limited to the validated manifest size and one application slot. A supplied length must match. Exact received length, SHA-256 and complete-image validation are still required before boot selection. This supports Vercel Function responses without accepting an unbounded download.
+
 A pending boot checks readable storage, the sensor identity, Wi-Fi, plausible time, and a successful cloud heartbeat. It confirms after at least 20 seconds. If conditions remain unmet after three minutes, it requests rollback. Reset before confirmation can also cause bootloader rollback.
 
 The cloud heartbeat uses an acknowledged Atlas status write. This health check still does not verify sensor calibration or every device operation. Verify failed-image rollback on the exact board and bootloader being used.

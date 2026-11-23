@@ -1002,9 +1002,14 @@ bool checkOta() {
   std::unique_ptr<char[]> json(new (std::nothrow) char[2048]);
   if (!json) return false;
   int manifestSize = http.getSize();
-  if (manifestSize <= 0 || manifestSize >= 2048 ||
-      http.getStream().readBytes(json.get(), manifestSize) != static_cast<size_t>(manifestSize)) return false;
-  auto error = deserializeJson(data, json.get(), manifestSize);
+  if (manifestSize == 0 || manifestSize >= 2048) return false;
+  // HTTP/1.0 origins may delimit a response by closing the connection instead
+  // of advertising Content-Length. Bound unknown manifests to the same buffer.
+  size_t manifestBytes = http.getStream().readBytes(json.get(), manifestSize > 0 ? manifestSize : 2047);
+  esp_task_wdt_reset();
+  if (!manifestBytes || manifestBytes >= 2047 ||
+      (manifestSize > 0 && manifestBytes != static_cast<size_t>(manifestSize))) return false;
+  auto error = deserializeJson(data, json.get(), manifestBytes);
   json.reset();
   http.end();
   if (error || data["board"].as<String>() != "esp32dev") return false;
@@ -1017,11 +1022,13 @@ bool checkOta() {
   if (version == FLEET_VERSION) return true;
   if (version == settings.getString("attempted", "")) return false;
   if (version.length() != 40 || hash.length() != 64 || !assetGet(http, tls, data["url"].as<String>())) return false;
-  int size = http.getSize();
-  if (size <= 0 || size != (data["size"] | 0)) {
+  int advertisedSize = http.getSize();
+  int size = data["size"] | 0;
+  if (size <= 0 || size > 1310720 || (advertisedSize >= 0 && advertisedSize != size)) {
     Serial.println("OTA rejected: binary length differs from manifest");
     return false;
   }
+  if (advertisedSize < 0) Serial.printf("OTA response length unknown; enforcing manifest size=%d\n", size);
   if (!Update.begin(size)) {
     Serial.printf("OTA flash allocation failed: error=%u heap=%u\n", Update.getError(), ESP.getFreeHeap());
     return false;

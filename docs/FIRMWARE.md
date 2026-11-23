@@ -127,6 +127,14 @@ Each TCP connection allows 15 seconds and each TLS handshake 12 seconds. Failed 
 
 Each valid manifest prints its advertised version and the running version, making stale channel responses visible without changing configuration.
 
+## Vercel firmware origin
+
+Networks that cannot reach GitHub release-asset hosts can use `https://esp32-fleet-iot-project3.vercel.app/v1/firmware` as the node's OTA manifest URL. GitHub Actions still publishes the commit image and stable manifest. The Vercel route reads that fixed repository's manifest, validates its board/schema/version/size/origin, and advertises a same-origin binary URL pinned by commit, SHA-256 and length. It downloads at most one OTA slot's worth of bytes and checks the hash before responding. The ESP32 independently validates the image again over verified HTTPS. No arbitrary upstream URL is accepted.
+
+The manifest is not cached; its upstream query changes each minute to bound stale redirect responses. Binary references are immutable and publicly cacheable. Firmware is already public on GitHub, so this endpoint is public too; it exposes no Wi-Fi, dashboard, database or node credentials. This adds Vercel transfer/function usage and depends on Vercel reaching GitHub. Upstream failures return 502 with a retry hint; the running firmware and local history remain intact. Node ingestion and dashboard authentication are unchanged.
+
+Run `node scripts/test-firmware-origin.cjs` after installing dashboard dependencies to check invalid references, fixed-origin enforcement, payload limits, hash failures and binary delivery.
+
 The download accepts partial stream reads, writes and hashes exactly the bytes received, and tolerates temporary zero-byte reads while the connection remains open. It aborts after 30 seconds without data or a ten-minute total download deadline. Wi-Fi modem sleep is disabled during OTA and its previous mode is restored after a failed or unchanged-version check; reboot restores normal initialization after success. A closed connection, write failure or incomplete image keeps the existing application selected. The watchdog is serviced during transfer waits.
 
 A pending boot checks readable storage, the sensor identity, Wi-Fi, plausible time, and a successful cloud heartbeat. It confirms after at least 20 seconds. If conditions remain unmet after three minutes, it requests rollback. Reset before confirmation can also cause bootloader rollback.

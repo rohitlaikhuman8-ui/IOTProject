@@ -10,6 +10,8 @@ The original Vercel deployment used a source upload through the API. A Git push 
 
 During COM5 commissioning, linking the repository returned a Vercel error requiring a GitHub Login Connection. Connect GitHub in Vercel account authentication settings, then retry the existing project's Git connection. The current live application was deployed through a source upload. Root Directory is configured as `dashboard` for repository builds.
 
+The public `/v1/firmware` GET route relays only this repository's published firmware channel. It requires no new secrets or Render service. GitHub Actions remains the publisher. The route validates manifest origin/schema/size and checks binary size/SHA-256 before serving an immutable reference. Keep production platform access available to the ESP32; dashboard sessions and authenticated node ingestion still apply to their existing routes. Firmware transfers count toward Vercel usage. See [firmware operations](FIRMWARE.md#vercel-firmware-origin) for behavior and local checks.
+
 ## Environment variables
 
 | Variable | Purpose |

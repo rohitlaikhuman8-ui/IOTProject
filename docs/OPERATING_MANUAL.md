@@ -287,6 +287,8 @@ For `OTA connect failed`, record the hostname, IP and elapsed time. Connections 
 
 If Actions succeeded but a manual manifest request still shows an older version, compare the stable release asset's update time with a fresh request such as `manifest.json?verify=<new-commit-sha>`. A cached redirect can temporarily return the old asset after replacement. Allow propagation and request another `ota-check`; keep the configured stable channel URL. Do not erase a node or republish a working image just because a cached response is stale.
 
+If GitHub release hosts repeatedly time out while Vercel remains reachable, set the OTA manifest URL to `https://esp32-fleet-iot-project3.vercel.app/v1/firmware`. This fixed-repository relay follows the same GitHub Actions channel and serves verified binaries through the dashboard origin. Save once; the URL persists across reboots. A 502 indicates an upstream fetch/validation failure: wait and retry. Never replace the firmware URL with an untrusted origin or disable certificate/hash checks.
+
 The image is checked for board, length and SHA-256 over verified HTTPS. A pending image must reach healthy storage, sensor, time and cloud reporting before accepting boot. For a confirmed faulty image, publish a corrected new commit or a new commit reverting it. For an unreachable board, use USB application recovery and retain the filesystem where possible.
 
 After migration to `/log0`–`/log7`, use only firmware that understands storage schema 2. Its manifest must include `storageSchema: 2`. Reverting unrelated features must retain that storage support; an old root-only image cannot read the migrated history. Migration preserves records without formatting and can resume after interrupted renames.

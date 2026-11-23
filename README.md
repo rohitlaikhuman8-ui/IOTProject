@@ -213,4 +213,6 @@ IOTProject/
 - Telemetry contains ADXL345 X/Y/Z, magnitude and movement events. Topology, current sensor data and notification history refresh automatically in IST.
 - OTA verifies HTTPS, board type, length, and SHA-256. Independent image signing and Secure Boot need a separate manufacturing setup.
 
+OTA can follow GitHub directly or use the Vercel manifest at `https://esp32-fleet-iot-project3.vercel.app/v1/firmware` when a network cannot reach GitHub release hosts. Both follow the same Actions-published channel. The Vercel route serves only this repository's validated images; the ESP32 checks them again. See [OTA operations](docs/FIRMWARE.md) and the [measured verification record](docs/VERIFICATION.md) for successful updates, failures and recovery procedures.
+
 The ADXL345 firmware has been built and flashed on the connected COM5 board. Sensor identity, live reads, Wi-Fi, and persistent local storage were exercised. Calibration, multiple-node radio behavior, controlled power cuts, and failed-image rollback still need targeted bench checks. See the [verification record](docs/VERIFICATION.md).

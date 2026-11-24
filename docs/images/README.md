@@ -6,6 +6,7 @@
 | `dashboard-nodes.png` | Live authenticated dashboard after fourth-node commissioning on November 24 |
 | `dashboard-topology.png` | Four registered nodes: 3013a5 online and the three disconnected boards last seen |
 | `dashboard-ist-history.png` | Live IST telemetry and movement history from the fourth node on release 408a075 |
+| `dashboard-reconnected-986aa3.png` | Live third-board reconnect check on November 24, with saved history and four registrations |
 | `dashboard-offline.png` | Physical node offline after its cloud uplink was paused in setup mode |
 | `provisioning-reference.png` | Actual `PortalPage` HTML extracted from firmware, rendered with sample settings |
 | `portal-live.png` | Real November 23 node, live settings/status/recent logs, password fields left blank |

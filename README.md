@@ -10,7 +10,7 @@ Four registered boards have been commissioned on release `408a075`, retaining se
 
 | Item | Value |
 | --- | --- |
-| Current COM5 Node ID | `esp32-3013a5f4e9d4` (commissioned November 24) |
+| Current COM5 Node ID | `esp32-986aa3f4e9d4` (reconnected and rechecked November 24) |
 | USB port | COM5 |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |
@@ -231,3 +231,5 @@ On November 23, 2026, node `esp32-7839a3f4e9d4` installed release `408a075` remo
 Later that evening, `esp32-d01de2f4e9d4` returned on COM5 and received the same checksum-verified release over USB. All 256 existing records migrated without formatting and passed a read-only integrity check with zero invalid records. Its original Node ID/secret were retained, and its saved Vercel OTA channel was checked successfully. The operator's tilt produced five verified cloud movement notifications. Its historical backlog finished uploading, reaching zero pending records by 21:45:30 IST.
 
 Third node `esp32-986aa3f4e9d4` passed provisioning, reboot persistence, sensor/storage, movement and current-version OTA checks on November 23. Fourth node `esp32-3013a5f4e9d4` passed the same commissioning checks on November 24 after recovery from two interrupted USB writes. Both received unique secrets, with earlier registrations preserved. Their checkpoints showed zero pending uploads; this is not a guarantee that an unplugged node's last report is a live reading or always has an empty queue.
+
+Later on November 24 the third board was reconnected to COM5. It already had the current firmware, restored its saved settings, resumed authenticated uploads and passed a read-only check of all 83 then-retained records with zero errors. No reflash, formatting, credential change or fifth registration was needed. See its [reconnect record](docs/NODE-986AA3.md#november-24-reconnect-check).

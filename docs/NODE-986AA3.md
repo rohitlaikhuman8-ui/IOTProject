@@ -44,3 +44,17 @@ The public release binary was verified before flashing: 1,224,352 bytes, SHA-256
 On November 24 the dashboard showed Last seen at November 23, 22:23:54 IST, with last-reported values of 66 local records and one pending record. These are historical values, not a new live health check. The connected COM5 board was then identified as a different MAC, and the operator explicitly requested commissioning it too. No reflash or settings change was made to this third board during that follow-up.
 
 Calibration, sustained-throughput tests, controlled power cuts, failed-image rollback and simultaneous multi-node radio testing remain separate acceptance work. See [verification](VERIFICATION.md) and [firmware behavior](FIRMWARE.md).
+
+## November 24 reconnect check
+
+The operator reconnected this board after commissioning the fourth board. Read-only MAC identification and serial status confirmed the same identity and the already-installed `408a075` release. No reflash, filesystem upload, configuration write, secret rotation or additional registration was performed.
+
+At 15:21:01 IST serial reported saved Sensor Testing Wi-Fi, ADXL345 address 0x53, healthy storage, synchronized time, setup inactive, 75 retained records and zero pending uploads. Authenticated heartbeat and telemetry returned HTTP 200, confirming that its original individual credential remained valid after the fourth registration had been added.
+
+Around 15:22 IST a read-only integrity check validated all 83 then-retained records with zero invalid records in 8,021 ms. The authenticated dashboard showed this board online in running mode, live readings, healthy sensor/storage and the four existing registrations. Its two pending readings at that dashboard snapshot were in the retry/upload queue; successful uploads continued. Newly observed movement records also appeared in cloud notification history without requesting another physical tilt test.
+
+The saved Vercel OTA channel was checked at approximately 15:23 IST and advertised the exact version already running, so no image was reinstalled. The serial port was released after diagnosis. This verifies ordinary reconnect/restart persistence; it does not replace a controlled interruption-during-write test.
+
+![Authenticated dashboard during the third board's reconnect check](images/dashboard-reconnected-986aa3.png)
+
+The screenshot is a dated checkpoint. Online status and pending counts continue to change with power, network access and new samples.

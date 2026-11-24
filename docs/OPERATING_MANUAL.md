@@ -271,6 +271,8 @@ On a new board only, initialize the filesystem:
 
 Close Serial Monitor before uploading. If the uploader stays at Connecting, hold BOOT until writing begins, then release it. A normal update keeps the partition layout unchanged and uploads the application.
 
+If long writes repeatedly stop with “chip stopped responding,” first check the cable, direct USB port and serial speed. The November 24 board recovered using shorter, sector-aligned application sections with separate verification, followed by full-image `verify_flash` against the original published binary before normal boot. This is an advanced recovery procedure: confirm the hardware MAC, partition offsets, whole-image SHA-256 and every section's destination first. Section success alone does not prove the complete application is correct. Preserve NVS and existing logs; initialize a filesystem only when its blank/unformatted state has been established. If short sections also fail, stop and correct the USB/power connection rather than repeatedly erasing the device.
+
 For Arduino IDE export, run `powershell -ExecutionPolicy Bypass -File scripts/export-arduino.ps1`. Use the documented Espressif core 2.0.17, ArduinoJson 7.3.1, ESP32 Dev Module and COM5. The filesystem still needs explicit initial provisioning.
 
 ## 20. OTA procedure and recovery

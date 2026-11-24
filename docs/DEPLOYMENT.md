@@ -12,6 +12,8 @@ During COM5 commissioning, linking the repository returned a Vercel error requir
 
 The public `/v1/firmware` GET route relays only this repository's published firmware channel. It requires no new secrets or Render service. GitHub Actions remains the publisher. The route validates manifest origin/schema/size and checks binary size/SHA-256 before serving an immutable reference. Keep production platform access available to the ESP32; dashboard sessions and authenticated node ingestion still apply to their existing routes. Firmware transfers count toward Vercel usage. See [firmware operations](FIRMWARE.md#vercel-firmware-origin) for behavior and local checks.
 
+The third node's credential was activated by redeployment `dpl_5jZ1VtFCbTuBrRCKqjCCZobpTdTf` on November 23. The fourth was activated by `dpl_C31oWXRvr5vNqacNBUtfTG1bVpHm` on November 24. Both reached Ready using the existing tested application source and updated Production environment. `NODE_SECRETS_JSON` now has four separate node entries; earlier entries were retained. Secrets are not documented or committed. The firmware channel remains release `408a075`; registration/documentation changes alone do not publish new firmware.
+
 ## Environment variables
 
 | Variable | Purpose |

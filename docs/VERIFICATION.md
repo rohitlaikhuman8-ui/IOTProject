@@ -1,5 +1,9 @@
 # Verification record
 
+## Latest commissioning checkpoint — November 24, 2026
+
+Four nodes are registered with separate secrets on release `408a075`. The fourth, `esp32-3013a5f4e9d4`, was verified online after its November 24 installation: saved settings survived reboot, ADXL345 and storage were healthy, record integrity passed, time was synchronized, the operator's movement was persisted in notification history, and pending uploads were zero. The other three boards were not connected during this check and retained Last-seen histories. See [third-node](NODE-986AA3.md) and [fourth-node](NODE-3013A5.md) records; the older checkpoints below remain historical evidence.
+
 ## Latest verified state — November 23, 2026
 
 At approximately 21:00 IST, COM5 node `esp32-7839a3f4e9d4` was online on release `408a075bcb8b8eb4366a380ffc283637349bcc57`, installed remotely through the Vercel firmware origin. Pending boot was confirmed, sensor/storage were healthy, all 256 retained records were present, the upload queue was empty, IST matched host time, and setup AP was inactive. The authenticated dashboard showed fresh telemetry and movement notifications. The November 18 node retained its historical last-seen state. Detailed acceptance and earlier failures follow below.
@@ -192,3 +196,23 @@ Atlas read-only queries confirmed five movement events captured at 21:23:44, 21:
 Direct Chromium navigation timed out at 30 and 60 seconds, while direct HTTP returned 200. Routing browser requests through Playwright's request client completed normal password login and a real dashboard API read. The 21:39:24 IST snapshot showed d01de2 online on `408a075`, sensor/storage healthy, synchronized time, live readings, matching movement notifications and 111 pending records. The unplugged 7839a3 node retained Last seen at 21:09:33 IST. Transport retries and new sampling continued; no records were deleted to hide the backlog. The documentation capture script now supports that optional HTTP transport and waits for DOM/UI readiness instead of global network idleness.
 
 The same node's pending count decreased to nine at 21:44:05 and zero at 21:45:30 IST, confirmed by a direct Atlas node-state query. No pending data was discarded and the sampling interval remained ten seconds. Final screenshots were refreshed after queue recovery. This verifies this observed recovery, not a sustained-throughput guarantee for every network or sampling rate.
+
+## Third node commissioned November 23
+
+New MAC `d4:e9:f4:a3:6a:98` produced Node ID `esp32-986aa3f4e9d4`. Its original application/settings area was backed up privately, with retries on two read sections, and the original application checksum/hash validated. Both filesystem superblock pages were blank. A third unique node secret was added without replacing the existing entries, and Vercel redeployment `dpl_5jZ1VtFCbTuBrRCKqjCCZobpTdTf` reached Ready. The same checksum-verified public `408a075` binary and a one-time initial LittleFS image were flashed successfully; BOOT was not needed.
+
+Persistent provisioning was acknowledged at 22:14:44 IST and followed by reboot, sensor detection at 0x53/0xE5, retained local records and authenticated HTTP 200 reporting. Serial status at 22:15:54 showed synchronized time, healthy sensor/storage, setup inactive and zero backlog. The scheduled OTA check at 22:15:56 reported matching advertised/running versions. At 22:17:24 the storage check validated all 17 then-retained records with zero errors in 607 ms.
+
+The operator's physical tilt generated fresh database-backed movement alerts. Example `398d05f9e88ba442c6b896439b5db197` was captured at 22:19:44 and received at 22:19:46.023 IST, delta 21.13259 m/s². The authenticated dashboard API at 22:20:12 showed this node online on `408a075`, mode running, 39 records, zero pending uploads and both older registrations preserved. See [the complete node record](NODE-986AA3.md).
+
+During the November 24 follow-up, the dashboard showed the third node's Last seen at November 23, 22:23:54 IST, with 66 records and one pending in its last report. COM5 enumerated but did not answer fleet status. A normal reset produced a different boot image, and read-only MAC identification revealed `d4:e9:f4:a5:13:30`, not the third board. The operator explicitly authorized configuring this newly connected fourth board. Historical successful checks above are not presented as current online status.
+
+## Fourth node commissioned November 24
+
+The new board's hardware ID is `esp32-3013a5f4e9d4`. Its compatible partition table and two blank filesystem superblock pages were checked before writing. The original boot/settings/application region was archived in 1,376,256 bytes; one read section required a retry, every section's transcript matched the MAC, and the original application checksum/hash validated. A fourth unique secret was added while retaining the other three. Vercel redeployment `dpl_C31oWXRvr5vNqacNBUtfTG1bVpHm` reached Ready.
+
+Two long USB writes stopped near 71% and 89% with “chip stopped responding.” Recovery wrote five shorter application sections successfully, then full-image verification against the published 1,224,352-byte binary reported a matching digest. The matched bootloader/boot-selection data were verified and the previously blank filesystem initialized once. NVS and the existing partition table were retained. No BOOT intervention was required.
+
+Permanent configuration was acknowledged at 15:08:15 IST and rebooted into the exact release, detecting ADXL345 0x53/0xE5. The first local record survived that reboot. Serial at 15:08:32 showed healthy sensor/storage, setup inactive, synchronized time and zero backlog. The 15:08:43 integrity check validated four records, zero invalid, in 93 ms. The operator tilted the device; movement event `9ebcd284363cd21db1a8a3600502c93b` was captured at 15:09:14 and received in notification history at 15:09:16.255 IST, delta 25.40308 m/s².
+
+The authenticated production dashboard API at 15:09:44 showed all four IDs, this node online in running mode, 13 local records, zero pending uploads, healthy sensor/storage and synchronized time. Older identities/history were preserved. The scheduled Vercel OTA check at 15:09:57 matched the running version without reinstalling it. These are USB commissioning and current-version channel checks, not an additional remote-image or deliberate rollback test.

@@ -2,10 +2,10 @@
 
 | File | Source |
 | --- | --- |
-| `dashboard-login.png` | Live deployed application sign-in on November 23, 2026 |
-| `dashboard-nodes.png` | Live authenticated dashboard after the returning d01de2 board's November 23 upgrade |
-| `dashboard-topology.png` | Live topology with d01de2 online and the unplugged 7839a3 board last seen |
-| `dashboard-ist-history.png` | Live IST telemetry and movement history with the returning board on release 408a075 |
+| `dashboard-login.png` | Live deployed application sign-in on November 24, 2026 |
+| `dashboard-nodes.png` | Live authenticated dashboard after fourth-node commissioning on November 24 |
+| `dashboard-topology.png` | Four registered nodes: 3013a5 online and the three disconnected boards last seen |
+| `dashboard-ist-history.png` | Live IST telemetry and movement history from the fourth node on release 408a075 |
 | `dashboard-offline.png` | Physical node offline after its cloud uplink was paused in setup mode |
 | `provisioning-reference.png` | Actual `PortalPage` HTML extracted from firmware, rendered with sample settings |
 | `portal-live.png` | Real November 23 node, live settings/status/recent logs, password fields left blank |

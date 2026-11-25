@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Reconnected; first component-up reference recorded; awaiting opposite face |
+| 2 | `esp32-7839a3f4e9d4` | Component-up/down references recorded; awaiting X-up; repeatability/alignment checks remain |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -266,3 +266,17 @@ The requested capture window was **14:58:25–15:00:25 IST**. Twelve unique peri
 | Z | 6.909765 | 0.146168 |
 
 Mean raw magnitude was **6.942521 m/s²**, below the conventional gravity reference. This point alone cannot determine Z bias versus scale or establish a hardware fault. Its variation was greater than Node 1's initial reference, so secure support and repeatability need attention in later windows. No coefficients were computed or applied to Node 2. Next: level component-side down, then the signed X/Y reference pairs, followed by independent validation before installation. Node 1's coefficients must not be reused.
+
+### Node 2 component-side-down reference — November 25
+
+The operator confirmed readiness with the opposite face downward. The requested capture window was **15:02:50–15:04:50 IST**. Twelve unique periodic samples were captured at **15:02:57–15:04:48 IST**. Node ID, boot ID and `408a075` firmware remained unchanged from the first reference; no calibration revision was applied. [Complete opposite-face evidence](calibration/node2-component-down-2026-11-25.json) contains source events and checks.
+
+| Axis | Raw mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -0.643807 | 0.039388 |
+| Y | -0.286844 | 0.204014 |
+| Z | -12.184518 | 0.041444 |
+
+Mean magnitude was **12.206503 m/s²**. The paired faces give a provisional Z bias **-2.637376 m/s²** and scale **1.027181801**. These values are not installed or accepted final calibration. Z was relatively steady, but Y varied from 0 to -0.497197 m/s², with standard deviation 0.204014 m/s². That off-axis variation requires support/alignment and repeatability attention; do not claim a fully stationary three-axis reference or use this window to estimate Y coefficients. Repeat references if later checks show the fit is unsuitable.
+
+Next requested position is **+X arrow upward** with the board secured against slipping and wires loose. Remaining X/Y pairs, independent validation and per-node installation are outstanding. Node 1's installed correction remains separate.

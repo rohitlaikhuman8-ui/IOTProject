@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Component-up/down and X-down recorded; awaiting actual X-up positioning |
+| 1 | `esp32-d01de2f4e9d4` | Component-up/down and X-up/down recorded; awaiting Y-up positioning |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -85,3 +85,17 @@ The requested capture window was **14:09:35–14:11:35 IST**. Twelve unique peri
 | Z | -2.262884 | 0.066910 |
 
 Mean vector magnitude was **10.041131 m/s²**. This provides the negative-X reference, subject to alignment and later validation. No calibration settings, firmware or movement thresholds were changed. Next: reverse this vertical position so the printed +X arrow points upward, confirm readiness, and collect a fresh X-up window. The Y-up/down references and post-application validation remain outstanding.
+
+### Node 1 confirmed X-up reference — November 25
+
+After correcting the earlier downward orientation, the operator confirmed the +X arrow pointing upward. Measured X became positive. The requested capture window was **14:13:15–14:15:15 IST**. Twelve unique periodic samples were captured at **14:13:18–14:15:08 IST**, selected by capture time and excluding movement events. The original boot ID and firmware `408a075` were retained. [Complete X-up evidence](calibration/node1-x-up-2026-11-25.json) includes the source measurements and provisional paired estimate.
+
+| Axis | Mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 10.026813 | 0.035854 |
+| Y | -0.207166 | 0.038101 |
+| Z | -1.733816 | 0.077069 |
+
+Mean vector magnitude was **10.178044 m/s²**. Combined with the X-down mean -9.778210 m/s², the provisional X bias is **0.124301 m/s²** and multiplicative scale **0.990319**, using `(rawX - bias) * scale`. These estimates remain **unapplied and subject to alignment and independent validation**. No firmware, saved settings or thresholds were changed.
+
+Four physical reference positions are now recorded for Node 1. Next: +Y arrow straight upward, then its opposite downward position, each confirmed by the operator and collected separately. Full three-axis calibration, persistent application and validation remain incomplete; Nodes 2–4 still await their own measurements.

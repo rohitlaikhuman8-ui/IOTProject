@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Flat component-up window recorded; awaiting opposite-face positioning |
+| 1 | `esp32-d01de2f4e9d4` | Component-up/down windows recorded; awaiting +X reference positioning |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -57,3 +57,17 @@ The operator confirmed the ADXL345 itself was flat. After settling, the requeste
 | Z | 7.792610 | 0.049263 |
 
 Mean vector magnitude was **7.921518 m/s²**, below the conventional gravity reference. This single position cannot distinguish offsets, gain errors and residual alignment error, and does not establish a hardware failure. No coefficient was computed or applied. The next requested pose is level with the component side downward, safely supported. Remaining signed-axis windows and independent validation are still required before declaring this node calibrated. Nodes 2–4 have not yet started their own reference measurements.
+
+### Node 1 component-side-down reference — November 25
+
+The operator confirmed the opposite-face position. After settling, the requested capture window was **14:05:10–14:07:10 IST**. Twelve unique periodic samples were captured at **14:05:17–14:07:07 IST**, selected by device capture time. All retained the same boot ID as the component-up reference and firmware `408a075`. [Complete face-down evidence](calibration/node1-component-down-2026-11-25.json) includes the source events and statistics.
+
+| Axis | Mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.168920 | 0.052739 |
+| Y | -0.165732 | 0.086806 |
+| Z | -11.308048 | 0.044162 |
+
+Mean vector magnitude was **11.310942 m/s²**. The Z sign reversal is consistent with turning the sensor over. Using these two physical faces provisionally as the positive/negative Z references gives bias **-1.757719 m/s²** and multiplicative scale **1.026839**, with correction `(rawZ - bias) * scale`. These are diagnostic estimates, **not applied or accepted final calibration**. Physical alignment still needs validation: Y means differ between the two faces, so residual tilt or other errors may affect the estimate. Do not infer Y bias or scale from this pair.
+
+Next requested pose: securely supported vertical board with its printed **+X arrow pointing upward**. If the marking is absent or ambiguous, stop to establish the actual sensor-axis direction before assigning the pose. The -X, +Y and -Y windows, independent orientation checks, persistent firmware support and post-application validation remain open. Nodes 2–4 remain uncalibrated.

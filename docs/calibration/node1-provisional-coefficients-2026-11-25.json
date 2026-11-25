@@ -1,0 +1,86 @@
+{
+  "nodeId": "esp32-d01de2f4e9d4",
+  "firmware": "408a075bcb8b8eb4366a380ffc283637349bcc57",
+  "status": "PROVISIONAL: not applied; held-out physical validation required",
+  "referenceGravity": 9.80665,
+  "unit": "m/s2",
+  "formula": "correctedAxis = (rawAxis - bias) * scale",
+  "coefficients": {
+    "x": {
+      "bias": 0.12430137500000082,
+      "scale": 0.9903194468551564
+    },
+    "y": {
+      "bias": -0.19601062499999955,
+      "scale": 0.9714042591584341
+    },
+    "z": {
+      "bias": -1.7577194166666663,
+      "scale": 1.026838979638284
+    }
+  },
+  "referenceFiles": [
+    "node1-x-up-2026-11-25.json",
+    "node1-x-down-2026-11-25.json",
+    "node1-y-up-2026-11-25.json",
+    "node1-y-down-2026-11-25.json",
+    "node1-component-up-2026-11-25.json",
+    "node1-component-down-2026-11-25.json"
+  ],
+  "fitChecks": [
+    {
+      "file": "node1-x-up-2026-11-25.json",
+      "correctedMean": {
+        "x": 9.80665,
+        "y": -0.010836216886800115,
+        "z": 0.02454530225952829
+      },
+      "magnitude": 9.806686704384893
+    },
+    {
+      "file": "node1-x-down-2026-11-25.json",
+      "correctedMean": {
+        "x": -9.80665,
+        "y": -0.09133252127586794,
+        "z": -0.5187230275790593
+      },
+      "magnitude": 9.820784053795471
+    },
+    {
+      "file": "node1-y-up-2026-11-25.json",
+      "correctedMean": {
+        "x": 0.018936021933247494,
+        "y": 9.80665,
+        "z": -0.07363590677858602
+      },
+      "magnitude": 9.806944735349218
+    },
+    {
+      "file": "node1-y-down-2026-11-25.json",
+      "correctedMean": {
+        "x": -0.050502866934860086,
+        "y": -9.80665,
+        "z": 0.18818047951655578
+      },
+      "magnitude": 9.808585354419856
+    },
+    {
+      "file": "node1-component-up-2026-11-25.json",
+      "correctedMean": {
+        "x": 0.04418652697619571,
+        "y": -1.1811325029447912,
+        "z": 9.80665
+      },
+      "magnitude": 9.877621710775264
+    },
+    {
+      "file": "node1-component-down-2026-11-25.json",
+      "correctedMean": {
+        "x": 0.04418652697619571,
+        "y": 0.029412299584331048,
+        "z": -9.80665
+      },
+      "magnitude": 9.806793653128073
+    }
+  ]
+}

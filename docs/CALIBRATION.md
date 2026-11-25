@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Component-up/down, X-up/down and Y-up recorded; awaiting Y-down positioning |
+| 1 | `esp32-d01de2f4e9d4` | All six references recorded; provisional coefficients calculated, awaiting independent validation |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -111,3 +111,31 @@ The operator confirmed the +Y arrow pointing upward, and measured Y was positive
 | Z | -1.829431 | 0.035853 |
 
 Mean vector magnitude was **10.068087 m/s²**. This records the positive-Y reference; it does not establish Y bias or scale without the opposite pose. No coefficients, firmware, saved settings or movement thresholds were changed. Five of six physical references are recorded for Node 1. Next: +Y arrow downward for a separately confirmed window, then calculate provisional three-axis coefficients, check alignment and independently validate corrections before applying them persistently. Nodes 2–4 still await their own reference measurements.
+
+### Node 1 Y-down reference — November 25
+
+The operator confirmed the +Y arrow downward. The requested capture window was **14:20:50–14:22:50 IST**. Twelve unique periodic samples were captured at **14:20:58–14:22:48 IST**, selected by device capture time with movement records excluded. All retained the original boot ID and firmware `408a075`. [Complete Y-down evidence](calibration/node1-y-down-2026-11-25.json) includes source events and statistics.
+
+| Axis | Mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.073305 | 0.030328 |
+| Y | -10.291344 | 0.057562 |
+| Z | -1.574458 | 0.102926 |
+
+Mean vector magnitude was **10.411797 m/s²**. All six operator-positioned references are now recorded for Node 1. No settings or firmware were changed.
+
+### Node 1 provisional six-position calculation
+
+The [coefficient record](calibration/node1-provisional-coefficients-2026-11-25.json) identifies all six input files, firmware and Node ID, and includes corrected reference means. Each input contains at least twelve unique event IDs from the same node. The paired-axis arithmetic was checked to map the two fitted means to ±9.80665 m/s². That arithmetic check is a fit check, not independent physical validation.
+
+| Axis | Bias to subtract (m/s²) | Multiplicative scale |
+| --- | --- | --- |
+| X | 0.124301375 | 0.990319447 |
+| Y | -0.196010625 | 0.971404259 |
+| Z | -1.757719417 | 1.026838980 |
+
+Apply the formula `(rawAxis - bias) * scale` separately to each axis. **These coefficients are provisional, are not installed on the ESP32 and must not be copied to other nodes.**
+
+The reference-fit corrected vector magnitudes range from approximately 9.8067 to 9.8776 m/s². The earlier component-up reference retains corrected Y approximately -1.1811 m/s², and X-down retains corrected Z approximately -0.5187 m/s². These cross-axis residuals require alignment/repeatability checks and cannot be dismissed as verified calibration. A diagonal correction does not compensate arbitrary mounting rotation or cross-axis coupling.
+
+Next requested action is a **new** level component-up window, kept separate from the fitted references. Apply the provisional correction offline to those new samples and review repeatability, magnitude and cross-axis residuals before deciding whether any reference must be repeated. Persistent per-node firmware support, reboot validation and controlled movement checks remain open. Nodes 2–4 still await their own six reference windows.

@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Component-up/down windows recorded; awaiting +X reference positioning |
+| 1 | `esp32-d01de2f4e9d4` | Component-up/down and X-down recorded; awaiting actual X-up positioning |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -71,3 +71,17 @@ The operator confirmed the opposite-face position. After settling, the requested
 Mean vector magnitude was **11.310942 m/s²**. The Z sign reversal is consistent with turning the sensor over. Using these two physical faces provisionally as the positive/negative Z references gives bias **-1.757719 m/s²** and multiplicative scale **1.026839**, with correction `(rawZ - bias) * scale`. These are diagnostic estimates, **not applied or accepted final calibration**. Physical alignment still needs validation: Y means differ between the two faces, so residual tilt or other errors may affect the estimate. Do not infer Y bias or scale from this pair.
 
 Next requested pose: securely supported vertical board with its printed **+X arrow pointing upward**. If the marking is absent or ambiguous, stop to establish the actual sensor-axis direction before assigning the pose. The -X, +Y and -Y windows, independent orientation checks, persistent firmware support and post-application validation remain open. Nodes 2–4 remain uncalibrated.
+
+### Node 1 X-down reference — November 25
+
+The operator initially reported X-up readiness, but the measured X sign was negative. During collection the operator clarified that the arrow was pointing **downward** and was asked to keep that position. This window is therefore recorded as **X-down**, not X-up. The actual X-up reference remains outstanding; no coefficients were calculated from a mislabeled pair.
+
+The requested capture window was **14:09:35–14:11:35 IST**. Twelve unique periodic samples were captured at **14:09:37–14:11:27 IST**, using capture-time selection and excluding movement records. All shared the original boot ID and `408a075` firmware. [Complete X-down evidence](calibration/node1-x-down-2026-11-25.json) preserves the corrected pose description and source samples.
+
+| Axis | Mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -9.778210 | 0.024911 |
+| Y | -0.290032 | 0.050154 |
+| Z | -2.262884 | 0.066910 |
+
+Mean vector magnitude was **10.041131 m/s²**. This provides the negative-X reference, subject to alignment and later validation. No calibration settings, firmware or movement thresholds were changed. Next: reverse this vertical position so the printed +X arrow points upward, confirm readiness, and collect a fresh X-up window. The Y-up/down references and post-application validation remain outstanding.

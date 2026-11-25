@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Six references recorded; first validation failed level-position screen; alignment/repeatability check pending, not installed |
+| 2 | `esp32-7839a3f4e9d4` | Two validation windows improved magnitude but failed level-position screen; level-reference method under review, not installed |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -363,3 +363,18 @@ The operator confirmed readiness for a fresh supported-level component-up check.
 Corrected mean magnitude error was **+1.082768%**, inside the unchanged 3% bench screen. Corrected axis sample standard deviations were **0.028254, 0.046675 and 0.045748 m/s²**, inside the 0.15 m/s² repeatability screen. Identity, independent events, timing, expected boot/version and uncorrected-input checks passed. The level-position screen **failed** because absolute corrected Y 1.029981 m/s² exceeded 0.5 m/s². Improved magnitude alone does not pass full validation.
 
 **Node 2 remains uncalibrated: provisional values are not accepted or installed.** Tilt, reference alignment or model/sensor error may explain the residual; this window alone cannot distinguish them. The operator was asked to inspect headers/components and support the actual PCB level in both directions before another held-out check. Do not refit or zero Y from this one pose, or relax limits to obtain a pass. If alignment can be independently verified and the residual persists, repeat the suspect reference orientations and investigate the fit; any changed coefficients require fresh validation.
+
+### Node 2 supported-level repeat validation — November 25
+
+The operator confirmed readiness after re-supporting the PCB. Coefficients and numeric screening criteria were unchanged. The requested capture window was **15:31:00–15:33:00 IST**. Twelve unique periodic samples were captured at **15:31:01–15:32:51 IST**, with the same expected boot `cd8da16d0a1c412ff2815da16d38c21e`, firmware `795d041` and revision `none`. [Repeat raw evidence](calibration/node2-validation-leveled-2026-11-25.json) and [repeat analysis](calibration/node2-validation-leveled-result-2026-11-25.json) retain the full results; the earlier unsuccessful window remains separate.
+
+| Quantity | Raw mean (m/s²) | Corrected offline mean (m/s²) |
+| --- | --- | --- |
+| X | 0.057369 | 0.338915 |
+| Y | -0.478074 | -0.575188 |
+| Z | 6.938450 | 9.836114 |
+| Vector magnitude (mean of sample magnitudes) | 6.955369 | 9.858903 |
+
+Corrected magnitude error improved to **+0.532829%**, inside the 3% screen. Corrected axis sample standard deviations **0.025271, 0.054425 and 0.054173 m/s²** passed the 0.15 m/s² repeatability screen. Identity, independence, timing, stable expected boot/firmware and uncorrected-input checks passed. The level-position screen still **failed**: corrected Y magnitude **0.575188 m/s²** exceeded the unchanged **0.5 m/s²** limit by approximately 0.075188 m/s². Corrected X was inside the limit.
+
+**Validation remains incomplete; nothing was installed or refitted.** Improvement after repositioning is useful evidence but does not establish that all residual error is tilt, nor that the coefficients are accurate. The operator was asked whether level was established with a spirit level/verified fixture or only visually. Establish that reference before repeating more nominally level windows. If externally verified alignment still fails, revisit the flagged reference positions/model rather than tilting until the calculated X/Y values happen to be zero or changing limits after the result. Node 2 continues logging with revision `none`.

@@ -1,0 +1,98 @@
+{
+  "nodeId": "esp32-d01de2f4e9d4",
+  "status": "OFFLINE_BENCH_SCREEN_PASS; not installed or production accepted",
+  "application": "Offline calculation only; device readings and settings unchanged",
+  "criteria": {
+    "purpose": "Bench screening only; not a manufacturer accuracy specification or final production acceptance",
+    "minUniqueSamples": 12,
+    "minSampleSpanSeconds": 100,
+    "meanMagnitudeErrorPercentMax": 3,
+    "absCorrectedMeanXYMax": 0.5,
+    "maxCorrectedAxisSampleStdDev": 0.15,
+    "requireSingleBoot": true,
+    "requireSameReferenceBootAndFirmware": true
+  },
+  "checks": {
+    "minimumSamples": true,
+    "uniqueEvents": true,
+    "independentEvents": true,
+    "sameNode": true,
+    "captureWindow": true,
+    "sampleSpan": true,
+    "singleReferenceBoot": true,
+    "sameFirmware": true,
+    "gravityMagnitude": true,
+    "levelXY": true,
+    "stationaryRepeatability": true
+  },
+  "first": 1795597179,
+  "last": 1795597289,
+  "count": 12,
+  "raw": {
+    "x": {
+      "mean": 0.06374333333333333,
+      "sampleStdDev": 0.029774470618401605,
+      "min": 0.038246,
+      "max": 0.114738
+    },
+    "y": {
+      "mean": 0.08286633333333333,
+      "sampleStdDev": 0.03938792233744509,
+      "min": 0.038246,
+      "max": 0.152984
+    },
+    "z": {
+      "mean": 7.8914115,
+      "sampleStdDev": 0.0787755651426597,
+      "min": 7.802171,
+      "max": 8.069892
+    }
+  },
+  "corrected": {
+    "x": {
+      "mean": -0.05997180632596566,
+      "sampleStdDev": 0.02948623727322059,
+      "min": -0.08522231136891387,
+      "max": -0.00947079624006924
+    },
+    "y": {
+      "mean": 0.27090226510614873,
+      "sampleStdDev": 0.03826159551799579,
+      "min": 0.22755788326107967,
+      "max": 0.33901486514840007
+    },
+    "z": {
+      "mean": 9.908103744866219,
+      "sampleStdDev": 0.08088982093151799,
+      "min": 9.81646812090381,
+      "max": 10.09137447937155
+    }
+  },
+  "rawMagnitude": {
+    "mean": 7.8922415627898586,
+    "sampleStdDev": 0.07921324090510717,
+    "min": 7.802358478452077,
+    "max": 8.07170440625671
+  },
+  "correctedMagnitude": {
+    "mean": 9.912090731317816,
+    "sampleStdDev": 0.08156634583645013,
+    "min": 9.819475128605912,
+    "max": 10.097178400813775
+  },
+  "magnitudeErrorPercent": 1.0751962323302777,
+  "coefficients": {
+    "x": {
+      "bias": 0.12430137500000082,
+      "scale": 0.9903194468551564
+    },
+    "y": {
+      "bias": -0.19601062499999955,
+      "scale": 0.9714042591584341
+    },
+    "z": {
+      "bias": -1.7577194166666663,
+      "scale": 1.026838979638284
+    }
+  }
+}

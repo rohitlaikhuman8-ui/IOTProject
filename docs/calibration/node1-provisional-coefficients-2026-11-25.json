@@ -1,7 +1,7 @@
 {
   "nodeId": "esp32-d01de2f4e9d4",
   "firmware": "408a075bcb8b8eb4366a380ffc283637349bcc57",
-  "status": "PROVISIONAL: not applied; held-out physical validation required",
+  "status": "OFFLINE_BENCH_SCREEN_PASS on supported-level held-out window; coefficients remain provisional and are not installed",
   "referenceGravity": 9.80665,
   "unit": "m/s2",
   "formula": "correctedAxis = (rawAxis - bias) * scale",
@@ -82,5 +82,10 @@
       },
       "magnitude": 9.806793653128073
     }
-  ]
+  ],
+  "independentValidation": {
+    "file": "node1-validation-leveled-result-2026-11-25.json",
+    "result": "All recorded bench-screen checks passed",
+    "scope": "Single held-out level pose; not on-device, full orientation or production acceptance"
+  }
 }

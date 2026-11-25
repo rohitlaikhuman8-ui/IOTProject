@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Six references and independent window recorded; magnitude improved, level-position screen failed; alignment check pending |
+| 1 | `esp32-d01de2f4e9d4` | Six references recorded; leveled repeat passed offline bench screen; persistent firmware application pending |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -158,3 +158,20 @@ Corrected mean magnitude error was **+1.506050%**, inside the 3% screen. Correct
 **Result: validation incomplete; calibration not accepted or installed.** A residual Y component may reflect tilt, reference alignment error or sensor/model error; this window alone does not establish which. Do not zero Y from this single pose, relax the screening criterion after viewing the result, or claim the improved magnitude proves full calibration.
 
 Next: inspect whether headers/components are tilting the PCB. Support the actual PCB level with nonconductive supports, leaving pins/wires unstressed, and independently verify alignment if possible. Confirm a corrected physical position before collecting another held-out window. If a reference is repeated and coefficients change, that changes the fit and requires a fresh independent validation window. If level cannot be established, record the limitation rather than declaring a three-axis calibration pass. Firmware, saved settings, thresholds and all other nodes remain unchanged.
+
+### Node 1 supported-level repeat validation — November 25
+
+After the first validation failed its level-position screen, the operator confirmed readiness with the PCB supported and level. The coefficients and screening criteria were **unchanged**. The requested capture window was **14:29:35–14:31:35 IST**. Twelve unique samples were captured at **14:29:39–14:31:29 IST**; all were separate from the six fitting windows and retained the reference boot ID and firmware. [Repeat raw samples](calibration/node1-validation-leveled-2026-11-25.json) and [repeat analysis](calibration/node1-validation-leveled-result-2026-11-25.json) preserve the complete result. The earlier unsuccessful validation is retained above.
+
+| Quantity | Raw mean (m/s²) | Corrected offline mean (m/s²) |
+| --- | --- | --- |
+| X | 0.063743 | -0.059972 |
+| Y | 0.082866 | 0.270902 |
+| Z | 7.891412 | 9.908104 |
+| Vector magnitude (mean of sample magnitudes) | 7.892242 | 9.912091 |
+
+Corrected magnitude error was **+1.075196%**, within the unchanged 3% screen. Absolute corrected X/Y means were below 0.5 m/s². Corrected axis sample standard deviations were **0.029486, 0.038262 and 0.080890 m/s²**, below 0.15 m/s². All eleven recorded checks, including sample identity, independence, time span and matching boot/firmware, passed.
+
+**Result: offline bench-screen pass for this held-out supported-level position.** The improvement after repositioning supports checking physical alignment, but does not prove every residual error comes from tilt. This is not a full orientation/temperature accuracy certification or an on-device calibration pass. No coefficients were refitted to this validation window.
+
+The ESP32 still runs `408a075` and reports uncorrected measurements. Firmware support for persistent per-axis corrections, writing this node's settings, reboot persistence and on-device verification remain required. A host serial-port inventory after the test showed only Bluetooth COM3/COM4 and no ESP32 USB port. The operator was asked to connect Node 1 by data USB for the next installation/verification stage; this request does not authorize applying its coefficients to any other Node ID. Nodes 2–4 remain online and await their individual calibration windows.

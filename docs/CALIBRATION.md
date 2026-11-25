@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Component-up/down references recorded; awaiting X-up; repeatability/alignment checks remain |
+| 2 | `esp32-7839a3f4e9d4` | Component-up/down and X-up recorded; awaiting X-down; repeatability/alignment checks remain |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -280,3 +280,17 @@ The operator confirmed readiness with the opposite face downward. The requested 
 Mean magnitude was **12.206503 m/s²**. The paired faces give a provisional Z bias **-2.637376 m/s²** and scale **1.027181801**. These values are not installed or accepted final calibration. Z was relatively steady, but Y varied from 0 to -0.497197 m/s², with standard deviation 0.204014 m/s². That off-axis variation requires support/alignment and repeatability attention; do not claim a fully stationary three-axis reference or use this window to estimate Y coefficients. Repeat references if later checks show the fit is unsuitable.
 
 Next requested position is **+X arrow upward** with the board secured against slipping and wires loose. Remaining X/Y pairs, independent validation and per-node installation are outstanding. Node 1's installed correction remains separate.
+
+### Node 2 X-up reference — November 25
+
+The operator confirmed +X pointing upward. The requested capture window was **15:07:05–15:09:05 IST**. Twelve unique periodic samples were captured at **15:07:08–15:08:58 IST**. All retained boot `6201b16ae2412486cfded9859fa8b3a2`, firmware `408a075` and uncorrected acquisition. [Complete X-up evidence](calibration/node2-x-up-2026-11-25.json) includes source records and consistency checks.
+
+| Axis | Raw mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 9.717654 | 0.019694 |
+| Y | -0.019123 | 0.030510 |
+| Z | -2.119462 | 0.142599 |
+
+Mean magnitude was **9.947041 m/s²**. Initially only nine records arrived; subsequent queued uploads completed all twelve. Maximum recorded capture-to-receipt lag was **58.384 seconds**. A fresh heartbeat/node-state query confirmed the same boot and healthy sensor/storage while the backlog drained. The original capture window was retained; later arrivals were selected by capture time rather than incorrectly extending the physical measurement period. No reboot or firmware transition occurred in these records.
+
+The measured X sign is positive as requested. This is the third recorded reference position, not a completed calibration; no X coefficients were fitted from one point. Next: +X arrow downward, followed by Y-up/down and independent validation. No settings or correction values were changed.

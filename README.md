@@ -54,6 +54,7 @@ The live dashboard shows each node's direct cloud uplink and authenticated ESP-N
 | [Fourth node](docs/NODE-3013A5.md) | November 24 commissioning, segmented USB recovery and movement test |
 | [Live topology](docs/TOPOLOGY.md) | Independent cloud uplinks, heartbeats, authenticated radio neighbors |
 | [Four-node group check](docs/GROUP-CHECK-2026-11-25.md) | November 25 simultaneous reporting, mutual radio sightings and remaining checks |
+| [Sensor calibration](docs/CALIBRATION.md) | Sequential node order, reference positions, measurements and application limits |
 | [Deployment](docs/DEPLOYMENT.md) | Atlas, Vercel, environment variables, local development |
 | [Operating procedures](docs/OPERATIONS.md) | Commissioning, provisioning, dashboard, exports, credential rotation |
 | [Firmware and OTA](docs/FIRMWARE.md) | Scheduling, persistence, watchdog, brownout, releases, rollback |

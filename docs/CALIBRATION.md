@@ -1,0 +1,47 @@
+# Per-node ADXL345 calibration
+
+## Test order and current state
+
+| Order | Node ID | State |
+| --- | --- | --- |
+| 1 | `esp32-d01de2f4e9d4` | Initial mounted baseline recorded; awaiting a valid level reference pose |
+| 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
+| 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
+| 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
+
+The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
+
+## Measurement procedure
+
+1. Identify the selected sensor and inspect its mounting and wiring. Support it on a nonconductive surface without stressing jumper wires. Keep power connected and avoid exposed contacts.
+2. Confirm fresh cloud reports, responding sensor, available storage, synchronized time, firmware version and boot ID. Record all times in IST, retaining UTC epoch values in machine-readable data.
+3. Place the sensor component-side up on a level surface. The operator must confirm positioning. Allow settling, then collect at least two minutes of new periodic samples while it stays still. Discard movement events and samples captured before settling; use capture time rather than delayed server receipt time to select the window. Deduplicate by event ID.
+4. Record the measured X/Y/Z means, standard deviations and magnitude. This initial orientation is a baseline check, not a completed three-axis calibration. Board component-side up alone does not establish chip-axis direction; inspect the sensor's printed axis markings before assigning a signed axis.
+5. Collect stationary windows with each marked sensor axis pointing upward and downward: +X, -X, +Y, -Y, +Z, -Z. Confirm each position separately. Use a secure nonconductive support; do not balance the board on pins or pull wires taut.
+6. For each axis, calculate bias `(positiveMean + negativeMean) / 2` and scale `2 * 9.80665 / (positiveMean - negativeMean)` from acceleration in m/s². The corrected axis is `(measured - bias) * scale`. Check pose signs, repeatability and reference alignment before accepting coefficients. This is a diagonal offset/scale model, not a cross-axis or temperature calibration.
+7. Apply accepted coefficients only to the matching Node ID, persist them, reboot and verify retained coefficients against repeated reference orientations. The current `408a075` firmware has no per-axis calibration fields or correction application. A validated firmware change is required before coefficients can be applied persistently; changing summary sensitivity is not a substitute.
+8. Recheck the stationary mounted baseline, then tune movement threshold against the actual movement of interest. Verify one-node-at-a-time movement attribution while the other nodes stay stationary. Record the final thresholds, firmware, coefficient revision and validation results before moving to the next node.
+
+At the current ten-second periodic interval, a cloud window provides relatively sparse stationary readings. It does not measure the full noise bandwidth or guarantee detection of fast vibrations. Do not infer a movement threshold solely from sparse magnitude samples; validate it against device-side movement detection and controlled motion.
+
+Stop and repeat a window if the sensor moves, restarts, reports invalid readings or loses enough telemetry to leave insufficient fresh samples. Do not reuse another node's coefficients. Do not adjust sensitivity simply to force gravity magnitude to an expected value in one orientation.
+
+The two-point-per-axis method follows [Analog Devices AN-1057](https://www.analog.com/en/resources/app-notes/an-1057.html). Gravity reference 9.80665 m/s² is a conventional approximation; this bench process does not establish traceable laboratory accuracy.
+
+## Results
+
+Measurements and acceptance decisions are added below as each operator-confirmed pose is completed. No node is marked calibrated until coefficients have been applied, persisted and independently validated.
+
+### Node 1 initial mounted baseline — November 25
+
+The operator initially confirmed readiness, then clarified that the ADXL345 was tilted/mounted. Seven unique periodic samples captured at **13:58:47–13:59:47 IST** were retained separately as a mounted baseline. This is a 60-second sample span, shorter than the intended reference window; it was stopped because the reference position was unsuitable. No calibration coefficient, sensitivity, threshold or firmware was changed.
+
+| Axis | Mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 5.501951 | 0.034411 |
+| Y | -7.966082 | 0.036379 |
+| Z | -4.879089 | 0.072758 |
+
+All seven samples share the original boot ID and running release `408a075`. The spread of gravity across axes is compatible with the operator's reported tilt; it does not establish an electrical fault or determine per-axis bias. This window is **not accepted as a level reference** and does not complete calibration. [Stored sample evidence](calibration/node1-initial-mounted-2026-11-25.json) contains event IDs, capture times and server receipt times.
+
+Next: confirm whether the sensor can be repositioned, obtain a level reference and continue the signed-axis orientations one at a time. If it cannot be rotated, document that constraint and use a restricted mounted baseline/threshold assessment; do not label that a full three-axis offset/scale calibration. Nodes 2–4 remain awaiting their own positioning and measurements.

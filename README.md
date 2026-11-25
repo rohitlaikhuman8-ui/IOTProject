@@ -10,7 +10,7 @@ Four registered boards have been commissioned on release `408a075`, retaining se
 
 | Item | Value |
 | --- | --- |
-| Current COM5 Node ID | `esp32-986aa3f4e9d4` (reconnected and rechecked November 24) |
+| Last verified COM5 Node ID | `esp32-986aa3f4e9d4` (November 24; November 25 group check uses cloud reports) |
 | USB port | COM5 |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |
@@ -53,6 +53,7 @@ The live dashboard shows each node's direct cloud uplink and authenticated ESP-N
 | [Third node](docs/NODE-986AA3.md) | Separate credential, first-time storage, November 23 checks |
 | [Fourth node](docs/NODE-3013A5.md) | November 24 commissioning, segmented USB recovery and movement test |
 | [Live topology](docs/TOPOLOGY.md) | Independent cloud uplinks, heartbeats, authenticated radio neighbors |
+| [Four-node group check](docs/GROUP-CHECK-2026-11-25.md) | November 25 simultaneous reporting, mutual radio sightings and remaining checks |
 | [Deployment](docs/DEPLOYMENT.md) | Atlas, Vercel, environment variables, local development |
 | [Operating procedures](docs/OPERATIONS.md) | Commissioning, provisioning, dashboard, exports, credential rotation |
 | [Firmware and OTA](docs/FIRMWARE.md) | Scheduling, persistence, watchdog, brownout, releases, rollback |
@@ -224,7 +225,7 @@ IOTProject/
 
 OTA can follow GitHub directly or use the Vercel manifest at `https://esp32-fleet-iot-project3.vercel.app/v1/firmware` when a network cannot reach GitHub release hosts. Both follow the same Actions-published channel. The Vercel route serves only this repository's validated images; the ESP32 checks them again. See [OTA operations](docs/FIRMWARE.md) and the [measured verification record](docs/VERIFICATION.md) for successful updates, failures and recovery procedures.
 
-The ADXL345 firmware has been built and flashed on the connected COM5 board. Sensor identity, live reads, Wi-Fi, and persistent local storage were exercised. Calibration, multiple-node radio behavior, controlled power cuts, and failed-image rollback still need targeted bench checks. See the [verification record](docs/VERIFICATION.md).
+The ADXL345 firmware has been built and flashed on all four commissioned boards. Sensor identity, live reads, Wi-Fi, and persistent local storage were exercised. The November 25 basic group check verified simultaneous cloud reporting and mutual radio discovery. Calibration, independent-network/separation tests, controlled power cuts, and failed-image rollback still need targeted bench checks. See the [verification record](docs/VERIFICATION.md).
 
 On November 23, 2026, node `esp32-7839a3f4e9d4` installed release `408a075` remotely through Vercel, verified and rebooted successfully, retained 256 records, and resumed reporting with zero backlog. The 1,224,352-byte binary transfer took 41 seconds. Its Wi-Fi and OTA settings remained saved; setup AP was inactive. The dashboard confirmed the new version, online status, IST telemetry and movement notifications.
 

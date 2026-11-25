@@ -34,7 +34,9 @@ The graph shows:
 | Solid purple neighbor line | Both online nodes recently reported hearing each other |
 | Dashed purple neighbor line | Only one online node reported the other |
 
-A radio line is an observed neighbor relationship. This implementation does not forward sensor events between nodes or provide multi-hop mesh routing. ESP-NOW discovery requires a shared radio channel, so nodes on different Wi-Fi channels may both upload directly while showing no neighbor line. Only one physical node is currently available for validation.
+A radio line is an observed neighbor relationship. This implementation does not forward sensor events between nodes or provide multi-hop mesh routing. ESP-NOW discovery requires a shared radio channel, so nodes on different Wi-Fi channels may both upload directly while showing no neighbor line.
+
+On November 25, 2026, all four commissioned physical boards reported together on channel 1. Each reported the other three, establishing all six mutual pairs. Independent uploads were confirmed in Atlas under each Node ID. See the [basic group-check record](GROUP-CHECK-2026-11-25.md) for the observation window, queue behavior, screenshot and remaining acceptance tests.
 
 ## Routes and records
 

@@ -7,6 +7,7 @@
 | `dashboard-topology.png` | Four registered nodes: 3013a5 online and the three disconnected boards last seen |
 | `dashboard-group-topology.png` | November 25 live four-node group topology with mutual neighbor sightings |
 | `dashboard-group-check.png` | November 25 authenticated group dashboard, health, live measurements and history |
+| `dashboard-calibration-node1.png` | November 25 14:46 IST live bench checkpoint: Node 1 revision n1-20261125-v1, three nodes Not applied, all four online |
 | `dashboard-ist-history.png` | Live IST telemetry and movement history from the fourth node on release 408a075 |
 | `dashboard-reconnected-986aa3.png` | Live third-board reconnect check on November 24, with saved history and four registrations |
 | `dashboard-offline.png` | Physical node offline after its cloud uplink was paused in setup mode |

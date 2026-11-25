@@ -189,6 +189,8 @@ The algorithm reads the sensor about every 20 ms outside flash work, compares ac
 
 Changing the sampling interval affects periodic storage, while movement events are recorded between periodic samples. Sensitivity scales the summary value. Proper per-axis calibration still requires reference measurements.
 
+Calibration-capable firmware also provides a separate **Sensor calibration** form in setup and a USB coefficient installer. Use only coefficients measured for that hardware Node ID; network settings changes retain the separate calibration record. Correction affects acquisition and movement detection after reboot, so recheck thresholds. Raw diagnostics remain available through `sensor-raw`. The dashboard shows each active revision and retains old uncorrected history. Follow the [complete calibration procedure](CALIBRATION.md), including validation and recovery, before applying values.
+
 ## 14. Change touch threshold
 
 Measure released and touched `touchRaw` values using `status`. Choose a threshold between those groups, save and test a four-second hold. A permanently low/floating/noisy input can repeatedly open setup.

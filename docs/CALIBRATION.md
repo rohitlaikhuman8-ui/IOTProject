@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Six references recorded; leveled repeat passed offline bench screen; persistent firmware application pending |
+| 1 | `esp32-d01de2f4e9d4` | Leveled offline screen passed; corrections installed/reboot-verified on bench firmware; final release/orientation checks pending |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -19,7 +19,7 @@ The other nodes can stay powered and online while one sensor is measured. Confir
 4. Record the measured X/Y/Z means, standard deviations and magnitude. This initial orientation is a baseline check, not a completed three-axis calibration. Board component-side up alone does not establish chip-axis direction; inspect the sensor's printed axis markings before assigning a signed axis.
 5. Collect stationary windows with each marked sensor axis pointing upward and downward: +X, -X, +Y, -Y, +Z, -Z. Confirm each position separately. Use a secure nonconductive support; do not balance the board on pins or pull wires taut.
 6. For each axis, calculate bias `(positiveMean + negativeMean) / 2` and scale `2 * 9.80665 / (positiveMean - negativeMean)` from acceleration in m/s². The corrected axis is `(measured - bias) * scale`. Check pose signs, repeatability and reference alignment before accepting coefficients. This is a diagonal offset/scale model, not a cross-axis or temperature calibration.
-7. Apply accepted coefficients only to the matching Node ID, persist them, reboot and verify retained coefficients against repeated reference orientations. The current `408a075` firmware has no per-axis calibration fields or correction application. A validated firmware change is required before coefficients can be applied persistently; changing summary sensitivity is not a substitute.
+7. Apply accepted coefficients only to the matching Node ID, persist them, reboot and verify retained coefficients against repeated reference orientations. Release `408a075` predates per-axis calibration support. The subsequent calibration implementation and USB/portal procedures are described below; changing summary sensitivity is not a substitute.
 8. Recheck the stationary mounted baseline, then tune movement threshold against the actual movement of interest. Verify one-node-at-a-time movement attribution while the other nodes stay stationary. Record the final thresholds, firmware, coefficient revision and validation results before moving to the next node.
 
 At the current ten-second periodic interval, a cloud window provides relatively sparse stationary readings. It does not measure the full noise bandwidth or guarantee detection of fast vibrations. Do not infer a movement threshold solely from sparse magnitude samples; validate it against device-side movement detection and controlled motion.
@@ -175,3 +175,58 @@ Corrected magnitude error was **+1.075196%**, within the unchanged 3% screen. Ab
 **Result: offline bench-screen pass for this held-out supported-level position.** The improvement after repositioning supports checking physical alignment, but does not prove every residual error comes from tilt. This is not a full orientation/temperature accuracy certification or an on-device calibration pass. No coefficients were refitted to this validation window.
 
 The ESP32 still runs `408a075` and reports uncorrected measurements. Firmware support for persistent per-axis corrections, writing this node's settings, reboot persistence and on-device verification remain required. A host serial-port inventory after the test showed only Bluetooth COM3/COM4 and no ESP32 USB port. The operator was asked to connect Node 1 by data USB for the next installation/verification stage; this request does not authorize applying its coefficients to any other Node ID. Nodes 2–4 remain online and await their individual calibration windows.
+
+## Installing and maintaining per-node corrections
+
+Calibration-capable firmware stores a separate, single NVS `calibration` record. Network settings remain in `config`; routine SSID/password/endpoint changes do not replace calibration. A missing record means identity correction (bias zero, scale one) and revision `none`. A malformed or different-node saved record is rejected at boot with a serial warning and identity correction. Export and inspect saved coefficients if that warning occurs; do not treat the node as calibrated.
+
+Bias values must be finite numbers between -5 and +5 m/s², and multiplicative scales between 0.5 and 1.5. The revision must contain 1–32 ASCII letters, digits, hyphens or underscores, excluding reserved `none`. Three values are required for each array, in X/Y/Z order. These bounds are guards against erroneous configuration, not sensor accuracy specifications. Values outside them require investigation rather than changing firmware limits to force acceptance.
+
+### USB installation
+
+Close other serial monitors. Confirm the physical Node ID, install a tested calibration-capable application without erasing NVS/LittleFS, and run from the repository root:
+
+```powershell
+.\.venv\Scripts\python.exe scripts/serial-check.py --port COM5 --command status
+.\.venv\Scripts\python.exe scripts/serial-check.py --port COM5 `
+  --calibration docs/calibration/node1-provisional-coefficients-2026-11-25.json `
+  --revision n1-20261125-v1 --command status
+.\.venv\Scripts\python.exe scripts/serial-check.py --port COM5 --command calibration
+.\.venv\Scripts\python.exe scripts/serial-check.py --port COM5 --command sensor-raw
+.\.venv\Scripts\python.exe scripts/serial-check.py --port COM5 --command sensor
+```
+
+The example file belongs **only** to `esp32-d01de2f4e9d4`. Create and validate a separate coefficient record for each other node before using this command. The helper checks live identity and calibration support before sending anything, requires `Calibration persisted; restarting`, then compares the saved revision and arrays after reboot. This calibration path does not open the captive portal or send network credentials. `sensor-raw` bypasses correction; `sensor` reports corrected acceleration. Different calls are different I2C measurements, so account for sensor noise and movement when comparing them.
+
+For a manual Arduino Serial Monitor session at 115200 baud with newline endings, use:
+
+```text
+calibration
+calibrate {"nodeId":"esp32-d01de2f4e9d4","revision":"n1-20261125-v1","bias":[0.124301375,-0.196010625,-1.757719417],"scale":[0.990319447,0.971404259,1.026838980]}
+```
+
+Writing is followed by reboot; acquisition uses the new immutable coefficients only after that reboot. Check sensor/storage health, clock synchronization, cloud acknowledgments, revision and pending uploads again once Wi-Fi reconnects. A serial save/readback immediately after boot may precede Wi-Fi association; it does not by itself establish cloud delivery.
+
+### Captive portal installation or change
+
+Open setup only when needed using the documented four-second GPIO 4 hold. Under **Sensor calibration**, verify Node ID, enter the measured revision plus three biases and three scales, then choose **Save calibration and restart**. The dedicated JSON endpoint checks the setup-interface address, page token, Node ID and numeric bounds. Saving calibration leaves network configuration and logs intact. Reconnect and verify the active revision. Normal network **Save and restart** keeps the separate calibration record unchanged.
+
+To deliberately return to uncorrected axes, save biases `[0,0,0]` and scales `[1,1,1]` with a new explicit revision such as `identity-20261125`; record the reason. This identity revision is an intentional operator configuration and is different from missing calibration (`none`). Never use it to hide a failed calibration check.
+
+### Effects, historical records and rollback
+
+Correction is applied to each sensor axis before live readings, movement detection and new local/cloud events. Summary sensitivity then scales only the magnitude, as before. Each new heartbeat/event carries `calibrationRevision`; the dashboard labels absent/`none` revisions **Not applied**. Historical records retain their original values and revisions, including queued older readings uploaded later. Do not compare raw and corrected history as one uniform series. Reassess movement thresholds after calibration because detection now uses corrected axes.
+
+Ordinary firmware updates preserve the calibration NVS key. Older `408a075` firmware ignores it and reports raw readings; reinstalling supported firmware loads the saved record again. Do not describe a firmware rollback to that older release as preserving calibrated output. Keep coefficient evidence exported before any deliberate erase or fault test.
+
+### November 25 hardware implementation checkpoint
+
+COM5 status identified `esp32-d01de2f4e9d4` before any writes. Its boot/settings/partition region was backed up privately and app/filesystem boundaries checked. The calibration bench image was written in five sections, then the entire application digest was verified before selecting app0. NVS and LittleFS were retained; no filesystem upload or formatting occurred. No BOOT-button intervention was required.
+
+The bench version `usb-calibration-bench` disabled automatic OTA temporarily to prevent the older stable manifest from replacing the test image. Identity defaults were confirmed before calibration. Six invalid requests (wrong Node ID, zero scale, excessive bias, boolean bias, incomplete axis array and reserved revision) were rejected without changing calibration. All 256 retained records remained indexed.
+
+Revision `n1-20261125-v1` was saved at approximately **14:42 IST**, and its coefficients were read back after the automatic reboot. A second reset also restored the same revision and arrays, retained 256 local records, restored saved Wi-Fi and synchronized time before cloud reporting resumed. This reset check is not a controlled interrupted-flash/power-cut test.
+
+The backward-compatible dashboard/API deployment `dpl_Fj4AMfugPZUQbZGKwawEpczj27Sg` reached Ready. Atlas event `ac6858b52fcb06b90fd09f564fe9987c`, captured **14:42:59 IST** and received **14:43:01.401 IST**, contains corrected acceleration and `calibrationRevision: n1-20261125-v1`. It verifies tagged cloud delivery, not a new known-orientation accuracy check after connecting USB.
+
+Firmware builds with OTA enabled and disabled passed within the app partition; the Next.js production build/type checks passed. The offline portal client-contract test passed. That fixture test does not claim a new physical captive-portal session; the operator's laptop Wi-Fi was left unchanged. Final release/version and any later on-device accuracy checks are recorded as follow-ups below.

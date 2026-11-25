@@ -102,6 +102,59 @@ bool storageReady, touched, ntpStarted;
 std::atomic<bool> portalActive{false}, pendingVerification{false}, cloudHealthy{false}, otaActive{false};
 std::atomic<uint32_t> lastCloudSuccess{0};
 String bootId, apPassword;
+struct AxisCalibration {
+  bool enabled = false;
+  String revision = "none";
+  float bias[3] = {0, 0, 0};
+  float scale[3] = {1, 1, 1};
+};
+AxisCalibration calibration; // Loaded before tasks start; changed only across reboot.
+
+bool decodeCalibration(JsonVariantConst value, AxisCalibration &result) {
+  if (!value.is<JsonObjectConst>() || value["nodeId"].as<String>() != nodeId ||
+      !value["revision"].is<const char *>() || !value["bias"].is<JsonArrayConst>() ||
+      !value["scale"].is<JsonArrayConst>() || value["bias"].size() != 3 || value["scale"].size() != 3) return false;
+  String revision = value["revision"].as<String>();
+  if (!revision.length() || revision.length() > 32 || revision == "none") return false;
+  for (char ch : revision) if (!isalnum(static_cast<unsigned char>(ch)) && ch != '-' && ch != '_') return false;
+  AxisCalibration candidate;
+  candidate.enabled = true;
+  candidate.revision = revision;
+  for (int i = 0; i < 3; ++i) {
+    if (!value["bias"][i].is<float>() || !value["scale"][i].is<float>()) return false;
+    float bias = value["bias"][i].as<float>(), scale = value["scale"][i].as<float>();
+    if (!isfinite(bias) || !isfinite(scale) || fabsf(bias) > 5 || scale < .5f || scale > 1.5f) return false;
+    candidate.bias[i] = bias;
+    candidate.scale[i] = scale;
+  }
+  result = candidate;
+  return true;
+}
+
+void calibrationView(JsonObject view) {
+  view["enabled"] = calibration.enabled;
+  view["nodeId"] = nodeId;
+  view["revision"] = calibration.revision;
+  for (int i = 0; i < 3; ++i) {
+    view["bias"][i] = calibration.bias[i];
+    view["scale"][i] = calibration.scale[i];
+  }
+}
+
+bool persistCalibration(JsonVariantConst value) {
+  AxisCalibration candidate;
+  if (!decodeCalibration(value, candidate)) return false;
+  JsonDocument record;
+  record["nodeId"] = nodeId;
+  record["revision"] = candidate.revision;
+  for (int i = 0; i < 3; ++i) {
+    record["bias"][i] = candidate.bias[i];
+    record["scale"][i] = candidate.scale[i];
+  }
+  String data;
+  serializeJson(record, data);
+  return settings.putString("calibration", data) == data.length();
+}
 uint32_t touchStarted, portalStarted, restartAt, nextSample, nextUpload, nextWifi, wifiLostAt;
 std::atomic<uint32_t> nextOta{0};
 uint32_t retryDelay = 5000;
@@ -270,12 +323,20 @@ bool beginSensor() {
   return false;
 }
 
-bool readAcceleration(float &x, float &y, float &z) {
+bool readRawAcceleration(float &x, float &y, float &z) {
   uint8_t bytes[6];
   if (!sensorAddress || !readRegisters(sensorAddress, 0x32, bytes, sizeof(bytes))) return false;
   x = static_cast<int16_t>(bytes[0] | (bytes[1] << 8)) * AccelerationScale;
   y = static_cast<int16_t>(bytes[2] | (bytes[3] << 8)) * AccelerationScale;
   z = static_cast<int16_t>(bytes[4] | (bytes[5] << 8)) * AccelerationScale;
+  return true;
+}
+
+bool readAcceleration(float &x, float &y, float &z) {
+  if (!readRawAcceleration(x, y, z)) return false;
+  x = (x - calibration.bias[0]) * calibration.scale[0];
+  y = (y - calibration.bias[1]) * calibration.scale[1];
+  z = (z - calibration.bias[2]) * calibration.scale[2];
   return true;
 }
 
@@ -395,13 +456,38 @@ button{padding:.6rem 1rem}a{display:inline-block;margin-right:1rem}
 <label>Movement threshold (m/s²)<input name="motionThreshold" type="number" step=".1" min=".2" max="100"></label>
 <label>Sample interval (seconds)<input name="interval" type="number" min="10" max="86400" required></label>
 <p>Leave passwords blank to keep the saved values.</p><button>Save and restart</button></form>
+<h2>Sensor calibration</h2><p id="calibrationState"></p>
+<p>Use coefficients measured for this Node ID only. Correction is (raw − bias) × scale. Saving network settings keeps calibration.</p>
+<form id="calibrationForm">
+<label>Calibration revision<input name="revision" maxlength="32" pattern="[A-Za-z0-9_-]+" required></label>
+<label>X bias (m/s²)<input name="biasX" type="number" step="any" min="-5" max="5" required></label>
+<label>Y bias (m/s²)<input name="biasY" type="number" step="any" min="-5" max="5" required></label>
+<label>Z bias (m/s²)<input name="biasZ" type="number" step="any" min="-5" max="5" required></label>
+<label>X scale<input name="scaleX" type="number" step="any" min=".5" max="1.5" required></label>
+<label>Y scale<input name="scaleY" type="number" step="any" min=".5" max="1.5" required></label>
+<label>Z scale<input name="scaleZ" type="number" step="any" min=".5" max="1.5" required></label>
+<button>Save calibration and restart</button><p id="calibrationReply"></p></form>
 <p><a href="/log">Download local log</a></p>
 <h2>Device status and logs</h2><p id="state">Loading…</p><pre id="logs" style="white-space:pre-wrap"></pre>
 <script>
+let loadedSettings;
 async function loadSettings(){const s=await fetch('/settings').then(r=>r.json());
+  loadedSettings=s;
   document.querySelector('#node').textContent=s.node+' / '+s.version;
   for(const field of document.forms[0].elements) if(field.name in s) field.value=s[field.name];
+  const c=s.calibration||{enabled:false,revision:'none',bias:[0,0,0],scale:[1,1,1]};
+  document.querySelector('#calibrationState').textContent=c.enabled?'Active revision: '+c.revision:'Uncalibrated: identity correction';
+  const f=document.querySelector('#calibrationForm');f.elements.revision.value=c.enabled?c.revision:'';
+  ['X','Y','Z'].forEach((a,i)=>{f.elements['bias'+a].value=c.bias[i];f.elements['scale'+a].value=c.scale[i];});
 }
+document.querySelector('#calibrationForm').addEventListener('submit',async e=>{
+  e.preventDefault();const f=e.target,reply=document.querySelector('#calibrationReply');
+  if(!loadedSettings){reply.textContent='Reload settings before saving.';return;}
+  const payload={token:loadedSettings.token,nodeId:loadedSettings.node,revision:f.elements.revision.value,
+    bias:['X','Y','Z'].map(a=>Number(f.elements['bias'+a].value)),scale:['X','Y','Z'].map(a=>Number(f.elements['scale'+a].value))};
+  try{const r=await fetch('/calibration',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});reply.textContent=await r.text();}
+  catch{reply.textContent='Connection closed. Reconnect and verify saved calibration before retrying.';}
+});
 async function refreshLogs(){
   try{
     const s=await fetch('/status').then(r=>r.json());
@@ -635,6 +721,7 @@ void saveSample(const char *kind = "sample", float movementDelta = 0) {
   event["sensitivity"] = sensitivity;
   event["resetReason"] = static_cast<int>(esp_reset_reason());
   event["version"] = FLEET_VERSION;
+  event["calibrationRevision"] = calibration.revision;
   String line;
   serializeJson(event, line);
   FILE *file = fopen("/littlefs/new.tmp", "w");
@@ -719,10 +806,24 @@ void serviceSerial() {
           restartAt = millis() + 1000;
         } else Serial.println("Configuration persistence failed");
       }
+    } else if (serialCommand.startsWith("calibrate ")) {
+      JsonDocument incoming;
+      if (restartAt || deserializeJson(incoming, serialCommand.substring(10)) || !persistCalibration(incoming.as<JsonVariantConst>())) {
+        Serial.println("Calibration rejected or persistence failed");
+      } else {
+        Serial.println("Calibration persisted; restarting");
+        restartAt = millis() + 1000;
+      }
+    } else if (serialCommand == "calibration") {
+      JsonDocument view;
+      calibrationView(view.to<JsonObject>());
+      serializeJson(view, Serial);
+      Serial.println();
     } else if (serialCommand == "status") {
       JsonDocument status;
       status["nodeId"] = nodeId;
       status["version"] = FLEET_VERSION;
+      calibrationView(status["calibration"].to<JsonObject>());
       status["storageReady"] = storageReady;
       status["sensorAddress"] = sensorAddress;
       status["wifiConnected"] = WiFi.status() == WL_CONNECTED;
@@ -742,9 +843,9 @@ void serviceSerial() {
       String output;
       serializeJson(status, output);
       Serial.println(output);
-    } else if (serialCommand == "sensor") {
+    } else if (serialCommand == "sensor" || serialCommand == "sensor-raw") {
       float x, y, z;
-      if (readAcceleration(x, y, z)) {
+      if (serialCommand == "sensor-raw" ? readRawAcceleration(x, y, z) : readAcceleration(x, y, z)) {
         Serial.printf("ADXL345 x=%.4f y=%.4f z=%.4f magnitude=%.4f m/s2\n", x, y, z, sqrtf(x*x+y*y+z*z));
       } else Serial.println("ADXL345 read failed");
     } else if (serialCommand == "sample") {
@@ -857,6 +958,7 @@ void sendHeartbeat() {
   heartbeat["bootId"] = bootId;
   heartbeat["uptimeMs"] = millis();
   heartbeat["version"] = FLEET_VERSION;
+  heartbeat["calibrationRevision"] = calibration.revision;
   heartbeat["ssid"] = config["ssid"] | "";
   heartbeat["rssi"] = WiFi.RSSI();
   heartbeat["channel"] = WiFi.channel();
@@ -1129,6 +1231,13 @@ void setup() {
     settings.putString("apKey", apPassword);
   }
   deserializeJson(config, settings.getString("config", "{}"));
+  String storedCalibration = settings.getString("calibration", "");
+  if (storedCalibration.length()) {
+    JsonDocument record;
+    if (deserializeJson(record, storedCalibration) || !decodeCalibration(record.as<JsonVariantConst>(), calibration)) {
+      Serial.println("Saved calibration invalid; using uncorrected measurements");
+    }
+  }
   beginSensor();
   storageReady = LittleFS.begin(false);
   esp_ota_img_states_t state;
@@ -1154,6 +1263,7 @@ void setup() {
     view["token"] = formToken;
     view["node"] = nodeId;
     view["version"] = FLEET_VERSION;
+    calibrationView(view["calibration"].to<JsonObject>());
     String body;
     serializeJson(view, body);
     portal.sendHeader("Cache-Control", "no-store");
@@ -1162,6 +1272,19 @@ void setup() {
   portal.on("/settings", HTTP_POST, [] {
     if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
     saveSettings();
+  });
+  portal.on("/calibration", HTTP_POST, [] {
+    if (portal.client().localIP() != WiFi.softAPIP() || restartAt) { portal.send(403); return; }
+    String body = portal.arg("plain");
+    if (body.length() > 1024) { portal.send(413); return; }
+    JsonDocument record;
+    if (deserializeJson(record, body) || record["token"].as<String>() != formToken) { portal.send(403); return; }
+    if (!persistCalibration(record.as<JsonVariantConst>())) {
+      portal.send(400, "text/plain", "Calibration rejected or persistence failed. Check node ID, revision and finite numeric ranges.");
+      return;
+    }
+    portal.send(200, "text/plain", "Calibration saved. Restarting; verify the revision after reconnecting.");
+    restartAt = millis() + 1000;
   });
   portal.on("/log", HTTP_GET, [] {
     if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }

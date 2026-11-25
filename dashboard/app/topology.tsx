@@ -5,6 +5,7 @@ import { formatIst } from '../lib/time';
 
 type Node = {
   nodeId: string; lastSeen: string | null; version?: string; rssi?: number; ssid?: string;
+  calibrationRevision?: string;
   channel?: number; storageReady?: boolean; sensorReady?: boolean; logRecords?: number; neighbors?: string[];
   lastMeasurement?: { value: number; unit?: string; acceleration?: { x: number; y: number; z: number } };
   acceleration?: { x: number; y: number; z: number }; value?: number;
@@ -12,6 +13,7 @@ type Node = {
 };
 type Notification = { _id: string; nodeId: string; kind: string; at: string; message: string; movementDelta?: number };
 type Event = { _id: string; nodeId: string; receivedAt: string; sampledAt?: number; value: number;
+  calibrationRevision?: string;
   kind?: string; movementDelta?: number; acceleration?: { x: number; y: number; z: number } };
 type Snapshot = { serverTime: number; onlineTimeoutMs?: number; nodes: Node[];
   notifications?: Notification[]; events?: Event[] };
@@ -118,7 +120,8 @@ export default function Topology({ selectedNode }: { selectedNode?: string }) {
     <div style={{ overflowX: 'auto' }}>
       <table cellPadding="8"><thead><tr><th>Node</th><th>Connection</th><th>Sensor</th><th>Storage</th><th>Local / pending</th><th>Live magnitude (m/s²)</th><th>X/Y/Z (m/s²)</th><th>Last cloud report (IST)</th></tr></thead>
         <tbody>{nodes.map(node => <tr key={node.nodeId}>
-          <td><a href={'/?node=' + node.nodeId}>{node.nodeId}</a><br/><small>{node.version?.slice(0,12)}</small></td><td>{status(node)}</td>
+          <td><a href={'/?node=' + node.nodeId}>{node.nodeId}</a><br/><small>{node.version?.slice(0,12)}</small>
+            <br/><small>Calibration: {node.calibrationRevision && node.calibrationRevision !== 'none' ? node.calibrationRevision : 'Not applied'}</small></td><td>{status(node)}</td>
           <td>{node.sensorReady === undefined ? 'Unknown' : node.sensorReady ? 'Responding' : 'Check sensor'}</td>
           <td>{node.storageReady === undefined ? 'Unknown' : node.storageReady ? 'Ready' : 'Check flash'}</td>
           <td>{node.logRecords ?? '—'} / {node.pendingRecords ?? '—'}</td><td>{(node.value ?? node.lastMeasurement?.value)?.toFixed(3) ?? '—'}</td>
@@ -145,7 +148,7 @@ export default function Topology({ selectedNode }: { selectedNode?: string }) {
         <tbody>{(snapshot?.events || []).map(record => <tr key={record._id}
           style={{ background: record.kind === 'movement' ? '#fff0c2' : undefined }}>
           <td>{formatIst(record.receivedAt)}</td><td>{record.sampledAt ? formatIst(record.sampledAt * 1000) : 'Time sync pending at capture'}</td>
-          <td>{record.nodeId}</td><td>{record.kind || 'sample'}</td><td>{record.value.toFixed(3)}</td>
+          <td>{record.nodeId}<br/><small>Calibration: {record.calibrationRevision && record.calibrationRevision !== 'none' ? record.calibrationRevision : 'Not applied'}</small></td><td>{record.kind || 'sample'}</td><td>{record.value.toFixed(3)}</td>
           <td>{record.acceleration ? Object.values(record.acceleration).map(n => n.toFixed(3)).join(' / ') : '—'}</td>
         </tr>)}</tbody></table>
     </div>

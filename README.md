@@ -6,6 +6,8 @@ The hardware target is a **classic ESP32 DevKit with 4 MB flash** and an ADXL345
 
 Four registered boards have been commissioned on release `408a075`, retaining separate identities and credentials. Online/Last-seen reflects each board's actual reporting. Captive-portal saving, 30 recent local records, and a complete 256-record download were verified on `esp32-7839a3f4e9d4`. See the [verification record](docs/VERIFICATION.md) for dated checkpoints and remaining hardware acceptance checks.
 
+Node 1 (`esp32-d01de2f4e9d4`) has completed six-position measurement and a held-out offline bench screen. Its measured corrections were installed as `n1-20261125-v1`, read back after two reboots, and confirmed in tagged Atlas telemetry. Calibration-capable firmware preserves separate per-node coefficients in NVS; the dashboard shows each revision. The other three nodes still need their own calibration. See [the calibration record and operating commands](docs/CALIBRATION.md) for accuracy limits and remaining on-device checks.
+
 ## Connected node and wiring
 
 | Item | Value |

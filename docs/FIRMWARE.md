@@ -23,6 +23,8 @@ Local builds use version `usb-dev`. The release workflow generates a Git-ignored
 | `fleetUpload` task | Telemetry retries and OTA, with its own watchdog subscription |
 | `fleetStatus` task | Independent heartbeat scheduling and watchdog subscription |
 | `saveSettings()` | Validate and persist one configuration record |
+| `decodeCalibration()` / `persistCalibration()` | Validate Node ID and finite per-axis bounds; save a separate calibration NVS record |
+| `readRawAcceleration()` / `readAcceleration()` | Read sensor units; apply immutable boot-loaded bias/scale to corrected acquisition |
 | `saveSample()` | Create and commit a local telemetry record |
 | `scanLog()` | Rebuild filename index at boot, then select pending/acknowledged records in RAM |
 | `uploadOne()` | Upload one event and record local acknowledgment |
@@ -31,6 +33,8 @@ Local builds use version `usb-dev`. The release workflow generates a Git-ignored
 | `diagnoseStorage()` | Validate retained JSON and measure read latency without opening the AP |
 | `closePortal()` | Close AP/DNS/server while retaining NVS settings and station Wi-Fi |
 | `checkOta()` | Fetch manifest and verify the new application |
+
+Per-axis calibration is stored separately from network settings and survives application-only USB/OTA updates. Missing/invalid calibration uses identity defaults; older firmware ignores the saved key. New telemetry records carry the active revision. Calibration changes take effect across a reboot to avoid mixing coefficients within one running acquisition session. See [the full calibration procedure](CALIBRATION.md).
 
 ## Timing
 

@@ -22,6 +22,10 @@ An explicit `--command` runs only that command, with no automatic sample afterwa
 
 Private JSON provisioning enters setup mode, paces long UART writes and requires a save acknowledgment. Use the portal for routine settings changes.
 
+For measured sensor corrections, `--calibration <coefficient-file> --revision <revision>` checks the connected Node ID before writing and verifies coefficient readback after reboot, without opening setup or replacing network configuration. `--command calibration` reads the active record, and `--command sensor-raw` bypasses correction. See [calibration procedures](CALIBRATION.md) before using any other node's coefficient file.
+
+`scripts/test-calibration-portal.cjs` tests the portal form's client contract offline using Playwright fixture responses. Run with the same Playwright setup as screenshot capture: `node scripts/test-calibration-portal.cjs`. It does not connect to a real ESP32 AP or establish hardware accuracy.
+
 ## Arduino IDE export
 
 `scripts/export-arduino.ps1` copies the same firmware source into an ignored sketch directory.

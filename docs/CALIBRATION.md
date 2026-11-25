@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Component-up/down and X-up/down recorded; awaiting Y-up positioning |
+| 1 | `esp32-d01de2f4e9d4` | Component-up/down, X-up/down and Y-up recorded; awaiting Y-down positioning |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -99,3 +99,15 @@ After correcting the earlier downward orientation, the operator confirmed the +X
 Mean vector magnitude was **10.178044 m/s²**. Combined with the X-down mean -9.778210 m/s², the provisional X bias is **0.124301 m/s²** and multiplicative scale **0.990319**, using `(rawX - bias) * scale`. These estimates remain **unapplied and subject to alignment and independent validation**. No firmware, saved settings or thresholds were changed.
 
 Four physical reference positions are now recorded for Node 1. Next: +Y arrow straight upward, then its opposite downward position, each confirmed by the operator and collected separately. Full three-axis calibration, persistent application and validation remain incomplete; Nodes 2–4 still await their own measurements.
+
+### Node 1 Y-up reference — November 25
+
+The operator confirmed the +Y arrow pointing upward, and measured Y was positive. The requested capture window was **14:17:20–14:19:20 IST**. Twelve unique periodic samples were captured at **14:17:28–14:19:18 IST**, selected by capture time and excluding movement events. All retained the original boot ID and firmware `408a075`. [Complete Y-up evidence](calibration/node1-y-up-2026-11-25.json) includes source events and statistics.
+
+| Axis | Mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.143423 | 0.033122 |
+| Y | 9.899323 | 0.045643 |
+| Z | -1.829431 | 0.035853 |
+
+Mean vector magnitude was **10.068087 m/s²**. This records the positive-Y reference; it does not establish Y bias or scale without the opposite pose. No coefficients, firmware, saved settings or movement thresholds were changed. Five of six physical references are recorded for Node 1. Next: +Y arrow downward for a separately confirmed window, then calculate provisional three-axis coefficients, check alignment and independently validate corrections before applying them persistently. Nodes 2–4 still await their own reference measurements.

@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | All six references recorded; provisional coefficients calculated, awaiting independent validation |
+| 1 | `esp32-d01de2f4e9d4` | Six references and independent window recorded; magnitude improved, level-position screen failed; alignment check pending |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -139,3 +139,22 @@ Apply the formula `(rawAxis - bias) * scale` separately to each axis. **These co
 The reference-fit corrected vector magnitudes range from approximately 9.8067 to 9.8776 m/s². The earlier component-up reference retains corrected Y approximately -1.1811 m/s², and X-down retains corrected Z approximately -0.5187 m/s². These cross-axis residuals require alignment/repeatability checks and cannot be dismissed as verified calibration. A diagonal correction does not compensate arbitrary mounting rotation or cross-axis coupling.
 
 Next requested action is a **new** level component-up window, kept separate from the fitted references. Apply the provisional correction offline to those new samples and review repeatability, magnitude and cross-axis residuals before deciding whether any reference must be repeated. Persistent per-node firmware support, reboot validation and controlled movement checks remain open. Nodes 2–4 still await their own six reference windows.
+
+### Node 1 independent component-up validation — November 25
+
+The operator confirmed a new component-up position. The requested capture window was **14:25:10–14:27:10 IST**. Twelve unique periodic samples were captured at **14:25:19–14:27:09 IST**. Their event IDs are disjoint from all fitting windows; Node ID, firmware and original boot ID matched. [Raw validation samples](calibration/node1-validation-component-up-2026-11-25.json) and the [offline analysis result](calibration/node1-validation-result-2026-11-25.json) preserve the evidence.
+
+The bench screening criteria were selected before collection: at least twelve distinct samples spanning 100 seconds, unchanged reference boot/firmware, corrected mean magnitude within 3% of 9.80665 m/s², absolute corrected X/Y mean at most 0.5 m/s² in the requested level pose, and corrected per-axis sample standard deviation at most 0.15 m/s². These are provisional project screening criteria, not a manufacturer specification or a finalized production accuracy requirement.
+
+| Quantity | Raw mean (m/s²) | Corrected offline mean (m/s²) |
+| --- | --- | --- |
+| X | 0.086054 | -0.037878 |
+| Y | -1.067699 | -0.846762 |
+| Z | 7.900973 | 9.917922 |
+| Vector magnitude (mean of sample magnitudes) | 7.973614 | 9.954343 |
+
+Corrected mean magnitude error was **+1.506050%**, inside the 3% screen. Corrected axis sample standard deviations were 0.028550, 0.068061 and 0.045733 m/s², inside the repeatability screen. Sample identity, independence, timing and boot/firmware checks passed. The level-position screen **failed** because corrected Y magnitude 0.846762 m/s² exceeded 0.5 m/s².
+
+**Result: validation incomplete; calibration not accepted or installed.** A residual Y component may reflect tilt, reference alignment error or sensor/model error; this window alone does not establish which. Do not zero Y from this single pose, relax the screening criterion after viewing the result, or claim the improved magnitude proves full calibration.
+
+Next: inspect whether headers/components are tilting the PCB. Support the actual PCB level with nonconductive supports, leaving pins/wires unstressed, and independently verify alignment if possible. Confirm a corrected physical position before collecting another held-out window. If a reference is repeated and coefficients change, that changes the fit and requires a fresh independent validation window. If level cannot be established, record the limitation rather than declaring a three-axis calibration pass. Firmware, saved settings, thresholds and all other nodes remain unchanged.

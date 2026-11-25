@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Component-up/down and X-up/down recorded; now on 795d041; awaiting Y-up and validation |
+| 2 | `esp32-7839a3f4e9d4` | Five references recorded on raw/identity acquisition; awaiting Y-down and independent validation |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -310,3 +310,15 @@ The operator was asked to keep X downward while collection restarted. The new re
 Mean magnitude was **10.625661 m/s²**. X was steady and negative, while off-axis Z varied more; support/alignment and independent repeatability checks remain necessary. No correction was applied to Node 2. The X pair gives provisional bias **-0.288439125 m/s²** and scale **0.980067808**, not final accepted values.
 
 The earlier references used the raw driver in `408a075`; this repeat uses the same raw acquisition followed by identity correction in `795d041`. With revision `none`, the new wrapper subtracts zero and multiplies by one. Their versions/boots are recorded separately rather than described as one continuous run. Coefficients remain provisional until fresh validation on the current firmware checks the fit. The remaining positions are Y-up and Y-down, each on a stable boot/version within its own window.
+
+### Node 2 Y-up reference — November 25
+
+The operator confirmed +Y upward. The requested capture window was **15:17:55–15:19:55 IST**. Twelve unique periodic samples were captured at **15:18:00–15:19:50 IST**. They share boot `cd8da16d0a1c412ff2815da16d38c21e`, published firmware `795d041` and revision `none`; no calibration is active. [Complete Y-up evidence](calibration/node2-y-up-2026-11-25.json) includes source samples and consistency checks.
+
+| Axis | Raw/identity mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -0.159358 | 0.035853 |
+| Y | 10.071432 | 0.044162 |
+| Z | -2.154521 | 0.054901 |
+
+Mean magnitude was **10.300711 m/s²**. Y was positive as requested, and the full window arrived without a boot or firmware transition. This is the fifth reference position. No Y bias/scale was calculated from this single point and no coefficients or settings were applied. Next: +Y downward, then provisional three-axis calculation and independent validation on fresh readings.

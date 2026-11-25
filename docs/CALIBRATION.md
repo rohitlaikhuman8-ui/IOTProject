@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | All six references recorded; provisional coefficients calculated; independent validation pending, not installed |
+| 2 | `esp32-7839a3f4e9d4` | Six references recorded; first validation failed level-position screen; alignment/repeatability check pending, not installed |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -348,3 +348,18 @@ The [provisional coefficient record](calibration/node2-provisional-coefficients-
 **These values are provisional, not applied and belong only to Node 2.** All values fall inside firmware configuration guards. Fit magnitudes range approximately 9.8067–9.8353 m/s², but off-axis corrected means include Y -0.7383 m/s² in the earlier component-up window and Z +0.5320 m/s² in X-up. The Y-down drift and other flagged variations remain relevant; fitting a gravity value does not establish an accurate sensor.
 
 Next: a fresh held-out component-up window with the actual PCB firmly supported level in both directions and wires loose, without hand-holding. Use the unchanged bench screening limits (at least twelve unique samples spanning 100 seconds, corrected mean magnitude within 3%, absolute corrected X/Y mean at most 0.5 m/s², axis sample standard deviation at most 0.15 m/s²) before considering installation. Repeat unsuitable references if validation fails; do not relax limits after seeing the data or reuse Node 1's coefficients. Persistent installation, on-device verification and movement acceptance remain outstanding for Node 2.
+
+### Node 2 first independent component-up validation — November 25
+
+The operator confirmed readiness for a fresh supported-level component-up check. The requested capture window was **15:26:10–15:28:10 IST**, and twelve unique samples were captured at **15:26:11–15:28:01 IST**. They were disjoint from the six fitting windows and retained expected boot `cd8da16d0a1c412ff2815da16d38c21e`, firmware `795d041` and revision `none`. [Raw independent evidence](calibration/node2-validation-component-up-2026-11-25.json) and [offline analysis](calibration/node2-validation-result-2026-11-25.json) retain the criteria and checks.
+
+| Quantity | Raw mean (m/s²) | Corrected offline mean (m/s²) |
+| --- | --- | --- |
+| X | -0.028685 | 0.254577 |
+| Y | -0.940212 | -1.029981 |
+| Z | 6.957573 | 9.855757 |
+| Vector magnitude (mean of sample magnitudes) | 7.021062 | 9.912833 |
+
+Corrected mean magnitude error was **+1.082768%**, inside the unchanged 3% bench screen. Corrected axis sample standard deviations were **0.028254, 0.046675 and 0.045748 m/s²**, inside the 0.15 m/s² repeatability screen. Identity, independent events, timing, expected boot/version and uncorrected-input checks passed. The level-position screen **failed** because absolute corrected Y 1.029981 m/s² exceeded 0.5 m/s². Improved magnitude alone does not pass full validation.
+
+**Node 2 remains uncalibrated: provisional values are not accepted or installed.** Tilt, reference alignment or model/sensor error may explain the residual; this window alone cannot distinguish them. The operator was asked to inspect headers/components and support the actual PCB level in both directions before another held-out check. Do not refit or zero Y from this one pose, or relax limits to obtain a pass. If alignment can be independently verified and the residual persists, repeat the suspect reference orientations and investigate the fit; any changed coefficients require fresh validation.

@@ -1,0 +1,100 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "status": "OFFLINE_BENCH_SCREEN_INCOMPLETE; investigate failed checks before acceptance",
+  "application": "Offline calculation only; device settings and output unchanged",
+  "criteria": {
+    "purpose": "Bench screening only; not manufacturer specifications or production acceptance",
+    "minUniqueSamples": 12,
+    "minSampleSpanSeconds": 100,
+    "meanMagnitudeErrorPercentMax": 3,
+    "absCorrectedMeanXYMax": 0.5,
+    "maxCorrectedAxisSampleStdDev": 0.15,
+    "expectedFirmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "expectedCalibrationRevision": "none",
+    "expectedBootId": "cd8da16d0a1c412ff2815da16d38c21e"
+  },
+  "checks": {
+    "minimumSamples": true,
+    "uniqueEvents": true,
+    "independentEvents": true,
+    "sameNode": true,
+    "captureWindow": true,
+    "sampleSpan": true,
+    "stableExpectedBoot": true,
+    "expectedFirmware": true,
+    "uncorrectedInput": true,
+    "gravityMagnitude": true,
+    "levelXY": false,
+    "stationaryRepeatability": true
+  },
+  "count": 12,
+  "first": 1795600571,
+  "last": 1795600681,
+  "raw": {
+    "x": {
+      "mean": -0.0286845,
+      "sampleStdDev": 0.028829007211802874,
+      "min": -0.076492,
+      "max": 0
+    },
+    "y": {
+      "mean": -0.9402122500000001,
+      "sampleStdDev": 0.04742914983257562,
+      "min": -0.994394,
+      "max": -0.841411
+    },
+    "z": {
+      "mean": 6.957572833333331,
+      "sampleStdDev": 0.044537472847098775,
+      "min": 6.884268,
+      "max": 7.037252
+    }
+  },
+  "corrected": {
+    "x": {
+      "mean": 0.25457714592397046,
+      "sampleStdDev": 0.028254381902929865,
+      "min": 0.20772255419625743,
+      "max": 0.2826899009605984
+    },
+    "y": {
+      "mean": -1.029980832300663,
+      "sampleStdDev": 0.04667533705273435,
+      "min": -1.0833014474136087,
+      "max": -0.9327498749408897
+    },
+    "z": {
+      "mean": 9.85575682275248,
+      "sampleStdDev": 0.04574808156933707,
+      "min": 9.780459432029996,
+      "max": 9.937601812668222
+    }
+  },
+  "rawMagnitude": {
+    "mean": 7.021062270581041,
+    "sampleStdDev": 0.04633949680117715,
+    "min": 6.935496980515888,
+    "max": 7.096965728367581
+  },
+  "correctedMagnitude": {
+    "mean": 9.912833221929661,
+    "sampleStdDev": 0.04667960870882369,
+    "min": 9.828902411301675,
+    "max": 9.991605007343784
+  },
+  "magnitudeErrorPercent": 1.0827675294790895,
+  "coefficients": {
+    "x": {
+      "bias": -0.288439125,
+      "scale": 0.980067807932084
+    },
+    "y": {
+      "bias": 0.10640290705128308,
+      "scale": 0.9841065508763649
+    },
+    "z": {
+      "bias": -2.6373760000000006,
+      "scale": 1.027181800961052
+    }
+  }
+}

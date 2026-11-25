@@ -1,0 +1,6 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "pose": "X-down",
+  "status": "EXCLUDED from calibration fitting: automatic firmware installation changed version and boot during collection",
+  "note": "Cloud data retained; interrupted observer stopped and a separate full window requested on stable new firmware."
+}

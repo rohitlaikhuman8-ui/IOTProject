@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Component-up/down and X-up recorded; awaiting X-down; repeatability/alignment checks remain |
+| 2 | `esp32-7839a3f4e9d4` | Component-up/down and X-up/down recorded; now on 795d041; awaiting Y-up and validation |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -294,3 +294,19 @@ The operator confirmed +X pointing upward. The requested capture window was **15
 Mean magnitude was **9.947041 m/s²**. Initially only nine records arrived; subsequent queued uploads completed all twelve. Maximum recorded capture-to-receipt lag was **58.384 seconds**. A fresh heartbeat/node-state query confirmed the same boot and healthy sensor/storage while the backlog drained. The original capture window was retained; later arrivals were selected by capture time rather than incorrectly extending the physical measurement period. No reboot or firmware transition occurred in these records.
 
 The measured X sign is positive as requested. This is the third recorded reference position, not a completed calibration; no X coefficients were fitted from one point. Next: +X arrow downward, followed by Y-up/down and independent validation. No settings or correction values were changed.
+
+### Node 2 X-down interrupted attempt and stable repeat — November 25
+
+The first requested X-down window was **15:11:30–15:13:30 IST**. Initially no selected events arrived. A node-state check at approximately 15:13 IST showed the board now running published `795d041` on new boot `cd8da16d0a1c412ff2815da16d38c21e`, healthy and synchronized. Late arrivals included both old/new boots and versions, confirming a transition during collection. This is consistent with the scheduled OTA rollout; no USB firmware write was performed on Node 2 for this transition. The [interrupted attempt](calibration/node2-x-down-interrupted-2026-11-25.json) was retained as evidence and **excluded from calibration fitting**. Cloud records were not deleted.
+
+The operator was asked to keep X downward while collection restarted. The new requested window was **15:13:45–15:15:45 IST**, capturing twelve unique samples at **15:13:50–15:15:40 IST**. All share the new boot, `795d041` and `calibrationRevision: none`. [Stable X-down evidence](calibration/node2-x-down-2026-11-25.json) records the accepted window and checks.
+
+| Axis | Raw/identity mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -10.294533 | 0.031929 |
+| Y | 0.124300 | 0.081744 |
+| Z | -2.619847 | 0.221514 |
+
+Mean magnitude was **10.625661 m/s²**. X was steady and negative, while off-axis Z varied more; support/alignment and independent repeatability checks remain necessary. No correction was applied to Node 2. The X pair gives provisional bias **-0.288439125 m/s²** and scale **0.980067808**, not final accepted values.
+
+The earlier references used the raw driver in `408a075`; this repeat uses the same raw acquisition followed by identity correction in `795d041`. With revision `none`, the new wrapper subtracts zero and multiplies by one. Their versions/boots are recorded separately rather than described as one continuous run. Coefficients remain provisional until fresh validation on the current firmware checks the fit. The remaining positions are Y-up and Y-down, each on a stable boot/version within its own window.

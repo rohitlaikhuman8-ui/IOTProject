@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Awaiting measurements; at 14:56 IST connectivity check, last accepted report was 14:49:58 IST |
+| 2 | `esp32-7839a3f4e9d4` | Reconnected; first component-up reference recorded; awaiting opposite face |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -250,3 +250,19 @@ Mean sample magnitude was **9.882263 m/s²**, error **+0.771038%** against 9.806
 **Node 1 result: measured corrections installed, persistent, reporting to Atlas, and passed the single-level on-device bench screen.** Movement attribution/threshold acceptance after calibration, repeated accuracy checks in other orientations, temperature behavior, deliberate power interruption/rollback and endurance remain separate acceptance work. No claim of production certification is made from this one level window.
 
 At the **14:56 IST** fleet checkpoint, Nodes 1, 3 and 4 had fresh reports. Node 2's last accepted report was **14:49:58.180 IST**, version `408a075`, last mode running. Its power/network status was requested from the operator before starting its calibration; the cause was not established. Nodes 3/4 still reported the previous release at that checkpoint. Publication makes the new release available to their scheduled OTA checks; it does not prove that every node has already installed it. Do not take stale node data as a new calibration window.
+
+## Node 2 reference measurements
+
+### Reconnect and component-side-up reference — November 25
+
+After the operator reported Node 2 ready, Atlas showed a fresh report at **14:58:13.988 IST**, healthy sensor/storage/time flags, firmware `408a075` and a new boot ID `6201b16ae2412486cfded9859fa8b3a2`. The preceding gap's cause was not independently established. The operator subsequently explicitly confirmed **Node 2 flat ready**.
+
+The requested capture window was **14:58:25–15:00:25 IST**. Twelve unique periodic samples were captured at **14:58:27–15:00:17 IST**. All came from the same Node ID, boot and firmware, with no applied calibration revision. No OTA/version transition occurred within the recorded samples. [Complete Node 2 face-up evidence](calibration/node2-component-up-2026-11-25.json) includes the source events and consistency checks.
+
+| Axis | Raw mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -0.156171 | 0.068140 |
+| Y | -0.643807 | 0.110406 |
+| Z | 6.909765 | 0.146168 |
+
+Mean raw magnitude was **6.942521 m/s²**, below the conventional gravity reference. This point alone cannot determine Z bias versus scale or establish a hardware fault. Its variation was greater than Node 1's initial reference, so secure support and repeatability need attention in later windows. No coefficients were computed or applied to Node 2. Next: level component-side down, then the signed X/Y reference pairs, followed by independent validation before installation. Node 1's coefficients must not be reused.

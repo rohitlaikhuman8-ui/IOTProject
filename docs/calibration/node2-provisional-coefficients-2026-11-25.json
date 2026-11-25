@@ -1,0 +1,96 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+  "status": "PROVISIONAL: not applied; held-out level validation required; off-axis variation flagged",
+  "referenceGravity": 9.80665,
+  "unit": "m/s2",
+  "formula": "correctedAxis = (rawAxis - bias) * scale",
+  "coefficients": {
+    "x": {
+      "bias": -0.288439125,
+      "scale": 0.980067807932084
+    },
+    "y": {
+      "bias": 0.10640290705128308,
+      "scale": 0.9841065508763649
+    },
+    "z": {
+      "bias": -2.6373760000000006,
+      "scale": 1.027181800961052
+    }
+  },
+  "referenceFiles": [
+    "node2-x-up-2026-11-25.json",
+    "node2-x-down-2026-11-25.json",
+    "node2-y-up-2026-11-25.json",
+    "node2-y-down-2026-11-25.json",
+    "node2-component-up-2026-11-25.json",
+    "node2-component-down-2026-11-25.json"
+  ],
+  "referenceFirmwares": [
+    "408a075bcb8b8eb4366a380ffc283637349bcc57",
+    "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+  ],
+  "referenceBootIds": [
+    "6201b16ae2412486cfded9859fa8b3a2",
+    "cd8da16d0a1c412ff2815da16d38c21e"
+  ],
+  "uniqueReferenceEvents": 73,
+  "excludedAttempt": "node2-x-down-interrupted-2026-11-25.json",
+  "fitChecks": [
+    {
+      "file": "node2-x-up-2026-11-25.json",
+      "correctedMean": {
+        "x": 9.806649999999998,
+        "y": -0.12353086743386538,
+        "z": 0.5319917496644595
+      },
+      "magnitude": 9.821846024013002
+    },
+    {
+      "file": "node2-x-down-2026-11-25.json",
+      "correctedMean": {
+        "x": -9.80665,
+        "y": 0.017612154359200088,
+        "z": 0.01800598337994742
+      },
+      "magnitude": 9.806682345519235
+    },
+    {
+      "file": "node2-y-up-2026-11-25.json",
+      "correctedMean": {
+        "x": 0.12650792853488801,
+        "y": 9.806649999999996,
+        "z": 0.4959802108969831
+      },
+      "magnitude": 9.819999228517462
+    },
+    {
+      "file": "node2-y-down-2026-11-25.json",
+      "correctedMean": {
+        "x": -0.08637920920125751,
+        "y": -9.806649999999998,
+        "z": -0.27965735657026775
+      },
+      "magnitude": 9.811016961934481
+    },
+    {
+      "file": "node2-component-up-2026-11-25.json",
+      "correctedMean": {
+        "x": 0.12963164965571958,
+        "y": -0.7382860740171204,
+        "z": 9.806650000000001
+      },
+      "magnitude": 9.835255711682342
+    },
+    {
+      "file": "node2-component-down-2026-11-25.json",
+      "correctedMean": {
+        "x": -0.34828428757146357,
+        "y": -0.3869972673854329,
+        "z": -9.80665
+      },
+      "magnitude": 9.82046093889859
+    }
+  ]
+}

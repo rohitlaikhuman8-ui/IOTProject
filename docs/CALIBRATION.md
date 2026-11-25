@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Five references recorded on raw/identity acquisition; awaiting Y-down and independent validation |
+| 2 | `esp32-7839a3f4e9d4` | All six references recorded; provisional coefficients calculated; independent validation pending, not installed |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -322,3 +322,29 @@ The operator confirmed +Y upward. The requested capture window was **15:17:55–
 | Z | -2.154521 | 0.054901 |
 
 Mean magnitude was **10.300711 m/s²**. Y was positive as requested, and the full window arrived without a boot or firmware transition. This is the fifth reference position. No Y bias/scale was calculated from this single point and no coefficients or settings were applied. Next: +Y downward, then provisional three-axis calculation and independent validation on fresh readings.
+
+### Node 2 Y-down reference — November 25
+
+The operator confirmed +Y downward. The requested capture window was **15:21:40–15:23:40 IST**. Thirteen unique periodic samples were captured at **15:21:40–15:23:40 IST**, including both endpoints of the 120-second interval. All retained boot `cd8da16d0a1c412ff2815da16d38c21e`, firmware `795d041` and revision `none`. [Complete Y-down evidence](calibration/node2-y-down-2026-11-25.json) preserves the source samples and checks; no record was dropped merely to force a twelve-sample count.
+
+| Axis | Raw/identity mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -0.376575 | 0.053740 |
+| Y | -9.858626 | 0.031822 |
+| Z | -2.909633 | 0.345084 |
+
+Mean magnitude was **10.291082 m/s²**. Y was relatively steady and negative, but off-axis Z ranged from -2.485986 to -3.403888 m/s². This drift is flagged for alignment/support and repeatability review; it is not described as a stationary three-axis pass. No coefficients were installed.
+
+### Node 2 provisional six-position calculation
+
+The [provisional coefficient record](calibration/node2-provisional-coefficients-2026-11-25.json) lists the six accepted input windows and **73 distinct reference event IDs**. The interrupted X-down attempt is excluded. Each input window has one boot/version and uncorrected/identity acquisition; the version transition between separate windows is explicitly retained. The fit verifies the paired-axis means map to ±9.80665 m/s²; this is arithmetic consistency, not independent physical validation.
+
+| Axis | Bias to subtract (m/s²) | Multiplicative scale |
+| --- | --- | --- |
+| X | -0.288439125 | 0.980067808 |
+| Y | 0.106402907 | 0.984106551 |
+| Z | -2.637376000 | 1.027181801 |
+
+**These values are provisional, not applied and belong only to Node 2.** All values fall inside firmware configuration guards. Fit magnitudes range approximately 9.8067–9.8353 m/s², but off-axis corrected means include Y -0.7383 m/s² in the earlier component-up window and Z +0.5320 m/s² in X-up. The Y-down drift and other flagged variations remain relevant; fitting a gravity value does not establish an accurate sensor.
+
+Next: a fresh held-out component-up window with the actual PCB firmly supported level in both directions and wires loose, without hand-holding. Use the unchanged bench screening limits (at least twelve unique samples spanning 100 seconds, corrected mean magnitude within 3%, absolute corrected X/Y mean at most 0.5 m/s², axis sample standard deviation at most 0.15 m/s²) before considering installation. Repeat unsuitable references if validation fails; do not relax limits after seeing the data or reuse Node 1's coefficients. Persistent installation, on-device verification and movement acceptance remain outstanding for Node 2.

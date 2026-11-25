@@ -68,4 +68,6 @@ event["value"] = sqrtf(x * x + y * y + z * z) * sensitivity;
 
 The API preserves `acceleration.x/y/z`, sensor `ADXL345`, and unit `m/s2`. See the [connected node record](NODE-COM5.md) for the observed device and calibration notes. If the breakout exposes CS, it must be high for I²C mode. SDO determines whether the sensor uses 0x53 or 0x1D. GPIO 4 remains available for provisioning.
 
+Calibration-capable firmware applies the node's measured per-axis bias/scale before the magnitude formula above. `sensor-raw` remains available for uncorrected acquisition diagnostics. Keep the sensor PCB level when collecting a gravity reference; headers, components or taut wires can tilt it even if the ESP32 itself lies flat. See [calibration procedures](CALIBRATION.md).
+
 Record each node's ID, board model, firmware SHA, sensor type, location, sample interval, touch threshold, and commissioning date in a private inventory. Keep its API secret in a password manager.

@@ -1,7 +1,7 @@
 {
   "nodeId": "esp32-d01de2f4e9d4",
   "firmware": "408a075bcb8b8eb4366a380ffc283637349bcc57",
-  "status": "OFFLINE_BENCH_SCREEN_PASS on supported-level held-out window; coefficients remain provisional and are not installed",
+  "status": "INSTALLED on published firmware; offline and on-device single-level bench screens passed; remaining acceptance documented",
   "referenceGravity": 9.80665,
   "unit": "m/s2",
   "formula": "correctedAxis = (rawAxis - bias) * scale",
@@ -87,5 +87,13 @@
     "file": "node1-validation-leveled-result-2026-11-25.json",
     "result": "All recorded bench-screen checks passed",
     "scope": "Single held-out level pose; not on-device, full orientation or production acceptance"
+  },
+  "installation": {
+    "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "revision": "n1-20261125-v1",
+    "method": "Whole-image-verified USB application update; NVS/LittleFS retained",
+    "coefficientPersistence": "Verified after save reboot, additional reset and published application installation",
+    "onDeviceValidation": "node1-on-device-validation-2026-11-25.json",
+    "onDeviceValidationResult": "Level bench screen passed; no second correction in analysis"
   }
 }

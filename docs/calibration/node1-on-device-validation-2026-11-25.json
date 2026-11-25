@@ -1,0 +1,282 @@
+{
+  "nodeId": "esp32-d01de2f4e9d4",
+  "pose": "Operator-confirmed supported level, component-side up, USB connected",
+  "status": "ON_DEVICE_LEVEL_BENCH_SCREEN_PASS",
+  "processing": "Sensor corrections already applied on ESP32; no second correction applied in analysis",
+  "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+  "calibrationRevision": "n1-20261125-v1",
+  "requestedCaptureWindow": {
+    "start": 1795598565,
+    "end": 1795598685
+  },
+  "screeningCriteria": {
+    "minUniqueSamples": 12,
+    "minSampleSpanSeconds": 100,
+    "meanMagnitudeErrorPercentMax": 3,
+    "absMeanXYMax": 0.5,
+    "maxAxisSampleStdDev": 0.15,
+    "scope": "Single level pose; not full metrology or production acceptance"
+  },
+  "statistics": {
+    "count": 12,
+    "first": 1795598574,
+    "last": 1795598684,
+    "boots": [
+      "d302989e462ae2827dd64f16dfa9083b"
+    ],
+    "axes": {
+      "x": {
+        "mean": -0.06312766666666668,
+        "sampleStdDev": 0.019503437568021108,
+        "min": -0.085222,
+        "max": -0.047346
+      },
+      "y": {
+        "mean": 0.017028583333333337,
+        "sampleStdDev": 0.04839755438122193,
+        "min": -0.032508,
+        "max": 0.078949
+      },
+      "z": {
+        "mean": 9.881920333333332,
+        "sampleStdDev": 0.03867257691142007,
+        "min": 9.816466,
+        "max": 9.934283
+      }
+    },
+    "meanMagnitude": 9.882262968285977,
+    "magnitudeErrorPercent": 0.7710376967259736
+  },
+  "checks": {
+    "minSamples": true,
+    "sampleSpan": true,
+    "singleBoot": true,
+    "correctNode": true,
+    "publishedVersion": true,
+    "calibrationRevision": true,
+    "captureWindow": true,
+    "gravityMagnitude": true,
+    "levelXY": true,
+    "repeatability": true,
+    "positiveZ": true,
+    "summaryMatchesCorrectedAxes": true
+  },
+  "samples": [
+    {
+      "acceleration": {
+        "x": -0.047346,
+        "y": -0.032508,
+        "z": 9.895011
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "6f47f29c90eb834cbc2784891e6ebeab",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:22:55.310Z"
+      },
+      "sampledAt": 1795598574,
+      "value": 9.895178,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.085222,
+        "y": -0.032508,
+        "z": 9.895011
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "954bd6ddd503add8fc6e061e188877ef",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:23:26.645Z"
+      },
+      "sampledAt": 1795598584,
+      "value": 9.895432,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.047346,
+        "y": -0.032508,
+        "z": 9.895011
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "fc27f4e164e2d3598f3a7ad375810637",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:23:28.372Z"
+      },
+      "sampledAt": 1795598594,
+      "value": 9.895178,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.047346,
+        "y": 0.041797,
+        "z": 9.934283
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "6847248325cf6c9dabe029cbaaf6f21a",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:23:29.533Z"
+      },
+      "sampledAt": 1795598604,
+      "value": 9.934484,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.085222,
+        "y": 0.004645,
+        "z": 9.816466
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "b568f5104499f96e4de2d41ccab712aa",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:23:36.492Z"
+      },
+      "sampledAt": 1795598614,
+      "value": 9.816837,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.047346,
+        "y": -0.032508,
+        "z": 9.816466
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "8dbca2d477a86f15cf45bfc8b422e465",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:23:45.478Z"
+      },
+      "sampledAt": 1795598624,
+      "value": 9.816634,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.085222,
+        "y": 0.041797,
+        "z": 9.895011
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "36ac7ae2fa0ef38050508543a9f3d078",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:23:56.761Z"
+      },
+      "sampledAt": 1795598634,
+      "value": 9.895466,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.085222,
+        "y": -0.032508,
+        "z": 9.85574
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "43275a780aa6b48c9aec45e13711e27a",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:24:05.811Z"
+      },
+      "sampledAt": 1795598644,
+      "value": 9.856161,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.047346,
+        "y": 0.078949,
+        "z": 9.85574
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "683b75c2a15575857c087702cadb5447",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:24:15.040Z"
+      },
+      "sampledAt": 1795598654,
+      "value": 9.85617,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.085222,
+        "y": 0.078949,
+        "z": 9.895011
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "9ee25f14752aa334ab6901da56071ffe",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:24:26.266Z"
+      },
+      "sampledAt": 1795598664,
+      "value": 9.895693,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.047346,
+        "y": 0.078949,
+        "z": 9.895011
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "7ec6d5f06d2235fcf32acb2e781750ed",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:24:35.291Z"
+      },
+      "sampledAt": 1795598674,
+      "value": 9.895439,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.047346,
+        "y": 0.041797,
+        "z": 9.934283
+      },
+      "bootId": "d302989e462ae2827dd64f16dfa9083b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "c7c057478c61fb47fc6e88cca83fa6af",
+      "kind": "sample",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-25T09:24:46.546Z"
+      },
+      "sampledAt": 1795598684,
+      "value": 9.934484,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    }
+  ]
+}

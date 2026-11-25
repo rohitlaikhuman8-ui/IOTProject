@@ -12,7 +12,7 @@ Node 1 (`esp32-d01de2f4e9d4`) has completed six-position measurement and a held-
 
 | Item | Value |
 | --- | --- |
-| Last verified COM5 Node ID | `esp32-986aa3f4e9d4` (November 24; November 25 group check uses cloud reports) |
+| Last verified COM5 Node ID | `esp32-d01de2f4e9d4` (November 25 calibration installation; verify identity whenever boards are swapped) |
 | USB port | COM5 |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |

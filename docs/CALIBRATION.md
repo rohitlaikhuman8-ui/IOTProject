@@ -4,8 +4,8 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Leveled offline screen passed; corrections installed/reboot-verified on bench firmware; final release/orientation checks pending |
-| 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
+| 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
+| 2 | `esp32-7839a3f4e9d4` | Awaiting measurements; at 14:56 IST connectivity check, last accepted report was 14:49:58 IST |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -230,3 +230,23 @@ Revision `n1-20261125-v1` was saved at approximately **14:42 IST**, and its coef
 The backward-compatible dashboard/API deployment `dpl_Fj4AMfugPZUQbZGKwawEpczj27Sg` reached Ready. Atlas event `ac6858b52fcb06b90fd09f564fe9987c`, captured **14:42:59 IST** and received **14:43:01.401 IST**, contains corrected acceleration and `calibrationRevision: n1-20261125-v1`. It verifies tagged cloud delivery, not a new known-orientation accuracy check after connecting USB.
 
 Firmware builds with OTA enabled and disabled passed within the app partition; the Next.js production build/type checks passed. The offline portal client-contract test passed. That fixture test does not claim a new physical captive-portal session; the operator's laptop Wi-Fi was left unchanged. Final release/version and any later on-device accuracy checks are recorded as follow-ups below.
+
+### Published release and final on-device level check
+
+The finalized implementation was merged to `main` only after the bench checks. [GitHub Actions run 45584124521](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45584124521) passed and published release **795d041b2daf1b4d9e1448890c7ef16c3de0c8f7**. The live Vercel manifest advertised **1,233,520 bytes**, SHA-256 **ba72ecba6986f9f5dc7983a2e8655d6baf25c972dfca6efc3496bf91e1e84565**. The complete downloaded image matched both values. Node 1 received that published image over USB, with whole-image verification before boot selection; it was not represented as an additional OTA transfer test.
+
+After boot, Node 1 reported the exact published version and restored `n1-20261125-v1`, the saved coefficients, sensor 0x53 and 256 local records. The published build uses normal OTA-enabled behavior, replacing the temporary OTA-disabled bench image. A scheduled manifest check at approximately **14:56 IST** returned matching advertised/running versions without reinstalling. During the earlier diagnostics one heartbeat timed out at its ten-second limit, then subsequent heartbeat/telemetry requests succeeded; this recovered transport failure is not omitted from the test record.
+
+With the operator's final supported-level position and USB still connected, the requested capture window was **14:52:45–14:54:45 IST**. Twelve unique periodic samples were captured at **14:52:54–14:54:44 IST**. They all carry the published firmware version, revision `n1-20261125-v1` and one post-installation boot ID. **These axes were corrected on the ESP32; analysis did not apply the coefficients a second time.** [Complete on-device evidence](calibration/node1-on-device-validation-2026-11-25.json) includes the raw API records, statistics and checks.
+
+| Quantity | On-device mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -0.063128 | 0.019503 |
+| Y | 0.017029 | 0.048398 |
+| Z | 9.881920 | 0.038673 |
+
+Mean sample magnitude was **9.882263 m/s²**, error **+0.771038%** against 9.80665 m/s². The unchanged numeric bench limits passed: ±3% mean magnitude, absolute mean X/Y at most 0.5 m/s², axis sample standard deviation at most 0.15 m/s², at least twelve samples spanning 100 seconds. Node ID, revision, published version, capture window and within-window boot consistency passed; event summary magnitude also matched its corrected axes at sensitivity one. An intentional firmware-installation reboot means this window correctly has a different boot/version from pre-installation references.
+
+**Node 1 result: measured corrections installed, persistent, reporting to Atlas, and passed the single-level on-device bench screen.** Movement attribution/threshold acceptance after calibration, repeated accuracy checks in other orientations, temperature behavior, deliberate power interruption/rollback and endurance remain separate acceptance work. No claim of production certification is made from this one level window.
+
+At the **14:56 IST** fleet checkpoint, Nodes 1, 3 and 4 had fresh reports. Node 2's last accepted report was **14:49:58.180 IST**, version `408a075`, last mode running. Its power/network status was requested from the operator before starting its calibration; the cause was not established. Nodes 3/4 still reported the previous release at that checkpoint. Publication makes the new release available to their scheduled OTA checks; it does not prove that every node has already installed it. Do not take stale node data as a new calibration window.

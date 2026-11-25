@@ -132,3 +132,9 @@ The physical node successfully downloaded, verified, and booted GitHub release `
 Earlier bench tests exposed and corrected TLS stack usage and long GitHub redirect handling. The current build uses a 16 KiB loop stack, heap-backed OTA buffers, and verified HTTPS redirects up to 4096 characters. Settings and local history remained available across the update.
 
 The final status check showed `pendingVerification: false`, healthy storage and sensor, the configured SSID, 133 local records, 9,692 bytes minimum free stack, and approximately 219 KiB free heap. No BOOT-button intervention was required.
+
+## November 25 calibration checkpoint
+
+This board returned on COM5 and its live Node ID was checked before any write. Six reference positions and a fresh supported-level offline validation produced the coefficients documented in [the calibration record](CALIBRATION.md). Revision `n1-20261125-v1` was installed on calibration-capable bench firmware, read back after two reboots and confirmed in Atlas events. The separate NVS calibration record leaves saved network configuration and LittleFS intact; 256 retained records remained indexed. This checkpoint does not claim that Nodes 2–4 have been calibrated. Final published firmware and on-device orientation checks are tracked in the calibration record.
+
+The board then received checksum-verified published release `795d041b2daf1b4d9e1448890c7ef16c3de0c8f7` over USB and restored its saved correction. Twelve device-corrected samples in a new level window passed the bench screen, mean magnitude 9.882263 m/s² (+0.771038%). The normal OTA check advertised the same release. Post-calibration movement/threshold and remaining fault/endurance tests are still separate work.

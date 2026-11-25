@@ -4,7 +4,7 @@
 
 | Order | Node ID | State |
 | --- | --- | --- |
-| 1 | `esp32-d01de2f4e9d4` | Initial mounted baseline recorded; awaiting a valid level reference pose |
+| 1 | `esp32-d01de2f4e9d4` | Flat component-up window recorded; awaiting opposite-face positioning |
 | 2 | `esp32-7839a3f4e9d4` | Awaiting positioning and measurements |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
@@ -45,3 +45,15 @@ The operator initially confirmed readiness, then clarified that the ADXL345 was 
 All seven samples share the original boot ID and running release `408a075`. The spread of gravity across axes is compatible with the operator's reported tilt; it does not establish an electrical fault or determine per-axis bias. This window is **not accepted as a level reference** and does not complete calibration. [Stored sample evidence](calibration/node1-initial-mounted-2026-11-25.json) contains event IDs, capture times and server receipt times.
 
 Next: confirm whether the sensor can be repositioned, obtain a level reference and continue the signed-axis orientations one at a time. If it cannot be rotated, document that constraint and use a restricted mounted baseline/threshold assessment; do not label that a full three-axis offset/scale calibration. Nodes 2–4 remain awaiting their own positioning and measurements.
+
+### Node 1 component-side-up reference — November 25
+
+The operator confirmed the ADXL345 itself was flat. After settling, the requested capture window was **14:01:10–14:03:10 IST**. Twelve unique periodic samples were captured at **14:01:17–14:03:07 IST**; selection used device capture time and excluded the earlier mounted window and movement records. All twelve retained the same boot ID and `408a075` firmware. [Complete reference evidence](calibration/node1-component-up-2026-11-25.json) includes samples and statistics.
+
+| Axis | Mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.168920 | 0.034434 |
+| Y | -1.411913 | 0.047429 |
+| Z | 7.792610 | 0.049263 |
+
+Mean vector magnitude was **7.921518 m/s²**, below the conventional gravity reference. This single position cannot distinguish offsets, gain errors and residual alignment error, and does not establish a hardware failure. No coefficient was computed or applied. The next requested pose is level with the component side downward, safely supported. Remaining signed-axis windows and independent validation are still required before declaring this node calibrated. Nodes 2–4 have not yet started their own reference measurements.

@@ -17,4 +17,14 @@ Read-only probes also identified Node 4 on COM7 and Node 2 on COM8. Port numbers
 5. Verify a new boot ID, fresh device-captured telemetry and server-stamped startup/connection reporting in Atlas/dashboard. Check the other nodes remain online and record queue state honestly. A ten-second outage may be shorter than the 90-second offline timeout and need not produce an offline notification.
 6. Preserve failed results, checkpoints and any recovery actions. Do not erase or reflash merely because reporting is delayed. Update this record before repeating or advancing to another node.
 
-**Physical power-cycle result: pending.** No controlled power removal has occurred in this phase. Later flash-interruption, intentional brownout and failed-image rollback tests need their own recovery plan and evidence; they must not publish a deliberately failing image to the fleet-wide production channel.
+## Node 1 normal power-cycle result — limited pass
+
+The operator confirmed **“Node 1 power-cycle done.”** The first USB status request returned no complete status; a separate retry identified Node 1 on COM5 at **21:21:06 IST**. Firmware, revision and all bias/scale values matched preflight exactly. Saved Wi-Fi reconnected, setup was inactive, the sensor responded at 0x53, storage was ready and no OTA image awaited validation. No configuration write or manual reset was needed.
+
+The post-cycle read-only scan validated **256 records, zero invalid**, in **29,748 ms**. [Device result](calibration/node1-power-cycle-result-2026-11-26.json) retains status and scan. Matching valid counts establish a readable retained journal, not exact record-ID continuity in the rolling log.
+
+[Cloud evidence](calibration/node1-power-cycle-cloud-2026-11-26.json) shows Node 1 changed from boot `c46ee4d687f0a5eb57677ed79ccd66e7` to `cb84e8a66ce1b15e361f3d0f89f65ed7`, retaining firmware `795d041` and revision `n1-20261125-v1`. A startup notification was stored at **21:20:56.925 IST**. Fresh periodic samples captured **21:21:07 / 21:21:17 / 21:21:27 IST** were received at **21:21:10.382 / 21:21:19.589 / 21:21:29.202 IST**, carrying the new boot ID. Device time was synchronized at the cloud checkpoint. Other nodes retained their preflight boot IDs and healthy running status. Queue counts were **0/0/0/1**; Node 4's pending record is not claimed delivered at that checkpoint.
+
+An Atlas connector transport error affected the first supplementary query; retry succeeded. It is not diagnosed as an ESP32 upload failure. User-performed removal was not electrically instrumented; exact outage timing and supply voltage were not measured.
+
+**Node 1 passed a limited normal power-cycle recovery check.** Nodes 2/3/4 still need their own checks. Exact record-ID continuity, interrupted writes, intentional brownout and failed-image rollback remain untested. Later flash-interruption and rollback tests need their own recovery plan and must not publish a deliberately failing image to the fleet-wide production channel.

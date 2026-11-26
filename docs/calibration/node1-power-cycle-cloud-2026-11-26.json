@@ -1,0 +1,167 @@
+{
+  "beforeNodes": [
+    {
+      "lastSeen": {
+        "$date": "2026-11-26T15:48:21.125Z"
+      },
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "bootId": "c46ee4d687f0a5eb57677ed79ccd66e7",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "8708c856fad9a30b8b50626daf39fcbc",
+      "lastSeen": {
+        "$date": "2026-11-26T15:48:23.893Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "de9470f61f9f15ad2d1d903c0e5d9946",
+      "lastSeen": {
+        "$date": "2026-11-26T15:48:23.391Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 2,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "f02a4e37c5819a59701745968fd9e509",
+      "lastSeen": {
+        "$date": "2026-11-26T15:48:23.544Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 9,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "afterNodes": [
+    {
+      "lastSeen": {
+        "$date": "2026-11-26T15:51:13.090Z"
+      },
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "bootId": "cb84e8a66ce1b15e361f3d0f89f65ed7",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "8708c856fad9a30b8b50626daf39fcbc",
+      "lastSeen": {
+        "$date": "2026-11-26T15:51:13.679Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "de9470f61f9f15ad2d1d903c0e5d9946",
+      "lastSeen": {
+        "$date": "2026-11-26T15:51:10.148Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "f02a4e37c5819a59701745968fd9e509",
+      "lastSeen": {
+        "$date": "2026-11-26T15:51:13.908Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "freshEvents": [
+    {
+      "bootId": "cb84e8a66ce1b15e361f3d0f89f65ed7",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "a2dccc0a201302a57b7345e64e490107",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T15:51:29.202Z"
+      },
+      "resetReason": 1,
+      "sampledAt": 1795708287,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "bootId": "cb84e8a66ce1b15e361f3d0f89f65ed7",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "891e8c0b00e90d77179b89c9f703e196",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T15:51:19.589Z"
+      },
+      "resetReason": 1,
+      "sampledAt": 1795708277,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "bootId": "cb84e8a66ce1b15e361f3d0f89f65ed7",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "1e9d5279a89e62044d53bb48cecb5ff4",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T15:51:10.382Z"
+      },
+      "resetReason": 1,
+      "sampledAt": 1795708267,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    }
+  ],
+  "startup": [
+    {
+      "at": {
+        "$date": "2026-11-26T15:50:56.925Z"
+      },
+      "kind": "startup",
+      "message": "Node started and reached the cloud",
+      "nodeId": "esp32-d01de2f4e9d4"
+    }
+  ],
+  "toolNote": "An Atlas connector transport error interrupted the first supplementary query; a retry returned the stored events. This is not evidence of device upload failure."
+}

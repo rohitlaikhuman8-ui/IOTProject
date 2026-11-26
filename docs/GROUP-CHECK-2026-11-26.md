@@ -27,6 +27,21 @@ The screenshot includes movement history during/around this observation. The ope
 
 ## Next checks and operating procedure
 
+### Confirmed stillness baseline completed
+
+The operator subsequently confirmed **“All four still and ready.”** A separate declared window **12:54:28–12:56:28 IST** recorded 49 periodic samples and **zero received movement events** across the four nodes. [Complete baseline evidence](calibration/postcal-stillness-baseline-2026-11-26.json) contains raw stored events, per-axis statistics, checks and final health. The sensors stayed in their supported resting orientations; this was not another component-up accuracy validation.
+
+| Node | Periodic samples / capture span | Received movement events | Pending at later health check |
+| --- | --- | --- | --- |
+| `esp32-d01de2f4e9d4` | 13 / 120 s | 0 | 0 |
+| `esp32-7839a3f4e9d4` | 12 / 110 s | 0 | 0 |
+| `esp32-986aa3f4e9d4` | 12 / 111 s | 0 | 0 |
+| `esp32-3013a5f4e9d4` | 12 / 110 s | 0 | 1 |
+
+All samples retained expected firmware/revision and one stable boot per node; final health showed sensor/storage/time ready and running mode. Per-axis sample standard deviations were approximately 0.016–0.047 m/s². No sensitivity or movement threshold was changed. The pending count is a later instantaneous queue state, not a missing baseline event count. Zero received alerts in this short window does not establish a false-alarm rate, guarantee no delayed events, characterize full-band noise or set a minimum detectable movement.
+
+The limited operator-confirmed baseline screen passed. At **12:57:57 IST**, a new controlled movement phase was marked for **Node 1 only** (`esp32-d01de2f4e9d4`); the operator was asked to gently tilt/move its sensor for about five seconds, then leave it still, with the other three untouched. **Controlled movement verification is pending the operator's reply and fresh event/notification evidence.** Do not treat the earlier group-window alerts as this test's result.
+
 1. Keep all four powered, with their existing saved network available. No provisioning portal is needed to resume logging.
 2. Secure each sensor separately on a nonconductive support, with wires slack. Confirm all four are untouched before recording a quiet baseline. Retain any baseline movement alerts for review rather than deleting them.
 3. Run controlled movement tests one node at a time, starting with `esp32-d01de2f4e9d4`. Move only the requested sensor gently, avoiding exposed pins and cable tension. Confirm a fresh event and matching notification under that exact Node ID and installed revision, using device capture and server receipt times separately.

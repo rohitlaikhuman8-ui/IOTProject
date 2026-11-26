@@ -1,0 +1,268 @@
+{
+  "nodeId": "esp32-d01de2f4e9d4",
+  "status": "Target movement detection and notification delivery verified; isolated-node acceptance INCONCLUSIVE",
+  "windowUtc": {
+    "start": "2026-11-26T07:27:57.000Z",
+    "queryCutoff": "2026-11-26T07:28:58.000Z"
+  },
+  "operatorInstruction": "Gently tilt/move Node 1 only about five seconds then leave still; others untouched",
+  "operatorReply": "Node 1 movement done",
+  "operatorClarification": "Yes, shared support or wires could have moved Node 2",
+  "targetEventCount": 4,
+  "otherMovementCounts": {
+    "node2": 1,
+    "node3": 0,
+    "node4": 0
+  },
+  "checks": {
+    "freshTargetEvents": true,
+    "expectedRevisionAndFirmware": true,
+    "targetBootUnchanged": true,
+    "matchingNotifications": true,
+    "withinMarkedWindow": true
+  },
+  "interpretation": "Potential mechanical disturbance confirmed as possible by operator, not proof of alert cause. Do not classify Node 2 alert as a sensor defect, identity leak or false positive. Isolated repeat required; thresholds unchanged.",
+  "events": [
+    {
+      "acceleration": {
+        "x": 3.285713,
+        "y": 6.989268,
+        "z": 7.892118
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "2804debca11b925c0bc2714447454d04",
+      "kind": "movement",
+      "movementDelta": 1.660572,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:28:18.411Z"
+      },
+      "sampledAt": 1795678096,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": -0.167114,
+        "y": 4.449497,
+        "z": 8.908524
+      },
+      "bootId": "16d0f3bfd608cdf9d4bc18d3725b684c",
+      "calibrationRevision": "n2-20261126-v2",
+      "eventId": "b3eb7fcad53d18f571eacfbc394396b4",
+      "kind": "movement",
+      "movementDelta": 1.532366,
+      "nodeId": "esp32-7839a3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:28:18.618Z"
+      },
+      "sampledAt": 1795678096,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 4.649237,
+        "y": 10.81595,
+        "z": -2.083075
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "73c3e0a87e6545b42f4ade0eeba82106",
+      "kind": "movement",
+      "movementDelta": 9.396443,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:28:20.632Z"
+      },
+      "sampledAt": 1795678099,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 5.368875,
+        "y": 7.658009,
+        "z": 6.949581
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "3e34aa2e030991fcc5d8c9b7a578767c",
+      "kind": "movement",
+      "movementDelta": 10.84934,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:28:22.493Z"
+      },
+      "sampledAt": 1795678100,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 3.285713,
+        "y": 7.397943,
+        "z": 2.511798
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "f36f6ed9d500cfaa0e277a1ed09d1398",
+      "kind": "movement",
+      "movementDelta": 16.74213,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:28:23.959Z"
+      },
+      "sampledAt": 1795678103,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    }
+  ],
+  "notifications": [
+    {
+      "at": {
+        "$date": "2026-11-26T07:28:18.411Z"
+      },
+      "eventId": "2804debca11b925c0bc2714447454d04",
+      "kind": "movement",
+      "message": "Movement detected by ADXL345",
+      "movementDelta": 1.660572,
+      "nodeId": "esp32-d01de2f4e9d4"
+    },
+    {
+      "at": {
+        "$date": "2026-11-26T07:28:18.618Z"
+      },
+      "eventId": "b3eb7fcad53d18f571eacfbc394396b4",
+      "kind": "movement",
+      "message": "Movement detected by ADXL345",
+      "movementDelta": 1.532366,
+      "nodeId": "esp32-7839a3f4e9d4"
+    },
+    {
+      "at": {
+        "$date": "2026-11-26T07:28:20.632Z"
+      },
+      "eventId": "73c3e0a87e6545b42f4ade0eeba82106",
+      "kind": "movement",
+      "message": "Movement detected by ADXL345",
+      "movementDelta": 9.396443,
+      "nodeId": "esp32-d01de2f4e9d4"
+    },
+    {
+      "at": {
+        "$date": "2026-11-26T07:28:22.493Z"
+      },
+      "eventId": "3e34aa2e030991fcc5d8c9b7a578767c",
+      "kind": "movement",
+      "message": "Movement detected by ADXL345",
+      "movementDelta": 10.84934,
+      "nodeId": "esp32-d01de2f4e9d4"
+    },
+    {
+      "at": {
+        "$date": "2026-11-26T07:28:23.959Z"
+      },
+      "eventId": "f36f6ed9d500cfaa0e277a1ed09d1398",
+      "kind": "movement",
+      "message": "Movement detected by ADXL345",
+      "movementDelta": 16.74213,
+      "nodeId": "esp32-d01de2f4e9d4"
+    }
+  ],
+  "finalNodes": [
+    {
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:28:59.772Z"
+      },
+      "logRecords": 256,
+      "neighbors": [
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ],
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:29:00.788Z"
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "mode": "running",
+      "pendingRecords": 1,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "16d0f3bfd608cdf9d4bc18d3725b684c",
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:29:17.170Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-986aa3f4e9d4",
+        "esp32-d01de2f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ],
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:28:53.423Z"
+      },
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "56af3af31d51a125e5258eaa2ed4c18a",
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:29:16.135Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-7839a3f4e9d4",
+        "esp32-d01de2f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ],
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 2,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:28:53.855Z"
+      },
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "c079f439a18f3a7292ce04ea74448c13",
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:29:01.618Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-d01de2f4e9d4",
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4"
+      ],
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:28:57.138Z"
+      },
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "productionAccepted": false
+}

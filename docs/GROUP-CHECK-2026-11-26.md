@@ -42,6 +42,8 @@ All samples retained expected firmware/revision and one stable boot per node; fi
 
 The limited operator-confirmed baseline screen passed. At **12:57:57 IST**, a new controlled movement phase was marked for **Node 1 only** (`esp32-d01de2f4e9d4`); the operator was asked to gently tilt/move its sensor for about five seconds, then leave it still, with the other three untouched. **Controlled movement verification is pending the operator's reply and fresh event/notification evidence.** Do not treat the earlier group-window alerts as this test's result.
 
+The subsequent first trial verified four fresh Node 1 movement events and matching notifications, but also one correctly attributed Node 2 alert. The operator confirmed shared supports or wires could have disturbed Node 2, so isolated-node acceptance remains inconclusive. See [the dedicated movement record](MOVEMENT-CHECK-2026-11-26.md) for the retained evidence and separated-support repeat procedure. Thresholds were not changed.
+
 1. Keep all four powered, with their existing saved network available. No provisioning portal is needed to resume logging.
 2. Secure each sensor separately on a nonconductive support, with wires slack. Confirm all four are untouched before recording a quiet baseline. Retain any baseline movement alerts for review rather than deleting them.
 3. Run controlled movement tests one node at a time, starting with `esp32-d01de2f4e9d4`. Move only the requested sensor gently, avoiding exposed pins and cable tension. Confirm a fresh event and matching notification under that exact Node ID and installed revision, using device capture and server receipt times separately.

@@ -14,6 +14,8 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
+The next validation stage is [exact local record retention](docs/RECORD-RETENTION-CHECK.md). Node 4's full 256-record baseline is archived with per-event hashes and thirty recent IDs selected before the test power-cycle. Post-cycle comparison is pending; this is separate from count-only integrity scans and later interrupted-write/brownout/rollback work. Raw NDJSON evidence is exempt from Git newline conversion to preserve its byte hashes.
+
 The [automatic fallback portal recovery fix](docs/PORTAL-RECOVERY-FIX.md) passed hardware disconnect/recovery, manual-portal preservation, real AP-client ownership and a normal power-cycle repeat. Production release **`d05bb40` is running on all four nodes**: Node 1 updated on its scheduled OTA poll, Nodes 2/3 through OTA after USB scheduling, and Node 4 through verified production installation with OTA restored. The [22:27 IST dashboard checkpoint](docs/images/dashboard-portal-recovery-release-2026-11-26.png) shows all four online with saved calibrations and zero queues at that instant. These are observed results, not endurance or complete production-readiness certification.
 
 All four have limited normal power-cycle recovery results, each with a 256-valid/zero-invalid journal. Node 4's original attempt needed portal-close intervention; the fix subsequently passed an unattended bench-image power-cycle repeat before the production rollout. Both results are retained in [staged recovery procedures and evidence](docs/RECOVERY-CHECKS-2026-11-26.md). This is not exact record-ID continuity, interrupted-write, brownout or intentional OTA rollback acceptance.

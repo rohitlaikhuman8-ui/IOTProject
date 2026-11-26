@@ -10,3 +10,4 @@
 *.tsx text eol=lf
 *.cjs text eol=lf
 *.png binary
+docs/retention/*.ndjson -text

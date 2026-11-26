@@ -1,0 +1,522 @@
+{
+  "nodeId": "esp32-986aa3f4e9d4",
+  "pose": "x-down-reference",
+  "source": "USB sensor-raw command",
+  "unit": "m/s2",
+  "timestampSource": "Host UTC for this USB capture, not device/server receipt time",
+  "requestedSeconds": 120,
+  "requestedIntervalSeconds": 1,
+  "rawReplyTimeoutSeconds": 5.0,
+  "guardPolicy": "Abort on raw-response timeout or observed reboot; compare identity/firmware/calibration before and after",
+  "status": "INCOMPLETE",
+  "measurements": [
+    {
+      "sequence": 0,
+      "hostTimeUtc": "2026-11-26T05:36:05.253502+00:00",
+      "elapsedSeconds": 0.01600000000325963,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0382,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 1,
+      "hostTimeUtc": "2026-11-26T05:36:06.241977+00:00",
+      "elapsedSeconds": 1.0160000000032596,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 2,
+      "hostTimeUtc": "2026-11-26T05:36:07.241578+00:00",
+      "elapsedSeconds": 2.0,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 3,
+      "hostTimeUtc": "2026-11-26T05:36:08.241395+00:00",
+      "elapsedSeconds": 3.0,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 4,
+      "hostTimeUtc": "2026-11-26T05:36:09.243265+00:00",
+      "elapsedSeconds": 4.01600000000326,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 5,
+      "hostTimeUtc": "2026-11-26T05:36:10.258104+00:00",
+      "elapsedSeconds": 5.032000000006519,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 6,
+      "hostTimeUtc": "2026-11-26T05:36:11.249518+00:00",
+      "elapsedSeconds": 6.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0382,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 7,
+      "hostTimeUtc": "2026-11-26T05:36:12.244390+00:00",
+      "elapsedSeconds": 7.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 8,
+      "hostTimeUtc": "2026-11-26T05:36:13.240937+00:00",
+      "elapsedSeconds": 8.0,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 9,
+      "hostTimeUtc": "2026-11-26T05:36:14.240549+00:00",
+      "elapsedSeconds": 9.0,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 10,
+      "hostTimeUtc": "2026-11-26T05:36:15.250582+00:00",
+      "elapsedSeconds": 10.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 11,
+      "hostTimeUtc": "2026-11-26T05:36:16.257263+00:00",
+      "elapsedSeconds": 11.03200000000652,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 12,
+      "hostTimeUtc": "2026-11-26T05:36:17.256962+00:00",
+      "elapsedSeconds": 12.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.1147,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 13,
+      "hostTimeUtc": "2026-11-26T05:36:18.247740+00:00",
+      "elapsedSeconds": 13.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 14,
+      "hostTimeUtc": "2026-11-26T05:36:19.260785+00:00",
+      "elapsedSeconds": 14.03200000000652,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0382,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 15,
+      "hostTimeUtc": "2026-11-26T05:36:20.251704+00:00",
+      "elapsedSeconds": 15.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0382,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 16,
+      "hostTimeUtc": "2026-11-26T05:36:21.256173+00:00",
+      "elapsedSeconds": 16.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.1147,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 17,
+      "hostTimeUtc": "2026-11-26T05:36:22.255921+00:00",
+      "elapsedSeconds": 17.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 18,
+      "hostTimeUtc": "2026-11-26T05:36:23.247453+00:00",
+      "elapsedSeconds": 18.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 19,
+      "hostTimeUtc": "2026-11-26T05:36:24.257966+00:00",
+      "elapsedSeconds": 19.03200000000652,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 20,
+      "hostTimeUtc": "2026-11-26T05:36:25.255531+00:00",
+      "elapsedSeconds": 20.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.1147,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 21,
+      "hostTimeUtc": "2026-11-26T05:36:26.267555+00:00",
+      "elapsedSeconds": 21.03200000000652,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 22,
+      "hostTimeUtc": "2026-11-26T05:36:27.246477+00:00",
+      "elapsedSeconds": 22.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0382,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 23,
+      "hostTimeUtc": "2026-11-26T05:36:28.248913+00:00",
+      "elapsedSeconds": 23.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 24,
+      "hostTimeUtc": "2026-11-26T05:36:29.250378+00:00",
+      "elapsedSeconds": 24.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0382,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 25,
+      "hostTimeUtc": "2026-11-26T05:36:30.255308+00:00",
+      "elapsedSeconds": 25.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0382,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 26,
+      "hostTimeUtc": "2026-11-26T05:36:31.252910+00:00",
+      "elapsedSeconds": 26.01600000000326,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.1147,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 27,
+      "hostTimeUtc": "2026-11-26T05:36:32.246272+00:00",
+      "elapsedSeconds": 27.01600000000326,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.1147,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 28,
+      "hostTimeUtc": "2026-11-26T05:36:33.254707+00:00",
+      "elapsedSeconds": 28.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 29,
+      "hostTimeUtc": "2026-11-26T05:36:34.245420+00:00",
+      "elapsedSeconds": 29.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.1147,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 30,
+      "hostTimeUtc": "2026-11-26T05:36:35.267650+00:00",
+      "elapsedSeconds": 30.03200000000652,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0382,
+        "z": -1.1474
+      }
+    },
+    {
+      "sequence": 31,
+      "hostTimeUtc": "2026-11-26T05:36:36.253806+00:00",
+      "elapsedSeconds": 31.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 32,
+      "hostTimeUtc": "2026-11-26T05:36:37.253122+00:00",
+      "elapsedSeconds": 32.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.1474
+      }
+    },
+    {
+      "sequence": 33,
+      "hostTimeUtc": "2026-11-26T05:36:38.244732+00:00",
+      "elapsedSeconds": 33.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.2239
+      }
+    },
+    {
+      "sequence": 34,
+      "hostTimeUtc": "2026-11-26T05:36:39.248787+00:00",
+      "elapsedSeconds": 34.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0382,
+        "z": -1.2621
+      }
+    },
+    {
+      "sequence": 35,
+      "hostTimeUtc": "2026-11-26T05:36:40.247861+00:00",
+      "elapsedSeconds": 35.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0765,
+        "z": -1.1091
+      }
+    },
+    {
+      "sequence": 36,
+      "hostTimeUtc": "2026-11-26T05:36:41.254442+00:00",
+      "elapsedSeconds": 36.01600000000326,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0382,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 37,
+      "hostTimeUtc": "2026-11-26T05:36:42.244652+00:00",
+      "elapsedSeconds": 37.01600000000326,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.1091
+      }
+    },
+    {
+      "sequence": 38,
+      "hostTimeUtc": "2026-11-26T05:36:43.261398+00:00",
+      "elapsedSeconds": 38.03200000000652,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.1474
+      }
+    },
+    {
+      "sequence": 39,
+      "hostTimeUtc": "2026-11-26T05:36:44.258894+00:00",
+      "elapsedSeconds": 39.03200000000652,
+      "acceleration": {
+        "x": -10.0587,
+        "y": -0.0382,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 40,
+      "hostTimeUtc": "2026-11-26T05:36:45.235988+00:00",
+      "elapsedSeconds": 40.0,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.1147,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 41,
+      "hostTimeUtc": "2026-11-26T05:36:46.249420+00:00",
+      "elapsedSeconds": 41.01600000000326,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.0765,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 42,
+      "hostTimeUtc": "2026-11-26T05:36:47.242032+00:00",
+      "elapsedSeconds": 42.01600000000326,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.1147,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 43,
+      "hostTimeUtc": "2026-11-26T05:36:48.239828+00:00",
+      "elapsedSeconds": 43.0,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.1147,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 44,
+      "hostTimeUtc": "2026-11-26T05:36:49.249266+00:00",
+      "elapsedSeconds": 44.01600000000326,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.0765,
+        "z": -1.1474
+      }
+    },
+    {
+      "sequence": 45,
+      "hostTimeUtc": "2026-11-26T05:36:50.262108+00:00",
+      "elapsedSeconds": 45.03200000000652,
+      "acceleration": {
+        "x": -10.0204,
+        "y": -0.0765,
+        "z": -1.1856
+      }
+    },
+    {
+      "sequence": 46,
+      "hostTimeUtc": "2026-11-26T05:36:51.251188+00:00",
+      "elapsedSeconds": 46.01600000000326,
+      "acceleration": {
+        "x": -9.9822,
+        "y": -0.1147,
+        "z": -1.2239
+      }
+    }
+  ],
+  "statusRequests": [
+    {
+      "phase": "capture-start",
+      "attempt": 1,
+      "receivedStatus": false
+    },
+    {
+      "phase": "capture-start",
+      "attempt": 2,
+      "receivedStatus": true
+    }
+  ],
+  "initialStatus": {
+    "nodeId": "esp32-986aa3f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": false,
+      "nodeId": "esp32-986aa3f4e9d4",
+      "revision": "none",
+      "bias": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "sensorAddress": 83,
+    "storageReady": true,
+    "logRecords": 256,
+    "timeIst": "2026-11-26 11:05:54 IST"
+  },
+  "startedAtUtc": "2026-11-26T05:36:05.234415+00:00",
+  "error": "Raw sensor response timed out; reference remains incomplete",
+  "missedReplies": 1
+}

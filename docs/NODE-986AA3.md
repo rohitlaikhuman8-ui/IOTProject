@@ -10,6 +10,8 @@ The first opposite-face attempt stopped after 53 samples at a host response time
 
 X-up then recorded **119 valid raw samples** at approximately **11:02:09–11:04:09 IST**, mean X **+10.051607 m/s²**, with low variation and no missed replies. The actual count/span passed the unchanged minimum requirements; it was not rounded up to 120. No calibration settings changed. Three references are now recorded; X-down, both Y faces and independent validation remain outstanding.
 
+X-down USB acquisition then stopped after 47 samples despite the five-second response deadline. That incomplete attempt is preserved and excluded. A separate cloud window at **11:09:05–11:11:05 IST** recorded **12 unique samples spanning 110 seconds**, mean X **-10.020438 m/s²**, with stable boot/firmware and revision `none`. Its uncorrected axes passed the existing cloud reference protocol; no partial USB data were merged. Four reference positions are now recorded. Both Y faces, fitting, independent validation and installation remain. See the [full reference record](CALIBRATION.md#node-3-x-down-usb-interruption-and-independent-cloud-reference).
+
 | Item | Verified value |
 | --- | --- |
 | Node ID | `esp32-986aa3f4e9d4` |

@@ -1,0 +1,210 @@
+{
+  "status": "PASS: all four adopted published production release and stored fresh telemetry",
+  "checks": {
+    "allFourExpectedVersions": true,
+    "allSavedRevisions": true,
+    "allHealthyRunning": true,
+    "allRetain256Records": true,
+    "everyNodeFreshStoredEvents": true,
+    "allPeerListings": true
+  },
+  "nodes": [
+    {
+      "channel": 13,
+      "lastSeen": {
+        "$date": "2026-11-26T16:56:33.214Z"
+      },
+      "logRecords": 256,
+      "neighbors": [
+        "esp32-7839a3f4e9d4",
+        "esp32-986aa3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ],
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "uptimeMs": 65643,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T16:56:31.141Z"
+      },
+      "bootId": "1534b0f5c8e8d2b7b98539dcbb51b54b",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "2c9752b362239859afb29ad6a4a53474",
+      "channel": 13,
+      "lastSeen": {
+        "$date": "2026-11-26T16:56:33.460Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-3013a5f4e9d4",
+        "esp32-986aa3f4e9d4",
+        "esp32-d01de2f4e9d4"
+      ],
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "uptimeMs": 593878,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T16:56:27.704Z"
+      },
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "ff12935f7b7624e60f8d8c537699b17e",
+      "channel": 13,
+      "lastSeen": {
+        "$date": "2026-11-26T16:56:33.288Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-7839a3f4e9d4",
+        "esp32-3013a5f4e9d4",
+        "esp32-d01de2f4e9d4"
+      ],
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "uptimeMs": 450137,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T16:56:32.375Z"
+      },
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "d019d565edf9d1d1ede4f18f1c11aa66",
+      "channel": 13,
+      "lastSeen": {
+        "$date": "2026-11-26T16:56:33.221Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4",
+        "esp32-d01de2f4e9d4"
+      ],
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "uptimeMs": 552173,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T16:56:34.532Z"
+      },
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "events": [
+    {
+      "bootId": "1534b0f5c8e8d2b7b98539dcbb51b54b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "01cb2a2a6f1e61dc19b640b38a23df41",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:23.617Z"
+      },
+      "sampledAt": 1795712239,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "1534b0f5c8e8d2b7b98539dcbb51b54b",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "6c58933e95261d7e87cc226e04a6854b",
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:22.376Z"
+      },
+      "sampledAt": 1795712228,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "2c9752b362239859afb29ad6a4a53474",
+      "calibrationRevision": "n2-20261126-v2",
+      "eventId": "d525ad6ada272da9b69b2fc1946254fd",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:27.396Z"
+      },
+      "sampledAt": 1795712245,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "2c9752b362239859afb29ad6a4a53474",
+      "calibrationRevision": "n2-20261126-v2",
+      "eventId": "8df526c990317caf3b1a5c4fce22a566",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:18.289Z"
+      },
+      "sampledAt": 1795712235,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "ff12935f7b7624e60f8d8c537699b17e",
+      "calibrationRevision": "n3-20261126-v1",
+      "eventId": "a1cb6cde5b7236a01a558ad0a9c94ec0",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:33.888Z"
+      },
+      "sampledAt": 1795712251,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "ff12935f7b7624e60f8d8c537699b17e",
+      "calibrationRevision": "n3-20261126-v1",
+      "eventId": "13b67dd2408a7c1ec43ecacd825e47bf",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:22.978Z"
+      },
+      "sampledAt": 1795712241,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "d019d565edf9d1d1ede4f18f1c11aa66",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "dff7da52e6b7fd038ceb639e115456cd",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:34.881Z"
+      },
+      "sampledAt": 1795712253,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "d019d565edf9d1d1ede4f18f1c11aa66",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "951861497bbaacd8a35c99a20a06961c",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:57:23.823Z"
+      },
+      "sampledAt": 1795712243,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    }
+  ],
+  "methods": {
+    "node1": "Scheduled automatic OTA, no USB trigger",
+    "node2": "OTA after USB ota-check scheduling",
+    "node3": "OTA after USB ota-check scheduling",
+    "node4": "Identity-guarded USB production install after isolated bench validation"
+  },
+  "limitations": "Snapshot pending counts retained, not constant zero. Node 1 pending boot-validation flag not directly read over USB; live healthy reporting and fresh events observed. This is not failed-image rollback, brownout, interrupted-write or endurance acceptance."
+}

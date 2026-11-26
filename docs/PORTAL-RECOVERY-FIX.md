@@ -2,7 +2,7 @@
 
 ## Status
 
-The validated fix is finalized on main as release **`d05bb40d0aa60753ce58f1caa75c7e0c397d0edf`**. [Actions run 45861131780](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45861131780) succeeded. Nodes 2/3 adopted it through OTA after USB scheduling; Node 4 was restored from its isolated bench image to the verified production artifact. OTA is reenabled on Node 4. **Node 1 adoption is still pending its normal polling interval at this checkpoint**; final fleet adoption evidence will be appended separately.
+The fix is finalized on main as production release **`d05bb40d0aa60753ce58f1caa75c7e0c397d0edf`**, and **all four nodes adopted it**. [Actions run 45861131780](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45861131780) succeeded. Node 1 updated on its normal automatic poll, Nodes 2/3 updated through OTA after USB scheduling, and Node 4 was restored from its isolated bench image to the verified production artifact. OTA is reenabled on Node 4. [Final adoption evidence](calibration/portal-recovery-fleet-adoption-2026-11-26.json) and the [reviewed dashboard](images/dashboard-portal-recovery-release-2026-11-26.png) verify current reporting.
 
 The earlier [Node 4 recovery test](RECOVERY-CHECKS-2026-11-26.md) restored data and connectivity but needed USB intervention to close fallback setup. The former implementation used the same fifteen-minute portal lifetime for manual setup and automatic network fallback.
 
@@ -58,11 +58,17 @@ The production binary was checked to exclude the bench-only `bench-wifi-drop` co
 
 ### Published artifact and verified production restoration
 
-The public Vercel manifest advertised the expected full release SHA. The downloaded published binary was **1,233,952 bytes**, SHA-256 **`d733fdcf1f10135cd9cf2945d7294d084837f1392b3d9c8609a58fbf7f40003d`**, matching its manifest exactly. Its size/hash differ from the earlier local candidate because release CI stamps the full release version. [Release evidence](calibration/portal-recovery-production-release-2026-11-26.json) records metadata and serial checkpoints.
+The public Vercel manifest advertised the expected full release SHA. The downloaded published binary was **1,233,952 bytes**, SHA-256 **`d733fdcf1f10135cd9cf2945d7294d084837f1392b3d9c8609a58fbf7f40003d`**, matching its manifest exactly. Release CI stamps the full release version; the local candidate and published artifact are separately identified. [Release evidence](calibration/portal-recovery-production-release-2026-11-26.json) records metadata and serial checkpoints.
 
 Node 4's production installation reverified its MAC and partition bounds, backed up boot/settings privately, wrote application sections, verified the full image and retained NVS/LittleFS. One section hit a serial-stream interruption; its retry and the whole-image verification succeeded. No BOOT intervention was needed. Production serial status confirmed its saved coefficients, 256 indexed records, portal inactive and no pending boot verification. A subsequent USB `ota-check` acknowledged scheduling, confirming normal OTA behavior is enabled again.
 
 Nodes 2/3 adopted the production version through OTA and serial readback confirmed their saved calibrations, 256 indexed records, portal inactive and `pendingVerification=false`. Node 1 remains on its scheduled polling path; do not infer its adoption from the workflow success or the other nodes' status. The numbered procedure below describes the release stages; completed hardware checks and production-restoration evidence above supersede their earlier pending states.
+
+### Final four-node adoption — 22:27 IST
+
+Node 1 entered updating on its normal poll at approximately **22:24:33 IST**, then reported the production version under new boot `1534b0f5c8e8d2b7b98539dcbb51b54b` by **22:25:52 IST**. No USB scheduling was used for it. Final Atlas checks verified all four expected versions/revisions, healthy sensor/storage/time, running mode, 256 indexed records each, three peer listings each on channel 13, and two fresh stored periodic events per current boot. The snapshot's pending counts were **0/0/1/0**; these are retained rather than rewritten to zero. Node 1's boot-validation flag was not directly read over USB, while its live healthy reporting and new-boot events were verified.
+
+The authenticated production dashboard/API at **22:27:48 IST** showed **4 of 4 online**, the new version and saved calibration labels, with queues **0/0/0/0** at that later instant. The [reviewed screenshot](images/dashboard-portal-recovery-release-2026-11-26.png) preserves this checkpoint. No bench firmware remains on the fleet. This completes this fallback-recovery fix and observed production rollout; it does not establish interrupted-write, measured brownout, intentional failed-image rollback, exact record-ID continuity, quantified sensitivity/false-alarm rate or endurance acceptance.
 
 ### Repeat preflight checkpoint
 

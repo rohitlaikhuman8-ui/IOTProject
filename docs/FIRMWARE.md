@@ -40,6 +40,7 @@ Per-axis calibration is stored separately from network settings and survives app
 
 - Touch activates setup after four continuous seconds.
 - The AP expires after 15 minutes and accepts one client.
+- From `d05bb40`, an automatically opened fallback AP closes after fifteen seconds of continuous Wi-Fi recovery plus a fresh cloud success since reconnecting. AP-client association, explicit USB setup or a touch hold preserves manual setup instead. Recovery timers reset on disconnect; restart/OTA activity defers auto-close. See [implementation validation](PORTAL-RECOVERY-FIX.md).
 - Wi-Fi reconnects start every 30 seconds.
 - Upload failures retry from five seconds to five minutes with jitter.
 - The first OTA check is scheduled around 60–120 seconds after boot.

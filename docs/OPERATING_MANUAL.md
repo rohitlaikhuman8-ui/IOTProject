@@ -66,6 +66,8 @@ Setup indication takes priority while the AP is active. GPIO 2 and active-high b
 
 The AP allows one client and expires after 15 minutes. Its current station connection remains active when the router is available, so entering setup does not deliberately stop cloud reporting. Configuration and logs are accepted only through the setup-AP interface. They are rejected through the station IP.
 
+From release **`d05bb40`**, a portal opened automatically after a saved-network outage closes after fifteen continuous seconds of restored Wi-Fi plus a fresh successful cloud request since reconnection. If Wi-Fi drops, the recovery timer restarts. A client joining the setup AP, a four-second touch hold, or an explicit USB `portal` request takes manual ownership; that portal keeps its normal lifetime instead of closing on network recovery. Thus an unattended node can stop fast setup blinking and return to normal logging without re-entering credentials. If the automatic AP disappears before you join, hold GPIO4 again or send `portal` to open manual setup. Check `portalActive` and `portalAutomatic` using USB `status`; `portal-close` ends setup without changing saved settings. See [validated recovery behavior and release evidence](PORTAL-RECOVERY-FIX.md).
+
 ![Physical node setup panel and local logs](images/portal-live.png)
 
 If there is no touch pad, open USB Serial Monitor at 115200 baud with newline endings and send `portal`. On a first boot with no saved SSID, setup starts automatically.

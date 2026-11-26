@@ -1,0 +1,275 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "pose": "y-up",
+  "status": "RAW_REFERENCE_RECORDED_NOT_CALIBRATED",
+  "source": "MongoDB Atlas periodic device telemetry; identity calibration revision none",
+  "units": "m/s^2",
+  "captureWindowUtc": {
+    "start": "2026-11-26T06:35:17.000Z",
+    "end": "2026-11-26T06:37:17.000Z"
+  },
+  "protocol": {
+    "minimumUniqueSamples": 12,
+    "minimumSpanSeconds": 100,
+    "selection": "Device sampledAt within declared window, kind sample only; inclusive bounds",
+    "notes": "Operator-supported vertical Y-up pose; not externally verified alignment. No firmware, network or calibration writes."
+  },
+  "analysis": {
+    "sampleCount": 12,
+    "spanSeconds": 110,
+    "axes": {
+      "x": {
+        "mean": 0.37289749999999994,
+        "sampleStandardDeviation": 0.033122007593139643,
+        "min": 0.344213,
+        "max": 0.420705,
+        "secondHalfMinusFirstHalf": 0.006374333333333315
+      },
+      "y": {
+        "mean": 10.55269,
+        "sampleStandardDeviation": 0.038099134802870055,
+        "min": 10.47939,
+        "max": 10.59412,
+        "secondHalfMinusFirstHalf": -0.006373333333332454
+      },
+      "z": {
+        "mean": -0.5832505,
+        "sampleStandardDeviation": 0.046485377353822493,
+        "min": -0.650181,
+        "max": -0.497197,
+        "secondHalfMinusFirstHalf": 0.006374333333333371
+      }
+    },
+    "checks": {
+      "minimum12Samples": true,
+      "uniqueEventIds": true,
+      "minimum100SecondSpan": true,
+      "expectedNode": true,
+      "expectedBoot": true,
+      "expectedFirmware": true,
+      "uncorrectedRevision": true,
+      "positiveY": true,
+      "withinWindow": true,
+      "perAxisStandardDeviationAtMost015": true
+    },
+    "maximumReceiptLagSeconds": 14.609999895095825
+  },
+  "samples": [
+    {
+      "acceleration": {
+        "x": 0.344213,
+        "y": 10.51763,
+        "z": -0.611935
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "0dd0220e7004a6df4cb87366f007d4d0",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:35:21.330Z"
+      },
+      "sampledAt": 1795674920,
+      "value": 10.54104,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.344213,
+        "y": 10.55588,
+        "z": -0.650181
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "6909ebe2a7f571b9b8abe86976b8d7d5",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:35:32.623Z"
+      },
+      "sampledAt": 1795674930,
+      "value": 10.58148,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.382459,
+        "y": 10.59412,
+        "z": -0.611935
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "8f860c225ec7601e67af15bdd6acde54",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:35:41.432Z"
+      },
+      "sampledAt": 1795674940,
+      "value": 10.61867,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.382459,
+        "y": 10.59412,
+        "z": -0.535443
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "60a42aeaea749b9b7021a9b1ecbf86ea",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:35:52.700Z"
+      },
+      "sampledAt": 1795674950,
+      "value": 10.61454,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.420705,
+        "y": 10.51763,
+        "z": -0.611935
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "ddc1f928652b444abee29bc32cfac0d1",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:36:01.714Z"
+      },
+      "sampledAt": 1795674960,
+      "value": 10.54382,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.344213,
+        "y": 10.55588,
+        "z": -0.497197
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "b457fdb21b6576b79d5cd4a852292071",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:36:24.610Z"
+      },
+      "sampledAt": 1795674970,
+      "value": 10.57318,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.382459,
+        "y": 10.59412,
+        "z": -0.611935
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "ecba6c96dbf3b29a7ee06635e07ffe52",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:36:26.092Z"
+      },
+      "sampledAt": 1795674980,
+      "value": 10.61867,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.344213,
+        "y": 10.51763,
+        "z": -0.535443
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "40dd8992614e25078d586e54d29d086c",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:36:39.586Z"
+      },
+      "sampledAt": 1795674990,
+      "value": 10.53688,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.344213,
+        "y": 10.55588,
+        "z": -0.611935
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "5aaa72e363051b5e09f2c4c55be23738",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:36:42.867Z"
+      },
+      "sampledAt": 1795675000,
+      "value": 10.5792,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.420705,
+        "y": 10.59412,
+        "z": -0.535443
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "0a691ae7ba9fa5065616dbc81db7220b",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:36:51.846Z"
+      },
+      "sampledAt": 1795675010,
+      "value": 10.61599,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.344213,
+        "y": 10.55588,
+        "z": -0.611935
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "e86bcb339a900664e8799d7ff2bfd324",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:37:02.898Z"
+      },
+      "sampledAt": 1795675020,
+      "value": 10.5792,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 0.420705,
+        "y": 10.47939,
+        "z": -0.573689
+      },
+      "bootId": "d4425b16a951887969c0439a9f68a4ba",
+      "calibrationRevision": "none",
+      "eventId": "1be01c693d32e40cfdee9bca27e69128",
+      "kind": "sample",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T06:37:11.926Z"
+      },
+      "sampledAt": 1795675030,
+      "value": 10.50351,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    }
+  ]
+}

@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; Z-up/down and X-up/down references recorded; Y pair and validation pending; revision `none` |
+| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; Z/X pairs and Y-up recorded; Y-down and validation pending; revision `none` |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -684,3 +684,15 @@ The operator confirmed +X downward. Preflight verified the expected node, negati
 | Z | -0.500139 | 0.055118 |
 
 All source/count/span/window/identity/sign checks passed and each axis's standard deviation was below 0.15 m/s². X's half-window mean shift was approximately **+0.004553 m/s²**. Maximum receipt delay was **34.209 seconds**; delayed arrivals were selected by capture time within the original window, not by receipt time or an extended acquisition interval. No settings or firmware changed. Four reference positions are recorded; both Y faces, fitting, independent validation and installation remain. The same visual-alignment and sparse-sampling limitations apply.
+
+### Node 4 Y-up cloud reference
+
+The operator confirmed +Y upward. A new declared window **12:05:17–12:07:17 IST** captured **12 unique periodic samples spanning 110 seconds**, at **12:05:20–12:07:10 IST**. [Complete Y-up evidence](calibration/node4-y-up-cloud-2026-11-26.json) contains raw-identity axes and capture/receipt times. Node identity, boot `d4425b16a951887969c0439a9f68a4ba`, firmware `795d041` and revision `none` remained unchanged.
+
+| Axis | Uncorrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.372897 | 0.033122 |
+| Y | 10.552690 | 0.038099 |
+| Z | -0.583250 | 0.046485 |
+
+All source/count/span/window/identity/sign checks passed and every axis's standard deviation was below 0.15 m/s². Y's half-window mean shift was approximately **-0.006373 m/s²**. Maximum receipt delay was **14.610 seconds**; selection used device capture time. No firmware, network or calibration settings changed. Five fitting positions are recorded; Y-down, fitting, independent validation and installation remain. This reference does not by itself establish calibration accuracy; visual alignment and sparse-sampling limitations still apply.

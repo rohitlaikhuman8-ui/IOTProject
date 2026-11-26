@@ -5,7 +5,7 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Two validation windows improved magnitude but failed level-position screen; level-reference method under review, not installed |
+| 2 | `esp32-7839a3f4e9d4` | November 26: visual leveling confirmed; two validation windows failed level-position screen; in-plane reversal diagnostic being prepared; not installed |
 | 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
@@ -378,3 +378,16 @@ The operator confirmed readiness after re-supporting the PCB. Coefficients and n
 Corrected magnitude error improved to **+0.532829%**, inside the 3% screen. Corrected axis sample standard deviations **0.025271, 0.054425 and 0.054173 m/s²** passed the 0.15 m/s² repeatability screen. Identity, independence, timing, stable expected boot/firmware and uncorrected-input checks passed. The level-position screen still **failed**: corrected Y magnitude **0.575188 m/s²** exceeded the unchanged **0.5 m/s²** limit by approximately 0.075188 m/s². Corrected X was inside the limit.
 
 **Validation remains incomplete; nothing was installed or refitted.** Improvement after repositioning is useful evidence but does not establish that all residual error is tilt, nor that the coefficients are accurate. The operator was asked whether level was established with a spirit level/verified fixture or only visually. Establish that reference before repeating more nominally level windows. If externally verified alignment still fails, revisit the flagged reference positions/model rather than tilting until the calculated X/Y values happen to be zero or changing limits after the result. Node 2 continues logging with revision `none`.
+
+### November 26 resume and alignment diagnostic
+
+The operator clarified that the previous leveling was **visual placement only**. A read-only fleet check showed Node 2 reporting on `795d041`, revision `none`, new boot `bbf19dc13849fcedb72c915bee52b647`, healthy sensor/storage/time flags and 41 pending records at that checkpoint. Node 1 still reported its saved `n1-20261125-v1` correction on a new boot. Node 3 reported updating from the older firmware; Node 4's latest accepted report remained November 25. These are dated observations, not a new four-node group acceptance or a diagnosed cause for any stale report.
+
+No coefficient, threshold, firmware or network setting was changed for the resume. Before repeating another nominally level pass/fail test, the operator was asked to prepare an **in-plane 180-degree reversal diagnostic** for Node 2:
+
+1. Position A: component side upward, PCB edges supported on firm equal-height nonconductive supports, wires loose. Mark the +Y-arrow direction on paper and confirm readiness. Collect fresh stationary data.
+2. Position B: rotate the board like a clock hand by 180 degrees on the same support, keeping the component side upward and the PCB plane unchanged. The +Y arrow should point opposite its mark. Do not flip the board or tilt it to force corrected values to zero. Confirm readiness and collect a separate fresh window.
+3. Check each window's Node ID, identity correction, stable boot/version, unique samples and capture times. Queued arrivals must be selected by capture time and allowed to finish uploading rather than treated as measurements of a later pose.
+4. Compare the X/Y vectors with the existing coefficients unchanged. Under the fixed-plane assumption, the horizontal projection of gravity reverses sign in sensor coordinates, while fixed offsets stay with the sensor. Opposing residual vectors support a fixed-support tilt explanation; a persistent midpoint residual calls for further offset/cross-axis/reference investigation. Movement, changed supports, wire tension, noise or drift can invalidate that inference.
+
+This is a diagnostic inference from the rotation geometry, **not a manufacturer accuracy test or a new calibration acceptance rule**. A nonzero or zero midpoint alone does not prove a hardware defect or certified accuracy. Keep the previous failed level screens and provisional coefficients unchanged. If diagnostic data later become fitting inputs, they are no longer independent validation data; fresh acceptance evidence is still required. A verified level/square fixture remains preferable for known-orientation accuracy checks. Position A/B data are not yet recorded at this planning checkpoint.

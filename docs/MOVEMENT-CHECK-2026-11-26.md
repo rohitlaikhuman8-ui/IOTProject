@@ -49,6 +49,8 @@ The firmware opens a fallback portal after more than 30 seconds without Wi-Fi an
 
 [Recovery evidence](calibration/movement-resume-recovery-2026-11-26.json) retains the snapshots. Firmware, settings, calibration and retained records were not replaced; no flash, erase, reset or queue deletion was performed. This observed network/queue recovery is not the planned controlled power-cut/rollback test, and its earlier root cause remains unconfirmed. Use a fresh capture-time boundary for Node 3 after recovery; never treat backfilled historical movement as the new physical test.
 
+At **14:17:23 IST**, a fresh preflight confirmed all four online, running, sensor/storage/time healthy and **zero pending records**, with their same boot IDs and saved revisions. This replaces the earlier ten-pending Node 1 checkpoint as the current recovery result. A **new Node 3 movement phase was marked at 14:17:23 IST (08:47:23 UTC)** before asking the operator to gently move only `esp32-986aa3f4e9d4` for about five seconds and then leave it still. COM5 was verified as this node. The physical reply and event/notification result remain pending; the pre-pause marker is not used.
+
 1. After a pause, verify current cloud freshness, boot/revision, sensor/storage/time and pending queue state before marking the next movement phase.
 2. Preserve the completed Node 1 isolated and Node 2 checks, including the earlier confounded Node 1 trial.
 3. Run controlled movement and settling checks for Nodes 3/4 individually, using their full Node IDs and active revisions. Keep supports and wires mechanically independent where possible.

@@ -8,17 +8,17 @@ Four registered boards have been commissioned on release `408a075`, retaining se
 
 Node 1 (`esp32-d01de2f4e9d4`) has completed six-position measurement and a held-out offline bench screen. Its measured corrections were installed as `n1-20261125-v1`, read back after two reboots, and confirmed in tagged Atlas telemetry. Calibration-capable firmware preserves separate per-node coefficients in NVS; the dashboard shows each revision. See [the calibration record and operating commands](docs/CALIBRATION.md) for accuracy limits and remaining on-device checks.
 
-Node 2 now runs **`n2-20261126-v2`**, saved and verified after reboot. It passed independent raw-data and on-device supported-pose numeric bench screens; the latter averaged 9.881484 m/s² (+0.763098%). The failed v1 trial is superseded and retained in history. Node 3 now runs **`n3-20261126-v1`**, likewise saved/read back after reboot and independently checked offline and on-device; its final mean magnitude was **9.939455 m/s² (+1.354238%)**. Physical level was visually estimated, so these are limited bench results, not certified full orientation/temperature accuracy. Node 4 still needs its calibration. A dashboard revision identifies applied settings, not production acceptance; see the complete calibration record.
+Node 2 now runs **`n2-20261126-v2`**, saved and verified after reboot. It passed independent raw-data and on-device supported-pose numeric bench screens; the latter averaged 9.881484 m/s² (+0.763098%). The failed v1 trial is superseded and retained in history. Node 3 runs **`n3-20261126-v1`**, likewise saved/read back after reboot and independently checked offline and on-device; its final mean magnitude was **9.939455 m/s² (+1.354238%)**. Node 4 now runs **`n4-20261126-v1`**, saved/reboot-verified and passed independent offline and on-device checks, final mean **9.702494 m/s² (-1.062093%)**. All four nodes have their own installed correction and recorded numeric bench screen. Physical level was visually estimated, so these are limited bench results, not certified full orientation/temperature accuracy. A dashboard revision identifies applied settings, not production acceptance; see the complete calibration record. Controlled post-calibration movement/threshold, power-cut/rollback and endurance work remains.
 
-The [November 26, 11:33 IST live dashboard checkpoint](docs/images/dashboard-calibration-three-nodes.png) shows three online nodes with their applied revisions and Node 4's historical last-seen state. The [earlier 10:49 IST checkpoint](docs/images/dashboard-calibration-two-nodes.png) preserves the preceding two-revision stage.
+The [November 26, 12:28 IST dashboard checkpoint](docs/images/dashboard-calibration-four-revisions.png) shows all four applied revisions, Nodes 2/3/4 online and Node 1 last seen at 11:35:47 IST. Restore Node 1's reporting before the next group check. Earlier [11:33 IST](docs/images/dashboard-calibration-three-nodes.png) and [10:49 IST](docs/images/dashboard-calibration-two-nodes.png) screenshots preserve the preceding calibration stages.
 
 ## Connected node and wiring
 
 | Item | Value |
 | --- | --- |
 | Last verified COM5 Node ID | `esp32-986aa3f4e9d4` (November 26 calibration installation/readback; verify identity whenever boards are swapped) |
-| Current calibration target | Node 4 `esp32-3013a5f4e9d4`, verified on **COM6**, November 26; first reference recorded, revision `none` |
-| USB ports | COM5: Node 3; COM6: Node 4 at the latest read-only check. Always reverify identity after reconnection. |
+| Latest calibrated node | Node 4 `esp32-3013a5f4e9d4`, **COM6**, November 26; `n4-20261126-v1` installed/reboot-verified and numeric bench checks passed |
+| USB ports | COM5: Node 3; COM6: Node 4 at the latest identity checks. Always reverify identity after reconnection. |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |
 | ADXL345 SCL | GPIO 22 |

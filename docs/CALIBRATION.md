@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | Six valid references after separate Y-down retry; v1 candidate fitted, independent validation next; revision `none` |
+| 4 | `esp32-3013a5f4e9d4` | `n4-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -732,3 +732,23 @@ The six accepted signed references were checked again for raw provenance, expect
 | Z | -0.468512833 | 0.997381817 |
 
 **Candidate only: `n4-20261126-v1` is not installed or independently validated.** All coefficients satisfy firmware bounds; that alone is not an accuracy pass. A fresh component-up validation must apply this fixed candidate once offline under unchanged numeric limits. Only if that passes should installation/reboot/readback and a fresh device-corrected check proceed. No validation measurements have been used in fitting. Visual support and sparse sampling remain limitations, and production acceptance is not established.
+
+### Node 4 independent validation, installation and final device check
+
+The operator confirmed a fresh supported component-up validation pose. A new **12:20:47–12:22:47 IST** cloud window recorded twelve unique raw-identity samples spanning 110 seconds, on the unchanged pre-installation boot, firmware and revision `none`. [Offline validation](calibration/node4-v1-offline-validation-2026-11-26.json) applied the fixed candidate once without refitting: mean sample magnitude **9.699031 m/s² (-1.097407%)**, corrected X/Y means **-0.083749 / 0.024570 m/s²**. All original provenance/count/span and numeric checks passed. The earlier failed Y-down attempt remains excluded from fitting and retained in history.
+
+The guarded USB installer verified the connected COM6 board's Node ID before saving **`n4-20261126-v1`**. Save acknowledgment and matching coefficients were verified after reboot at approximately **12:24:21–12:24:22 IST**. [Installation evidence](calibration/node4-v1-installation-2026-11-26.json) records 256 retained logs, sensor address 0x53, healthy storage and setup inactive. No firmware, filesystem or network settings were replaced, and no BOOT intervention or captive portal was needed. Immediate readback preceded Wi-Fi reconnection; subsequent Atlas reports independently confirmed the new boot/revision and restored uploads.
+
+With the sensor kept in the supported pose, a separate **12:25:00–12:27:00 IST** window recorded twelve unique device-corrected samples spanning 110 seconds. [Final on-device evidence](calibration/node4-v1-on-device-validation-2026-11-26.json) confirms stable node, firmware, installed revision and boot `d52ec16a0f63b407967db1a6e98f794c`.
+
+| Axis | Device-corrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -0.083749 | 0.029101 |
+| Y | -0.070640 | 0.042918 |
+| Z | 9.701749 | 0.041336 |
+
+Mean sample magnitude was **9.702494 m/s² (-1.062093%)**. All unchanged screens passed: ±3% mean magnitude, absolute mean X/Y at most 0.5 m/s², per-axis sample standard deviation at most 0.15 m/s² and all count/span/window/identity/boot/version/revision checks. Event summary magnitudes matched the already-corrected axes; analysis applied no second correction. A **12:25:39 IST** health checkpoint showed sensor/storage/time ready, 256 retained records and zero pending uploads.
+
+**Node 4 checkpoint: correction installed, persistent through its save/reboot, reporting to Atlas and passed the limited supported-pose numeric bench screen.** Each of the four registered nodes now has its own installed correction and recorded bench screen. Operator-established visual level and sparse telemetry do not certify full orientation/temperature accuracy. Post-calibration controlled movement/threshold, deliberate power-cut/rollback and endurance checks remain outstanding.
+
+At approximately **12:28 IST**, the authenticated dashboard/API showed all four applied revision labels, Nodes 2/3/4 online and Node 1 last seen **11:35:47 IST**. The [reviewed dashboard screenshot](images/dashboard-calibration-four-revisions.png) records this state. It is not a simultaneous four-node group pass. Restore Node 1's reporting before the next group check, then perform controlled post-calibration movement/threshold checks before deliberate fault/rollback testing.

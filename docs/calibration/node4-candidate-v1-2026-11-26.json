@@ -1,7 +1,7 @@
 {
   "nodeId": "esp32-3013a5f4e9d4",
   "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
-  "status": "CANDIDATE ONLY: not installed; independent validation required",
+  "status": "INSTALLED n4-20261126-v1: independent offline and on-device supported-pose numeric bench screens passed; remaining limitations documented",
   "proposedRevision": "n4-20261126-v1",
   "formula": "correctedAxis = (rawAxis - bias) * scale",
   "referenceGravity": 9.80665,
@@ -90,5 +90,19 @@
     "perAxisSampleStandardDeviation": 0.15
   },
   "fixtureLimitation": "Visual support and operator alignment; physical level not externally verified; sparse cloud samples do not establish full-band noise or full orientation/temperature accuracy",
-  "productionAccepted": false
+  "productionAccepted": false,
+  "validation": {
+    "offline": "node4-v1-offline-validation-2026-11-26.json",
+    "onDevice": "node4-v1-on-device-validation-2026-11-26.json",
+    "numericBenchPass": true,
+    "fixtureLevelExternallyVerified": false,
+    "productionAccepted": false
+  },
+  "installation": {
+    "evidence": "node4-v1-installation-2026-11-26.json",
+    "revision": "n4-20261126-v1",
+    "readbackAfterReboot": true,
+    "firmwareUnchanged": true,
+    "retainedRecords": 256
+  }
 }

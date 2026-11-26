@@ -45,6 +45,7 @@ constexpr int SensorScl = 22;
 constexpr float AccelerationScale = 0.0039f * 9.80665f;
 constexpr size_t LogLimit = 256;
 constexpr uint32_t PortalLifetime = 15 * 60 * 1000UL;
+constexpr uint32_t PortalRecoveryDelay = 15000;
 constexpr int StatusLed = 2;
 constexpr uint32_t HeartbeatInterval = 5000;
 constexpr uint32_t CloudTimeout = 90000;
@@ -99,6 +100,12 @@ JsonDocument config;
 String nodeId;
 String formToken;
 bool storageReady, touched, ntpStarted;
+bool portalAutomatic = false, portalRecoveryTracking = false;
+uint32_t portalRecoveryStarted = 0;
+#ifdef FLEET_PORTAL_RECOVERY_BENCH
+bool benchWifiDropped = false;
+uint32_t benchWifiResumeAt = 0;
+#endif
 std::atomic<bool> portalActive{false}, pendingVerification{false}, cloudHealthy{false}, otaActive{false};
 std::atomic<uint32_t> lastCloudSuccess{0};
 String bootId, apPassword;
@@ -162,7 +169,7 @@ uint64_t nextSequence = 1;
 uint32_t verificationStarted;
 uint8_t sensorAddress = 0;
 String serialCommand;
-void startPortal();
+void startPortal(bool automatic = false);
 void closePortal();
 void diagnoseStorage();
 bool due(uint32_t now, uint32_t target);
@@ -831,6 +838,7 @@ void serviceSerial() {
       status["rssi"] = WiFi.RSSI();
       status["ip"] = WiFi.localIP().toString();
       status["portalActive"] = portalActive.load();
+      status["portalAutomatic"] = portalAutomatic;
       status["touchRaw"] = touchRead(TouchPin);
       status["logRecords"] = storageReady ? scanLog().count : 0;
       status["stackFreeBytes"] = uxTaskGetStackHighWaterMark(nullptr);
@@ -852,6 +860,17 @@ void serviceSerial() {
       saveSample();
     } else if (serialCommand == "portal") {
       if (!portalActive) startPortal();
+      else portalAutomatic = false;
+#ifdef FLEET_PORTAL_RECOVERY_BENCH
+    } else if (serialCommand == "bench-wifi-drop") {
+      // Bench image only: exercise a transient disconnect without changing NVS.
+      WiFi.setAutoReconnect(false);
+      WiFi.disconnect(false, false);
+      benchWifiDropped = true;
+      benchWifiResumeAt = millis() + 45000;
+      nextWifi = benchWifiResumeAt;
+      Serial.println("Bench Wi-Fi disconnected for 45 seconds; saved settings retained");
+#endif
     } else if (serialCommand == "portal-close") {
       closePortal();
     } else if (serialCommand == "storage-check") {
@@ -1034,7 +1053,7 @@ void exportLog() {
   Serial.printf("Log export %s: %u/%u bytes in %lu ms\n", complete && sent == totalBytes ? "complete" : "canceled", sent, totalBytes, millis() - started);
 }
 
-void startPortal() {
+void startPortal(bool automatic) {
   WiFi.mode(WIFI_AP_STA);
   String name = "ESP32-Setup-" + nodeId.substring(6);
   if (!WiFi.softAP(name.c_str(), apPassword.c_str(), 1, false, 1)) {
@@ -1046,6 +1065,8 @@ void startPortal() {
   dns.start(53, "*", WiFi.softAPIP());
   portal.begin();
   portalActive = true;
+  portalAutomatic = automatic;
+  portalRecoveryTracking = false;
   portalStarted = millis();
 }
 
@@ -1056,6 +1077,8 @@ void closePortal() {
   WiFi.softAPdisconnect(false);
   WiFi.mode(WIFI_STA);
   portalActive = false;
+  portalAutomatic = false;
+  portalRecoveryTracking = false;
   touched = false;
   nextWifi = millis();
   Serial.println("Setup AP closed; saved settings retained");
@@ -1067,7 +1090,10 @@ void checkTouch(uint32_t now) {
     return;
   }
   if (!touched) { touched = true; touchStarted = now; }
-  if (!portalActive && now - touchStarted >= 4000) startPortal();
+  if (now - touchStarted >= 4000) {
+    if (!portalActive) startPortal();
+    else portalAutomatic = false;
+  }
 }
 
 // GitHub asset redirects may change hosts. Every hop must use verified HTTPS.
@@ -1411,12 +1437,21 @@ void loop() {
     saveSample();
   }
   if (portalActive) {
+    // A setup client takes ownership even if Wi-Fi recovered in parallel.
+    if (portalAutomatic && WiFi.softAPgetStationNum() > 0) portalAutomatic = false;
     dns.processNextRequest();
     portal.handleClient();
     if (now - portalStarted >= PortalLifetime && !restartAt) {
       closePortal();
     }
   }
+#ifdef FLEET_PORTAL_RECOVERY_BENCH
+  if (benchWifiDropped && due(now, benchWifiResumeAt)) {
+    benchWifiDropped = false;
+    WiFi.setAutoReconnect(true);
+    nextWifi = now;
+  }
+#endif
   if (WiFi.status() == WL_CONNECTED) {
     wifiLostAt = 0;
     serviceDiscovery();
@@ -1427,7 +1462,26 @@ void loop() {
   }
   if (WiFi.status() != WL_CONNECTED) {
     if (!wifiLostAt) wifiLostAt = now;
-    if (!portalActive && now - wifiLostAt > 30000) startPortal();
+    if (!portalActive && now - wifiLostAt > 30000) startPortal(true);
   }
+  if (portalActive && portalAutomatic && !restartAt && !otaActive.load()) {
+    if (WiFi.status() != WL_CONNECTED) portalRecoveryTracking = false;
+    else {
+      if (!portalRecoveryTracking) {
+        portalRecoveryTracking = true;
+        portalRecoveryStarted = now;
+      }
+      uint32_t recoveredFor = now - portalRecoveryStarted;
+      uint32_t success = lastCloudSuccess.load();
+      // Unsigned elapsed comparisons also work across the millis() wrap.
+      // Reload millis after the atomic read: a network task may just have updated it.
+      uint32_t successAge = millis() - success;
+      if (recoveredFor >= PortalRecoveryDelay && success &&
+          successAge <= recoveredFor && successAge < PortalRecoveryDelay) {
+        Serial.println("Saved Wi-Fi and cloud recovered; closing automatic setup AP");
+        closePortal();
+      }
+    }
+  } else portalRecoveryTracking = false;
   delay(20);
 }

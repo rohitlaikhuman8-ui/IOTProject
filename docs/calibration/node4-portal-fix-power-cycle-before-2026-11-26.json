@@ -1,0 +1,57 @@
+{
+  "status": "PREFLIGHT: fixed bench firmware normal power-cycle repeat pending",
+  "nodeId": "esp32-3013a5f4e9d4",
+  "port": "COM7",
+  "beforeStatus": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "usb-portal-recovery-bench",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -30,
+    "ip": "10.157.182.153",
+    "portalActive": false,
+    "portalAutomatic": false,
+    "touchRaw": 111,
+    "logRecords": 256,
+    "stackFreeBytes": 12348,
+    "freeHeap": 104800,
+    "pendingVerification": false,
+    "ledOn": true,
+    "timeIst": "2026-11-26 22:01:42 IST",
+    "pendingRecords": 18,
+    "lastCloudAgeMs": 2474
+  },
+  "beforeIntegrity": {
+    "diagnostic": "storage-check",
+    "nodeId": "esp32-3013a5f4e9d4",
+    "records": 256,
+    "valid": 256,
+    "invalid": 0,
+    "elapsedMs": 24625,
+    "maximumReadMs": 162,
+    "usedBytes": 704512,
+    "totalBytes": 1441792,
+    "freeHeap": 145388,
+    "largestAllocation": 53236
+  },
+  "calibrationUnchanged": true,
+  "otaDisabledForBench": true,
+  "notes": "Pending uploads are retained, not claimed delivered. This is development validation, not production rollout."
+}

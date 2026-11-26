@@ -17,7 +17,8 @@ The [November 26, 11:33 IST live dashboard checkpoint](docs/images/dashboard-cal
 | Item | Value |
 | --- | --- |
 | Last verified COM5 Node ID | `esp32-986aa3f4e9d4` (November 26 calibration installation/readback; verify identity whenever boards are swapped) |
-| USB port | COM5 |
+| Current calibration target | Node 4 `esp32-3013a5f4e9d4`, verified on **COM6**, November 26; first reference recorded, revision `none` |
+| USB ports | COM5: Node 3; COM6: Node 4 at the latest read-only check. Always reverify identity after reconnection. |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |
 | ADXL345 SCL | GPIO 22 |

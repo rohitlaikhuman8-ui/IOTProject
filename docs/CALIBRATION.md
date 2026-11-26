@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
+| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; component-up reference recorded; remaining five faces and validation pending; revision `none` |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -630,3 +630,21 @@ Mean sample magnitude was **9.939455 m/s² (+1.354238%)**. All unchanged screens
 **Node 3 checkpoint: correction installed, persistent through its save/reboot, reporting to Atlas, and passed the limited supported-pose numeric bench screen.** Visual support was not externally leveled; sparse telemetry does not certify full orientation/temperature accuracy, post-calibration movement/threshold acceptance, deliberate power-cut/rollback or endurance. These remain separate work.
 
 The authenticated live dashboard at **11:33:23 IST** showed Nodes 1/2/3 online with their respective applied revisions; Node 4 still showed last seen November 25. The [reviewed screenshot](images/dashboard-calibration-three-nodes.png) preserves this checkpoint, including Node 3's then-current two pending records (different from the earlier zero-pending health snapshot). No controlled movement test or simultaneous four-node acceptance is inferred from that screenshot.
+
+## Node 4 raw reference measurements — November 26
+
+### USB identity and component-up cloud reference
+
+The operator connected Node 4 and confirmed its ADXL345 component-side up on supported, visually established level. A read-only probe showed COM5 still belonged to calibrated Node 3; **COM6** identified the intended **`esp32-3013a5f4e9d4`**. No settings were written to either board. At approximately **11:38:08 IST**, Node 4 reported firmware `795d041`, calibration disabled/revision `none`, healthy storage, sensor address 0x53, saved Wi-Fi connected, 256 retained records and setup inactive. Atlas independently confirmed current reporting, synchronized time and healthy sensor/storage on boot `d4425b16a951887969c0439a9f68a4ba`.
+
+A new cloud window **11:38:38–11:40:38 IST** used the existing minimum twelve unique periodic samples spanning 100 seconds, selected by device capture time. [Component-up evidence](calibration/node4-component-up-cloud-2026-11-26.json) contains **12 unique samples spanning 110 seconds**, captured **11:38:39–11:40:29 IST**. Node/boot/firmware/identity-revision checks passed, so these axes are uncorrected fitting inputs. Maximum receipt delay was approximately **17.911 seconds**.
+
+| Axis | Uncorrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.305967 | 0.043147 |
+| Y | 0.764919 | 0.048924 |
+| Z | 9.363880 | 0.027451 |
+
+Z remained positive, with a second-half minus first-half shift of approximately **0.012749 m/s²**. All per-axis standard deviations were below 0.15 m/s². This is only the first fitting reference, not a calibration accuracy pass; the nonzero sideways means are not declared corrected or accepted. No coefficient was calculated from this one face or copied from another node. Next: component-down, X/Y signed pairs, fitting and independent validation. Physical level was not externally verified, and sparse telemetry does not characterize full-band noise.
+
+At **11:39 IST**, Nodes 2/3/4 had fresh cloud reports; Node 1's latest accepted report was **11:35:46 IST**. This session does not establish simultaneous four-node availability or group acceptance.

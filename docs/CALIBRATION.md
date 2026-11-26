@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
-| 3 | `esp32-986aa3f4e9d4` | Six references recorded; v1 candidate fitted; independent validation next; no correction applied |
+| 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
@@ -610,3 +610,23 @@ All six completed signed references were checked for identity, firmware, raw pro
 | Z | -1.603617917 | 1.005284974 |
 
 **Candidate only: proposed revision `n3-20261126-v1` is not installed or independently validated.** All values satisfy firmware coefficient bounds, which does not establish accuracy. Next is a fresh supported component-up validation, applying this candidate once offline to raw axes under unchanged numeric limits. Only after that passes should installation/readback/reboot and a fresh device-corrected check proceed. No validation readings have been used to fit these coefficients.
+
+### Node 3 independent validation, installation and device check
+
+The operator returned the sensor to a supported component-up pose. A fresh **11:25:39–11:27:39 IST** cloud window recorded twelve unique raw-identity samples spanning 110 seconds, on the unchanged pre-installation boot, firmware and revision `none`. [Offline validation](calibration/node3-v1-offline-validation-2026-11-26.json) applied the fixed candidate once, without refitting: mean sample magnitude **9.977857 m/s² (+1.745828%)**, corrected X/Y means **0.009686 / 0.018702 m/s²**. All original count/span/provenance and numeric limits passed.
+
+The guarded USB installer then verified Node 3 identity and saved `n3-20261126-v1`. The save acknowledgment and matching coefficients were read back after its automatic reboot at approximately **11:29:14–11:29:15 IST**. [Installation evidence](calibration/node3-v1-installation-2026-11-26.json) records 256 retained logs, healthy storage, ADXL345 address 0x53 and setup inactive. Firmware, network settings and filesystem were not replaced; no BOOT intervention or captive portal was needed. The immediate readback preceded Wi-Fi reconnection; subsequent Atlas reports independently established restored connectivity and the new revision.
+
+With the sensor left in the same supported pose, a separate **11:29:47–11:31:47 IST** window recorded twelve unique device-corrected samples spanning 110 seconds. [On-device validation](calibration/node3-v1-on-device-validation-2026-11-26.json) records stable firmware, revision and new boot `56af3af31d51a125e5258eaa2ed4c18a`.
+
+| Axis | Device-corrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.009687 | 0.024342 |
+| Y | -0.018704 | 0.047405 |
+| Z | 9.939302 | 0.038302 |
+
+Mean sample magnitude was **9.939455 m/s² (+1.354238%)**. All unchanged screens passed: ±3% mean magnitude, absolute mean X/Y at most 0.5 m/s², per-axis standard deviation at most 0.15 m/s², and count/span/window/node/boot/version/revision checks. Event summaries matched the already-corrected axes; no second correction was applied. An **11:30:42 IST** health checkpoint showed sensor/storage/time ready, 256 retained records and zero pending uploads.
+
+**Node 3 checkpoint: correction installed, persistent through its save/reboot, reporting to Atlas, and passed the limited supported-pose numeric bench screen.** Visual support was not externally leveled; sparse telemetry does not certify full orientation/temperature accuracy, post-calibration movement/threshold acceptance, deliberate power-cut/rollback or endurance. These remain separate work.
+
+The authenticated live dashboard at **11:33:23 IST** showed Nodes 1/2/3 online with their respective applied revisions; Node 4 still showed last seen November 25. The [reviewed screenshot](images/dashboard-calibration-three-nodes.png) preserves this checkpoint, including Node 3's then-current two pending records (different from the earlier zero-pending health snapshot). No controlled movement test or simultaneous four-node acceptance is inferred from that screenshot.

@@ -1,0 +1,29 @@
+{
+  "nodeId": "esp32-986aa3f4e9d4",
+  "revision": "n3-20261126-v1",
+  "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+  "method": "USB calibration key only; no firmware reflash or portal",
+  "saveAcknowledged": true,
+  "readbackAfterReboot": true,
+  "calibration": {
+    "enabled": true,
+    "nodeId": "esp32-986aa3f4e9d4",
+    "revision": "n3-20261126-v1",
+    "bias": [
+      0.015584,
+      -0.127486,
+      -1.603618
+    ],
+    "scale": [
+      0.977145,
+      0.978043,
+      1.005285
+    ]
+  },
+  "logRecords": 256,
+  "storageReady": true,
+  "sensorAddress": 83,
+  "portalActive": false,
+  "readbackTimeIst": "2026-11-26 11:29:15 IST",
+  "note": "Immediate readback preceded Wi-Fi reconnection; subsequent cloud health and validation are recorded separately"
+}

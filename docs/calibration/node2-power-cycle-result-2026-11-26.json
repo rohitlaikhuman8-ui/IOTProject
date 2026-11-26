@@ -1,0 +1,57 @@
+{
+  "status": "PASS: limited normal power-cycle recovery; not interrupted-write/rollback acceptance",
+  "nodeId": "esp32-7839a3f4e9d4",
+  "operatorConfirmation": "Node 2 power-cycle done",
+  "preflightFile": "node2-power-cycle-preflight-2026-11-26.json",
+  "cloudFile": "node2-power-cycle-cloud-2026-11-26.json",
+  "identityFirmwareRevisionCoefficientsMatch": true,
+  "afterStatus": {
+    "nodeId": "esp32-7839a3f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-7839a3f4e9d4",
+      "revision": "n2-20261126-v2",
+      "bias": [
+        -0.288439,
+        0.106403,
+        -2.478975
+      ],
+      "scale": [
+        0.980068,
+        0.984107,
+        1.026941
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -46,
+    "ip": "10.157.182.5",
+    "portalActive": false,
+    "touchRaw": 102,
+    "logRecords": 256,
+    "stackFreeBytes": 13660,
+    "freeHeap": 107004,
+    "pendingVerification": false,
+    "ledOn": true,
+    "timeIst": "2026-11-26 21:28:51 IST",
+    "pendingRecords": 2,
+    "lastCloudAgeMs": 107
+  },
+  "afterIntegrity": {
+    "diagnostic": "storage-check",
+    "nodeId": "esp32-7839a3f4e9d4",
+    "records": 256,
+    "valid": 256,
+    "invalid": 0,
+    "elapsedMs": 30652,
+    "maximumReadMs": 621,
+    "usedBytes": 745472,
+    "totalBytes": 1441792,
+    "freeHeap": 110512,
+    "largestAllocation": 42996
+  },
+  "limitations": "Matching valid record counts do not prove exact record-ID continuity; outage duration and voltage not instrumented; interrupted writes, brownout and rollback remain separate"
+}

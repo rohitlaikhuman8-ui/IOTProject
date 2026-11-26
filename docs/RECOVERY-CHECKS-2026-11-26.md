@@ -29,10 +29,18 @@ An Atlas connector transport error affected the first supplementary query; retry
 
 **Node 1 passed a limited normal power-cycle recovery check.** Nodes 2/3/4 still need their own checks. Exact record-ID continuity, interrupted writes, intentional brownout and failed-image rollback remain untested. Later flash-interruption and rollback tests need their own recovery plan and must not publish a deliberately failing image to the fleet-wide production channel.
 
-## Node 2 preflight — power-cycle pending
+## Node 2 preflight and completed normal power-cycle
 
 At approximately **21:26 IST**, COM8 was reverified as **`esp32-7839a3f4e9d4`**, firmware `795d041`, revision `n2-20261126-v2`. The first USB status response was garbled and excluded; a fresh complete JSON response passed identity/version/revision checks and its bias/scale arrays matched the installed v2 candidate within serial precision. No cause for the garbled transport response is asserted. Saved Wi-Fi was connected, setup inactive, zero pending uploads and no OTA image awaiting validation.
 
 The read-only journal scan validated **256 of 256 records, zero invalid**, in **24,290 ms**. [Node 2 preflight](calibration/node2-power-cycle-preflight-2026-11-26.json) retains status and integrity results. [Cloud preflight](calibration/node2-power-cycle-cloud-before-2026-11-26.json) records all four healthy/running with expected revisions and zero pending at that checkpoint. Node 2's pre-cycle boot ID is `8708c856fad9a30b8b50626daf39fcbc`.
 
 **Physical Node 2 power-cycle has not started.** Follow the same normal power-cycle procedure above, using this node's verified identity and port. Confirm it is USB-only powered before removal; if it has another supply/backfeed path, establish its power arrangement first. Leave other nodes powered. After reconnection, verify identity, firmware, coefficients, Wi-Fi/time/sensor/storage, fresh cloud boot/events and journal integrity. No settings, firmware, reset or record deletion was performed in preflight. Exact record-ID continuity, interrupted writes, brownout and OTA rollback remain separate work.
+
+### Node 2 result — limited pass
+
+The preflight paragraph above preserves the state before the operator confirmed **“Node 2 power-cycle done.”** At **21:28:51 IST**, read-only USB status reidentified Node 2 on COM8 with the same firmware, revision and every bias/scale value. Saved Wi-Fi reconnected, setup remained inactive, sensor/storage were healthy and no OTA image awaited validation. A second journal scan validated **256 records, zero invalid**, in **30,652 ms**. [Device result](calibration/node2-power-cycle-result-2026-11-26.json) retains those checks.
+
+[Cloud evidence](calibration/node2-power-cycle-cloud-2026-11-26.json) records the new boot `7744fc78566815c7bfa7ad4659c0eef3`, replacing `8708c856fad9a30b8b50626daf39fcbc`. The startup notification was received at **21:28:49.974 IST**. Two fresh timestamped samples were captured at **21:28:53 / 21:29:03 IST**, received **21:28:54.849 / 21:29:04.267 IST** with the expected firmware/revision/new boot. An earlier sample had no device timestamp; it is retained but excluded from timestamp checks. Final cloud state reported synchronized time. All other nodes retained their preflight boots and healthy running status. Queue counts were **0/0/0/1**, so Node 4's in-flight record is not claimed delivered at that instant.
+
+**Node 2 passed a limited normal power-cycle recovery check.** No settings, firmware or calibration were rewritten. This verifies readable retained records and recovery, not exact record-ID continuity, electrically measured outage timing, interrupted-write safety, brownout or OTA rollback. Nodes 3/4 still need their staged recovery checks.

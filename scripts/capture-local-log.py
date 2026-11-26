@@ -18,6 +18,7 @@ parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--port', required=True)
 parser.add_argument('--node', required=True)
 parser.add_argument('--output', required=True, help='New evidence directory')
+parser.add_argument('--post-cycle-baseline', help='Existing acknowledged baseline metadata; permits queued records in post-cycle export')
 args = parser.parse_args()
 if not re.fullmatch(r'esp32-[a-f0-9]{12}', args.node):
     parser.error('Invalid Node ID')
@@ -26,6 +27,13 @@ out.mkdir(parents=True, exist_ok=False)
 profile_name = 'CodexLocalLogCapture'
 profile_file = out / 'private-profile.xml'
 metadata = {'nodeId': args.node, 'captureStartedEpoch': time.time()}
+if args.post_cycle_baseline:
+    baseline = json.loads(Path(args.post_cycle_baseline).read_text(encoding='utf-8'))
+    if (baseline.get('nodeId') != args.node or
+            not baseline.get('result', '').startswith('CAPTURE COMPLETE:') or
+            baseline.get('portalStatusBeforeExport', {}).get('pending') != 0):
+        raise RuntimeError('Post-cycle capture requires an existing same-node acknowledged baseline')
+    metadata['postCycleBaseline'] = str(Path(args.post_cycle_baseline))
 credentials = {}
 port = serial.Serial(port=None, baudrate=115200, timeout=.2)
 port.port = args.port
@@ -119,7 +127,7 @@ try:
         state = json.loads(get('/status'))
         if state.get('nodeId') != args.node:
             raise RuntimeError('HTTP hardware identity mismatch')
-        if state['pending'] == 0:
+        if state['pending'] == 0 or args.post_cycle_baseline:
             break
         drain(2)
     else:

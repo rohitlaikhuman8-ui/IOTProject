@@ -1,0 +1,62 @@
+{
+  "scope": "Post-retention-check live fleet checkpoint",
+  "nodes": [
+    {
+      "lastSeen": {
+        "$date": "2026-11-26T17:20:51.187Z"
+      },
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "bootId": "1534b0f5c8e8d2b7b98539dcbb51b54b",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "2c9752b362239859afb29ad6a4a53474",
+      "lastSeen": {
+        "$date": "2026-11-26T17:20:54.671Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "ff12935f7b7624e60f8d8c537699b17e",
+      "lastSeen": {
+        "$date": "2026-11-26T17:20:54.248Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "lastSeen": {
+        "$date": "2026-11-26T17:20:53.491Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "notes": "Node 4 boot differs from baseline export, saved production firmware/revision retained. Other nodes' instantaneous pending counts retained."
+}

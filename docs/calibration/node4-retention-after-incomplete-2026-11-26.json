@@ -1,0 +1,44 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "captureStartedEpoch": 1795713229.3658442,
+  "originalWifiSSID": "Sensor Testing",
+  "serialBefore": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -38,
+    "ip": "10.157.182.153",
+    "portalActive": false,
+    "portalAutomatic": false,
+    "touchRaw": 111,
+    "logRecords": 256,
+    "stackFreeBytes": 13500,
+    "freeHeap": 106184,
+    "pendingVerification": false,
+    "ledOn": false,
+    "timeIst": "2026-11-26 22:43:56 IST",
+    "pendingRecords": 4,
+    "lastCloudAgeMs": 0
+  },
+  "result": "INCOMPLETE: Queue not drained; preserve partial evidence and retry later",
+  "originalNetworkRestored": true,
+  "captureCompletedEpoch": 1795713302.375213
+}

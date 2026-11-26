@@ -2,7 +2,7 @@
 
 ## Status
 
-Bench validation is complete on **`codex/fallback-portal-recovery`**, ready for main/release publication. Node 4 (`esp32-3013a5f4e9d4`, verified COM7) still runs **`usb-portal-recovery-bench`** with OTA checks disabled until the production artifact is published and installed. Other nodes remain on the previous published firmware. **Production rollout is not yet verified**; final deployment/adoption results must be recorded separately.
+The validated fix is finalized on main as release **`d05bb40d0aa60753ce58f1caa75c7e0c397d0edf`**. [Actions run 45861131780](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45861131780) succeeded. Nodes 2/3 adopted it through OTA after USB scheduling; Node 4 was restored from its isolated bench image to the verified production artifact. OTA is reenabled on Node 4. **Node 1 adoption is still pending its normal polling interval at this checkpoint**; final fleet adoption evidence will be appended separately.
 
 The earlier [Node 4 recovery test](RECOVERY-CHECKS-2026-11-26.md) restored data and connectivity but needed USB intervention to close fallback setup. The former implementation used the same fifteen-minute portal lifetime for manual setup and automatic network fallback.
 
@@ -44,7 +44,7 @@ python scripts/test-portal-recovery.py --port COM7 --node esp32-3013a5f4e9d4 --r
 
 The helper rejects an existing output file, checks bench firmware/revision, records automatic opening/closure and manual preservation, then explicitly closes the manual portal for cleanup. It is a hardware integration test, not a CI simulator. Failed observations must be retained. An AP client automatically joining during the automatic phase will intentionally prevent automatic closure, so ensure the laptop/phone does not auto-join that setup SSID during this specific trial.
 
-For production validation, remove the bench and OTA-disable definitions; release CI generates only the release version. The production candidate was compiled separately and has not been installed on Node 4 or released to the fleet yet.
+For production validation, remove the bench and OTA-disable definitions; release CI generates only the release version. The initial production candidate was compiled separately; the later published artifact and installation are recorded below.
 
 ## Completed real power-cycle and AP-client checks
 
@@ -55,6 +55,14 @@ A separate [real AP-client ownership test](calibration/node4-portal-client-owner
 The production binary was checked to exclude the bench-only `bench-wifi-drop` command; the bench binary contains it. The hardware helper compiled successfully. Original intervention-assisted recovery evidence remains intact.
 
 ## Release completion procedure
+
+### Published artifact and verified production restoration
+
+The public Vercel manifest advertised the expected full release SHA. The downloaded published binary was **1,233,952 bytes**, SHA-256 **`d733fdcf1f10135cd9cf2945d7294d084837f1392b3d9c8609a58fbf7f40003d`**, matching its manifest exactly. Its size/hash differ from the earlier local candidate because release CI stamps the full release version. [Release evidence](calibration/portal-recovery-production-release-2026-11-26.json) records metadata and serial checkpoints.
+
+Node 4's production installation reverified its MAC and partition bounds, backed up boot/settings privately, wrote application sections, verified the full image and retained NVS/LittleFS. One section hit a serial-stream interruption; its retry and the whole-image verification succeeded. No BOOT intervention was needed. Production serial status confirmed its saved coefficients, 256 indexed records, portal inactive and no pending boot verification. A subsequent USB `ota-check` acknowledged scheduling, confirming normal OTA behavior is enabled again.
+
+Nodes 2/3 adopted the production version through OTA and serial readback confirmed their saved calibrations, 256 indexed records, portal inactive and `pendingVerification=false`. Node 1 remains on its scheduled polling path; do not infer its adoption from the workflow success or the other nodes' status. The numbered procedure below describes the release stages; completed hardware checks and production-restoration evidence above supersede their earlier pending states.
 
 ### Repeat preflight checkpoint
 

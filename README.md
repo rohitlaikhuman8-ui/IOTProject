@@ -14,7 +14,7 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
-Development validation is in progress for [automatic fallback portal recovery](docs/PORTAL-RECOVERY-FIX.md). Node 4 currently runs an isolated bench image with OTA temporarily disabled; automatic recovery and manual-portal preservation passed a hardware test. The production candidate compiles, but power-cycle repeat and remaining validation precede main/fleet publication. Other nodes remain on the published release.
+The [automatic fallback portal recovery fix](docs/PORTAL-RECOVERY-FIX.md) passed hardware disconnect/recovery, manual-portal preservation, real AP-client ownership and a normal power-cycle repeat. Production release `d05bb40` is published on main; Nodes 2/3 adopted it through OTA, and Node 4 was restored to production with OTA enabled. Node 1's scheduled adoption is pending at this checkpoint. Complete rollout evidence will be recorded after all four report the release.
 
 Nodes 1, 2 and 3 passed limited normal power-cycle recovery checks. Node 4 restored calibration, readable logs and cloud delivery, but required a USB portal-close intervention after delayed Wi-Fi reconnection opened fallback setup. All four post-cycle journals validated 256 records with zero invalid; all are reporting normally at the final checkpoint. Node 4's unattended normal-mode return still needs correction and a repeat test. See [staged recovery procedures and evidence](docs/RECOVERY-CHECKS-2026-11-26.md). This is not exact record-ID continuity, interrupted-write, brownout or OTA rollback acceptance.
 

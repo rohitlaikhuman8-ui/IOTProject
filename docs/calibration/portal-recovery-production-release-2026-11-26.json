@@ -1,0 +1,124 @@
+{
+  "status": "Production release published; adoption checkpoints recorded separately",
+  "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+  "bytes": 1233952,
+  "sha256": "d733fdcf1f10135cd9cf2945d7294d084837f1392b3d9c8609a58fbf7f40003d",
+  "downloadUrl": "https://esp32-fleet-iot-project3.vercel.app/v1/firmware?version=d05bb40d0aa60753ce58f1caa75c7e0c397d0edf&sha256=d733fdcf1f10135cd9cf2945d7294d084837f1392b3d9c8609a58fbf7f40003d&size=1233952",
+  "actionsRun": "https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45861131780",
+  "actionsConclusion": "success",
+  "manifestAndDownloadedBinaryVerified": true,
+  "node4Install": "Verified MAC, private boot/settings backup, application section writes and whole-image verification, NVS/LittleFS retained",
+  "node4UsbRetry": "One serial-stream failure on application section 2; retry and whole-image verification succeeded",
+  "node4OtaReenabled": "USB ota-check acknowledged OTA check scheduled on production firmware",
+  "serialProofs": [
+    {
+      "nodeId": "esp32-7839a3f4e9d4",
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-7839a3f4e9d4",
+        "revision": "n2-20261126-v2",
+        "bias": [
+          -0.288439,
+          0.106403,
+          -2.478975
+        ],
+        "scale": [
+          0.980068,
+          0.984107,
+          1.026941
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "ssid": "Sensor Testing",
+      "rssi": -45,
+      "ip": "10.157.182.5",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 105,
+      "logRecords": 256,
+      "stackFreeBytes": 13452,
+      "freeHeap": 106908,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-26 22:19:32 IST",
+      "pendingRecords": 1,
+      "lastCloudAgeMs": 752
+    },
+    {
+      "nodeId": "esp32-986aa3f4e9d4",
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-986aa3f4e9d4",
+        "revision": "n3-20261126-v1",
+        "bias": [
+          0.015584,
+          -0.127486,
+          -1.603618
+        ],
+        "scale": [
+          0.977145,
+          0.978043,
+          1.005285
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "ssid": "Sensor Testing",
+      "rssi": -39,
+      "ip": "10.157.182.86",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 108,
+      "logRecords": 256,
+      "stackFreeBytes": 13500,
+      "freeHeap": 108824,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-26 22:20:20 IST",
+      "pendingRecords": 0,
+      "lastCloudAgeMs": 2296
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "revision": "n4-20261126-v1",
+        "bias": [
+          0.251419,
+          0.376085,
+          -0.468513
+        ],
+        "scale": [
+          0.977386,
+          0.963646,
+          0.997382
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "ssid": "Sensor Testing",
+      "rssi": -50,
+      "ip": "10.157.182.153",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 112,
+      "logRecords": 256,
+      "stackFreeBytes": 13612,
+      "freeHeap": 107136,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-26 22:18:01 IST",
+      "pendingRecords": 0,
+      "lastCloudAgeMs": 4653
+    }
+  ],
+  "benchDiagnosticExcludedFromProductionBinary": true
+}

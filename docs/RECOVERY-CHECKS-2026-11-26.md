@@ -64,3 +64,19 @@ The read-only integrity scan validated **256 records, zero invalid**, in **24,83
 Node 3's new pre-cycle reference boot is **`72523a2784d5c0dde4ee01a8ec013449`**. Node 1 also had a different boot following cable troubleshooting; that activity is not claimed as an additional controlled recovery test. Use this fresh fleet snapshot for the staged Node 3 comparison.
 
 **The journal check and serial session finished; Node 3's staged test power-cycle is pending.** If powered only by USB, disconnect that board's USB for ten seconds, reconnect, and confirm completion. If another supply/backfeed path exists, establish its arrangement first. Leave other nodes powered and sensor wires unchanged. No firmware, calibration or network settings were changed during preflight. Retained count validity alone does not prove exact record-ID continuity, interrupted-write safety, brownout or rollback behavior.
+
+## Node 3 normal power-cycle result — limited pass
+
+The operator subsequently confirmed **“Node 3 power-cycle done.”** A fresh USB status retry on COM5 at **21:39:04 IST** verified the same firmware, revision `n3-20261126-v1` and every saved bias/scale value. The first status request had no complete reply; the independent retry succeeded. Saved Wi-Fi restored without setup, storage/sensor were healthy and no OTA image awaited validation. The post-cycle read-only scan validated **256 records, zero invalid**, in **25,151 ms**. [Device result](calibration/node3-power-cycle-result-2026-11-26.json) retains the checks.
+
+[Cloud evidence](calibration/node3-power-cycle-cloud-2026-11-26.json) records Node 3's new boot **`30796fdcfa6ee1b25763429ce7bcc20d`**, replacing `72523a2784d5c0dde4ee01a8ec013449`. A startup notification was received at **21:38:51.168 IST**. Fresh samples captured **21:39:03 / 21:39:13 / 21:39:23 IST** were received at **21:39:05.814 / 21:39:28.023 / 21:39:29.695 IST**, retaining expected firmware/revision and new boot. Other nodes retained their preflight boots, all reported healthy running state and synchronized time, and queue counts were **0/1/0/1** at that checkpoint.
+
+**Node 3 passed a limited normal power-cycle recovery check.** Matching valid journal counts do not prove exact record-ID continuity. No configuration/firmware/calibration writes were performed. Outage voltage/timing were not instrumented; interrupted-write, brownout and OTA rollback acceptance remain separate.
+
+## Node 4 preflight completed — power-cycle pending
+
+Node 4 **`esp32-3013a5f4e9d4`** was verified on **COM7** with a fresh complete status at **21:40:18 IST**, after excluding a garbled first reply. Firmware `795d041`, revision `n4-20261126-v1` and saved bias/scale matched its installed candidate within serial precision. Saved Wi-Fi was connected, setup inactive, sensor/storage healthy, zero pending and no OTA image awaiting validation.
+
+The read-only scan validated **256 records, zero invalid**, in **23,708 ms**. [Device preflight](calibration/node4-power-cycle-preflight-2026-11-26.json) and [cloud preflight](calibration/node4-power-cycle-cloud-before-2026-11-26.json) retain the results. All four were healthy/running/synchronized; instantaneous queues were **1/1/1/0**. Node 4's pre-test boot is **`f02a4e37c5819a59701745968fd9e509`**.
+
+**Node 4's physical test is pending.** Serial checks finished without settings changes or resets. If powered only by USB, remove that board's USB for ten seconds, reconnect and confirm completion; if another power source/backfeed exists, establish its arrangement first. Leave other nodes powered and sensor wires unchanged. Apply the same post-cycle identity/calibration/journal/cloud checks before accepting its limited recovery result.

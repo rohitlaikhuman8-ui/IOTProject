@@ -1,0 +1,56 @@
+{
+  "status": "PREFLIGHT ONLY: physical power-cycle not started",
+  "nodeId": "esp32-3013a5f4e9d4",
+  "port": "COM7",
+  "beforeStatus": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -46,
+    "ip": "10.157.182.153",
+    "portalActive": false,
+    "touchRaw": 112,
+    "logRecords": 256,
+    "stackFreeBytes": 13420,
+    "freeHeap": 105632,
+    "pendingVerification": false,
+    "ledOn": true,
+    "timeIst": "2026-11-26 21:40:18 IST",
+    "pendingRecords": 0,
+    "lastCloudAgeMs": 238
+  },
+  "beforeIntegrity": {
+    "diagnostic": "storage-check",
+    "nodeId": "esp32-3013a5f4e9d4",
+    "records": 256,
+    "valid": 256,
+    "invalid": 0,
+    "elapsedMs": 23708,
+    "maximumReadMs": 134,
+    "usedBytes": 696320,
+    "totalBytes": 1441792,
+    "freeHeap": 108872,
+    "largestAllocation": 38900
+  },
+  "coefficientsMatchInstalledCandidate": true,
+  "initialStatusReply": "Garbled and excluded; fresh retry used",
+  "scope": "Normal power removal/restoration only; not exact record-ID continuity, interrupted-write/brownout/rollback acceptance"
+}

@@ -14,7 +14,7 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
-Nodes 1 and 2 passed limited normal power-cycle recovery checks: saved calibration/Wi-Fi restored, each local journal validated 256 records with zero invalid, and fresh cloud telemetry/startup appeared under new boot IDs. See [staged recovery procedures and evidence](docs/RECOVERY-CHECKS-2026-11-26.md). This is not exact record-ID continuity, interrupted-write, brownout or OTA rollback acceptance; Nodes 3/4 recovery checks remain.
+Nodes 1, 2 and 3 passed limited normal power-cycle recovery checks: saved calibration/Wi-Fi restored, each local journal validated 256 records with zero invalid, and fresh cloud telemetry/startup appeared under new boot IDs. Node 4's preflight passed; its physical power-cycle remains pending. See [staged recovery procedures and evidence](docs/RECOVERY-CHECKS-2026-11-26.md). This is not exact record-ID continuity, interrupted-write, brownout or OTA rollback acceptance.
 
 Post-calibration gross-motion detection and matching notification delivery are verified individually for **all four nodes**; [the movement record](docs/MOVEMENT-CHECK-2026-11-26.md) preserves the earlier confounded Node 1 trial, short stillness windows and pause/resume recovery. The [14:20 IST dashboard screenshot](docs/images/dashboard-postcal-movement-2026-11-26.png) shows all four online and the latest highlighted alerts. These limited checks do not establish quantified sensitivity, false-alarm rate or settling behavior. Next: staged power-cycle/recovery preflight, followed separately by controlled interrupted-write/OTA rollback and endurance work.
 

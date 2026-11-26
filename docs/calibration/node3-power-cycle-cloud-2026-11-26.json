@@ -1,0 +1,174 @@
+{
+  "checks": {
+    "newBoot": true,
+    "otherBootsUnchanged": true,
+    "healthyFleet": true,
+    "freshTelemetry": true,
+    "targetQueueZero": true,
+    "startupReceived": true
+  },
+  "beforeNodes": [
+    {
+      "lastSeen": {
+        "$date": "2026-11-26T16:06:48.129Z"
+      },
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "bootId": "7f6205f49ba3db1c292345c1095fe55f",
+      "mode": "running",
+      "pendingRecords": 2,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "7744fc78566815c7bfa7ad4659c0eef3",
+      "lastSeen": {
+        "$date": "2026-11-26T16:06:44.529Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "72523a2784d5c0dde4ee01a8ec013449",
+      "lastSeen": {
+        "$date": "2026-11-26T16:06:47.412Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "f02a4e37c5819a59701745968fd9e509",
+      "lastSeen": {
+        "$date": "2026-11-26T16:06:47.769Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "afterNodes": [
+    {
+      "lastSeen": {
+        "$date": "2026-11-26T16:09:07.011Z"
+      },
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "bootId": "7f6205f49ba3db1c292345c1095fe55f",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "7744fc78566815c7bfa7ad4659c0eef3",
+      "lastSeen": {
+        "$date": "2026-11-26T16:09:10.334Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "30796fdcfa6ee1b25763429ce7bcc20d",
+      "lastSeen": {
+        "$date": "2026-11-26T16:09:07.011Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "f02a4e37c5819a59701745968fd9e509",
+      "lastSeen": {
+        "$date": "2026-11-26T16:09:05.996Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "freshEvents": [
+    {
+      "bootId": "30796fdcfa6ee1b25763429ce7bcc20d",
+      "calibrationRevision": "n3-20261126-v1",
+      "eventId": "6fa8cbf9f762aadc6ea4504e54170d1c",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:09:29.695Z"
+      },
+      "resetReason": 1,
+      "sampledAt": 1795709363,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "bootId": "30796fdcfa6ee1b25763429ce7bcc20d",
+      "calibrationRevision": "n3-20261126-v1",
+      "eventId": "83b66a3f57c2b45dca23b6bf9d5c3a62",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:09:28.023Z"
+      },
+      "resetReason": 1,
+      "sampledAt": 1795709353,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "bootId": "30796fdcfa6ee1b25763429ce7bcc20d",
+      "calibrationRevision": "n3-20261126-v1",
+      "eventId": "ac2012be99a3d2b968d8eb7fea9b51c9",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T16:09:05.814Z"
+      },
+      "resetReason": 1,
+      "sampledAt": 1795709343,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    }
+  ],
+  "startup": [
+    {
+      "at": {
+        "$date": "2026-11-26T16:08:51.168Z"
+      },
+      "kind": "startup",
+      "message": "Node started and reached the cloud",
+      "nodeId": "esp32-986aa3f4e9d4"
+    }
+  ]
+}

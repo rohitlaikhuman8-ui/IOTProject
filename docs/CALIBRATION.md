@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; component-up/down references recorded; X/Y pairs and validation pending; revision `none` |
+| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; Z-up/down and X-up references recorded; X-down/Y pairs and validation pending; revision `none` |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -660,3 +660,15 @@ The operator confirmed component-side down. Preflight verified negative Z, uncha
 | Z | -10.300906 | 0.063860 |
 
 All count/span/window/node/boot/firmware/revision/sign checks passed. Y variation was close to the unchanged 0.15 m/s² standard-deviation limit, and its second-half mean shifted **-0.216727 m/s²**; Z shifted **-0.038245 m/s²**. These measured changes remain recorded rather than claiming perfectly fixed orientation or diagnosing a cause. This reference met the stated numeric requirements, but visual support and sparse sampling still limit its interpretation. No firmware, calibration or network settings were changed. Both Z faces are recorded; X/Y pairs, fitting, independent validation and installation remain.
+
+### Node 4 X-up cloud reference
+
+The operator confirmed +X upward and then requested continuation. A fresh cloud window **11:55:53–11:57:53 IST** was declared after continuation; no earlier waiting-period samples were substituted. [X-up evidence](calibration/node4-x-up-cloud-2026-11-26.json) contains **12 unique periodic samples spanning 110 seconds**, captured **11:56:00–11:57:50 IST**, all on Node 4's unchanged boot `d4425b16a951887969c0439a9f68a4ba`, firmware `795d041` and revision `none`. Maximum receipt delay was approximately **14.396 seconds**; selection used device capture time.
+
+| Axis | Uncorrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 10.284971 | 0.025569 |
+| Y | 0.200792 | 0.017297 |
+| Z | -1.105945 | 0.126804 |
+
+All source/count/span/window/identity/sign checks passed and each axis's standard deviation remained below 0.15 m/s². The fitted X axis's half-window mean shift was **-0.006372 m/s²**, while Z shifted **-0.172107 m/s²**. The latter remains an explicit positioning/stability limitation rather than a claim of perfect fixed alignment. No calibration, firmware or network settings changed. Three fitting positions are recorded; X-down, both Y faces, fitting, independent validation and installation remain.

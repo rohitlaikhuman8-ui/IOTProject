@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | Five valid references; first Y-down failed stability and is excluded; fresh Y-down retry required; revision `none` |
+| 4 | `esp32-3013a5f4e9d4` | Six valid references after separate Y-down retry; v1 candidate fitted, independent validation next; revision `none` |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -710,3 +710,25 @@ The operator confirmed +Y downward. A new window **12:10:18–12:12:18 IST** rec
 X and Z exceeded the unchanged **0.15 m/s²** standard-deviation limit. Their second-half means shifted approximately **+0.267722** and **+0.248598 m/s²**, respectively. The stable fitted Y axis alone does not override the whole-reference stability requirement. No hardware-fault or physical-movement cause is established solely from these readings. Maximum receipt delay was approximately 18.365 seconds; samples were selected by device capture time.
 
 **This attempt is excluded from fitting. Five valid fitting positions remain, and no candidate was calculated or installed.** The operator was asked to secure the Y-down position against slipping/rocking with nonconductive supports and slack wires, then confirm readiness for an entirely new window. Do not trim this window, merge partial data, or relax the limits to force acceptance. No firmware, network or calibration settings changed.
+
+### Node 4 Y-down retry and candidate v1
+
+After the operator confirmed a newly supported Y-down pose, a separate full window **12:15:00–12:17:00 IST** recorded **12 unique periodic samples spanning 110 seconds**, captured **12:15:01–12:16:51 IST**. [Retry evidence](calibration/node4-y-down-cloud-retry1-2026-11-26.json) preserves all measurements, unchanged Node 4 boot `d4425b16a951887969c0439a9f68a4ba`, firmware `795d041`, identity revision `none` and the original count/span/stability checks. All checks passed. The earlier failed measurements were not merged or trimmed into this reference.
+
+| Axis | Uncorrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.146610 | 0.022081 |
+| Y | -9.800521 | 0.017298 |
+| Z | -0.850972 | 0.086487 |
+
+Z's half-window mean shift was **-0.082866 m/s²** and maximum receipt delay was **9.931 seconds**. Passing this numeric screen does not prove externally verified alignment or perfectly fixed positioning. No device settings changed.
+
+The six accepted signed references were checked again for raw provenance, expected node/boot/firmware/revision, unique IDs, count/span/window, sign and per-axis standard deviation. Each axis was fitted using its two opposite-face means: `bias=(positive+negative)/2`, `scale=2*9.80665/(positive-negative)`. The actual X-down count remains thirteen; the other faces each contain twelve. [Candidate v1](calibration/node4-candidate-v1-2026-11-26.json) records sources and the excluded failed attempt.
+
+| Axis | Candidate bias (m/s²) | Candidate scale |
+| --- | --- | --- |
+| X | 0.251418917 | 0.977385684 |
+| Y | 0.376084625 | 0.963646485 |
+| Z | -0.468512833 | 0.997381817 |
+
+**Candidate only: `n4-20261126-v1` is not installed or independently validated.** All coefficients satisfy firmware bounds; that alone is not an accuracy pass. A fresh component-up validation must apply this fixed candidate once offline under unchanged numeric limits. Only if that passes should installation/reboot/readback and a fresh device-corrected check proceed. No validation measurements have been used in fitting. Visual support and sparse sampling remain limitations, and production acceptance is not established.

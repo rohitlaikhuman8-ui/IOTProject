@@ -1,0 +1,94 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+  "status": "CANDIDATE ONLY: not installed; independent validation required",
+  "proposedRevision": "n4-20261126-v1",
+  "formula": "correctedAxis = (rawAxis - bias) * scale",
+  "referenceGravity": 9.80665,
+  "coefficients": {
+    "x": {
+      "bias": 0.25141891666666716,
+      "scale": 0.977385683698934
+    },
+    "y": {
+      "bias": 0.37608462499999984,
+      "scale": 0.96364648511292
+    },
+    "z": {
+      "bias": -0.4685128333333326,
+      "scale": 0.9973818174273547
+    }
+  },
+  "sources": {
+    "x": [
+      "node4-x-up-cloud-2026-11-26.json",
+      "node4-x-down-cloud-2026-11-26.json"
+    ],
+    "y": [
+      "node4-y-up-cloud-2026-11-26.json",
+      "node4-y-down-cloud-retry1-2026-11-26.json"
+    ],
+    "z": [
+      "node4-component-up-cloud-2026-11-26.json",
+      "node4-component-down-cloud-2026-11-26.json"
+    ]
+  },
+  "referenceChecks": {
+    "node4-x-up-cloud-2026-11-26.json": {
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "x",
+      "rawMean": 10.284970833333334,
+      "passed": true
+    },
+    "node4-x-down-cloud-2026-11-26.json": {
+      "sampleCount": 13,
+      "spanSeconds": 120,
+      "fittedAxis": "x",
+      "rawMean": -9.782133,
+      "passed": true
+    },
+    "node4-y-up-cloud-2026-11-26.json": {
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "y",
+      "rawMean": 10.55269,
+      "passed": true
+    },
+    "node4-y-down-cloud-retry1-2026-11-26.json": {
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "y",
+      "rawMean": -9.80052075,
+      "passed": true
+    },
+    "node4-component-up-cloud-2026-11-26.json": {
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "z",
+      "rawMean": 9.363880166666668,
+      "passed": true
+    },
+    "node4-component-down-cloud-2026-11-26.json": {
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "z",
+      "rawMean": -10.300905833333333,
+      "passed": true
+    }
+  },
+  "excludedAttempts": [
+    "node4-y-down-cloud-2026-11-26.json"
+  ],
+  "processing": "Per-axis opposite-face means from six completed raw-identity cloud references; failed attempt excluded; no validation data used in fitting",
+  "validationRequired": "Fresh independent raw window first, then installed device-corrected window under unchanged numeric limits",
+  "numericLimits": {
+    "minimumCloudSamples": 12,
+    "minimumCloudSpanSeconds": 100,
+    "meanMagnitudeErrorPercent": 3,
+    "absoluteMeanXY": 0.5,
+    "perAxisSampleStandardDeviation": 0.15
+  },
+  "fixtureLimitation": "Visual support and operator alignment; physical level not externally verified; sparse cloud samples do not establish full-band noise or full orientation/temperature accuracy",
+  "productionAccepted": false
+}

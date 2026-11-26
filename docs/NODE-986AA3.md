@@ -8,6 +8,8 @@ COM5 identity was reverified as this board on firmware `795d041`, revision `none
 
 The first opposite-face attempt stopped after 53 samples at a host response timeout and was retained/excluded. Fresh status/raw probes were healthy with unchanged cloud boot. A new full retry with an explicit five-second USB response deadline recorded 120 samples at approximately **10:56:52–10:58:52 IST**, mean Z **-11.358712 m/s²**, with no missed replies and identity correction unchanged. No calibration values were applied. The timeout cause remains undiagnosed; the retry's measured data are separate from the incomplete attempt. Remaining X/Y references and validation are still required.
 
+X-up then recorded **119 valid raw samples** at approximately **11:02:09–11:04:09 IST**, mean X **+10.051607 m/s²**, with low variation and no missed replies. The actual count/span passed the unchanged minimum requirements; it was not rounded up to 120. No calibration settings changed. Three references are now recorded; X-down, both Y faces and independent validation remain outstanding.
+
 | Item | Verified value |
 | --- | --- |
 | Node ID | `esp32-986aa3f4e9d4` |

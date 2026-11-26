@@ -1,0 +1,1306 @@
+{
+  "nodeId": "esp32-986aa3f4e9d4",
+  "pose": "x-up-reference",
+  "source": "USB sensor-raw command",
+  "unit": "m/s2",
+  "timestampSource": "Host UTC for this USB capture, not device/server receipt time",
+  "requestedSeconds": 120,
+  "requestedIntervalSeconds": 1,
+  "rawReplyTimeoutSeconds": 5,
+  "guardPolicy": "Abort on raw-response timeout or observed reboot; compare identity/firmware/calibration before and after",
+  "status": "RAW_REFERENCE_RECORDED: operator pose and stability still require review",
+  "measurements": [
+    {
+      "sequence": 0,
+      "hostTimeUtc": "2026-11-26T05:32:09.018232+00:00",
+      "elapsedSeconds": 0.01600000000325963,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0765,
+        "z": -2.2948
+      }
+    },
+    {
+      "sequence": 1,
+      "hostTimeUtc": "2026-11-26T05:32:10.018913+00:00",
+      "elapsedSeconds": 1.0160000000032596,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2948
+      }
+    },
+    {
+      "sequence": 2,
+      "hostTimeUtc": "2026-11-26T05:32:11.021723+00:00",
+      "elapsedSeconds": 2.0160000000032596,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 3,
+      "hostTimeUtc": "2026-11-26T05:32:12.031919+00:00",
+      "elapsedSeconds": 3.0310000000172295,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 4,
+      "hostTimeUtc": "2026-11-26T05:32:13.017821+00:00",
+      "elapsedSeconds": 4.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 5,
+      "hostTimeUtc": "2026-11-26T05:32:14.023241+00:00",
+      "elapsedSeconds": 5.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 6,
+      "hostTimeUtc": "2026-11-26T05:32:15.031768+00:00",
+      "elapsedSeconds": 6.0310000000172295,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 7,
+      "hostTimeUtc": "2026-11-26T05:32:16.008660+00:00",
+      "elapsedSeconds": 7,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 8,
+      "hostTimeUtc": "2026-11-26T05:32:17.023754+00:00",
+      "elapsedSeconds": 8.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 9,
+      "hostTimeUtc": "2026-11-26T05:32:18.033223+00:00",
+      "elapsedSeconds": 9.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 10,
+      "hostTimeUtc": "2026-11-26T05:32:19.031007+00:00",
+      "elapsedSeconds": 10.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 11,
+      "hostTimeUtc": "2026-11-26T05:32:20.013842+00:00",
+      "elapsedSeconds": 11.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2948
+      }
+    },
+    {
+      "sequence": 12,
+      "hostTimeUtc": "2026-11-26T05:32:21.013596+00:00",
+      "elapsedSeconds": 12.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 13,
+      "hostTimeUtc": "2026-11-26T05:32:22.031286+00:00",
+      "elapsedSeconds": 13.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 14,
+      "hostTimeUtc": "2026-11-26T05:32:23.014391+00:00",
+      "elapsedSeconds": 14.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 15,
+      "hostTimeUtc": "2026-11-26T05:32:24.023141+00:00",
+      "elapsedSeconds": 15.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 16,
+      "hostTimeUtc": "2026-11-26T05:32:25.027902+00:00",
+      "elapsedSeconds": 16.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 17,
+      "hostTimeUtc": "2026-11-26T05:32:26.012677+00:00",
+      "elapsedSeconds": 17.01600000000326,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 18,
+      "hostTimeUtc": "2026-11-26T05:32:27.014702+00:00",
+      "elapsedSeconds": 18.01600000000326,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0765,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 19,
+      "hostTimeUtc": "2026-11-26T05:32:28.030082+00:00",
+      "elapsedSeconds": 19.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 20,
+      "hostTimeUtc": "2026-11-26T05:32:29.013746+00:00",
+      "elapsedSeconds": 20.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 21,
+      "hostTimeUtc": "2026-11-26T05:32:30.029117+00:00",
+      "elapsedSeconds": 21.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 22,
+      "hostTimeUtc": "2026-11-26T05:32:31.012356+00:00",
+      "elapsedSeconds": 22.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 23,
+      "hostTimeUtc": "2026-11-26T05:32:32.014743+00:00",
+      "elapsedSeconds": 23.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 24,
+      "hostTimeUtc": "2026-11-26T05:32:33.006423+00:00",
+      "elapsedSeconds": 24,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 25,
+      "hostTimeUtc": "2026-11-26T05:32:34.020289+00:00",
+      "elapsedSeconds": 25.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 26,
+      "hostTimeUtc": "2026-11-26T05:32:35.021458+00:00",
+      "elapsedSeconds": 26.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 27,
+      "hostTimeUtc": "2026-11-26T05:32:36.031613+00:00",
+      "elapsedSeconds": 27.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 28,
+      "hostTimeUtc": "2026-11-26T05:32:37.011197+00:00",
+      "elapsedSeconds": 28.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 29,
+      "hostTimeUtc": "2026-11-26T05:32:38.021504+00:00",
+      "elapsedSeconds": 29.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 30,
+      "hostTimeUtc": "2026-11-26T05:32:39.028369+00:00",
+      "elapsedSeconds": 30.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 31,
+      "hostTimeUtc": "2026-11-26T05:32:40.019916+00:00",
+      "elapsedSeconds": 31.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 32,
+      "hostTimeUtc": "2026-11-26T05:32:41.030207+00:00",
+      "elapsedSeconds": 32.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": 0,
+        "z": -2.1035
+      }
+    },
+    {
+      "sequence": 33,
+      "hostTimeUtc": "2026-11-26T05:32:42.028621+00:00",
+      "elapsedSeconds": 33.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 34,
+      "hostTimeUtc": "2026-11-26T05:32:43.018889+00:00",
+      "elapsedSeconds": 34.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 35,
+      "hostTimeUtc": "2026-11-26T05:32:44.018141+00:00",
+      "elapsedSeconds": 35.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 36,
+      "hostTimeUtc": "2026-11-26T05:32:45.026785+00:00",
+      "elapsedSeconds": 36.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 37,
+      "hostTimeUtc": "2026-11-26T05:32:46.018063+00:00",
+      "elapsedSeconds": 37.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.1035
+      }
+    },
+    {
+      "sequence": 38,
+      "hostTimeUtc": "2026-11-26T05:32:47.032450+00:00",
+      "elapsedSeconds": 38.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.1147,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 39,
+      "hostTimeUtc": "2026-11-26T05:32:48.018910+00:00",
+      "elapsedSeconds": 39.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 40,
+      "hostTimeUtc": "2026-11-26T05:32:49.018763+00:00",
+      "elapsedSeconds": 40.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 41,
+      "hostTimeUtc": "2026-11-26T05:32:50.027118+00:00",
+      "elapsedSeconds": 41.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.1147,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 42,
+      "hostTimeUtc": "2026-11-26T05:32:51.016920+00:00",
+      "elapsedSeconds": 42.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 43,
+      "hostTimeUtc": "2026-11-26T05:32:52.028031+00:00",
+      "elapsedSeconds": 43.03100000001723,
+      "acceleration": {
+        "x": 9.9822,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 44,
+      "hostTimeUtc": "2026-11-26T05:32:53.019330+00:00",
+      "elapsedSeconds": 44.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 45,
+      "hostTimeUtc": "2026-11-26T05:32:54.016368+00:00",
+      "elapsedSeconds": 45.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 46,
+      "hostTimeUtc": "2026-11-26T05:32:55.016132+00:00",
+      "elapsedSeconds": 46.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 47,
+      "hostTimeUtc": "2026-11-26T05:32:56.025398+00:00",
+      "elapsedSeconds": 47.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 48,
+      "hostTimeUtc": "2026-11-26T05:32:57.020229+00:00",
+      "elapsedSeconds": 48.01600000000326,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 49,
+      "hostTimeUtc": "2026-11-26T05:32:58.033979+00:00",
+      "elapsedSeconds": 49.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 50,
+      "hostTimeUtc": "2026-11-26T05:32:59.025546+00:00",
+      "elapsedSeconds": 50.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 51,
+      "hostTimeUtc": "2026-11-26T05:33:00.016510+00:00",
+      "elapsedSeconds": 51.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 52,
+      "hostTimeUtc": "2026-11-26T05:33:01.025345+00:00",
+      "elapsedSeconds": 52.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.1147,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 53,
+      "hostTimeUtc": "2026-11-26T05:33:02.017627+00:00",
+      "elapsedSeconds": 53.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 54,
+      "hostTimeUtc": "2026-11-26T05:33:03.018292+00:00",
+      "elapsedSeconds": 54.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 55,
+      "hostTimeUtc": "2026-11-26T05:33:04.022975+00:00",
+      "elapsedSeconds": 55.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 56,
+      "hostTimeUtc": "2026-11-26T05:33:05.007323+00:00",
+      "elapsedSeconds": 56,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 57,
+      "hostTimeUtc": "2026-11-26T05:33:06.036944+00:00",
+      "elapsedSeconds": 57.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 58,
+      "hostTimeUtc": "2026-11-26T05:33:07.033718+00:00",
+      "elapsedSeconds": 58.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 59,
+      "hostTimeUtc": "2026-11-26T05:33:08.023439+00:00",
+      "elapsedSeconds": 59.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 60,
+      "hostTimeUtc": "2026-11-26T05:33:09.016060+00:00",
+      "elapsedSeconds": 60.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 61,
+      "hostTimeUtc": "2026-11-26T05:33:10.025357+00:00",
+      "elapsedSeconds": 61.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 62,
+      "hostTimeUtc": "2026-11-26T05:33:11.012069+00:00",
+      "elapsedSeconds": 62.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 63,
+      "hostTimeUtc": "2026-11-26T05:33:12.009003+00:00",
+      "elapsedSeconds": 63,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 64,
+      "hostTimeUtc": "2026-11-26T05:33:13.022422+00:00",
+      "elapsedSeconds": 64.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 65,
+      "hostTimeUtc": "2026-11-26T05:33:14.029796+00:00",
+      "elapsedSeconds": 65.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 66,
+      "hostTimeUtc": "2026-11-26T05:33:15.022808+00:00",
+      "elapsedSeconds": 66.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0765,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 67,
+      "hostTimeUtc": "2026-11-26T05:33:16.014523+00:00",
+      "elapsedSeconds": 67.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 68,
+      "hostTimeUtc": "2026-11-26T05:33:17.022919+00:00",
+      "elapsedSeconds": 68.01600000000326,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 69,
+      "hostTimeUtc": "2026-11-26T05:33:18.014072+00:00",
+      "elapsedSeconds": 69.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 70,
+      "hostTimeUtc": "2026-11-26T05:33:19.020997+00:00",
+      "elapsedSeconds": 70.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 71,
+      "hostTimeUtc": "2026-11-26T05:33:20.020239+00:00",
+      "elapsedSeconds": 71.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 72,
+      "hostTimeUtc": "2026-11-26T05:33:21.028303+00:00",
+      "elapsedSeconds": 72.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 73,
+      "hostTimeUtc": "2026-11-26T05:33:22.020076+00:00",
+      "elapsedSeconds": 73.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 74,
+      "hostTimeUtc": "2026-11-26T05:33:23.013312+00:00",
+      "elapsedSeconds": 74.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 75,
+      "hostTimeUtc": "2026-11-26T05:33:24.027942+00:00",
+      "elapsedSeconds": 75.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 76,
+      "hostTimeUtc": "2026-11-26T05:33:25.021431+00:00",
+      "elapsedSeconds": 76.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 77,
+      "hostTimeUtc": "2026-11-26T05:33:26.023944+00:00",
+      "elapsedSeconds": 77.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 78,
+      "hostTimeUtc": "2026-11-26T05:33:27.027498+00:00",
+      "elapsedSeconds": 78.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 79,
+      "hostTimeUtc": "2026-11-26T05:33:28.027524+00:00",
+      "elapsedSeconds": 79.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 80,
+      "hostTimeUtc": "2026-11-26T05:33:29.010197+00:00",
+      "elapsedSeconds": 80.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0765,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 81,
+      "hostTimeUtc": "2026-11-26T05:33:30.021169+00:00",
+      "elapsedSeconds": 81.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 82,
+      "hostTimeUtc": "2026-11-26T05:33:31.033127+00:00",
+      "elapsedSeconds": 82.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0765,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 83,
+      "hostTimeUtc": "2026-11-26T05:33:32.026008+00:00",
+      "elapsedSeconds": 83.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 84,
+      "hostTimeUtc": "2026-11-26T05:33:33.022510+00:00",
+      "elapsedSeconds": 84.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 85,
+      "hostTimeUtc": "2026-11-26T05:33:34.018325+00:00",
+      "elapsedSeconds": 85.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0765,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 86,
+      "hostTimeUtc": "2026-11-26T05:33:35.034573+00:00",
+      "elapsedSeconds": 86.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 87,
+      "hostTimeUtc": "2026-11-26T05:33:36.026029+00:00",
+      "elapsedSeconds": 87.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0765,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 88,
+      "hostTimeUtc": "2026-11-26T05:33:37.022199+00:00",
+      "elapsedSeconds": 88.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 89,
+      "hostTimeUtc": "2026-11-26T05:33:38.014379+00:00",
+      "elapsedSeconds": 89.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0765,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 90,
+      "hostTimeUtc": "2026-11-26T05:33:39.016865+00:00",
+      "elapsedSeconds": 90.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 91,
+      "hostTimeUtc": "2026-11-26T05:33:40.034611+00:00",
+      "elapsedSeconds": 91.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 92,
+      "hostTimeUtc": "2026-11-26T05:33:41.019303+00:00",
+      "elapsedSeconds": 92.01600000000326,
+      "acceleration": {
+        "x": 9.9822,
+        "y": 0,
+        "z": -2.2948
+      }
+    },
+    {
+      "sequence": 93,
+      "hostTimeUtc": "2026-11-26T05:33:42.016687+00:00",
+      "elapsedSeconds": 93.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 94,
+      "hostTimeUtc": "2026-11-26T05:33:43.018910+00:00",
+      "elapsedSeconds": 94.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.333
+      }
+    },
+    {
+      "sequence": 95,
+      "hostTimeUtc": "2026-11-26T05:33:44.025707+00:00",
+      "elapsedSeconds": 95.03100000001723,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.0382,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 96,
+      "hostTimeUtc": "2026-11-26T05:33:45.035979+00:00",
+      "elapsedSeconds": 96.03100000001723,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 97,
+      "hostTimeUtc": "2026-11-26T05:33:46.018479+00:00",
+      "elapsedSeconds": 97.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 98,
+      "hostTimeUtc": "2026-11-26T05:33:47.020423+00:00",
+      "elapsedSeconds": 98.01600000000326,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 99,
+      "hostTimeUtc": "2026-11-26T05:33:48.013441+00:00",
+      "elapsedSeconds": 99.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2948
+      }
+    },
+    {
+      "sequence": 100,
+      "hostTimeUtc": "2026-11-26T05:33:49.017632+00:00",
+      "elapsedSeconds": 100.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2948
+      }
+    },
+    {
+      "sequence": 101,
+      "hostTimeUtc": "2026-11-26T05:33:50.033658+00:00",
+      "elapsedSeconds": 101.03100000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.2948
+      }
+    },
+    {
+      "sequence": 102,
+      "hostTimeUtc": "2026-11-26T05:33:51.023324+00:00",
+      "elapsedSeconds": 102.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 103,
+      "hostTimeUtc": "2026-11-26T05:33:52.016715+00:00",
+      "elapsedSeconds": 103.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 104,
+      "hostTimeUtc": "2026-11-26T05:33:53.016545+00:00",
+      "elapsedSeconds": 104.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 105,
+      "hostTimeUtc": "2026-11-26T05:33:54.014298+00:00",
+      "elapsedSeconds": 105.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 106,
+      "hostTimeUtc": "2026-11-26T05:33:55.017677+00:00",
+      "elapsedSeconds": 106.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 107,
+      "hostTimeUtc": "2026-11-26T05:33:56.016318+00:00",
+      "elapsedSeconds": 107.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 108,
+      "hostTimeUtc": "2026-11-26T05:33:57.015952+00:00",
+      "elapsedSeconds": 108.01600000000326,
+      "acceleration": {
+        "x": 10.0969,
+        "y": 0,
+        "z": -2.2565
+      }
+    },
+    {
+      "sequence": 109,
+      "hostTimeUtc": "2026-11-26T05:33:58.016145+00:00",
+      "elapsedSeconds": 109.01600000000326,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 110,
+      "hostTimeUtc": "2026-11-26T05:34:00.405396+00:00",
+      "elapsedSeconds": 111.40600000001723,
+      "acceleration": {
+        "x": 10.0204,
+        "y": 0,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 111,
+      "hostTimeUtc": "2026-11-26T05:34:01.422274+00:00",
+      "elapsedSeconds": 112.42200000002049,
+      "acceleration": {
+        "x": 10.0969,
+        "y": 0,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 112,
+      "hostTimeUtc": "2026-11-26T05:34:02.467172+00:00",
+      "elapsedSeconds": 113.46900000004098,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.2183
+      }
+    },
+    {
+      "sequence": 113,
+      "hostTimeUtc": "2026-11-26T05:34:03.415798+00:00",
+      "elapsedSeconds": 114.42200000002049,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0382,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 114,
+      "hostTimeUtc": "2026-11-26T05:34:04.446026+00:00",
+      "elapsedSeconds": 115.43800000002375,
+      "acceleration": {
+        "x": 10.0969,
+        "y": 0,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 115,
+      "hostTimeUtc": "2026-11-26T05:34:05.430699+00:00",
+      "elapsedSeconds": 116.42200000002049,
+      "acceleration": {
+        "x": 10.0204,
+        "y": -0.0765,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 116,
+      "hostTimeUtc": "2026-11-26T05:34:06.422435+00:00",
+      "elapsedSeconds": 117.42200000002049,
+      "acceleration": {
+        "x": 10.0969,
+        "y": -0.1147,
+        "z": -2.18
+      }
+    },
+    {
+      "sequence": 117,
+      "hostTimeUtc": "2026-11-26T05:34:07.432363+00:00",
+      "elapsedSeconds": 118.43800000002375,
+      "acceleration": {
+        "x": 10.0587,
+        "y": 0,
+        "z": -2.1418
+      }
+    },
+    {
+      "sequence": 118,
+      "hostTimeUtc": "2026-11-26T05:34:08.428454+00:00",
+      "elapsedSeconds": 119.42200000002049,
+      "acceleration": {
+        "x": 10.0587,
+        "y": -0.0382,
+        "z": -2.1418
+      }
+    }
+  ],
+  "statusRequests": [
+    {
+      "phase": "capture-start",
+      "attempt": 1,
+      "receivedStatus": true
+    },
+    {
+      "phase": "capture-end",
+      "attempt": 1,
+      "receivedStatus": true
+    }
+  ],
+  "initialStatus": {
+    "nodeId": "esp32-986aa3f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": false,
+      "nodeId": "esp32-986aa3f4e9d4",
+      "revision": "none",
+      "bias": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "sensorAddress": 83,
+    "storageReady": true,
+    "logRecords": 256,
+    "timeIst": "2026-11-26 11:01:58 IST"
+  },
+  "startedAtUtc": "2026-11-26T05:32:09.007711+00:00",
+  "endedAtUtc": "2026-11-26T05:34:09.031338+00:00",
+  "missedReplies": 0,
+  "finalStatus": {
+    "nodeId": "esp32-986aa3f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": false,
+      "nodeId": "esp32-986aa3f4e9d4",
+      "revision": "none",
+      "bias": [
+        0,
+        0,
+        0
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "sensorAddress": 83,
+    "storageReady": true,
+    "logRecords": 256,
+    "timeIst": "2026-11-26 11:04:08 IST"
+  },
+  "analysis": {
+    "statistics": {
+      "count": 119,
+      "spanSeconds": 119.40600000001723,
+      "maxHostReceiptGapSeconds": 2.39000000001397,
+      "axes": {
+        "x": {
+          "mean": 10.05160672268909,
+          "sampleStdDev": 0.02633958396095113,
+          "min": 9.9822,
+          "max": 10.0969,
+          "secondHalfMinusFirstHalf": -0.0024540677966129465
+        },
+        "y": {
+          "mean": -0.0388621848739495,
+          "sampleStdDev": 0.027714473339286214,
+          "min": -0.1147,
+          "max": 0,
+          "secondHalfMinusFirstHalf": 0.009006723163841782
+        },
+        "z": {
+          "mean": -2.211200840336135,
+          "sampleStdDev": 0.054312878105486295,
+          "min": -2.333,
+          "max": -2.1035,
+          "secondHalfMinusFirstHalf": -0.03483437853107141
+        }
+      }
+    },
+    "checks": {
+      "captureComplete": true,
+      "nodeMatches": true,
+      "firmwareUnchanged": true,
+      "identityCorrection": true,
+      "minimumCount": true,
+      "minimumSpan": true,
+      "noMissedReplies": true,
+      "positiveX": true
+    },
+    "scope": "Raw positive-X fitting reference; opposite X and Y pairs and independent validation outstanding; no coefficients applied"
+  }
+}

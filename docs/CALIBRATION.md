@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
-| 3 | `esp32-986aa3f4e9d4` | Both raw Z faces recorded after one excluded timeout; X-up acquisition next; no correction applied |
+| 3 | `esp32-986aa3f4e9d4` | Z-up/down and X-up raw references recorded; X-down acquisition next; no correction applied |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
@@ -548,3 +548,15 @@ The separate retry captured **120 raw samples** over approximately 119.016 monot
 | Z | -11.358712 | 0.046894 |
 
 Z's second-half mean differed by approximately **-0.007015 m/s²**. The two Z faces yield provisional bias **-1.603617917 m/s²** and scale **1.005284974**, recorded for later fitting/validation only. No coefficient was installed, and the incomplete 53-sample attempt is not part of the fit. Next: X-up/down and Y-up/down, then independent validation with unchanged numeric bench limits.
+
+### Node 3 raw X-up reference
+
+The operator confirmed the +X arrow upward. The host USB capture ran **11:02:09.008–11:04:09.031 IST**, recording **119 valid raw samples** spanning approximately 119.406 monotonic seconds. [X-up evidence](calibration/node3-x-up-usb-2026-11-26.json) records the five-second raw-response deadline, zero missed replies, unchanged firmware/identity correction and before/after matching Node ID.
+
+| Axis | Raw mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 10.051607 | 0.026340 |
+| Y | -0.038862 | 0.027714 |
+| Z | -2.211201 | 0.054313 |
+
+The actual count was 119, not a forced 120; it still exceeds the unchanged 100-sample/100-second requirements. Maximum recorded host receipt gap was approximately **2.390 seconds**. No raw request exceeded its configured deadline. X was positive as requested and its second-half mean changed by only approximately -0.002454 m/s². No coefficient was computed from this one X face or applied. This is the third reference position; X-down and both Y faces remain before fitting and validation.

@@ -1,0 +1,127 @@
+{
+  "status": "RECOVERED WITH INTERVENTION: persistence/integrity/delivery verified; unattended normal-mode return not passed",
+  "nodeId": "esp32-3013a5f4e9d4",
+  "operatorConfirmation": "Node 4 power-cycle done",
+  "identityFirmwareRevisionCoefficientsMatch": true,
+  "initialStatus": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": false,
+    "ssid": "Sensor Testing",
+    "rssi": 0,
+    "ip": "0.0.0.0",
+    "portalActive": false,
+    "touchRaw": 111,
+    "logRecords": 256,
+    "stackFreeBytes": 13660,
+    "freeHeap": 164556,
+    "pendingVerification": false,
+    "ledOn": false,
+    "timeIst": "Waiting for time sync",
+    "pendingRecords": 9,
+    "lastCloudAgeMs": 0
+  },
+  "reconnectedSetupStatus": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -50,
+    "ip": "10.157.182.153",
+    "portalActive": true,
+    "touchRaw": 111,
+    "logRecords": 256,
+    "stackFreeBytes": 12364,
+    "freeHeap": 100880,
+    "pendingVerification": false,
+    "ledOn": false,
+    "timeIst": "2026-11-26 21:44:41 IST",
+    "pendingRecords": 7,
+    "lastCloudAgeMs": 4125
+  },
+  "finalStatus": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -51,
+    "ip": "10.157.182.153",
+    "portalActive": false,
+    "touchRaw": 111,
+    "logRecords": 256,
+    "stackFreeBytes": 12364,
+    "freeHeap": 106008,
+    "pendingVerification": false,
+    "ledOn": true,
+    "timeIst": "2026-11-26 21:45:41 IST",
+    "pendingRecords": 0,
+    "lastCloudAgeMs": 1471
+  },
+  "afterIntegrity": {
+    "diagnostic": "storage-check",
+    "nodeId": "esp32-3013a5f4e9d4",
+    "records": 256,
+    "valid": 256,
+    "invalid": 0,
+    "elapsedMs": 21795,
+    "maximumReadMs": 128,
+    "usedBytes": 688128,
+    "totalBytes": 1441792,
+    "freeHeap": 164660,
+    "largestAllocation": 94196
+  },
+  "intervention": "USB portal-close on verified COM7; settings retained",
+  "unattendedNormalModeAcceptance": false,
+  "limitations": "Not exact record-ID continuity, instrumented outage, interrupted-write, brownout or rollback acceptance"
+}

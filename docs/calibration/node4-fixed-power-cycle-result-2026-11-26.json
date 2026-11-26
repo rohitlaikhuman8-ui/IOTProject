@@ -1,0 +1,91 @@
+{
+  "status": "PASS: limited fixed bench firmware power-cycle recovery without portal intervention",
+  "operatorConfirmation": "Node 4 fixed-firmware power-cycle done",
+  "initialStatus": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "usb-portal-recovery-bench",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -39,
+    "ip": "10.157.182.153",
+    "portalActive": false,
+    "portalAutomatic": false,
+    "touchRaw": 110,
+    "logRecords": 256,
+    "stackFreeBytes": 13660,
+    "freeHeap": 109152,
+    "pendingVerification": false,
+    "ledOn": false,
+    "timeIst": "Waiting for time sync",
+    "pendingRecords": 1,
+    "lastCloudAgeMs": 0
+  },
+  "postCycleIntegrity": {
+    "diagnostic": "storage-check",
+    "nodeId": "esp32-3013a5f4e9d4",
+    "records": 256,
+    "valid": 256,
+    "invalid": 0,
+    "elapsedMs": 23879,
+    "maximumReadMs": 147,
+    "usedBytes": 729088,
+    "totalBytes": 1441792,
+    "freeHeap": 115460,
+    "largestAllocation": 61428
+  },
+  "laterStatusAfterSeparateClientTest": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "usb-portal-recovery-bench",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": -64,
+    "ip": "10.157.182.153",
+    "portalActive": false,
+    "portalAutomatic": false,
+    "touchRaw": 112,
+    "logRecords": 256,
+    "stackFreeBytes": 12316,
+    "freeHeap": 112208,
+    "pendingVerification": false,
+    "ledOn": true,
+    "timeIst": "2026-11-26 22:10:22 IST",
+    "pendingRecords": 0,
+    "lastCloudAgeMs": 2613
+  },
+  "calibrationUnchanged": true,
+  "limitations": "Early time synchronization pending was resolved in cloud evidence. Later AP-client test cleanup is a separate phase. Not exact record-ID retention, brownout, interrupted-write or rollback acceptance."
+}

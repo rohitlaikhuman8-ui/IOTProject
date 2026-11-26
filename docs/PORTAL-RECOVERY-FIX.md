@@ -2,7 +2,7 @@
 
 ## Status
 
-Implementation is on **`codex/fallback-portal-recovery`**, not main. Node 4 (`esp32-3013a5f4e9d4`, verified COM7) runs **`usb-portal-recovery-bench`** with OTA checks disabled for bench isolation. Other nodes remain on the published firmware. **This is not yet a fleet release.** Real power-cycle repeat and final release verification remain outstanding.
+Bench validation is complete on **`codex/fallback-portal-recovery`**, ready for main/release publication. Node 4 (`esp32-3013a5f4e9d4`, verified COM7) still runs **`usb-portal-recovery-bench`** with OTA checks disabled until the production artifact is published and installed. Other nodes remain on the previous published firmware. **Production rollout is not yet verified**; final deployment/adoption results must be recorded separately.
 
 The earlier [Node 4 recovery test](RECOVERY-CHECKS-2026-11-26.md) restored data and connectivity but needed USB intervention to close fallback setup. The former implementation used the same fifteen-minute portal lifetime for manual setup and automatic network fallback.
 
@@ -46,7 +46,15 @@ The helper rejects an existing output file, checks bench firmware/revision, reco
 
 For production validation, remove the bench and OTA-disable definitions; release CI generates only the release version. The production candidate was compiled separately and has not been installed on Node 4 or released to the fleet yet.
 
-## Before release
+## Completed real power-cycle and AP-client checks
+
+The operator confirmed **“Node 4 fixed-firmware power-cycle done.”** The new boot **`05c1f980c2cbe39a020241ec79a4d0d9`** replaced `64deba6b178d0fd57a6cd748cf94cb82`. Initial serial status restored saved Wi-Fi/calibration with setup inactive while time sync was pending; subsequent cloud status at approximately **22:04:27 IST** showed running, synchronized, healthy and zero pending, without a portal-close command. Other nodes retained their preflight boot IDs. Startup was received **22:03:54.973 IST**, and fresh timestamped events under the new boot are preserved in [cloud evidence](calibration/node4-fixed-power-cycle-cloud-2026-11-26.json). The post-cycle scan validated **256 records, zero invalid**, in **23,879 ms**. [Device evidence](calibration/node4-fixed-power-cycle-result-2026-11-26.json) confirms unchanged coefficients. This is a limited normal recovery pass, not exact record-ID continuity or interrupted-write acceptance.
+
+A separate [real AP-client ownership test](calibration/node4-portal-client-ownership-2026-11-26.json) then simulated the station disconnect, let the automatic AP open, and connected the Windows laptop to it using a temporary local Wi-Fi profile. The automatic portal became client-owned and stayed active for at least twenty seconds after station Wi-Fi recovery, longer than the automatic-close delay. An HTTP request to `http://192.168.4.1/` returned the actual setup page successfully. The laptop was restored to **Sensor Testing**; its temporary profile/private credential file were removed. An explicit portal-close was used only to clean up this separate client test, not during the power-cycle repeat. Final serial status retained calibration and normal cloud reporting. Physical touch takeover and timer wrap are not separately hardware-tested; manual USB takeover and actual AP-client ownership were tested.
+
+The production binary was checked to exclude the bench-only `bench-wifi-drop` command; the bench binary contains it. The hardware helper compiled successfully. Original intervention-assisted recovery evidence remains intact.
+
+## Release completion procedure
 
 ### Repeat preflight checkpoint
 

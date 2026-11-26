@@ -1,7 +1,7 @@
 {
   "nodeId": "esp32-7839a3f4e9d4",
   "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
-  "status": "INSTALLED AS TRIAL n2-20261126-v1; supported-pose offline numeric screen passed but on-device magnitude screen failed; NOT ACCEPTED",
+  "status": "SUPERSEDED TRIAL n2-20261126-v1: failed on-device magnitude screen (+3.284%); historical, not current",
   "referenceGravity": 9.80665,
   "unit": "m/s2",
   "formula": "correctedAxis = (rawAxis - bias) * scale",
@@ -103,6 +103,7 @@
     "method": "USB calibration record only; no firmware/network/filesystem replacement",
     "readbackAfterReboot": true,
     "onDeviceValidation": "node2-on-device-validation-2026-11-26.json",
-    "acceptance": "FAILED mean magnitude limit: +3.284037% versus 3%; trial remains active for bench investigation"
-  }
+    "acceptance": "Historical trial failed mean magnitude screen; replaced by v2 on November 26; old event history unchanged"
+  },
+  "supersededBy": "node2-candidate-v2-2026-11-26.json"
 }

@@ -1,7 +1,7 @@
 {
   "nodeId": "esp32-7839a3f4e9d4",
   "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
-  "status": "V2 CANDIDATE: not installed or validated; Z replaced from two new USB raw fitting faces, X/Y unchanged",
+  "status": "INSTALLED n2-20261126-v2: independent raw and on-device supported-pose numeric bench screens passed; remaining acceptance/fixture limitations documented",
   "proposedRevision": "n2-20261126-v2",
   "formula": "correctedAxis = (rawAxis - bias) * scale",
   "referenceGravity": 9.80665,
@@ -36,5 +36,19 @@
   "previousTrial": "node2-provisional-coefficients-2026-11-25.json",
   "processing": "Fresh USB sensor-raw fitting data; no coefficients adjusted using a held-out validation value",
   "validationRequired": "Fresh independent raw window first, then installed device-corrected window under unchanged numeric limits",
-  "fixtureLimitation": "Visual support; physical level not externally verified"
+  "fixtureLimitation": "Visual support; physical level not externally verified",
+  "validation": {
+    "offline": "node2-v2-validation-result-2026-11-26.json",
+    "onDevice": "node2-v2-on-device-validation-2026-11-26.json",
+    "numericBenchPass": true,
+    "fixtureLevelExternallyVerified": false,
+    "productionAccepted": false
+  },
+  "installation": {
+    "revision": "n2-20261126-v2",
+    "method": "USB calibration key only, unchanged firmware/network/filesystem",
+    "readbackAfterReboot": true,
+    "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "retainedRecordsAtCheck": 256
+  }
 }

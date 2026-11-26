@@ -1,0 +1,14 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "pose": "component-up-independent-v2-validation",
+  "source": "USB sensor-raw command",
+  "unit": "m/s2",
+  "timestampSource": "Host UTC for this USB capture, not device/server receipt time",
+  "requestedSeconds": 120,
+  "requestedIntervalSeconds": 1,
+  "guardPolicy": "Abort on raw-response timeout or observed reboot; compare identity/firmware/calibration before and after",
+  "status": "INCOMPLETE",
+  "measurements": [],
+  "error": "No matching calibration-capable hardware status; no settings written",
+  "missedReplies": 0
+}

@@ -2,6 +2,10 @@
 
 This third registered board was commissioned on November 23, 2026. COM5 was later reused by another physical board; identify it by Node ID and MAC, not the port number.
 
+## November 26 calibration started
+
+COM5 identity was reverified as this board on firmware `795d041`, revision `none`. The raw USB sampler recorded 120 component-up measurements at approximately **10:48:14–10:50:14 IST**, mean Z **8.151477 m/s²**, with low variation and no missed raw replies. One initial status read was incomplete; the bounded second read verified identity before measurements began. The sampler did not change settings or firmware. This is one fitting reference, not a completed calibration. The opposite face and X/Y pairs, independent validation and any installation remain outstanding; no Node 1/2 coefficients were copied. See [the calibration record](CALIBRATION.md#node-3-raw-reference-measurements--november-26).
+
 | Item | Verified value |
 | --- | --- |
 | Node ID | `esp32-986aa3f4e9d4` |

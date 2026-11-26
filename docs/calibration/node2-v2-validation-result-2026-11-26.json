@@ -1,0 +1,93 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "status": "V2_OFFLINE_NUMERIC_BENCH_SCREEN_PASS; not installed or production accepted",
+  "source": "node2-v2-validation-usb-retry1-2026-11-26.json",
+  "candidate": "node2-candidate-v2-2026-11-26.json",
+  "processing": "Candidate v2 applied once offline to explicit sensor-raw USB data; no fitting changes",
+  "fixtureLimitation": "Operator-supported visually estimated level; not externally verified",
+  "criteria": {
+    "minimumRawSamples": 100,
+    "minimumSpanSeconds": 100,
+    "magnitudeErrorPercentMax": 3,
+    "absMeanXYMax": 0.5,
+    "maxAxisSampleStdDev": 0.15
+  },
+  "checks": {
+    "captureComplete": true,
+    "minimumSamples": true,
+    "uniqueSequences": true,
+    "minimumSpan": true,
+    "correctNode": true,
+    "firmwareUnchanged": true,
+    "activeTrialUnchanged": true,
+    "independentOfZFit": true,
+    "noMissedReplies": true,
+    "magnitude": true,
+    "xy": true,
+    "repeatability": true,
+    "positiveZ": true
+  },
+  "count": 120,
+  "spanSeconds": 118.98499999998603,
+  "raw": {
+    "x": {
+      "mean": -0.053201666666666564,
+      "sampleStdDev": 0.023947133592204992,
+      "min": -0.1147,
+      "max": 0
+    },
+    "y": {
+      "mean": -0.05001333333333324,
+      "sampleStdDev": 0.02207770818902072,
+      "min": -0.1147,
+      "max": 0
+    },
+    "z": {
+      "mean": 7.159941666666673,
+      "sampleStdDev": 0.03963394390927971,
+      "min": 6.999,
+      "max": 7.2285
+    }
+  },
+  "corrected": {
+    "x": {
+      "mean": 0.23054866013226513,
+      "sampleStdDev": 0.023469814725969113,
+      "min": 0.17027612339078835,
+      "max": 0.2826899009605984
+    },
+    "y": {
+      "mean": -0.15393024682595322,
+      "sampleStdDev": 0.021726817257152017,
+      "min": -0.21758881924697568,
+      "max": -0.10471179786145664
+    },
+    "z": {
+      "mean": 9.898603194484537,
+      "sampleStdDev": 0.04070174038822684,
+      "min": 9.733325523675152,
+      "max": 9.96900858969753
+    }
+  },
+  "correctedMagnitude": {
+    "mean": 9.902535427123105,
+    "sampleStdDev": 0.04068792255010484,
+    "min": 9.737454727688828,
+    "max": 9.973649232278007
+  },
+  "magnitudeErrorPercent": 0.977759246257448,
+  "coefficients": {
+    "x": {
+      "bias": -0.288439125,
+      "scale": 0.980067807932084
+    },
+    "y": {
+      "bias": 0.10640290705128308,
+      "scale": 0.9841065508763649
+    },
+    "z": {
+      "bias": -2.478975000000002,
+      "scale": 1.0269414641497947
+    }
+  }
+}

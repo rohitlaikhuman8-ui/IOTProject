@@ -5,8 +5,8 @@
 | Order | Node ID | State |
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
-| 2 | `esp32-7839a3f4e9d4` | Trial v1 active but not accepted; new two-face USB raw Z pair recorded and v2 candidate calculated; fresh candidate validation pending |
-| 3 | `esp32-986aa3f4e9d4` | Awaiting positioning and measurements |
+| 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
+| 3 | `esp32-986aa3f4e9d4` | First raw component-up reference recorded on 795d041; awaiting opposite face; no correction applied |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
@@ -476,3 +476,55 @@ Z's second-half mean differed from its first half by **0.005105 m/s²**. Off-axi
 The [v2 candidate](calibration/node2-candidate-v2-2026-11-26.json) replaces only Z with a two-point fit from the new raw means **+7.070401/-12.028351 m/s²**. Candidate Z bias is **-2.478975 m/s²**, scale **1.026941464**. Existing X/Y coefficients are unchanged. This fit uses two new raw fitting windows, **not the failed validation value**. The old v1 fit and its failure remain preserved.
 
 **V2 is a candidate only: it has not been installed or validated.** V1 remains active for tagged bench telemetry. The operator was asked to return to a supported component-up pose for a separate fresh raw validation. Apply the candidate offline once to those raw values, with the original numeric limits unchanged. If that passes, a trial v2 save/reboot and a new device-corrected check are still required. Do not claim acceptance from fitting the two Z means to gravity.
+
+### V2 independent raw validation and USB status retry — November 26
+
+The operator confirmed a fresh component-up validation pose. The first capture stopped at its initial USB status check, before recording any measurement or changing settings. [The incomplete zero-sample evidence](calibration/node2-v2-validation-usb-2026-11-26.json) was retained. A separate clean serial read confirmed the correct Node 2, unchanged firmware/trial v1 and healthy state; the cloud boot remained `6245cdaf9d6271af27736e988bbb47b6`. The cause of the missing initial response was not established as a device reboot or hardware fault.
+
+The host sampler was updated to allow at most three initial four-second status requests, still refusing a returned identity/support mismatch immediately. Final state checking and raw-response timeout behavior remain strict. A new output file was used rather than overwriting the failed evidence. Python compilation passed, and the retry completed normal initial/final status reads with no retries needed in that successful run.
+
+The fresh host capture ran **10:37:29.706–10:39:29.703 IST**, recording **120 raw samples** over approximately 118.985 monotonic seconds. Firmware and active v1 settings stayed unchanged, and there were no missed raw replies. The validation started after both Z fitting captures ended. [Successful retry evidence](calibration/node2-v2-validation-usb-retry1-2026-11-26.json) and [offline v2 analysis](calibration/node2-v2-validation-result-2026-11-26.json) preserve the data, coefficient snapshot and checks.
+
+| Axis | Raw mean (m/s²) | V2 corrected offline mean (m/s²) | Corrected sample standard deviation (m/s²) |
+| --- | --- | --- | --- |
+| X | -0.053202 | 0.230549 | 0.023470 |
+| Y | -0.050013 | -0.153930 | 0.021727 |
+| Z | 7.159942 | 9.898603 | 0.040702 |
+
+Corrected mean sample magnitude was **9.902535 m/s² (+0.977759%)**. All unchanged numeric screens passed: ±3% mean magnitude, absolute mean X/Y at most 0.5 m/s² and per-axis sample standard deviation at most 0.15 m/s². Raw USB validation required at least 100 samples spanning 100 seconds, stricter in count than the earlier sparse cloud windows. Identity, state consistency, raw-input provenance and temporal separation from the Z fit also passed. V2 was applied once offline to explicit raw data; it was not refitted using this validation.
+
+This was a **numeric supported-pose bench pass** with visually estimated support, not externally verified physical level or certified orientation/temperature accuracy. A separate installed-correction check remained mandatory.
+
+### V2 installation and final device-corrected bench screen — November 26
+
+The USB installer rechecked Node 2 identity before saving **`n2-20261126-v2`** from the v2 candidate file. Its normal restart restored the expected bias/scale arrays at approximately **10:40:47 IST**, on firmware `795d041`. The board retained 256 indexed records, its Wi-Fi settings and sensor response. No firmware reflash, portal reopening or network/filesystem replacement was performed. V1 was superseded; old events were not rewritten.
+
+Atlas then reported v2, new boot `8f6540df4f4260352348b39760926dff`, healthy sensor/storage/time flags and zero pending records at the checkpoint. The operator had kept the supported component-up pose unchanged. A new cloud capture window **10:42:00–10:44:00 IST** selected twelve unique periodic samples captured at **10:42:07–10:43:57 IST**. [Full v2 on-device evidence](calibration/node2-v2-on-device-validation-2026-11-26.json) contains all records and checks.
+
+| Axis | Device-corrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.248330 | 0.025060 |
+| Y | -0.136077 | 0.035283 |
+| Z | 9.877339 | 0.042147 |
+
+Mean sample magnitude was **9.881484 m/s² (+0.763098%)**. All original numeric screens and identity/count/span/window/boot/version/revision checks passed. Each event's summary matched its already-corrected axes; **analysis applied no second correction**.
+
+**Current Node 2 checkpoint: v2 installed, persistent through its save/reboot, reporting to Atlas and passed the supported-pose numeric bench screen.** V1's +3.284% failed check and all incomplete/diagnostic data remain preserved. This does not certify externally measured level, full orientation/temperature accuracy, movement/threshold acceptance, deliberate power-cut/rollback or endurance. Those remain separate work, as for Node 1.
+
+At approximately **10:45 IST**, Nodes 1/2/3 had fresh reports on `795d041`; revisions were `n1-20261125-v1`, `n2-20261126-v2` and `none`, respectively. Node 4's last accepted report was still November 25. Node 3 was requested next for identity verification and its own raw references; no calibration values were copied to it.
+
+## Node 3 raw reference measurements — November 26
+
+### Component-side-up USB reference
+
+The operator connected Node 3 on COM5 and confirmed the supported component-up pose. The host sampler's first status request had no complete reply; its bounded second request verified **`esp32-986aa3f4e9d4`**, firmware `795d041` and identity revision `none` before acquisition. It then settled for ten seconds. No firmware, calibration, network setting or local log was written by the sampler.
+
+Host capture ran **10:48:14.792–10:50:14.799 IST**, recording **120 raw measurements** spanning 119 monotonic seconds. [Complete Node 3 positive-face evidence](calibration/node3-component-up-usb-2026-11-26.json) includes initial/final state, status-request attempts and raw data. There were no missed raw replies; identity, firmware and calibration remained consistent through the window.
+
+| Axis | Raw mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.004457 | 0.020529 |
+| Y | -0.031223 | 0.042922 |
+| Z | 8.151477 | 0.045160 |
+
+Z was positive as expected for this physical face. Its second-half mean differed from the first by approximately **-0.043347 m/s²**. This is only the first fitting reference, not a calibration or accuracy pass; no offsets/scales were calculated from one point and none were copied from Nodes 1/2. Next: supported component-side down with USB retained, then the signed X/Y pairs, fitting and independent validation.

@@ -38,6 +38,8 @@ The default requires at least 100 raw measurements spanning 100 seconds before m
 
 The sampler aborts and preserves an incomplete capture on a raw-response timeout or observed reboot. It compares identity, firmware and calibration state before/after acquisition and saves evidence with exclusive file creation. For a critical fit, also compare the cloud boot ID before/after when available; a serial status response does not expose that boot ID. The USB raw diagnostic prints four decimal places, finer than the sensor's quantization, and is distinct from full-precision cloud JSON.
 
+An initial status read allows at most three four-second requests to tolerate a missing/partial first reply. A returned wrong Node ID or missing calibration support still fails immediately; measurement timeouts and final-state verification are not relaxed. A failed initial attempt keeps an incomplete file, so retry with a new output filename after checking port ownership and a clean `status` response. Do not infer a hardware fault or reflash solely from one missing USB status reply.
+
 ## Arduino IDE export
 
 `scripts/export-arduino.ps1` copies the same firmware source into an ignored sketch directory.

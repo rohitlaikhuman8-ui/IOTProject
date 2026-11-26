@@ -6,15 +6,17 @@ The hardware target is a **classic ESP32 DevKit with 4 MB flash** and an ADXL345
 
 Four registered boards have been commissioned on release `408a075`, retaining separate identities and credentials. Online/Last-seen reflects each board's actual reporting. Captive-portal saving, 30 recent local records, and a complete 256-record download were verified on `esp32-7839a3f4e9d4`. See the [verification record](docs/VERIFICATION.md) for dated checkpoints and remaining hardware acceptance checks.
 
-Node 1 (`esp32-d01de2f4e9d4`) has completed six-position measurement and a held-out offline bench screen. Its measured corrections were installed as `n1-20261125-v1`, read back after two reboots, and confirmed in tagged Atlas telemetry. Calibration-capable firmware preserves separate per-node coefficients in NVS; the dashboard shows each revision. The other three nodes still need their own calibration. See [the calibration record and operating commands](docs/CALIBRATION.md) for accuracy limits and remaining on-device checks.
+Node 1 (`esp32-d01de2f4e9d4`) has completed six-position measurement and a held-out offline bench screen. Its measured corrections were installed as `n1-20261125-v1`, read back after two reboots, and confirmed in tagged Atlas telemetry. Calibration-capable firmware preserves separate per-node coefficients in NVS; the dashboard shows each revision. See [the calibration record and operating commands](docs/CALIBRATION.md) for accuracy limits and remaining on-device checks.
 
-Node 2 currently has trial revision `n2-20261126-v1` active, but its post-install magnitude check failed the unchanged ±3% bench limit. It is **not accepted as calibrated**; a revised candidate from two fresh raw Z references awaits independent validation. A dashboard revision label identifies applied settings, not accuracy acceptance. Earlier failed checks and fitting data are retained in the calibration record.
+Node 2 now runs **`n2-20261126-v2`**, saved and verified after reboot. It passed independent raw-data and on-device supported-pose numeric bench screens; the latter averaged 9.881484 m/s² (+0.763098%). The failed v1 trial is superseded and retained in history. Physical level was visually estimated, so this is a limited bench result, not certified full orientation/temperature accuracy. Nodes 3–4 still need their own calibration. A dashboard revision identifies applied settings, not production acceptance; see the complete calibration record.
+
+The [November 26 live dashboard checkpoint](docs/images/dashboard-calibration-two-nodes.png) shows the two applied revisions, Node 3 uncorrected and online, and Node 4's historical last-seen state.
 
 ## Connected node and wiring
 
 | Item | Value |
 | --- | --- |
-| Last verified COM5 Node ID | `esp32-7839a3f4e9d4` (November 26 calibration trial; verify identity whenever boards are swapped) |
+| Last verified COM5 Node ID | `esp32-986aa3f4e9d4` (November 26 first raw calibration reference; verify identity whenever boards are swapped) |
 | USB port | COM5 |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |

@@ -64,16 +64,24 @@ def parse_status(line):
         pass
     return None
 
-def checked_status():
-    value = reply("status", parse_status)
-    if not value or value.get("nodeId") != args.node or "calibration" not in value:
-        raise RuntimeError("No matching calibration-capable hardware status; no settings written")
-    return {key: value.get(key) for key in ["nodeId", "version", "calibration", "sensorAddress", "storageReady", "logRecords", "timeIst"]}
+def checked_status(attempts=1):
+    for attempt in range(attempts):
+        value = reply("status", parse_status)
+        record.setdefault("statusRequests", []).append({"phase": "capture-end" if capturing else "capture-start",
+                                                        "attempt": attempt + 1, "receivedStatus": value is not None})
+        if value is None:
+            if attempt + 1 < attempts:
+                print("No complete status reply yet; retrying identity read without changing settings.", flush=True)
+            continue
+        if value.get("nodeId") != args.node or "calibration" not in value:
+            raise RuntimeError("Hardware identity/support mismatch; no settings written")
+        return {key: value.get(key) for key in ["nodeId", "version", "calibration", "sensorAddress", "storageReady", "logRecords", "timeIst"]}
+    raise RuntimeError("No matching calibration-capable hardware status; no settings written")
 
 try:
     port.open()
     port.reset_input_buffer()
-    first = checked_status()
+    first = checked_status(attempts=3)
     record["initialStatus"] = first
     print("Identity verified; settling for 10 seconds. Keep the reference pose fixed.", flush=True)
     # Drain boot/network messages without exposing passwords or filling stdout.

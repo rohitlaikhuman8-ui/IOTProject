@@ -23,6 +23,12 @@ The operator was asked to isolate Node 1 on a separate nonconductive support wit
 
 ## Remaining checks
 
+### Separated-support baseline completed; Node 1 repeat requested
+
+After the operator confirmed Node 1 isolated and all sensors still, a new declared **13:01:14–13:03:14 IST** window recorded **48 periodic samples**, twelve per node, and **zero received movement events**. Capture spans were 109/110/110/110 seconds for Nodes 1/2/3/4. Expected firmware, per-node revisions and stable boot provenance passed, and final sensor/storage/time flags were healthy. Pending counts at the health checkpoint were 0/0/0/1. [Complete separated-support baseline](calibration/node1-isolated-baseline-2026-11-26.json) retains all data and the limited-observation scope; no settings changed.
+
+At **13:04:21 IST**, the isolated Node 1 repeat phase was marked before asking for about five seconds of gentle movement of that sensor only, followed by stillness. Its event/notification result is pending. The first trial remains inconclusive for isolation and is not overwritten.
+
 1. Record the new quiet baseline after physical separation, preserving any alerts and queue state.
 2. Ask for Node 1 movement only, mark the phase before the instruction, and verify fresh events, notifications and continued reporting from the other nodes.
 3. Repeat controlled movement and settling checks for Nodes 2/3/4 individually, using their full Node IDs and active revisions. Keep supports and wires mechanically independent where possible.

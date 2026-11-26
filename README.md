@@ -14,7 +14,7 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
-Post-calibration movement delivery is verified for **Node 1's isolated repeat and Node 2**; [the movement record](docs/MOVEMENT-CHECK-2026-11-26.md) preserves the earlier confounded trial, short stillness windows and pause/resume recovery. Nodes 3/4 movement checks remain outstanding. These checks do not establish a quantified sensitivity or false-alarm rate.
+Post-calibration gross-motion detection and matching notification delivery are verified individually for **all four nodes**; [the movement record](docs/MOVEMENT-CHECK-2026-11-26.md) preserves the earlier confounded Node 1 trial, short stillness windows and pause/resume recovery. The [14:20 IST dashboard screenshot](docs/images/dashboard-postcal-movement-2026-11-26.png) shows all four online and the latest highlighted alerts. These limited checks do not establish quantified sensitivity, false-alarm rate or settling behavior. Next: staged power-cycle/recovery preflight, followed separately by controlled interrupted-write/OTA rollback and endurance work.
 
 | Item | Value |
 | --- | --- |

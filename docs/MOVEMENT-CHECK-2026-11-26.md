@@ -39,6 +39,27 @@ The Node 2 phase was marked at **13:06:04 IST**; the operator confirmed its move
 
 The user paused before Node 3 received any movement instruction. Its earlier internal phase marker is discarded for future testing; a fresh marker must be recorded after resumption. Nodes 3/4 controlled movement checks remain outstanding.
 
+### Node 3 movement after recovery — limited pass
+
+After the recovery preflight below, a fresh phase was marked at **14:17:23 IST**. The operator moved Node 3 only and confirmed completion. [Node 3 evidence](calibration/node3-postcal-movement-2026-11-26.json) records three events captured **14:17:43 / 14:17:45 / 14:17:47 IST**, with matching notifications received at **14:17:45.754 / 14:17:46.980 / 14:17:49.971 IST**. Deltas were **8.952613 / 22.342550 / 16.956190 m/s²**. All had the expected firmware, revision `n3-20261126-v1` and unchanged boot. No other node movement event was received in the phase through **14:18:03 IST**. Final health showed all four running and healthy, unchanged boots and zero queues. No settings changed.
+
+### Node 4 movement — limited pass
+
+The phase was marked at **14:18:38 IST**. The operator moved Node 4 only and confirmed completion. [Node 4 evidence](calibration/node4-postcal-movement-2026-11-26.json) records event `10a8f066e51c4045c4e093476cd2ac00`, captured **14:19:03 IST**, received **14:19:06.272 IST**, delta **2.884526 m/s²**, with a matching notification, expected firmware/revision `n4-20261126-v1` and unchanged boot. No other node movement was received in the phase through **14:19:20 IST**. All four remained running and healthy with unchanged boots. Node 4's queue was zero; a later instantaneous snapshot had pending counts **1/0/1/0**, retained as ordinary in-flight state rather than declared delivered.
+
+## Current result
+
+| Node | Verified isolated gross-motion events / matching notifications | Applied revision | Result |
+| --- | --- | --- | --- |
+| `esp32-d01de2f4e9d4` | 4 / 4 in isolated repeat | `n1-20261125-v1` | Limited delivery pass; first confounded trial retained |
+| `esp32-7839a3f4e9d4` | 2 / 2 | `n2-20261126-v2` | Limited delivery pass |
+| `esp32-986aa3f4e9d4` | 3 / 3 | `n3-20261126-v1` | Limited delivery pass after observed queue recovery |
+| `esp32-3013a5f4e9d4` | 1 / 1 | `n4-20261126-v1` | Limited delivery pass |
+
+All four have now triggered correctly attributed post-calibration movement events and notifications during their individual tests, with no received other-node movement in each accepted phase. Thresholds were unchanged. Operator-controlled gross tilts do not establish calibrated minimum detectable motion, a statistically measured false-alarm rate, or a quantified settling/cooldown specification. Do not relabel this as complete sensitivity tuning or production acceptance.
+
+The authenticated production dashboard/API at approximately **14:20 IST** showed four online, all saved revisions and highlighted Node 3/4 movement notifications. The [reviewed screenshot](images/dashboard-postcal-movement-2026-11-26.png) showed zero pending for all four at that instant; later small pending counts are normal sampling/upload overlap. Previous failure and recovery records remain intact.
+
 ## Remaining checks
 
 ### Resume checkpoint after the user-requested pause
@@ -53,6 +74,6 @@ At **14:17:23 IST**, a fresh preflight confirmed all four online, running, senso
 
 1. After a pause, verify current cloud freshness, boot/revision, sensor/storage/time and pending queue state before marking the next movement phase.
 2. Preserve the completed Node 1 isolated and Node 2 checks, including the earlier confounded Node 1 trial.
-3. Run controlled movement and settling checks for Nodes 3/4 individually, using their full Node IDs and active revisions. Keep supports and wires mechanically independent where possible.
+3. Preserve the completed Node 3/4 gross-motion delivery checks above. Quantified threshold/noise/settling characterization still needs a defined physical stimulus and longer controlled observation if required for deployment.
 4. Record the mounting and motion used. A gentle gross tilt verifies that motion can trigger delivery; it does not quantify minimum detectable movement or tune a statistically justified threshold.
 5. Proceed to controlled power-cut/recovery and failed-image rollback testing only after movement/threshold checks. Full orientation/temperature accuracy and endurance remain separate work.

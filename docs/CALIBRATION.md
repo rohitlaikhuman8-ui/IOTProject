@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; Z/X pairs and Y-up recorded; Y-down and validation pending; revision `none` |
+| 4 | `esp32-3013a5f4e9d4` | Five valid references; first Y-down failed stability and is excluded; fresh Y-down retry required; revision `none` |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -696,3 +696,17 @@ The operator confirmed +Y upward. A new declared window **12:05:17–12:07:17 IS
 | Z | -0.583250 | 0.046485 |
 
 All source/count/span/window/identity/sign checks passed and every axis's standard deviation was below 0.15 m/s². Y's half-window mean shift was approximately **-0.006373 m/s²**. Maximum receipt delay was **14.610 seconds**; selection used device capture time. No firmware, network or calibration settings changed. Five fitting positions are recorded; Y-down, fitting, independent validation and installation remain. This reference does not by itself establish calibration accuracy; visual alignment and sparse-sampling limitations still apply.
+
+### Node 4 first Y-down attempt — failed stability, excluded
+
+The operator confirmed +Y downward. A new window **12:10:18–12:12:18 IST** recorded **12 unique periodic samples spanning 110 seconds**, captured **12:10:21–12:12:11 IST**. [Failed Y-down evidence](calibration/node4-y-down-cloud-2026-11-26.json) retains the entire capture. Expected node, boot `d4425b16a951887969c0439a9f68a4ba`, firmware `795d041`, identity revision `none`, negative-Y sign, count/span and window checks passed, but **the per-axis stability check failed**.
+
+| Axis | Uncorrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -0.089241 | **0.158393** |
+| Y | -9.794147 | 0.030328 |
+| Z | -0.264534 | **0.181202** |
+
+X and Z exceeded the unchanged **0.15 m/s²** standard-deviation limit. Their second-half means shifted approximately **+0.267722** and **+0.248598 m/s²**, respectively. The stable fitted Y axis alone does not override the whole-reference stability requirement. No hardware-fault or physical-movement cause is established solely from these readings. Maximum receipt delay was approximately 18.365 seconds; samples were selected by device capture time.
+
+**This attempt is excluded from fitting. Five valid fitting positions remain, and no candidate was calculated or installed.** The operator was asked to secure the Y-down position against slipping/rocking with nonconductive supports and slack wires, then confirm readiness for an entirely new window. Do not trim this window, merge partial data, or relax the limits to force acceptance. No firmware, network or calibration settings changed.

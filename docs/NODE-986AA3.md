@@ -14,6 +14,8 @@ X-down USB acquisition then stopped after 47 samples despite the five-second res
 
 Y-up cloud acquisition subsequently recorded **12 unique samples spanning 110 seconds**, captured **11:15:22–11:17:12 IST**, with mean Y **+9.899323 m/s²** and low variation. Node identity, boot, firmware and revision `none` stayed consistent. [Complete evidence](calibration/node3-y-up-cloud-2026-11-26.json) preserves source and capture/receipt times. Five fitting positions are recorded; Y-down, fitting, independent validation and installation remain. No settings were changed.
 
+Y-down then recorded **12 unique cloud samples spanning 110 seconds** in the **11:19:55–11:21:55 IST** window, mean Y **-10.154294 m/s²**, with unchanged identity/boot/firmware and revision `none`. All six signed references are now recorded. [Candidate v1](calibration/node3-candidate-v1-2026-11-26.json) was calculated from completed references only; interrupted USB attempts are excluded. It remains **uninstalled and unvalidated**. The next step is a fresh supported component-up validation, followed by installation and a separate on-device check only if it passes. No network or firmware settings changed.
+
 | Item | Verified value |
 | --- | --- |
 | Node ID | `esp32-986aa3f4e9d4` |

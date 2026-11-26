@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
-| 3 | `esp32-986aa3f4e9d4` | Z-up/down, X-up/down and Y-up references recorded; Y-down next; no correction applied |
+| 3 | `esp32-986aa3f4e9d4` | Six references recorded; v1 candidate fitted; independent validation next; no correction applied |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
@@ -588,3 +588,25 @@ The operator confirmed +Y upward. A fresh cloud window was declared as **11:15:2
 | Z | -1.010330 | 0.057562 |
 
 All source/count/span/window/identity checks passed, and Y remained positive. No firmware, calibration or network setting was changed. Five fitting positions are now recorded; Y-down, coefficient fitting, independent validation and installation remain. This is a fitting reference, not an accuracy acceptance result, and the sparse cloud/visual positioning limitations above still apply.
+
+### Node 3 Y-down reference and v1 candidate
+
+After the operator confirmed +Y downward, a new window **11:19:55–11:21:55 IST** captured **12 unique periodic cloud samples spanning 110 seconds**. [Y-down evidence](calibration/node3-y-down-cloud-2026-11-26.json) contains device capture times, server receipt times and checks. All samples retained Node 3 identity, boot `910e13f2c305bad75baa3d6f8b622131`, firmware `795d041` and identity revision `none`; Y remained negative. No calibration, firmware or network setting changed.
+
+| Axis | Uncorrected cloud mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.095615 | 0.025785 |
+| Y | -10.154294 | 0.025786 |
+| Z | -1.752939 | 0.089075 |
+
+Z shifted approximately **-0.165733 m/s²** between the first and second halves, while the fitted Y axis shifted approximately **-0.012752 m/s²**. All per-axis sample standard deviations remained below 0.15 m/s². These observations are retained rather than claiming perfectly fixed orientation. Sparse sampling and visual support remain limitations.
+
+All six completed signed references were checked for identity, firmware, raw provenance, sign and source-specific count/span requirements. [Candidate v1](calibration/node3-candidate-v1-2026-11-26.json) uses each axis's positive/negative means with `bias=(positive+negative)/2` and `scale=2*9.80665/(positive-negative)`. The interrupted component-down and X-down USB attempts are excluded. USB and cloud sample counts are retained separately; samples are not pooled across faces or transports.
+
+| Axis | Candidate bias (m/s²) | Candidate scale |
+| --- | --- | --- |
+| X | 0.015584278 | 0.977145085 |
+| Y | -0.127485625 | 0.978043009 |
+| Z | -1.603617917 | 1.005284974 |
+
+**Candidate only: proposed revision `n3-20261126-v1` is not installed or independently validated.** All values satisfy firmware coefficient bounds, which does not establish accuracy. Next is a fresh supported component-up validation, applying this candidate once offline to raw axes under unchanged numeric limits. Only after that passes should installation/readback/reboot and a fresh device-corrected check proceed. No validation readings have been used to fit these coefficients.

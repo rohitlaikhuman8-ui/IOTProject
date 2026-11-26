@@ -1,0 +1,101 @@
+{
+  "nodeId": "esp32-986aa3f4e9d4",
+  "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+  "status": "CANDIDATE ONLY: not installed; independent validation required",
+  "proposedRevision": "n3-20261126-v1",
+  "formula": "correctedAxis = (rawAxis - bias) * scale",
+  "referenceGravity": 9.80665,
+  "coefficients": {
+    "x": {
+      "bias": 0.015584278011210095,
+      "scale": 0.9771450845250435
+    },
+    "y": {
+      "bias": -0.12748562500000027,
+      "scale": 0.9780430093232763
+    },
+    "z": {
+      "bias": -1.603617916666666,
+      "scale": 1.0052849735311387
+    }
+  },
+  "sources": {
+    "x": [
+      "node3-x-up-usb-2026-11-26.json",
+      "node3-x-down-cloud-2026-11-26.json"
+    ],
+    "y": [
+      "node3-y-up-cloud-2026-11-26.json",
+      "node3-y-down-cloud-2026-11-26.json"
+    ],
+    "z": [
+      "node3-component-up-usb-2026-11-26.json",
+      "node3-component-down-usb-retry1-2026-11-26.json"
+    ]
+  },
+  "referenceChecks": {
+    "node3-x-up-usb-2026-11-26.json": {
+      "source": "USB sensor-raw",
+      "sampleCount": 119,
+      "spanSeconds": 119.40600000001723,
+      "fittedAxis": "x",
+      "rawMean": 10.05160672268909,
+      "passed": true
+    },
+    "node3-x-down-cloud-2026-11-26.json": {
+      "source": "Cloud identity-correction axes",
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "x",
+      "rawMean": -10.02043816666667,
+      "passed": true
+    },
+    "node3-y-up-cloud-2026-11-26.json": {
+      "source": "Cloud identity-correction axes",
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "y",
+      "rawMean": 9.899322916666668,
+      "passed": true
+    },
+    "node3-y-down-cloud-2026-11-26.json": {
+      "source": "Cloud identity-correction axes",
+      "sampleCount": 12,
+      "spanSeconds": 110,
+      "fittedAxis": "y",
+      "rawMean": -10.154294166666668,
+      "passed": true
+    },
+    "node3-component-up-usb-2026-11-26.json": {
+      "source": "USB sensor-raw",
+      "sampleCount": 120,
+      "spanSeconds": 119,
+      "fittedAxis": "z",
+      "rawMean": 8.151476666666662,
+      "passed": true
+    },
+    "node3-component-down-usb-retry1-2026-11-26.json": {
+      "source": "USB sensor-raw",
+      "sampleCount": 120,
+      "spanSeconds": 119.01600000000326,
+      "fittedAxis": "z",
+      "rawMean": -11.358712499999994,
+      "passed": true
+    }
+  },
+  "excludedAttempts": [
+    "node3-component-down-usb-2026-11-26.json",
+    "node3-x-down-usb-2026-11-26.json"
+  ],
+  "processing": "Per-axis opposite-face means; only completed references; no validation data used in fitting",
+  "validationRequired": "Fresh independent raw window, then installed device-corrected window under unchanged numeric limits",
+  "numericLimits": {
+    "minimumCloudSamples": 12,
+    "minimumCloudSpanSeconds": 100,
+    "meanMagnitudeErrorPercent": 3,
+    "absoluteMeanXY": 0.5,
+    "perAxisSampleStandardDeviation": 0.15
+  },
+  "fixtureLimitation": "Visual support and operator positioning; physical level not externally verified; mixed sparse cloud and USB reference sources documented",
+  "productionAccepted": false
+}

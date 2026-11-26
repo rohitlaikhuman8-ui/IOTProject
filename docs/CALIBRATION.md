@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; Z-up/down and X-up references recorded; X-down/Y pairs and validation pending; revision `none` |
+| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; Z-up/down and X-up/down references recorded; Y pair and validation pending; revision `none` |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -672,3 +672,15 @@ The operator confirmed +X upward and then requested continuation. A fresh cloud 
 | Z | -1.105945 | 0.126804 |
 
 All source/count/span/window/identity/sign checks passed and each axis's standard deviation remained below 0.15 m/s². The fitted X axis's half-window mean shift was **-0.006372 m/s²**, while Z shifted **-0.172107 m/s²**. The latter remains an explicit positioning/stability limitation rather than a claim of perfect fixed alignment. No calibration, firmware or network settings changed. Three fitting positions are recorded; X-down, both Y faces, fitting, independent validation and installation remain.
+
+### Node 4 X-down cloud reference
+
+The operator confirmed +X downward. Preflight verified the expected node, negative X and unchanged firmware/identity revision. The new declared window **12:00:40–12:02:40 IST** captured **13 unique periodic samples spanning 120 seconds**, including samples on both inclusive boundaries. [Complete X-down evidence](calibration/node4-x-down-cloud-2026-11-26.json) retains the actual count rather than truncating to twelve. All samples retained boot `d4425b16a951887969c0439a9f68a4ba`, firmware `795d041` and revision `none`.
+
+| Axis | Uncorrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | -9.782133 | 0.016772 |
+| Y | 0.456009 | 0.039690 |
+| Z | -0.500139 | 0.055118 |
+
+All source/count/span/window/identity/sign checks passed and each axis's standard deviation was below 0.15 m/s². X's half-window mean shift was approximately **+0.004553 m/s²**. Maximum receipt delay was **34.209 seconds**; delayed arrivals were selected by capture time within the original window, not by receipt time or an extended acquisition interval. No settings or firmware changed. Four reference positions are recorded; both Y faces, fitting, independent validation and installation remain. The same visual-alignment and sparse-sampling limitations apply.

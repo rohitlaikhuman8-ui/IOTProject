@@ -391,3 +391,19 @@ No coefficient, threshold, firmware or network setting was changed for the resum
 4. Compare the X/Y vectors with the existing coefficients unchanged. Under the fixed-plane assumption, the horizontal projection of gravity reverses sign in sensor coordinates, while fixed offsets stay with the sensor. Opposing residual vectors support a fixed-support tilt explanation; a persistent midpoint residual calls for further offset/cross-axis/reference investigation. Movement, changed supports, wire tension, noise or drift can invalidate that inference.
 
 This is a diagnostic inference from the rotation geometry, **not a manufacturer accuracy test or a new calibration acceptance rule**. A nonzero or zero midpoint alone does not prove a hardware defect or certified accuracy. Keep the previous failed level screens and provisional coefficients unchanged. If diagnostic data later become fitting inputs, they are no longer independent validation data; fresh acceptance evidence is still required. A verified level/square fixture remains preferable for known-orientation accuracy checks. Position A/B data are not yet recorded at this planning checkpoint.
+
+### Position A movement interruption and stationary repeat — November 26
+
+The first requested A window was **09:59:35–10:01:35 IST**. Its readings shifted noticeably, including X/Y approximately -0.54/-0.99 to -0.08/-0.23 m/s². The operator confirmed **movement or adjustment after readiness**. The twelve observed records were retained in the [interrupted A evidence](calibration/node2-reversal-a-interrupted-2026-11-26.json) and excluded from the stationary reversal comparison. No coefficients were changed.
+
+The operator was asked to leave the current position untouched. After settling, a new full A window was requested at **10:02:25–10:04:25 IST**, capturing twelve unique samples at **10:02:28–10:04:18 IST**. All share the expected Node ID, boot `bbf19dc13849fcedb72c915bee52b647`, firmware `795d041` and revision `none`. [Stationary A evidence](calibration/node2-reversal-a-2026-11-26.json) includes raw data, offline statistics and consistency checks.
+
+| Axis | Raw mean (m/s²) | Corrected offline mean (m/s²) | Corrected sample standard deviation (m/s²) |
+| --- | --- | --- | --- |
+| X | -0.073305 | 0.210846 | 0.040618 |
+| Y | -0.063743 | -0.167442 | 0.049030 |
+| Z | 7.158364 | 10.062006 | 0.043789 |
+
+With the existing provisional coefficients unchanged, mean sample magnitude was **10.065792 m/s²**, error **+2.642514%** against 9.80665 m/s². This stationary A window's numeric values fall inside the earlier magnitude, X/Y and repeatability limits. However, its mechanical level was not independently verified, and the planned position B comparison is still required to interpret the diagnostic. **No coefficient was fitted or installed, and the diagnostic is not declared a completed calibration.**
+
+Next requested action: turn the PCB 180 degrees like a clock hand on the same supports, keep the component side upward and the board plane unchanged, and point +Y opposite its paper mark. Let wire tension settle before confirming position B readiness; do not move it during the next window.

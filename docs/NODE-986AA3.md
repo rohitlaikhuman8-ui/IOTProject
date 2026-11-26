@@ -12,6 +12,8 @@ X-up then recorded **119 valid raw samples** at approximately **11:02:09–11:04
 
 X-down USB acquisition then stopped after 47 samples despite the five-second response deadline. That incomplete attempt is preserved and excluded. A separate cloud window at **11:09:05–11:11:05 IST** recorded **12 unique samples spanning 110 seconds**, mean X **-10.020438 m/s²**, with stable boot/firmware and revision `none`. Its uncorrected axes passed the existing cloud reference protocol; no partial USB data were merged. Four reference positions are now recorded. Both Y faces, fitting, independent validation and installation remain. See the [full reference record](CALIBRATION.md#node-3-x-down-usb-interruption-and-independent-cloud-reference).
 
+Y-up cloud acquisition subsequently recorded **12 unique samples spanning 110 seconds**, captured **11:15:22–11:17:12 IST**, with mean Y **+9.899323 m/s²** and low variation. Node identity, boot, firmware and revision `none` stayed consistent. [Complete evidence](calibration/node3-y-up-cloud-2026-11-26.json) preserves source and capture/receipt times. Five fitting positions are recorded; Y-down, fitting, independent validation and installation remain. No settings were changed.
+
 | Item | Verified value |
 | --- | --- |
 | Node ID | `esp32-986aa3f4e9d4` |

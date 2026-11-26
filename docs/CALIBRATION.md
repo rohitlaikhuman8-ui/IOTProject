@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
-| 3 | `esp32-986aa3f4e9d4` | Z-up/down and X-up/down references recorded; both Y faces next; no correction applied |
+| 3 | `esp32-986aa3f4e9d4` | Z-up/down, X-up/down and Y-up references recorded; Y-down next; no correction applied |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
@@ -576,3 +576,15 @@ A separate cloud window was declared before capture, **11:09:05–11:11:05 IST**
 | Z | -1.137816 | 0.028829 |
 
 All source/count/span/window/identity checks passed, and X remained negative. Four fitting positions are recorded; both Y faces, fitting and independent validation remain. No correction is installed. Cloud sampling is sparse and does not characterize full-band sensor noise; physical positioning remains operator-established, not externally certified.
+
+### Node 3 raw Y-up cloud reference
+
+The operator confirmed +Y upward. A fresh cloud window was declared as **11:15:22–11:17:22 IST**, using the same minimum twelve unique periodic samples spanning 100 seconds. [Y-up evidence](calibration/node3-y-up-cloud-2026-11-26.json) records **12 unique samples spanning 110 seconds**, captured **11:15:22–11:17:12 IST**. All samples retained the expected Node 3 identity, boot `910e13f2c305bad75baa3d6f8b622131`, firmware `795d041` and identity correction revision `none`. Its cloud axes therefore remain uncorrected fitting inputs. Maximum receipt delay was approximately **13.290 seconds**; selection used device capture time.
+
+| Axis | Uncorrected cloud mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.025497 | 0.018831 |
+| Y | 9.899323 | 0.022081 |
+| Z | -1.010330 | 0.057562 |
+
+All source/count/span/window/identity checks passed, and Y remained positive. No firmware, calibration or network setting was changed. Five fitting positions are now recorded; Y-down, coefficient fitting, independent validation and installation remain. This is a fitting reference, not an accuracy acceptance result, and the sparse cloud/visual positioning limitations above still apply.

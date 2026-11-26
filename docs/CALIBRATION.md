@@ -7,7 +7,7 @@
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
 | 3 | `esp32-986aa3f4e9d4` | `n3-20261126-v1` installed/read back after reboot; independent offline and on-device supported-pose numeric screens passed |
-| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; component-up reference recorded; remaining five faces and validation pending; revision `none` |
+| 4 | `esp32-3013a5f4e9d4` | COM6 identity verified; component-up/down references recorded; X/Y pairs and validation pending; revision `none` |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
 
@@ -648,3 +648,15 @@ A new cloud window **11:38:38–11:40:38 IST** used the existing minimum twelve 
 Z remained positive, with a second-half minus first-half shift of approximately **0.012749 m/s²**. All per-axis standard deviations were below 0.15 m/s². This is only the first fitting reference, not a calibration accuracy pass; the nonzero sideways means are not declared corrected or accepted. No coefficient was calculated from this one face or copied from another node. Next: component-down, X/Y signed pairs, fitting and independent validation. Physical level was not externally verified, and sparse telemetry does not characterize full-band noise.
 
 At **11:39 IST**, Nodes 2/3/4 had fresh cloud reports; Node 1's latest accepted report was **11:35:46 IST**. This session does not establish simultaneous four-node availability or group acceptance.
+
+### Node 4 component-down cloud reference
+
+The operator confirmed component-side down. Preflight verified negative Z, unchanged Node 4 identity, firmware `795d041`, revision `none` and boot `d4425b16a951887969c0439a9f68a4ba`. A new declared window **11:43:20–11:45:20 IST** captured **12 unique periodic samples spanning 110 seconds**, at **11:43:29–11:45:19 IST**. [Full opposite-face evidence](calibration/node4-component-down-cloud-2026-11-26.json) preserves all raw-identity axes, device capture times, receipt times and checks.
+
+| Axis | Uncorrected mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.866908 | 0.054901 |
+| Y | 0.293219 | 0.145255 |
+| Z | -10.300906 | 0.063860 |
+
+All count/span/window/node/boot/firmware/revision/sign checks passed. Y variation was close to the unchanged 0.15 m/s² standard-deviation limit, and its second-half mean shifted **-0.216727 m/s²**; Z shifted **-0.038245 m/s²**. These measured changes remain recorded rather than claiming perfectly fixed orientation or diagnosing a cause. This reference met the stated numeric requirements, but visual support and sparse sampling still limit its interpretation. No firmware, calibration or network settings were changed. Both Z faces are recorded; X/Y pairs, fitting, independent validation and installation remain.

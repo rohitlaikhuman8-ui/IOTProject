@@ -1,0 +1,444 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "operatorActions": "Confirmed per-device hotspot pause capability; then reported blocking Node 4 and opening setup via GPIO4",
+  "windowUtc": {
+    "start": "2026-11-26T17:31:24.000Z",
+    "end": "2026-11-26T17:44:55.000Z"
+  },
+  "selectionDeclaredBeforeRestore": "Check subsequent stored Node 4 events whose sampledAt falls in this fixed observed-block window; compare receivedAt to restoration time. Do not change the window to include earlier/later data.",
+  "storedEventsBeforeRestore": [
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "347eb5f4049fd1a7a659ac742ac1ab8d",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:30.833Z"
+      },
+      "sampledAt": 1795714285,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "62c6f672cdbabd8a08c069fa684fa36b",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:31.584Z"
+      },
+      "sampledAt": 1795714295,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "2f379c64725828ec70faa6dfce948d29",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:32.472Z"
+      },
+      "sampledAt": 1795714305,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "5bf9ce5edf7b014d3fe28ba2922c29eb",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:33.270Z"
+      },
+      "sampledAt": 1795714315,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "aa9713366d1757e2e1f6643c4c10a4c6",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:34.879Z"
+      },
+      "sampledAt": 1795714325,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "39df46a0671da646ebcc5d6c34a26dcb",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:35.820Z"
+      },
+      "sampledAt": 1795714335,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "f4de26c284ecf5bb66a90f99b94c7b84",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:36.767Z"
+      },
+      "sampledAt": 1795714345,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "e8f6b015e992e099830109554d8425f1",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:37.797Z"
+      },
+      "sampledAt": 1795714355,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "a9e2ec181977be6dbe235c8a35a91557",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:40.283Z"
+      },
+      "sampledAt": 1795714365,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "ded11aa94cdd9144b35dafe555cb042f",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:41.877Z"
+      },
+      "sampledAt": 1795714375,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "7ee5b0d65253129abbbd6f7ee840150c",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:44.129Z"
+      },
+      "sampledAt": 1795714385,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "275740b961e2a032a827c94dd77da3b9",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:41:07.889Z"
+      },
+      "sampledAt": 1795714395,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "ae29606e9ea2ae65df6d674b5bfed5fe",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:41:09.362Z"
+      },
+      "sampledAt": 1795714405,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "2a6099f543111985c9239543d4ef88a8",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:41:10.762Z"
+      },
+      "sampledAt": 1795714415,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "8422b74f9c032179bd0c41881b906c8e",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:41:11.572Z"
+      },
+      "sampledAt": 1795714425,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "1e6d8ce8b06f9956baac126b058a799b",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:41:40.543Z"
+      },
+      "sampledAt": 1795714435,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "0f9643b67a1d8e8abdd69178099cf0a1",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:01.149Z"
+      },
+      "sampledAt": 1795714445,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "ff620e3346049190c3e94a680c41a014",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:02.579Z"
+      },
+      "sampledAt": 1795714455,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "5090b9e9ffb60459e1b878e11ddb3c2c",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:03.893Z"
+      },
+      "sampledAt": 1795714465,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "3b362901e9c4a9e2ec15c5e5a493f0f4",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:05.090Z"
+      },
+      "sampledAt": 1795714475,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "66d5cc620e8cc4be4b78ff2788b5894b",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:06.094Z"
+      },
+      "sampledAt": 1795714485,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "166cd6458891569067f767384158285f",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:07.080Z"
+      },
+      "sampledAt": 1795714495,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "3d0db6557a1fa92145416745a5c870c5",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:08.318Z"
+      },
+      "sampledAt": 1795714505,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "010d4d20fe1697a0b7fc18c436d4f065",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:10.414Z"
+      },
+      "sampledAt": 1795714515,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "99506b2356f5d73566b3dee9c1b67b47",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:11.563Z"
+      },
+      "sampledAt": 1795714525,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "b8460849f5921a0b465f69ab2cab19eb",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:14.770Z"
+      },
+      "sampledAt": 1795714535,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "7a9317ba978a3e4abdd3b261e7403f84",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:16.089Z"
+      },
+      "sampledAt": 1795714545,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "80f68aad6fdc9118bd0dc95d8933716c",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:17.532Z"
+      },
+      "sampledAt": 1795714555,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "000e6e94a1b1f4a0fda9284173e48ab3",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:19.241Z"
+      },
+      "sampledAt": 1795714565,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "c078110edc3ecc52b9813c1f652f1e4e",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:42:23.531Z"
+      },
+      "sampledAt": 1795714575,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "8721132e5591d5534b3fbee83f85f685",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:38.805Z"
+      },
+      "sampledAt": 1795714837,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "f54831ae156b790681772e2ee0d4d31a",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:40.991Z"
+      },
+      "sampledAt": 1795714839,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "9a731b779885fc05c2cabeae09708bab",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:43.113Z"
+      },
+      "sampledAt": 1795714841,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "calibrationRevision": "n4-20261126-v1",
+      "eventId": "779993ff6d9c202d6ccb28bd39a3fffa",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T17:40:45.354Z"
+      },
+      "sampledAt": 1795714843,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf"
+    }
+  ],
+  "initialFleet": [
+    {
+      "lastSeen": {
+        "$date": "2026-11-26T17:31:26.029Z"
+      },
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "bootId": "1534b0f5c8e8d2b7b98539dcbb51b54b",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "2c9752b362239859afb29ad6a4a53474",
+      "lastSeen": {
+        "$date": "2026-11-26T17:31:26.756Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "ff12935f7b7624e60f8d8c537699b17e",
+      "lastSeen": {
+        "$date": "2026-11-26T17:31:26.687Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "e2f73147203cf881d1891fe378397a14",
+      "lastSeen": {
+        "$date": "2026-11-26T17:29:26.251Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 1,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "scope": "Server-gap and subsequent backfill observation. Pre-restoration exact-ID local archive unavailable: USB output garbled and setup network not available to laptop. Not an exact preselected queue/power-cut acceptance test."
+}

@@ -1,0 +1,8 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "scope": "AP-only queued-data baseline during operator-confirmed per-device hotspot block; USB status unavailable",
+  "startedEpoch": 1795714869.3193014,
+  "result": "INCOMPLETE: Laptop did not join Node 4 AP",
+  "originalNetworkRestored": true,
+  "completedEpoch": 1795714896.5731082
+}

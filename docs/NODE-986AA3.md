@@ -6,6 +6,8 @@ This third registered board was commissioned on November 23, 2026. COM5 was late
 
 COM5 identity was reverified as this board on firmware `795d041`, revision `none`. The raw USB sampler recorded 120 component-up measurements at approximately **10:48:14–10:50:14 IST**, mean Z **8.151477 m/s²**, with low variation and no missed raw replies. One initial status read was incomplete; the bounded second read verified identity before measurements began. The sampler did not change settings or firmware. This is one fitting reference, not a completed calibration. The opposite face and X/Y pairs, independent validation and any installation remain outstanding; no Node 1/2 coefficients were copied. See [the calibration record](CALIBRATION.md#node-3-raw-reference-measurements--november-26).
 
+The first opposite-face attempt stopped after 53 samples at a host response timeout and was retained/excluded. Fresh status/raw probes were healthy with unchanged cloud boot. A new full retry with an explicit five-second USB response deadline recorded 120 samples at approximately **10:56:52–10:58:52 IST**, mean Z **-11.358712 m/s²**, with no missed replies and identity correction unchanged. No calibration values were applied. The timeout cause remains undiagnosed; the retry's measured data are separate from the incomplete attempt. Remaining X/Y references and validation are still required.
+
 | Item | Verified value |
 | --- | --- |
 | Node ID | `esp32-986aa3f4e9d4` |

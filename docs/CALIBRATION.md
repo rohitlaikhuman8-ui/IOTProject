@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | 1 | `esp32-d01de2f4e9d4` | Installed on published 795d041; persistence and on-device level bench screen passed; movement/threshold acceptance remains |
 | 2 | `esp32-7839a3f4e9d4` | V2 installed/reboot-verified; independent raw and on-device supported-pose numeric bench screens passed; physical-level/production limitations remain |
-| 3 | `esp32-986aa3f4e9d4` | First raw component-up reference recorded on 795d041; awaiting opposite face; no correction applied |
+| 3 | `esp32-986aa3f4e9d4` | Both raw Z faces recorded after one excluded timeout; X-up acquisition next; no correction applied |
 | 4 | `esp32-3013a5f4e9d4` | Awaiting positioning and measurements |
 
 The other nodes can stay powered and online while one sensor is measured. Confirm each physical board's Node ID before moving it. Movement while positioning is a calibration activity; its notifications are not operational incidents.
@@ -528,3 +528,23 @@ Host capture ran **10:48:14.792–10:50:14.799 IST**, recording **120 raw measur
 | Z | 8.151477 | 0.045160 |
 
 Z was positive as expected for this physical face. Its second-half mean differed from the first by approximately **-0.043347 m/s²**. This is only the first fitting reference, not a calibration or accuracy pass; no offsets/scales were calculated from one point and none were copied from Nodes 1/2. Next: supported component-side down with USB retained, then the signed X/Y pairs, fitting and independent validation.
+
+### Component-down interrupted attempt and transport check
+
+The first component-down attempt verified identity after one initial status retry, then began raw measurement. It recorded **53 samples**, first at **10:53:32.880 IST** and last at **10:54:24.887 IST**, before a raw USB response exceeded the default two-second deadline. The last progress line had reported 40, but the retained file contains 53. [Incomplete evidence](calibration/node3-component-down-usb-2026-11-26.json) preserves the exact count and timeout; it is **excluded from fitting** because it is incomplete and below the 100-sample/100-second requirements. No settings changed.
+
+A subsequent clean `status` and `sensor-raw` probe identified the same Node 3 on `795d041`, revision `none`, healthy sensor/storage and a valid negative-Z read. Cloud boot ID `910e13f2c305bad75baa3d6f8b622131` was unchanged at that checkpoint. The timeout's cause was not established as a reboot, sensor defect, flash delay or wiring fault.
+
+The sampler gained an explicit bounded raw-response deadline option and an immediate abort for an explicit sensor read-failure message. A separate full retry was started with **`--reply-timeout 5`**, recorded in its new evidence file. Sample count/span, physical-pose requirements, before/after state checks and calibration numeric limits were unchanged. No partial measurements were merged, and no firmware or calibration value was changed to address the host read deadline. The retry is in progress at this checkpoint.
+
+### Completed component-down raw retry
+
+The separate retry captured **120 raw samples** over approximately 119.016 monotonic seconds, host **10:56:52.102–10:58:52.101 IST**. [Complete retry evidence](calibration/node3-component-down-usb-retry1-2026-11-26.json) records the explicit five-second response deadline, zero missed replies and unchanged Node ID, firmware and identity revision. A subsequent cloud checkpoint retained boot `910e13f2c305bad75baa3d6f8b622131`, healthy sensor/storage and revision `none`. The retry's success does not establish the first timeout's cause.
+
+| Axis | Raw mean (m/s²) | Sample standard deviation (m/s²) |
+| --- | --- | --- |
+| X | 0.123331 | 0.042788 |
+| Y | -0.089239 | 0.092400 |
+| Z | -11.358712 | 0.046894 |
+
+Z's second-half mean differed by approximately **-0.007015 m/s²**. The two Z faces yield provisional bias **-1.603617917 m/s²** and scale **1.005284974**, recorded for later fitting/validation only. No coefficient was installed, and the incomplete 53-sample attempt is not part of the fit. Next: X-up/down and Y-up/down, then independent validation with unchanged numeric bench limits.

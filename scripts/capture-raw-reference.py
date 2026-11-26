@@ -16,6 +16,8 @@ parser.add_argument("--pose", required=True)
 parser.add_argument("--output", type=Path, required=True)
 parser.add_argument("--seconds", type=float, default=120)
 parser.add_argument("--interval", type=float, default=1)
+parser.add_argument("--reply-timeout", type=float, default=2,
+                    help="Raw USB response deadline in seconds (default 2, range 0.5-10)")
 args = parser.parse_args()
 if not re.fullmatch(r"esp32-[a-f0-9]{12}", args.node):
     parser.error("--node must be a full hardware Node ID")
@@ -23,6 +25,8 @@ if not math.isfinite(args.seconds) or not 100 <= args.seconds <= 600:
     parser.error("--seconds must be between 100 and 600")
 if not math.isfinite(args.interval) or not .1 <= args.interval <= 2:
     parser.error("--interval must be between 0.1 and 2 seconds")
+if not math.isfinite(args.reply_timeout) or not .5 <= args.reply_timeout <= 10:
+    parser.error("--reply-timeout must be between 0.5 and 10 seconds")
 if args.output.exists():
     parser.error("Output already exists; choose a new evidence file")
 
@@ -37,6 +41,7 @@ measurements = []
 record = {"nodeId": args.node, "pose": args.pose, "source": "USB sensor-raw command",
           "unit": "m/s2", "timestampSource": "Host UTC for this USB capture, not device/server receipt time",
           "requestedSeconds": args.seconds, "requestedIntervalSeconds": args.interval,
+          "rawReplyTimeoutSeconds": args.reply_timeout,
           "guardPolicy": "Abort on raw-response timeout or observed reboot; compare identity/firmware/calibration before and after",
           "status": "INCOMPLETE", "measurements": measurements}
 capturing = False
@@ -50,6 +55,8 @@ def reply(command, predicate, timeout=4):
         line = port.readline().decode("utf-8", errors="replace").strip()
         if capturing and line.startswith("Node esp32-"):
             raise RuntimeError("Device restarted during reference collection")
+        if capturing and "ADXL345 read failed" in line:
+            raise RuntimeError("Device reported a raw sensor read failure")
         value = predicate(line)
         if value is not None:
             return value
@@ -99,7 +106,7 @@ try:
             continue
         if time.monotonic() - started >= args.seconds:
             break
-        value = reply("sensor-raw", lambda line: raw_pattern.match(line), timeout=2)
+        value = reply("sensor-raw", lambda line: raw_pattern.match(line), timeout=args.reply_timeout)
         if value is None:
             failures += 1
             raise RuntimeError("Raw sensor response timed out; reference remains incomplete")

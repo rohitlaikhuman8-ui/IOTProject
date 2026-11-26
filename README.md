@@ -14,6 +14,8 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
+Post-calibration movement delivery is verified for **Node 1's isolated repeat and Node 2**; [the movement record](docs/MOVEMENT-CHECK-2026-11-26.md) preserves the earlier confounded trial, short stillness windows and pause/resume recovery. Nodes 3/4 movement checks remain outstanding. These checks do not establish a quantified sensitivity or false-alarm rate.
+
 | Item | Value |
 | --- | --- |
 | Last verified COM5 Node ID | `esp32-986aa3f4e9d4` (November 26 calibration installation/readback; verify identity whenever boards are swapped) |

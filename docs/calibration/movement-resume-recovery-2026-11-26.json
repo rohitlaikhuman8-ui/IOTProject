@@ -1,0 +1,245 @@
+{
+  "status": "Observed recovery after pause; not a controlled fault test",
+  "observations": {
+    "initial": [
+      {
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:38:44.252Z"
+        },
+        "logRecords": 256,
+        "neighbors": [
+          "esp32-986aa3f4e9d4",
+          "esp32-7839a3f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-d01de2f4e9d4",
+        "sensorReady": true,
+        "storageReady": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:38:48.730Z"
+        },
+        "bootId": "76f5f2298b232717b0b982fca5ff8577",
+        "mode": "setup",
+        "pendingRecords": 215,
+        "timeSynced": true,
+        "calibrationRevision": "n1-20261125-v1"
+      },
+      {
+        "bootId": "16d0f3bfd608cdf9d4bc18d3725b684c",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:38:44.583Z"
+        },
+        "logRecords": 256,
+        "mode": "setup",
+        "neighbors": [
+          "esp32-986aa3f4e9d4",
+          "esp32-d01de2f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-7839a3f4e9d4",
+        "pendingRecords": 191,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:38:48.546Z"
+        },
+        "calibrationRevision": "n2-20261126-v2"
+      },
+      {
+        "bootId": "56af3af31d51a125e5258eaa2ed4c18a",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:38:49.105Z"
+        },
+        "logRecords": 256,
+        "mode": "setup",
+        "neighbors": [
+          "esp32-7839a3f4e9d4",
+          "esp32-d01de2f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-986aa3f4e9d4",
+        "pendingRecords": 220,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:38:48.570Z"
+        },
+        "calibrationRevision": "n3-20261126-v1"
+      },
+      {
+        "bootId": "c079f439a18f3a7292ce04ea74448c13",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:38:38.433Z"
+        },
+        "logRecords": 256,
+        "mode": "setup",
+        "neighbors": [
+          "esp32-986aa3f4e9d4",
+          "esp32-7839a3f4e9d4",
+          "esp32-d01de2f4e9d4"
+        ],
+        "nodeId": "esp32-3013a5f4e9d4",
+        "pendingRecords": 211,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:38:37.703Z"
+        },
+        "calibrationRevision": "n4-20261126-v1"
+      }
+    ],
+    "later": [
+      {
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:45:25.275Z"
+        },
+        "nodeId": "esp32-d01de2f4e9d4",
+        "sensorReady": true,
+        "storageReady": true,
+        "bootId": "76f5f2298b232717b0b982fca5ff8577",
+        "mode": "setup",
+        "pendingRecords": 54,
+        "timeSynced": true,
+        "calibrationRevision": "n1-20261125-v1"
+      },
+      {
+        "bootId": "16d0f3bfd608cdf9d4bc18d3725b684c",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:45:27.711Z"
+        },
+        "mode": "setup",
+        "nodeId": "esp32-7839a3f4e9d4",
+        "pendingRecords": 34,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "calibrationRevision": "n2-20261126-v2"
+      },
+      {
+        "bootId": "56af3af31d51a125e5258eaa2ed4c18a",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:45:26.676Z"
+        },
+        "mode": "setup",
+        "nodeId": "esp32-986aa3f4e9d4",
+        "pendingRecords": 32,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "calibrationRevision": "n3-20261126-v1"
+      },
+      {
+        "bootId": "c079f439a18f3a7292ce04ea74448c13",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:45:28.556Z"
+        },
+        "mode": "setup",
+        "nodeId": "esp32-3013a5f4e9d4",
+        "pendingRecords": 36,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "calibrationRevision": "n4-20261126-v1"
+      }
+    ],
+    "afterNode3PortalClose": [
+      {
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:46:25.479Z"
+        },
+        "logRecords": 256,
+        "nodeId": "esp32-d01de2f4e9d4",
+        "sensorReady": true,
+        "storageReady": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:46:29.008Z"
+        },
+        "bootId": "76f5f2298b232717b0b982fca5ff8577",
+        "mode": "running",
+        "pendingRecords": 10,
+        "timeSynced": true,
+        "calibrationRevision": "n1-20261125-v1"
+      },
+      {
+        "bootId": "16d0f3bfd608cdf9d4bc18d3725b684c",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:46:27.358Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "nodeId": "esp32-7839a3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:46:28.751Z"
+        },
+        "calibrationRevision": "n2-20261126-v2"
+      },
+      {
+        "bootId": "56af3af31d51a125e5258eaa2ed4c18a",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:46:26.479Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "nodeId": "esp32-986aa3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:46:28.358Z"
+        },
+        "calibrationRevision": "n3-20261126-v1"
+      },
+      {
+        "bootId": "c079f439a18f3a7292ce04ea74448c13",
+        "channel": 1,
+        "lastSeen": {
+          "$date": "2026-11-26T08:46:28.762Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "nodeId": "esp32-3013a5f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+        "lastMeasurementAt": {
+          "$date": "2026-11-26T08:46:22.039Z"
+        },
+        "calibrationRevision": "n4-20261126-v1"
+      }
+    ]
+  },
+  "usbNode": "esp32-986aa3f4e9d4",
+  "usbPort": "COM5",
+  "usbObservation": "Wi-Fi connected with /v1/telemetry HTTP -1 timeout; subsequent requests returned HTTP 200",
+  "action": "Issued portal-close on verified Node 3; later serial status confirmed portalActive false, pendingRecords 0 and saved revision n3-20261126-v1. Other nodes subsequently reported running; no portal-close command was sent to them.",
+  "interpretation": "All four had setup-mode heartbeats and substantial queued data on resumption; queues declined while uploads recovered. Firmware can open fallback AP after 30 seconds disconnected and expires portals after 15 minutes. This does not prove the cause of the earlier network interruption.",
+  "limitations": "No firmware/configuration/calibration write, reset, erase or record deletion; queue recovery is observed, not proof against every data-loss scenario or sustained throughput guarantee."
+}

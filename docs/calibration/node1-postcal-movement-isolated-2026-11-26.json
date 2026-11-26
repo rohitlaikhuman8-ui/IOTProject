@@ -1,0 +1,231 @@
+{
+  "nodeId": "esp32-d01de2f4e9d4",
+  "status": "PASS: limited isolated gross-motion detection and notification-delivery check",
+  "phaseStartUtc": "2026-11-26T07:34:21.000Z",
+  "finalObservationCutoffUtc": "2026-11-26T07:35:38.000Z",
+  "baselineFile": "node1-isolated-baseline-2026-11-26.json",
+  "previousConfoundedTrial": "node1-postcal-movement-trial1-2026-11-26.json",
+  "operatorConfirmation": "Node 1 isolated movement done",
+  "checks": {
+    "targetDetected": true,
+    "onlyTargetMovementReceived": true,
+    "expectedFirmwareRevisionBoot": true,
+    "everyEventHasMatchingNotification": true,
+    "allNodesHealthy": true,
+    "allQueuesZeroAtCheckpoint": true
+  },
+  "targetEventCount": 4,
+  "otherMovementEventsReceived": 0,
+  "events": [
+    {
+      "acceleration": {
+        "x": 4.384107,
+        "y": 5.986157,
+        "z": 6.203404
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "7ae6e10692fb0c8bf198c6bc89ff4a33",
+      "kind": "movement",
+      "movementDelta": 7.101395,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:34:54.772Z"
+      },
+      "sampledAt": 1795678493,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 4.838615,
+        "y": 8.438206,
+        "z": 10.95537
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "7a93f1a98c6bdb0f7dc3114f53a900de",
+      "kind": "movement",
+      "movementDelta": 21.87593,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:34:57.994Z"
+      },
+      "sampledAt": 1795678495,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 2.982708,
+        "y": 7.137877,
+        "z": 3.768515
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "59f45edfdf7f455856bb1d7bda601de2",
+      "kind": "movement",
+      "movementDelta": 19.28996,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:35:14.612Z"
+      },
+      "sampledAt": 1795678497,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    },
+    {
+      "acceleration": {
+        "x": 3.778097,
+        "y": 8.029531,
+        "z": 3.68997
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "calibrationRevision": "n1-20261125-v1",
+      "eventId": "89c31c7bb0dabab984f38202c533c003",
+      "kind": "movement",
+      "movementDelta": 3.211888,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "receivedAt": {
+        "$date": "2026-11-26T07:35:15.581Z"
+      },
+      "sampledAt": 1795678501,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7"
+    }
+  ],
+  "notifications": [
+    {
+      "at": {
+        "$date": "2026-11-26T07:34:54.772Z"
+      },
+      "eventId": "7ae6e10692fb0c8bf198c6bc89ff4a33",
+      "kind": "movement",
+      "movementDelta": 7.101395,
+      "nodeId": "esp32-d01de2f4e9d4"
+    },
+    {
+      "at": {
+        "$date": "2026-11-26T07:34:57.994Z"
+      },
+      "eventId": "7a93f1a98c6bdb0f7dc3114f53a900de",
+      "kind": "movement",
+      "movementDelta": 21.87593,
+      "nodeId": "esp32-d01de2f4e9d4"
+    },
+    {
+      "at": {
+        "$date": "2026-11-26T07:35:14.612Z"
+      },
+      "eventId": "59f45edfdf7f455856bb1d7bda601de2",
+      "kind": "movement",
+      "movementDelta": 19.28996,
+      "nodeId": "esp32-d01de2f4e9d4"
+    },
+    {
+      "at": {
+        "$date": "2026-11-26T07:35:15.581Z"
+      },
+      "eventId": "89c31c7bb0dabab984f38202c533c003",
+      "kind": "movement",
+      "movementDelta": 3.211888,
+      "nodeId": "esp32-d01de2f4e9d4"
+    }
+  ],
+  "finalNodes": [
+    {
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:35:37.917Z"
+      },
+      "logRecords": 256,
+      "neighbors": [
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ],
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:35:30.339Z"
+      },
+      "bootId": "76f5f2298b232717b0b982fca5ff8577",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "16d0f3bfd608cdf9d4bc18d3725b684c",
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:35:37.100Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-986aa3f4e9d4",
+        "esp32-d01de2f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ],
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:35:34.219Z"
+      },
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "56af3af31d51a125e5258eaa2ed4c18a",
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:35:35.096Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-7839a3f4e9d4",
+        "esp32-d01de2f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ],
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:35:33.583Z"
+      },
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "c079f439a18f3a7292ce04ea74448c13",
+      "channel": 6,
+      "lastSeen": {
+        "$date": "2026-11-26T07:35:34.215Z"
+      },
+      "logRecords": 256,
+      "mode": "running",
+      "neighbors": [
+        "esp32-d01de2f4e9d4",
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4"
+      ],
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+      "lastMeasurementAt": {
+        "$date": "2026-11-26T07:35:36.862Z"
+      },
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "limitations": "Operator-controlled gross tilt, no quantified motion amplitude; not minimum-motion sensitivity, false-alarm rate, full accuracy, power-cut/rollback or endurance acceptance. Thresholds unchanged.",
+  "productionAccepted": false
+}

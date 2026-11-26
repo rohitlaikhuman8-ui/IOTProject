@@ -21,16 +21,36 @@ The operator confirmed **shared support or wires could have moved Node 2**. Ther
 
 The operator was asked to isolate Node 1 on a separate nonconductive support with slack wires and keep all nodes still, then confirmed **“Node 1 isolated ready.”** A new stillness window and isolated repeat are required. Do not substitute this confounded trial for that repeat or claim completed per-node/group acceptance.
 
-## Remaining checks
+## Separated-support baseline and completed movement checks
 
 ### Separated-support baseline completed; Node 1 repeat requested
 
 After the operator confirmed Node 1 isolated and all sensors still, a new declared **13:01:14–13:03:14 IST** window recorded **48 periodic samples**, twelve per node, and **zero received movement events**. Capture spans were 109/110/110/110 seconds for Nodes 1/2/3/4. Expected firmware, per-node revisions and stable boot provenance passed, and final sensor/storage/time flags were healthy. Pending counts at the health checkpoint were 0/0/0/1. [Complete separated-support baseline](calibration/node1-isolated-baseline-2026-11-26.json) retains all data and the limited-observation scope; no settings changed.
 
-At **13:04:21 IST**, the isolated Node 1 repeat phase was marked before asking for about five seconds of gentle movement of that sensor only, followed by stillness. Its event/notification result is pending. The first trial remains inconclusive for isolation and is not overwritten.
+At **13:04:21 IST**, the isolated Node 1 repeat phase was marked before asking for about five seconds of gentle movement of that sensor only, followed by stillness. The first trial remains inconclusive for isolation and is not overwritten.
 
-1. Record the new quiet baseline after physical separation, preserving any alerts and queue state.
-2. Ask for Node 1 movement only, mark the phase before the instruction, and verify fresh events, notifications and continued reporting from the other nodes.
-3. Repeat controlled movement and settling checks for Nodes 2/3/4 individually, using their full Node IDs and active revisions. Keep supports and wires mechanically independent where possible.
+### Node 1 isolated repeat — limited pass
+
+The operator confirmed the isolated movement was done. [Repeat evidence](calibration/node1-postcal-movement-isolated-2026-11-26.json) records four fresh Node 1 events captured **13:04:53–13:05:01 IST**, each with a matching notification and expected firmware, revision `n1-20261125-v1` and stable boot. No other node's movement event was received in the marked phase through **13:05:38 IST**. All four nodes remained healthy with zero pending records at the follow-up checkpoint. The largest observed server-receipt delay was approximately 17.612 seconds; capture and receipt times remain separate. This verifies limited isolated gross-motion detection and delivery, not a quantified minimum motion or false-alarm rate.
+
+### Node 2 movement — limited pass
+
+The Node 2 phase was marked at **13:06:04 IST**; the operator confirmed its movement was done. [Node 2 evidence](calibration/node2-postcal-movement-2026-11-26.json) records two events captured **13:06:28** and **13:06:30 IST**, received at **13:06:30.751** and **13:06:32.042 IST**, with deltas **4.841630** and **12.076590 m/s²**. Both had matching notifications, revision `n2-20261126-v2`, expected firmware and stable boot. No other movement event was received in that phase through **13:06:48 IST**. All four nodes remained healthy, with zero queues at the follow-up checkpoint. No thresholds changed.
+
+The user paused before Node 3 received any movement instruction. Its earlier internal phase marker is discarded for future testing; a fresh marker must be recorded after resumption. Nodes 3/4 controlled movement checks remain outstanding.
+
+## Remaining checks
+
+### Resume checkpoint after the user-requested pause
+
+At approximately **14:08 IST**, all four were reachable with their saved revisions but reported setup mode and queues **215/191/220/211** for Nodes 1/2/3/4. A later checkpoint showed **54/34/32/36**, indicating upload recovery. COM5 was reverified as Node 3, with Wi-Fi connected, setup active and a telemetry HTTP -1 transport timeout in its USB log. No credential or sensor fault was established.
+
+The firmware opens a fallback portal after more than 30 seconds without Wi-Fi and expires it after 15 minutes; a setup heartbeat alone does not prove why connectivity was interrupted. The agent issued `portal-close` only to the verified Node 3. Subsequent serial confirmed its saved correction unchanged, portal inactive, zero pending and resumed HTTP 200 reporting. At approximately **14:16 IST**, all four reported running and healthy with queues **10/0/0/0**; Node 1's remaining ten records were not declared delivered at that checkpoint. Other portals returned to running without a close command from the agent.
+
+[Recovery evidence](calibration/movement-resume-recovery-2026-11-26.json) retains the snapshots. Firmware, settings, calibration and retained records were not replaced; no flash, erase, reset or queue deletion was performed. This observed network/queue recovery is not the planned controlled power-cut/rollback test, and its earlier root cause remains unconfirmed. Use a fresh capture-time boundary for Node 3 after recovery; never treat backfilled historical movement as the new physical test.
+
+1. After a pause, verify current cloud freshness, boot/revision, sensor/storage/time and pending queue state before marking the next movement phase.
+2. Preserve the completed Node 1 isolated and Node 2 checks, including the earlier confounded Node 1 trial.
+3. Run controlled movement and settling checks for Nodes 3/4 individually, using their full Node IDs and active revisions. Keep supports and wires mechanically independent where possible.
 4. Record the mounting and motion used. A gentle gross tilt verifies that motion can trigger delivery; it does not quantify minimum detectable movement or tune a statistically justified threshold.
 5. Proceed to controlled power-cut/recovery and failed-image rollback testing only after movement/threshold checks. Full orientation/temperature accuracy and endurance remain separate work.

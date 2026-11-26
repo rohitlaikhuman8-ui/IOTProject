@@ -1,7 +1,7 @@
 {
   "nodeId": "esp32-7839a3f4e9d4",
   "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
-  "status": "PROVISIONAL: not applied; held-out level validation required; off-axis variation flagged",
+  "status": "INSTALLED AS TRIAL n2-20261126-v1; supported-pose offline numeric screen passed but on-device magnitude screen failed; NOT ACCEPTED",
   "referenceGravity": 9.80665,
   "unit": "m/s2",
   "formula": "correctedAxis = (rawAxis - bias) * scale",
@@ -92,5 +92,17 @@
       },
       "magnitude": 9.82046093889859
     }
-  ]
+  ],
+  "independentValidation": {
+    "file": "node2-validation-supported-result-2026-11-26.json",
+    "scope": "Numeric supported-pose screen passed; physical level not externally verified"
+  },
+  "installation": {
+    "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "revision": "n2-20261126-v1",
+    "method": "USB calibration record only; no firmware/network/filesystem replacement",
+    "readbackAfterReboot": true,
+    "onDeviceValidation": "node2-on-device-validation-2026-11-26.json",
+    "acceptance": "FAILED mean magnitude limit: +3.284037% versus 3%; trial remains active for bench investigation"
+  }
 }

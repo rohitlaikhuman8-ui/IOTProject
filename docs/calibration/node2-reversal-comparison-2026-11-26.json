@@ -1,0 +1,65 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "status": "DIAGNOSTIC_COMPLETE: physical plane/rotation assumptions not independently measured; not calibration acceptance",
+  "coefficientSource": "node2-provisional-coefficients-2026-11-25.json",
+  "coefficientsUsed": {
+    "x": {
+      "bias": -0.288439125,
+      "scale": 0.980067807932084
+    },
+    "y": {
+      "bias": 0.10640290705128308,
+      "scale": 0.9841065508763649
+    },
+    "z": {
+      "bias": -2.6373760000000006,
+      "scale": 1.027181800961052
+    }
+  },
+  "inputs": [
+    "node2-reversal-a-2026-11-26.json",
+    "node2-reversal-b-2026-11-26.json"
+  ],
+  "processing": "No coefficients refitted or installed",
+  "correctedXY": {
+    "x": {
+      "a": 0.21084619364477164,
+      "b": 0.21709347254180003,
+      "midpoint": 0.21396983309328582,
+      "halfDifference": -0.0031236394485141955
+    },
+    "y": {
+      "a": -0.16744202976948572,
+      "b": -0.020025984785617363,
+      "midpoint": -0.09373400727755155,
+      "halfDifference": -0.07370802249193417
+    }
+  },
+  "correctedZDifference": -0.06874979152922123,
+  "magnitudes": {
+    "a": {
+      "mean": 10.065792129662912,
+      "sampleStdDev": 0.04386982906422218,
+      "min": 9.979355045772195,
+      "max": 10.136699313566004
+    },
+    "b": {
+      "mean": 9.995720413751384,
+      "sampleStdDev": 0.04554895529381116,
+      "min": 9.900498971480413,
+      "max": 10.05849094859174
+    }
+  },
+  "checks": {
+    "minimumSamples": true,
+    "uniqueEvents": true,
+    "distinctFromA": true,
+    "sameNode": true,
+    "sameBootAsA": true,
+    "expectedFirmware": true,
+    "uncorrected": true,
+    "captureWindow": true,
+    "sampleSpan": true,
+    "correctedRepeatability": true
+  }
+}

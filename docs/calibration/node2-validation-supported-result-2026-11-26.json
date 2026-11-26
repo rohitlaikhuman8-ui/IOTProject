@@ -1,0 +1,103 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "status": "OFFLINE_BENCH_SCREEN_PASS; not installed or production accepted",
+  "application": "Offline calculation only; device settings and output unchanged",
+  "criteria": {
+    "purpose": "Same supported-component-up bench screen as earlier; physical level visually estimated, not externally verified",
+    "minUniqueSamples": 12,
+    "minSampleSpanSeconds": 100,
+    "meanMagnitudeErrorPercentMax": 3,
+    "absCorrectedMeanXYMax": 0.5,
+    "maxCorrectedAxisSampleStdDev": 0.15,
+    "expectedFirmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "expectedCalibrationRevision": "none",
+    "expectedBootId": "bbf19dc13849fcedb72c915bee52b647"
+  },
+  "checks": {
+    "minimumSamples": true,
+    "uniqueEvents": true,
+    "independentEvents": true,
+    "sameNode": true,
+    "captureWindow": true,
+    "sampleSpan": true,
+    "stableExpectedBoot": true,
+    "expectedFirmware": true,
+    "uncorrectedInput": true,
+    "gravityMagnitude": true,
+    "levelXY": true,
+    "stationaryRepeatability": true,
+    "independentDiagnosticEvents": true
+  },
+  "count": 12,
+  "first": 1795668128,
+  "last": 1795668238,
+  "raw": {
+    "x": {
+      "mean": -0.07330483333333333,
+      "sampleStdDev": 0.025569666339179512,
+      "min": -0.114738,
+      "max": -0.038246
+    },
+    "y": {
+      "mean": 0.16573258333333332,
+      "sampleStdDev": 0.07170624300760117,
+      "min": 0.076492,
+      "max": 0.305967
+    },
+    "z": {
+      "mean": 7.1424284999999985,
+      "sampleStdDev": 0.040360610096524016,
+      "min": 7.075498,
+      "max": 7.228482
+    }
+  },
+  "corrected": {
+    "x": {
+      "mean": 0.21084619364477164,
+      "sampleStdDev": 0.025060006838594467,
+      "min": 0.17023888081408692,
+      "max": 0.24520622757842792
+    },
+    "y": {
+      "mean": 0.05838672309053975,
+      "sampleStdDev": 0.07056658348251285,
+      "min": -0.02943551957182173,
+      "max": 0.1963923311905321
+    },
+    "z": {
+      "mean": 10.045637199357001,
+      "sampleStdDev": 0.041457684166834596,
+      "min": 9.976887407827776,
+      "max": 10.134029788466002
+    }
+  },
+  "rawMagnitude": {
+    "mean": 7.145093539213865,
+    "sampleStdDev": 0.041384304064845306,
+    "min": 7.077565052920671,
+    "max": 7.235055672621255
+  },
+  "correctedMagnitude": {
+    "mean": 10.04827306076595,
+    "sampleStdDev": 0.04198984599974562,
+    "min": 9.979154893233902,
+    "max": 10.138898154893852
+  },
+  "magnitudeErrorPercent": 2.463869524923923,
+  "coefficients": {
+    "x": {
+      "bias": -0.288439125,
+      "scale": 0.980067807932084
+    },
+    "y": {
+      "bias": 0.10640290705128308,
+      "scale": 0.9841065508763649
+    },
+    "z": {
+      "bias": -2.6373760000000006,
+      "scale": 1.027181800961052
+    }
+  },
+  "fixtureLevelExternallyVerified": false,
+  "scope": "Numeric supported-component-up bench screen only; no physical level certification"
+}

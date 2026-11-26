@@ -8,11 +8,13 @@ Four registered boards have been commissioned on release `408a075`, retaining se
 
 Node 1 (`esp32-d01de2f4e9d4`) has completed six-position measurement and a held-out offline bench screen. Its measured corrections were installed as `n1-20261125-v1`, read back after two reboots, and confirmed in tagged Atlas telemetry. Calibration-capable firmware preserves separate per-node coefficients in NVS; the dashboard shows each revision. The other three nodes still need their own calibration. See [the calibration record and operating commands](docs/CALIBRATION.md) for accuracy limits and remaining on-device checks.
 
+Node 2 currently has trial revision `n2-20261126-v1` active, but its post-install magnitude check failed the unchanged ±3% bench limit. It is **not accepted as calibrated**; a revised candidate from two fresh raw Z references awaits independent validation. A dashboard revision label identifies applied settings, not accuracy acceptance. Earlier failed checks and fitting data are retained in the calibration record.
+
 ## Connected node and wiring
 
 | Item | Value |
 | --- | --- |
-| Last verified COM5 Node ID | `esp32-d01de2f4e9d4` (November 25 calibration installation; verify identity whenever boards are swapped) |
+| Last verified COM5 Node ID | `esp32-7839a3f4e9d4` (November 26 calibration trial; verify identity whenever boards are swapped) |
 | USB port | COM5 |
 | Chip | ESP32-D0WD-V3 revision 3.1 |
 | ADXL345 SDA | GPIO 21 |

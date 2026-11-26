@@ -1,0 +1,40 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "firmware": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+  "status": "V2 CANDIDATE: not installed or validated; Z replaced from two new USB raw fitting faces, X/Y unchanged",
+  "proposedRevision": "n2-20261126-v2",
+  "formula": "correctedAxis = (rawAxis - bias) * scale",
+  "referenceGravity": 9.80665,
+  "coefficients": {
+    "x": {
+      "bias": -0.288439125,
+      "scale": 0.980067807932084
+    },
+    "y": {
+      "bias": 0.10640290705128308,
+      "scale": 0.9841065508763649
+    },
+    "z": {
+      "bias": -2.478975000000002,
+      "scale": 1.0269414641497947
+    }
+  },
+  "sources": {
+    "x": [
+      "node2-x-up-2026-11-25.json",
+      "node2-x-down-2026-11-25.json"
+    ],
+    "y": [
+      "node2-y-up-2026-11-25.json",
+      "node2-y-down-2026-11-25.json"
+    ],
+    "z": [
+      "node2-z-up-usb-2026-11-26.json",
+      "node2-z-down-usb-2026-11-26.json"
+    ]
+  },
+  "previousTrial": "node2-provisional-coefficients-2026-11-25.json",
+  "processing": "Fresh USB sensor-raw fitting data; no coefficients adjusted using a held-out validation value",
+  "validationRequired": "Fresh independent raw window first, then installed device-corrected window under unchanged numeric limits",
+  "fixtureLimitation": "Visual support; physical level not externally verified"
+}

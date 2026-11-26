@@ -1,0 +1,1300 @@
+{
+  "nodeId": "esp32-7839a3f4e9d4",
+  "pose": "component-up-usb-stable-z-reference",
+  "source": "USB sensor-raw command",
+  "unit": "m/s2",
+  "timestampSource": "Host UTC for this USB capture, not device/server receipt time",
+  "requestedSeconds": 120,
+  "requestedIntervalSeconds": 1,
+  "status": "RAW_REFERENCE_RECORDED: operator pose and stability still require review",
+  "measurements": [
+    {
+      "sequence": 0,
+      "hostTimeUtc": "2026-11-26T04:56:12.067449+00:00",
+      "elapsedSeconds": 0.01600000000325963,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 1,
+      "hostTimeUtc": "2026-11-26T04:56:13.075040+00:00",
+      "elapsedSeconds": 1.0310000000172295,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 2,
+      "hostTimeUtc": "2026-11-26T04:56:14.064698+00:00",
+      "elapsedSeconds": 2.0160000000032596,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 3,
+      "hostTimeUtc": "2026-11-26T04:56:15.054784+00:00",
+      "elapsedSeconds": 3,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 4,
+      "hostTimeUtc": "2026-11-26T04:56:16.073133+00:00",
+      "elapsedSeconds": 4.0310000000172295,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 5,
+      "hostTimeUtc": "2026-11-26T04:56:17.064579+00:00",
+      "elapsedSeconds": 5.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 6,
+      "hostTimeUtc": "2026-11-26T04:56:18.078397+00:00",
+      "elapsedSeconds": 6.0310000000172295,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 7,
+      "hostTimeUtc": "2026-11-26T04:56:19.067867+00:00",
+      "elapsedSeconds": 7.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 8,
+      "hostTimeUtc": "2026-11-26T04:56:20.053577+00:00",
+      "elapsedSeconds": 8,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 9,
+      "hostTimeUtc": "2026-11-26T04:56:21.052947+00:00",
+      "elapsedSeconds": 9,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 10,
+      "hostTimeUtc": "2026-11-26T04:56:22.054389+00:00",
+      "elapsedSeconds": 10,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 11,
+      "hostTimeUtc": "2026-11-26T04:56:23.069682+00:00",
+      "elapsedSeconds": 11.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 12,
+      "hostTimeUtc": "2026-11-26T04:56:24.080587+00:00",
+      "elapsedSeconds": 12.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 13,
+      "hostTimeUtc": "2026-11-26T04:56:25.071447+00:00",
+      "elapsedSeconds": 13.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 14,
+      "hostTimeUtc": "2026-11-26T04:56:26.061649+00:00",
+      "elapsedSeconds": 14.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 15,
+      "hostTimeUtc": "2026-11-26T04:56:27.058358+00:00",
+      "elapsedSeconds": 15.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 16,
+      "hostTimeUtc": "2026-11-26T04:56:28.068759+00:00",
+      "elapsedSeconds": 16.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 17,
+      "hostTimeUtc": "2026-11-26T04:56:29.079157+00:00",
+      "elapsedSeconds": 17.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 18,
+      "hostTimeUtc": "2026-11-26T04:56:30.070490+00:00",
+      "elapsedSeconds": 18.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 19,
+      "hostTimeUtc": "2026-11-26T04:56:31.078404+00:00",
+      "elapsedSeconds": 19.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 20,
+      "hostTimeUtc": "2026-11-26T04:56:32.066725+00:00",
+      "elapsedSeconds": 20.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 21,
+      "hostTimeUtc": "2026-11-26T04:56:33.063830+00:00",
+      "elapsedSeconds": 21.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 22,
+      "hostTimeUtc": "2026-11-26T04:56:34.067704+00:00",
+      "elapsedSeconds": 22.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 23,
+      "hostTimeUtc": "2026-11-26T04:56:35.077524+00:00",
+      "elapsedSeconds": 23.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 24,
+      "hostTimeUtc": "2026-11-26T04:56:36.061407+00:00",
+      "elapsedSeconds": 24.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 25,
+      "hostTimeUtc": "2026-11-26T04:56:37.061339+00:00",
+      "elapsedSeconds": 25.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 26,
+      "hostTimeUtc": "2026-11-26T04:56:38.076424+00:00",
+      "elapsedSeconds": 26.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 27,
+      "hostTimeUtc": "2026-11-26T04:56:39.053580+00:00",
+      "elapsedSeconds": 27,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 28,
+      "hostTimeUtc": "2026-11-26T04:56:40.063402+00:00",
+      "elapsedSeconds": 28.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 29,
+      "hostTimeUtc": "2026-11-26T04:56:41.057670+00:00",
+      "elapsedSeconds": 29.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 30,
+      "hostTimeUtc": "2026-11-26T04:56:42.067926+00:00",
+      "elapsedSeconds": 30.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 31,
+      "hostTimeUtc": "2026-11-26T04:56:43.066098+00:00",
+      "elapsedSeconds": 31.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 32,
+      "hostTimeUtc": "2026-11-26T04:56:44.058166+00:00",
+      "elapsedSeconds": 32.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 33,
+      "hostTimeUtc": "2026-11-26T04:56:45.067844+00:00",
+      "elapsedSeconds": 33.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 34,
+      "hostTimeUtc": "2026-11-26T04:56:46.079801+00:00",
+      "elapsedSeconds": 34.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 35,
+      "hostTimeUtc": "2026-11-26T04:56:47.067084+00:00",
+      "elapsedSeconds": 35.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 36,
+      "hostTimeUtc": "2026-11-26T04:56:48.067556+00:00",
+      "elapsedSeconds": 36.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 37,
+      "hostTimeUtc": "2026-11-26T04:56:49.079506+00:00",
+      "elapsedSeconds": 37.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 38,
+      "hostTimeUtc": "2026-11-26T04:56:50.066220+00:00",
+      "elapsedSeconds": 38.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 39,
+      "hostTimeUtc": "2026-11-26T04:56:51.055629+00:00",
+      "elapsedSeconds": 39.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 40,
+      "hostTimeUtc": "2026-11-26T04:56:52.048125+00:00",
+      "elapsedSeconds": 40,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 41,
+      "hostTimeUtc": "2026-11-26T04:56:53.056403+00:00",
+      "elapsedSeconds": 41.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 42,
+      "hostTimeUtc": "2026-11-26T04:56:54.072532+00:00",
+      "elapsedSeconds": 42.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.152
+      }
+    },
+    {
+      "sequence": 43,
+      "hostTimeUtc": "2026-11-26T04:56:55.055596+00:00",
+      "elapsedSeconds": 43.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 44,
+      "hostTimeUtc": "2026-11-26T04:56:56.071874+00:00",
+      "elapsedSeconds": 44.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 45,
+      "hostTimeUtc": "2026-11-26T04:56:57.083054+00:00",
+      "elapsedSeconds": 45.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 46,
+      "hostTimeUtc": "2026-11-26T04:56:58.072269+00:00",
+      "elapsedSeconds": 46.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 47,
+      "hostTimeUtc": "2026-11-26T04:56:59.071424+00:00",
+      "elapsedSeconds": 47.03100000001723,
+      "acceleration": {
+        "x": -0.0765,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 48,
+      "hostTimeUtc": "2026-11-26T04:57:00.062280+00:00",
+      "elapsedSeconds": 48.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 49,
+      "hostTimeUtc": "2026-11-26T04:57:01.061056+00:00",
+      "elapsedSeconds": 49.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 50,
+      "hostTimeUtc": "2026-11-26T04:57:02.065077+00:00",
+      "elapsedSeconds": 50.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 51,
+      "hostTimeUtc": "2026-11-26T04:57:03.070806+00:00",
+      "elapsedSeconds": 51.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 52,
+      "hostTimeUtc": "2026-11-26T04:57:04.065529+00:00",
+      "elapsedSeconds": 52.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 53,
+      "hostTimeUtc": "2026-11-26T04:57:05.060054+00:00",
+      "elapsedSeconds": 53.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 54,
+      "hostTimeUtc": "2026-11-26T04:57:06.063470+00:00",
+      "elapsedSeconds": 54.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 55,
+      "hostTimeUtc": "2026-11-26T04:57:07.079768+00:00",
+      "elapsedSeconds": 55.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.1147,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 56,
+      "hostTimeUtc": "2026-11-26T04:57:08.070190+00:00",
+      "elapsedSeconds": 56.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 57,
+      "hostTimeUtc": "2026-11-26T04:57:09.051448+00:00",
+      "elapsedSeconds": 57,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 58,
+      "hostTimeUtc": "2026-11-26T04:57:10.063068+00:00",
+      "elapsedSeconds": 58.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 59,
+      "hostTimeUtc": "2026-11-26T04:57:11.060255+00:00",
+      "elapsedSeconds": 59.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 60,
+      "hostTimeUtc": "2026-11-26T04:57:12.063243+00:00",
+      "elapsedSeconds": 60.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 61,
+      "hostTimeUtc": "2026-11-26T04:57:13.058228+00:00",
+      "elapsedSeconds": 61.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 62,
+      "hostTimeUtc": "2026-11-26T04:57:14.070483+00:00",
+      "elapsedSeconds": 62.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 63,
+      "hostTimeUtc": "2026-11-26T04:57:15.059561+00:00",
+      "elapsedSeconds": 63.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 64,
+      "hostTimeUtc": "2026-11-26T04:57:16.055343+00:00",
+      "elapsedSeconds": 64.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 65,
+      "hostTimeUtc": "2026-11-26T04:57:17.060769+00:00",
+      "elapsedSeconds": 65.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 66,
+      "hostTimeUtc": "2026-11-26T04:57:18.078369+00:00",
+      "elapsedSeconds": 66.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 67,
+      "hostTimeUtc": "2026-11-26T04:57:19.068028+00:00",
+      "elapsedSeconds": 67.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 68,
+      "hostTimeUtc": "2026-11-26T04:57:20.077817+00:00",
+      "elapsedSeconds": 68.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 69,
+      "hostTimeUtc": "2026-11-26T04:57:21.061591+00:00",
+      "elapsedSeconds": 69.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 70,
+      "hostTimeUtc": "2026-11-26T04:57:22.074877+00:00",
+      "elapsedSeconds": 70.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 71,
+      "hostTimeUtc": "2026-11-26T04:57:23.050148+00:00",
+      "elapsedSeconds": 71,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 72,
+      "hostTimeUtc": "2026-11-26T04:57:24.052278+00:00",
+      "elapsedSeconds": 72,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 73,
+      "hostTimeUtc": "2026-11-26T04:57:25.059998+00:00",
+      "elapsedSeconds": 73.01600000000326,
+      "acceleration": {
+        "x": -0.0765,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 74,
+      "hostTimeUtc": "2026-11-26T04:57:26.059992+00:00",
+      "elapsedSeconds": 74.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 75,
+      "hostTimeUtc": "2026-11-26T04:57:27.055182+00:00",
+      "elapsedSeconds": 75.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 76,
+      "hostTimeUtc": "2026-11-26T04:57:28.067600+00:00",
+      "elapsedSeconds": 76.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.1147,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 77,
+      "hostTimeUtc": "2026-11-26T04:57:29.083081+00:00",
+      "elapsedSeconds": 77.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 78,
+      "hostTimeUtc": "2026-11-26T04:57:30.067570+00:00",
+      "elapsedSeconds": 78.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 79,
+      "hostTimeUtc": "2026-11-26T04:57:31.059522+00:00",
+      "elapsedSeconds": 79.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.1147,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 80,
+      "hostTimeUtc": "2026-11-26T04:57:32.079250+00:00",
+      "elapsedSeconds": 80.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 81,
+      "hostTimeUtc": "2026-11-26T04:57:33.058999+00:00",
+      "elapsedSeconds": 81.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 82,
+      "hostTimeUtc": "2026-11-26T04:57:34.071178+00:00",
+      "elapsedSeconds": 82.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 83,
+      "hostTimeUtc": "2026-11-26T04:57:35.047555+00:00",
+      "elapsedSeconds": 83,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 84,
+      "hostTimeUtc": "2026-11-26T04:57:36.064642+00:00",
+      "elapsedSeconds": 84.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 85,
+      "hostTimeUtc": "2026-11-26T04:57:37.056554+00:00",
+      "elapsedSeconds": 85.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.152
+      }
+    },
+    {
+      "sequence": 86,
+      "hostTimeUtc": "2026-11-26T04:57:38.076644+00:00",
+      "elapsedSeconds": 86.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 87,
+      "hostTimeUtc": "2026-11-26T04:57:39.070583+00:00",
+      "elapsedSeconds": 87.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0382,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 88,
+      "hostTimeUtc": "2026-11-26T04:57:40.055404+00:00",
+      "elapsedSeconds": 88.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 89,
+      "hostTimeUtc": "2026-11-26T04:57:41.071772+00:00",
+      "elapsedSeconds": 89.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 90,
+      "hostTimeUtc": "2026-11-26T04:57:42.064953+00:00",
+      "elapsedSeconds": 90.01600000000326,
+      "acceleration": {
+        "x": -0.0765,
+        "y": 0.1147,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 91,
+      "hostTimeUtc": "2026-11-26T04:57:43.077530+00:00",
+      "elapsedSeconds": 91.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 92,
+      "hostTimeUtc": "2026-11-26T04:57:44.064350+00:00",
+      "elapsedSeconds": 92.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 93,
+      "hostTimeUtc": "2026-11-26T04:57:45.079705+00:00",
+      "elapsedSeconds": 93.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0382,
+        "z": 6.9608
+      }
+    },
+    {
+      "sequence": 94,
+      "hostTimeUtc": "2026-11-26T04:57:46.068170+00:00",
+      "elapsedSeconds": 94.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 95,
+      "hostTimeUtc": "2026-11-26T04:57:47.079334+00:00",
+      "elapsedSeconds": 95.03100000001723,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 96,
+      "hostTimeUtc": "2026-11-26T04:57:48.070203+00:00",
+      "elapsedSeconds": 96.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.152
+      }
+    },
+    {
+      "sequence": 97,
+      "hostTimeUtc": "2026-11-26T04:57:49.063953+00:00",
+      "elapsedSeconds": 97.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 98,
+      "hostTimeUtc": "2026-11-26T04:57:50.076622+00:00",
+      "elapsedSeconds": 98.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 99,
+      "hostTimeUtc": "2026-11-26T04:57:51.063266+00:00",
+      "elapsedSeconds": 99.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.1147,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 100,
+      "hostTimeUtc": "2026-11-26T04:57:52.067946+00:00",
+      "elapsedSeconds": 100.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 6.999
+      }
+    },
+    {
+      "sequence": 101,
+      "hostTimeUtc": "2026-11-26T04:57:53.061027+00:00",
+      "elapsedSeconds": 101.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 102,
+      "hostTimeUtc": "2026-11-26T04:57:54.058810+00:00",
+      "elapsedSeconds": 102.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 103,
+      "hostTimeUtc": "2026-11-26T04:57:55.061283+00:00",
+      "elapsedSeconds": 103.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 104,
+      "hostTimeUtc": "2026-11-26T04:57:56.079071+00:00",
+      "elapsedSeconds": 104.03100000001723,
+      "acceleration": {
+        "x": -0.0765,
+        "y": 0.1147,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 105,
+      "hostTimeUtc": "2026-11-26T04:57:57.062342+00:00",
+      "elapsedSeconds": 105.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 106,
+      "hostTimeUtc": "2026-11-26T04:57:58.077894+00:00",
+      "elapsedSeconds": 106.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.153,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 107,
+      "hostTimeUtc": "2026-11-26T04:57:59.054960+00:00",
+      "elapsedSeconds": 107.01600000000326,
+      "acceleration": {
+        "x": -0.0765,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 108,
+      "hostTimeUtc": "2026-11-26T04:58:00.065064+00:00",
+      "elapsedSeconds": 108.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 109,
+      "hostTimeUtc": "2026-11-26T04:58:01.058314+00:00",
+      "elapsedSeconds": 109.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 110,
+      "hostTimeUtc": "2026-11-26T04:58:02.052657+00:00",
+      "elapsedSeconds": 110.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 111,
+      "hostTimeUtc": "2026-11-26T04:58:03.071025+00:00",
+      "elapsedSeconds": 111.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.153,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 112,
+      "hostTimeUtc": "2026-11-26T04:58:04.069299+00:00",
+      "elapsedSeconds": 112.03100000001723,
+      "acceleration": {
+        "x": -0.0765,
+        "y": 0.1147,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 113,
+      "hostTimeUtc": "2026-11-26T04:58:05.081306+00:00",
+      "elapsedSeconds": 113.03100000001723,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.153,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 114,
+      "hostTimeUtc": "2026-11-26T04:58:06.060931+00:00",
+      "elapsedSeconds": 114.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 115,
+      "hostTimeUtc": "2026-11-26T04:58:07.059482+00:00",
+      "elapsedSeconds": 115.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.0765,
+        "z": 7.0373
+      }
+    },
+    {
+      "sequence": 116,
+      "hostTimeUtc": "2026-11-26T04:58:08.066800+00:00",
+      "elapsedSeconds": 116.01600000000326,
+      "acceleration": {
+        "x": 0,
+        "y": 0.0765,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 117,
+      "hostTimeUtc": "2026-11-26T04:58:09.050389+00:00",
+      "elapsedSeconds": 117,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.0755
+      }
+    },
+    {
+      "sequence": 118,
+      "hostTimeUtc": "2026-11-26T04:58:10.063006+00:00",
+      "elapsedSeconds": 118.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.1147,
+        "z": 7.1137
+      }
+    },
+    {
+      "sequence": 119,
+      "hostTimeUtc": "2026-11-26T04:58:11.065881+00:00",
+      "elapsedSeconds": 119.01600000000326,
+      "acceleration": {
+        "x": -0.0382,
+        "y": 0.153,
+        "z": 7.0755
+      }
+    }
+  ],
+  "initialStatus": {
+    "nodeId": "esp32-7839a3f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-7839a3f4e9d4",
+      "revision": "n2-20261126-v1",
+      "bias": [
+        -0.288439,
+        0.106403,
+        -2.637376
+      ],
+      "scale": [
+        0.980068,
+        0.984107,
+        1.027182
+      ]
+    },
+    "sensorAddress": 83,
+    "storageReady": true,
+    "logRecords": 256,
+    "timeIst": "2026-11-26 10:26:01 IST"
+  },
+  "startedAtUtc": "2026-11-26T04:56:12.042150+00:00",
+  "endedAtUtc": "2026-11-26T04:58:12.049041+00:00",
+  "missedReplies": 0,
+  "finalStatus": {
+    "nodeId": "esp32-7839a3f4e9d4",
+    "version": "795d041b2daf1b4d9e1448890c7ef16c3de0c8f7",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-7839a3f4e9d4",
+      "revision": "n2-20261126-v1",
+      "bias": [
+        -0.288439,
+        0.106403,
+        -2.637376
+      ],
+      "scale": [
+        0.980068,
+        0.984107,
+        1.027182
+      ]
+    },
+    "sensorAddress": 83,
+    "storageReady": true,
+    "logRecords": 256,
+    "timeIst": "2026-11-26 10:28:11 IST"
+  },
+  "analysis": {
+    "processing": "Raw USB values; active trial coefficients not applied to these measurements",
+    "statistics": {
+      "count": 120,
+      "spanSeconds": 119,
+      "axes": {
+        "x": {
+          "mean": -0.02738166666666662,
+          "sampleStdDev": 0.0211291704981141,
+          "min": -0.0765,
+          "max": 0,
+          "secondHalfMinusFirstHalf": -0.003826666666666669
+        },
+        "y": {
+          "mean": 0.07265249999999998,
+          "sampleStdDev": 0.033044103359097576,
+          "min": 0,
+          "max": 0.153,
+          "secondHalfMinusFirstHalf": 0.03315833333333334
+        },
+        "z": {
+          "mean": 7.070400833333332,
+          "sampleStdDev": 0.037715938489005396,
+          "min": 6.9608,
+          "max": 7.152,
+          "secondHalfMinusFirstHalf": 0.008924999999999628
+        }
+      }
+    },
+    "checks": {
+      "nodeMatches": true,
+      "firmwareUnchanged": true,
+      "calibrationUnchanged": true,
+      "minimumCount": true,
+      "minimumSpan": true,
+      "noMissedReplies": true
+    },
+    "scope": "New positive-Z fitting reference, not independent validation or accepted calibration"
+  }
+}

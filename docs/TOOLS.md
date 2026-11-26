@@ -26,6 +26,18 @@ For measured sensor corrections, `--calibration <coefficient-file> --revision <r
 
 `scripts/test-calibration-portal.cjs` tests the portal form's client contract offline using Playwright fixture responses. Run with the same Playwright setup as screenshot capture: `node scripts/test-calibration-portal.cjs`. It does not connect to a real ESP32 AP or establish hardware accuracy.
 
+`scripts/capture-raw-reference.py` reads a stationary ADXL345 fitting reference through the USB `sensor-raw` command, bypassing any active correction without changing it. It checks the full Node ID and firmware/calibration state, settles for ten seconds, records about one raw sample per second for 120 seconds, and keeps interrupted captures as evidence. Output uses host UTC/monotonic receipt timing, not fabricated device/server telemetry timestamps. Existing evidence files are not intentionally overwritten. Review support, movement, missing responses and boot consistency before using a capture for fitting.
+
+```powershell
+.\.venv\Scripts\python.exe scripts/capture-raw-reference.py --port COM5 `
+  --node esp32-7839a3f4e9d4 --pose component-up-usb-stable-z-reference `
+  --output docs/calibration/node2-z-up-usb-2026-11-26.json
+```
+
+The default requires at least 100 raw measurements spanning 100 seconds before marking a raw reference recorded. This records fitting data, not a calibration pass. Use a new output filename for every repeat. A normal calibration revision remains active for telemetry during raw reference acquisition; do not mistake its cloud axes for the USB raw measurements.
+
+The sampler aborts and preserves an incomplete capture on a raw-response timeout or observed reboot. It compares identity, firmware and calibration state before/after acquisition and saves evidence with exclusive file creation. For a critical fit, also compare the cloud boot ID before/after when available; a serial status response does not expose that boot ID. The USB raw diagnostic prints four decimal places, finer than the sensor's quantization, and is distinct from full-precision cloud JSON.
+
 ## Arduino IDE export
 
 `scripts/export-arduino.ps1` copies the same firmware source into an ignored sketch directory.

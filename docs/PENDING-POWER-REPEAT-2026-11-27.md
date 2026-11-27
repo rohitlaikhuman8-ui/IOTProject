@@ -29,3 +29,9 @@ The [before-cut metadata](calibration/node4-pending-power-repeat3-before-2026-11
 The [Atlas query](calibration/node4-pending-power-repeat3-absence-2026-11-27.json) found zero documents for every fixed selected ID, with no applied limits, before requesting any power change. No IDs were replaced after that query. The operator was then asked to remove USB from the identified board, keep it unplugged and report both LEDs off. Physical removal, new boot, post-cut exact local survival and later cloud delivery remain pending.
 
 **No power-cut result yet.** All physical steps await their explicit operator checkpoints. A pass would establish exact survival/delivery of the fixed already-committed records in this test, not survival of an in-progress write, zero loss during an indefinite outage, a measured brownout threshold, intentional OTA rollback or endurance acceptance. Flash-write interruption and measured supply tests require separate equipment/procedures.
+
+## Physical removal verified; reconnection pending
+
+The operator confirmed **“Node 4 unplugged, LEDs off.”** At **13:47:32 IST**, [fresh USB enumeration](calibration/node4-pending-power-repeat3-disconnected-2026-11-27.json) verified **COM6 absent**, with COM5/COM8/COM9 still present. The indicator observation is operator-reported; the supply voltage and exact physical cutoff time were not electrically measured. This checkpoint is specific to the current immutable pending-record baseline, not reused from an earlier test.
+
+The operator was then asked to reconnect the same cable **while keeping Node 4 blocked in the hotspot**. Do not unblock until the new boot and isolated full-log comparison are checked. Reconnection, selected-record survival, cloud delivery and recovery remain pending; COM-port disappearance alone is not a retention pass.

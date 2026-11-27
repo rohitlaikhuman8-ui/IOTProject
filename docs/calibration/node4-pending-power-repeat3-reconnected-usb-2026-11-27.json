@@ -1,0 +1,519 @@
+{
+  "ports": [
+    {
+      "port": "COM5",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM5)"
+    },
+    {
+      "port": "COM3",
+      "description": "Standard Serial over Bluetooth link (COM3)"
+    },
+    {
+      "port": "COM4",
+      "description": "Standard Serial over Bluetooth link (COM4)"
+    },
+    {
+      "port": "COM6",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM6)"
+    },
+    {
+      "port": "COM8",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM8)"
+    },
+    {
+      "port": "COM9",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM9)"
+    }
+  ],
+  "operatorReport": "Node 4 reconnected, still blocked",
+  "startedEpoch": 1795767540.0529506,
+  "apOnlyReady": true,
+  "calibrationExactMatch": true,
+  "observations": [
+    {
+      "hostEpoch": 1795767540.1636455,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164152,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 36,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767541.2691002,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767542.379341,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767543.494052,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767544.6074274,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767545.7206018,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767546.8332522,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767547.944292,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767549.0583582,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767550.1699123,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 13644,
+        "freeHeap": 164168,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 37,
+        "lastCloudAgeMs": 0
+      }
+    },
+    {
+      "hostEpoch": 1795767551.2617452,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 13596,
+        "freeHeap": 158604,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 38,
+        "lastCloudAgeMs": 0
+      }
+    }
+  ],
+  "completedEpoch": 1795767551.2617452
+}

@@ -1,0 +1,78 @@
+{
+  "serverTime": 1795767955319,
+  "screenshot": "docs/images/dashboard-pending-power-pass-2026-11-27.png",
+  "nodes": [
+    {
+      "nodeId": "esp32-d01de2f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n1-20261125-v1",
+      "lastSeen": "2026-11-27T08:25:54.332Z",
+      "pendingRecords": 0,
+      "mode": "updating",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ]
+    },
+    {
+      "nodeId": "esp32-7839a3f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n2-20261126-v2",
+      "lastSeen": "2026-11-27T08:25:54.253Z",
+      "pendingRecords": 0,
+      "mode": "running",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-d01de2f4e9d4",
+        "esp32-986aa3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ]
+    },
+    {
+      "nodeId": "esp32-986aa3f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n3-20261126-v1",
+      "lastSeen": "2026-11-27T08:25:52.023Z",
+      "pendingRecords": 0,
+      "mode": "running",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-d01de2f4e9d4",
+        "esp32-7839a3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ]
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n4-20261126-v1",
+      "lastSeen": "2026-11-27T08:25:53.486Z",
+      "pendingRecords": 0,
+      "mode": "running",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-7839a3f4e9d4",
+        "esp32-d01de2f4e9d4",
+        "esp32-986aa3f4e9d4"
+      ]
+    }
+  ]
+}

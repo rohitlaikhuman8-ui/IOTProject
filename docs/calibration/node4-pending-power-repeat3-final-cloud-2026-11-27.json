@@ -1,0 +1,149 @@
+{
+  "checkedAt": "2026-11-27T08:25:46.164Z",
+  "result": "PASS: fixed committed pending records survived observed USB power cut with isolated raw-hash comparison, exact once-stored cloud delivery and healthy zero-queue recovery",
+  "newBootId": "4412fae2215814b621317804360e5dcd",
+  "fleet": {
+    "documents": [
+      {
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T08:25:03.452Z"
+        },
+        "logRecords": 256,
+        "neighbors": [
+          "esp32-986aa3f4e9d4",
+          "esp32-7839a3f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-d01de2f4e9d4",
+        "sensorReady": true,
+        "storageReady": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "bootId": "a35383434f10eb86d0536bed3a204fec",
+        "mode": "running",
+        "pendingRecords": 0,
+        "timeSynced": true,
+        "calibrationRevision": "n1-20261125-v1"
+      },
+      {
+        "bootId": "71bb2ca59515ae346d6c2635be87d3ef",
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T08:25:04.069Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "neighbors": [
+          "esp32-d01de2f4e9d4",
+          "esp32-986aa3f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-7839a3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibrationRevision": "n2-20261126-v2"
+      },
+      {
+        "bootId": "b55f4c8f74cf569fe7a3aac19bf4ea85",
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T08:25:04.458Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "neighbors": [
+          "esp32-d01de2f4e9d4",
+          "esp32-7839a3f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-986aa3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibrationRevision": "n3-20261126-v1"
+      },
+      {
+        "bootId": "4412fae2215814b621317804360e5dcd",
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T08:25:03.446Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "neighbors": [
+          "esp32-7839a3f4e9d4",
+          "esp32-d01de2f4e9d4",
+          "esp32-986aa3f4e9d4"
+        ],
+        "nodeId": "esp32-3013a5f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibrationRevision": "n4-20261126-v1"
+      }
+    ],
+    "queryResultsCount": 4,
+    "appliedLimits": []
+  },
+  "newBootSamples": {
+    "documents": [
+      {
+        "acceleration": {
+          "x": -5.105268,
+          "y": -8.138932,
+          "z": -1.554441
+        },
+        "bootId": "4412fae2215814b621317804360e5dcd",
+        "calibrationRevision": "n4-20261126-v1",
+        "eventId": "540f5d821258af2555bb3c59dfdddf31",
+        "kind": "sample",
+        "movementDelta": 0,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "receivedAt": {
+          "$date": "2026-11-27T08:25:38.091Z"
+        },
+        "resetReason": 1,
+        "sampledAt": 1795767937,
+        "sensitivity": 1,
+        "sensor": "ADXL345",
+        "unit": "m/s2",
+        "uptimeMs": 426263,
+        "value": 9.732537,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+      },
+      {
+        "acceleration": {
+          "x": -5.14265,
+          "y": -8.102077,
+          "z": -1.592587
+        },
+        "bootId": "4412fae2215814b621317804360e5dcd",
+        "calibrationRevision": "n4-20261126-v1",
+        "eventId": "d929066d47d1aff31c25fca447a10e4c",
+        "kind": "sample",
+        "movementDelta": 0,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "receivedAt": {
+          "$date": "2026-11-27T08:25:29.088Z"
+        },
+        "resetReason": 1,
+        "sampledAt": 1795767927,
+        "sensitivity": 1,
+        "sensor": "ADXL345",
+        "unit": "m/s2",
+        "uptimeMs": 416243,
+        "value": 9.727633,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+      }
+    ],
+    "queryResultsCount": 39,
+    "appliedLimits": []
+  }
+}

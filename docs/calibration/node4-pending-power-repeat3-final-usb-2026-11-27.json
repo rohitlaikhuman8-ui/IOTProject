@@ -1,0 +1,91 @@
+{
+  "checkedAtEpoch": 1795767909.4197176,
+  "calibrationExactMatch": true,
+  "observations": [
+    {
+      "hostEpoch": 1795767909.4197176,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -29,
+        "ip": "10.157.182.153",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12364,
+        "freeHeap": 102864,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:55:09 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 76
+      }
+    }
+  ],
+  "status": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "wifiAssociated": true,
+    "wifiMode": 1,
+    "apClients": 0,
+    "portalStationPaused": false,
+    "portalStationProbe": false,
+    "ssid": "Sensor Testing",
+    "rssi": -29,
+    "ip": "10.157.182.153",
+    "portalActive": false,
+    "portalAutomatic": false,
+    "touchRaw": 110,
+    "logRecords": 256,
+    "stackFreeBytes": 12364,
+    "freeHeap": 102864,
+    "pendingVerification": false,
+    "ledOn": true,
+    "timeIst": "2026-11-27 13:55:09 IST",
+    "pendingRecords": 0,
+    "lastCloudAgeMs": 76
+  }
+}

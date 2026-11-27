@@ -6,7 +6,7 @@
 
 Subsequent repair: [fallback AP availability release `c0e1dc4`](FALLBACK-AP-AVAILABILITY.md) passed a separate real blocked-hotspot startup log export and recovery, then rolled out through OTA to all four nodes with exact calibrations preserved. This addresses the access failure for future checks; it does not retroactively supply the missing post-cut export or turn the earlier power-loss procedure into a pass.
 
-A separate [fresh repeat on the repaired production portal](PENDING-POWER-REPEAT-2026-11-27.md) now preserves its own preflight and fixed criteria. Follow that record for the current attempt; retain all failures and classifications in this historical record.
+A separate [fresh repeat on the repaired production portal](PENDING-POWER-REPEAT-2026-11-27.md) subsequently **passed for ten fixed committed pending records on Node 4**, including isolated post-cut local payload/hash survival, exact once-stored cloud delivery, new-boot/settings/journal recovery and queue drainage. It preserves its own original baseline and full evidence. This later success does not change any failure or classification in this historical record.
 
 **Power-loss result inconclusive; network restored, selected records delivered and queue cleared.** The prior [network-only test](QUEUED-DATA-RETRY-2026-11-27.md) passed ten selected records. This separate phase checks whether a fixed set of already-committed, unsent records survives removal of USB power and subsequently reaches Atlas unchanged. Manual removal is not synchronized to a flash write, so even a pass cannot establish interrupted-write or measured brownout safety.
 

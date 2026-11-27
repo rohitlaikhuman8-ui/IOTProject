@@ -27,6 +27,8 @@ See the [complete operations and safety manual](OPERATING_MANUAL.md) for the ful
 | Device stays offline | Check 2.4 GHz network, SSID/password, signal, router, DHCP |
 | Touch responds late | Local flash writes or a slow portal client can delay the main loop; check storage and serial diagnostics |
 
+If USB shows a connected flag with IP `0.0.0.0`, the node has no usable IPv4 connection: do not treat association as internet or cloud readiness. Record the IP, portal flags, MAC/Node ID, pending count and actual AP visibility. Do not erase/reprovision as the first response. A [candidate fix and isolated test](FALLBACK-AP-AVAILABILITY.md) address this readiness check and setup access during station retries; its production release status is tracked explicitly.
+
 ## Uploads
 
 If queued records drain slowly while heartbeats succeed, compare the serial request timings and pending count. Current firmware reuses HTTPS connections and resets failed transports for retry. A full all-pending log preserves existing records but cannot save new samples until delivery frees capacity. OTA checks that repeatedly fail to acquire the transport lock require the current transport-recovery firmware; `ota-check` schedules another check without opening the AP.

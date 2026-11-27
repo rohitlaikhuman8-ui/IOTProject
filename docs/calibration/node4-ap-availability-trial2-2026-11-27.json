@@ -1,0 +1,2230 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "scope": "Simulated disconnect on bench hardware; stable AP access and unattended recovery",
+  "observations": [
+    {
+      "hostEpoch": 1795764454.1283855,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -51,
+        "ip": "10.157.182.153",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 112104,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 12:57:33 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 1617
+      }
+    },
+    {
+      "hostEpoch": 1795764462.2713118,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 162336,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 12:57:41 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 3206
+      }
+    },
+    {
+      "hostEpoch": 1795764467.3129487,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 162364,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 12:57:46 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 8246
+      }
+    },
+    {
+      "hostEpoch": 1795764472.4099295,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 162364,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 12:57:52 IST",
+        "pendingRecords": 1,
+        "lastCloudAgeMs": 13345
+      }
+    },
+    {
+      "hostEpoch": 1795764477.553278,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 162364,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 12:57:57 IST",
+        "pendingRecords": 1,
+        "lastCloudAgeMs": 18490
+      }
+    },
+    {
+      "hostEpoch": 1795764482.7407918,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 162364,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 12:58:02 IST",
+        "pendingRecords": 2,
+        "lastCloudAgeMs": 23682
+      }
+    },
+    {
+      "hostEpoch": 1795764487.9367032,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 162364,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 12:58:07 IST",
+        "pendingRecords": 2,
+        "lastCloudAgeMs": 28869
+      }
+    },
+    {
+      "hostEpoch": 1795764493.0679152,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159208,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 12:58:12 IST",
+        "pendingRecords": 3,
+        "lastCloudAgeMs": 34000
+      }
+    },
+    {
+      "hostEpoch": 1795764603.4879837,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 145516,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:00:03 IST",
+        "pendingRecords": 11,
+        "lastCloudAgeMs": 144411
+      }
+    },
+    {
+      "hostEpoch": 1795764603.6075618,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147932,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:03 IST",
+        "pendingRecords": 11,
+        "lastCloudAgeMs": 144533
+      }
+    },
+    {
+      "hostEpoch": 1795764603.7126052,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147932,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:00:03 IST",
+        "pendingRecords": 11,
+        "lastCloudAgeMs": 144641
+      }
+    },
+    {
+      "hostEpoch": 1795764605.5210416,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:00:05 IST",
+        "pendingRecords": 11,
+        "lastCloudAgeMs": 146447
+      }
+    },
+    {
+      "hostEpoch": 1795764610.7544906,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:00:10 IST",
+        "pendingRecords": 11,
+        "lastCloudAgeMs": 151684
+      }
+    },
+    {
+      "hostEpoch": 1795764615.8772078,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:15 IST",
+        "pendingRecords": 12,
+        "lastCloudAgeMs": 156801
+      }
+    },
+    {
+      "hostEpoch": 1795764620.9704547,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:00:20 IST",
+        "pendingRecords": 12,
+        "lastCloudAgeMs": 161895
+      }
+    },
+    {
+      "hostEpoch": 1795764626.1596034,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:25 IST",
+        "pendingRecords": 13,
+        "lastCloudAgeMs": 167085
+      }
+    },
+    {
+      "hostEpoch": 1795764631.3269765,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:30 IST",
+        "pendingRecords": 13,
+        "lastCloudAgeMs": 172250
+      }
+    },
+    {
+      "hostEpoch": 1795764636.4723415,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:00:36 IST",
+        "pendingRecords": 14,
+        "lastCloudAgeMs": 177395
+      }
+    },
+    {
+      "hostEpoch": 1795764641.560876,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:41 IST",
+        "pendingRecords": 14,
+        "lastCloudAgeMs": 182484
+      }
+    },
+    {
+      "hostEpoch": 1795764646.683978,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 147924,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:46 IST",
+        "pendingRecords": 15,
+        "lastCloudAgeMs": 187606
+      }
+    },
+    {
+      "hostEpoch": 1795764651.8558145,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 3,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -38,
+        "ip": "10.157.182.153",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 109,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 90684,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:51 IST",
+        "pendingRecords": 15,
+        "lastCloudAgeMs": 192775
+      }
+    },
+    {
+      "hostEpoch": 1795764657.0634768,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 3,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -38,
+        "ip": "10.157.182.153",
+        "portalActive": true,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 92676,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:00:56 IST",
+        "pendingRecords": 16,
+        "lastCloudAgeMs": 1598
+      }
+    },
+    {
+      "hostEpoch": 1795764663.295249,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 109,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159404,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:01:02 IST",
+        "pendingRecords": 16,
+        "lastCloudAgeMs": 7835
+      }
+    },
+    {
+      "hostEpoch": 1795764668.379297,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159404,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:01:08 IST",
+        "pendingRecords": 17,
+        "lastCloudAgeMs": 12923
+      }
+    },
+    {
+      "hostEpoch": 1795764673.522007,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159384,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:01:13 IST",
+        "pendingRecords": 18,
+        "lastCloudAgeMs": 18059
+      }
+    },
+    {
+      "hostEpoch": 1795764678.6680229,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159400,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:01:18 IST",
+        "pendingRecords": 18,
+        "lastCloudAgeMs": 23204
+      }
+    },
+    {
+      "hostEpoch": 1795764683.717173,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159384,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:01:23 IST",
+        "pendingRecords": 19,
+        "lastCloudAgeMs": 28259
+      }
+    },
+    {
+      "hostEpoch": 1795764688.8922222,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159400,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:01:28 IST",
+        "pendingRecords": 19,
+        "lastCloudAgeMs": 33425
+      }
+    },
+    {
+      "hostEpoch": 1795764693.9687095,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 156464,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:01:33 IST",
+        "pendingRecords": 20,
+        "lastCloudAgeMs": 38502
+      }
+    },
+    {
+      "hostEpoch": 1795764698.0316522,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 156912,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:01:37 IST",
+        "pendingRecords": 20,
+        "lastCloudAgeMs": 42566
+      }
+    },
+    {
+      "hostEpoch": 1795764703.271537,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 158032,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:01:42 IST",
+        "pendingRecords": 20,
+        "lastCloudAgeMs": 47803
+      }
+    },
+    {
+      "hostEpoch": 1795764708.4206667,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159196,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:01:48 IST",
+        "pendingRecords": 21,
+        "lastCloudAgeMs": 52952
+      }
+    },
+    {
+      "hostEpoch": 1795764713.6200173,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:01:53 IST",
+        "pendingRecords": 22,
+        "lastCloudAgeMs": 58151
+      }
+    },
+    {
+      "hostEpoch": 1795764718.8520582,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:01:58 IST",
+        "pendingRecords": 22,
+        "lastCloudAgeMs": 63390
+      }
+    },
+    {
+      "hostEpoch": 1795764723.9650173,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:02:03 IST",
+        "pendingRecords": 23,
+        "lastCloudAgeMs": 68495
+      }
+    },
+    {
+      "hostEpoch": 1795764729.1770465,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:02:08 IST",
+        "pendingRecords": 23,
+        "lastCloudAgeMs": 73710
+      }
+    },
+    {
+      "hostEpoch": 1795764734.3006551,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:02:13 IST",
+        "pendingRecords": 24,
+        "lastCloudAgeMs": 78831
+      }
+    },
+    {
+      "hostEpoch": 1795764739.533646,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:02:19 IST",
+        "pendingRecords": 24,
+        "lastCloudAgeMs": 84068
+      }
+    },
+    {
+      "hostEpoch": 1795764744.6432393,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:02:24 IST",
+        "pendingRecords": 25,
+        "lastCloudAgeMs": 89172
+      }
+    },
+    {
+      "hostEpoch": 1795764749.6480844,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 2,
+        "apClients": 0,
+        "portalStationPaused": true,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 159188,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:02:29 IST",
+        "pendingRecords": 25,
+        "lastCloudAgeMs": 94180
+      }
+    },
+    {
+      "hostEpoch": 1795764754.796609,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 3,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -34,
+        "ip": "10.157.182.153",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 109,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 101740,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:02:34 IST",
+        "pendingRecords": 26,
+        "lastCloudAgeMs": 99331
+      }
+    },
+    {
+      "hostEpoch": 1795764759.9131646,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 3,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -34,
+        "ip": "10.157.182.153",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 110,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 104172,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:02:39 IST",
+        "pendingRecords": 25,
+        "lastCloudAgeMs": 1639
+      }
+    },
+    {
+      "hostEpoch": 1795764765.1094606,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 3,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -37,
+        "ip": "10.157.182.153",
+        "portalActive": true,
+        "portalAutomatic": true,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 104168,
+        "pendingVerification": false,
+        "ledOn": false,
+        "timeIst": "2026-11-27 13:02:44 IST",
+        "pendingRecords": 26,
+        "lastCloudAgeMs": 6831
+      }
+    },
+    {
+      "hostEpoch": 1795764770.3238995,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -36,
+        "ip": "10.157.182.153",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 109,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 105168,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:02:49 IST",
+        "pendingRecords": 26,
+        "lastCloudAgeMs": 12045
+      }
+    },
+    {
+      "hostEpoch": 1795764775.6515048,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "usb-ap-availability-bench",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "wifiAssociated": true,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": -34,
+        "ip": "10.157.182.153",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 12492,
+        "freeHeap": 111976,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:02:55 IST",
+        "pendingRecords": 26,
+        "lastCloudAgeMs": 177
+      }
+    }
+  ],
+  "messages": [
+    {
+      "hostEpoch": 1795764460.1280415,
+      "message": "Setup AP closed; saved settings retained"
+    },
+    {
+      "hostEpoch": 1795764650.2042787,
+      "message": "Setup AP: bounded saved-network probe started"
+    },
+    {
+      "hostEpoch": 1795764661.120561,
+      "message": "Setup AP closed; saved settings retained"
+    },
+    {
+      "hostEpoch": 1795764753.3873158,
+      "message": "Setup AP: bounded saved-network probe started"
+    },
+    {
+      "hostEpoch": 1795764768.4771962,
+      "message": "Saved Wi-Fi and cloud recovered; closing automatic setup AP"
+    },
+    {
+      "hostEpoch": 1795764768.485993,
+      "message": "Setup AP closed; saved settings retained"
+    }
+  ],
+  "originalWifiSSID": "Sensor Testing",
+  "export": {
+    "bytes": 108484,
+    "sha256": "1110304df43b3f3567658dd3e175714a816f17fd978de82970273e4ee596e7b6",
+    "recordCount": 256
+  },
+  "clientHttpObservations": [
+    {
+      "hostEpoch": 1795764525.2977707,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:58:44 IST",
+        "pending": 5,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764528.4749835,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:58:48 IST",
+        "pending": 5,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764532.2838018,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:58:51 IST",
+        "pending": 5,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764535.848842,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:58:55 IST",
+        "pending": 6,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764539.163156,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:58:58 IST",
+        "pending": 6,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764542.5688233,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:02 IST",
+        "pending": 6,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764546.0521646,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:05 IST",
+        "pending": 7,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764549.602649,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:09 IST",
+        "pending": 7,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764553.1378272,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:12 IST",
+        "pending": 7,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764556.8117092,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:16 IST",
+        "pending": 8,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764560.5110636,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:20 IST",
+        "pending": 8,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764564.2026844,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:23 IST",
+        "pending": 8,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764568.3696854,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:28 IST",
+        "pending": 9,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764574.4512312,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:34 IST",
+        "pending": 9,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764580.607675,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:40 IST",
+        "pending": 10,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764583.8010721,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:43 IST",
+        "pending": 10,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    },
+    {
+      "hostEpoch": 1795764586.9901948,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "timeIst": "2026-11-27 12:59:46 IST",
+        "pending": 10,
+        "connection": "Setup available; saved Wi-Fi retries paused",
+        "wifiReady": false,
+        "portalStationPaused": true,
+        "apClients": 1
+      }
+    }
+  ],
+  "clientHoldSeconds": 65.23499999998603,
+  "manualPortalPreservedAfterRecovery": true,
+  "automaticRecoveryClosedPortal": true,
+  "result": "PASS: bounded simulated outage, complete fallback log export, client scan protection, manual preservation and automatic recovery",
+  "originalNetworkRestored": true,
+  "completedEpoch": 1795764779.7219346
+}

@@ -11,6 +11,7 @@
 #include <Wire.h>
 #include <math.h>
 #include <esp_now.h>
+#include <esp_wifi.h>
 #include <mbedtls/md.h>
 #include <memory>
 #include <atomic>
@@ -46,6 +47,8 @@ constexpr float AccelerationScale = 0.0039f * 9.80665f;
 constexpr size_t LogLimit = 256;
 constexpr uint32_t PortalLifetime = 15 * 60 * 1000UL;
 constexpr uint32_t PortalRecoveryDelay = 15000;
+constexpr uint32_t PortalApOnlyInterval = 60000;
+constexpr uint32_t PortalProbeWindow = 15000;
 constexpr int StatusLed = 2;
 constexpr uint32_t HeartbeatInterval = 5000;
 constexpr uint32_t CloudTimeout = 90000;
@@ -102,6 +105,8 @@ String formToken;
 bool storageReady, touched, ntpStarted;
 bool portalAutomatic = false, portalRecoveryTracking = false;
 uint32_t portalRecoveryStarted = 0;
+bool portalStationPaused = false, portalStationProbe = false;
+uint32_t portalRadioStarted = 0;
 #ifdef FLEET_PORTAL_RECOVERY_BENCH
 bool benchWifiDropped = false;
 uint32_t benchWifiResumeAt = 0;
@@ -172,6 +177,12 @@ String serialCommand;
 void startPortal(bool automatic = false);
 void closePortal();
 void diagnoseStorage();
+// Association without a DHCP address cannot support DNS, HTTPS or recovery.
+bool stationReady() {
+  if (!(WiFi.getMode() & WIFI_MODE_STA) || WiFi.status() != WL_CONNECTED) return false;
+  uint32_t ip = static_cast<uint32_t>(WiFi.localIP());
+  return ip != 0 && ip != UINT32_MAX;
+}
 bool due(uint32_t now, uint32_t target);
 uint32_t nextHeartbeat, nextBeacon;
 bool radioReady;
@@ -243,7 +254,7 @@ void receiveBeacon(const uint8_t *mac, const uint8_t *data, int length) {
 }
 
 void serviceDiscovery() {
-  if (WiFi.status() != WL_CONNECTED || String(config["discovery"] | "").length() < 32 ||
+  if (!stationReady() || String(config["discovery"] | "").length() < 32 ||
       time(nullptr) < 1577836800) return;
   if (!radioReady) {
     if (!beaconQueue) beaconQueue = xQueueCreate(8, sizeof(Beacon));
@@ -833,7 +844,12 @@ void serviceSerial() {
       calibrationView(status["calibration"].to<JsonObject>());
       status["storageReady"] = storageReady;
       status["sensorAddress"] = sensorAddress;
-      status["wifiConnected"] = WiFi.status() == WL_CONNECTED;
+      status["wifiConnected"] = stationReady();
+      status["wifiAssociated"] = (WiFi.getMode() & WIFI_MODE_STA) && WiFi.status() == WL_CONNECTED;
+      status["wifiMode"] = static_cast<int>(WiFi.getMode());
+      status["apClients"] = portalActive ? WiFi.softAPgetStationNum() : 0;
+      status["portalStationPaused"] = portalStationPaused;
+      status["portalStationProbe"] = portalStationProbe;
       status["ssid"] = config["ssid"] | "";
       status["rssi"] = WiFi.RSSI();
       status["ip"] = WiFi.localIP().toString();
@@ -1054,7 +1070,10 @@ void exportLog() {
 }
 
 void startPortal(bool automatic) {
-  WiFi.mode(WIFI_AP_STA);
+  bool ready = stationReady();
+  WiFi.setAutoReconnect(false);
+  if (!ready && (WiFi.getMode() & WIFI_MODE_STA)) WiFi.disconnect(false, false);
+  WiFi.mode(ready ? WIFI_AP_STA : WIFI_AP);
   String name = "ESP32-Setup-" + nodeId.substring(6);
   if (!WiFi.softAP(name.c_str(), apPassword.c_str(), 1, false, 1)) {
     WiFi.mode(WIFI_STA);
@@ -1068,6 +1087,9 @@ void startPortal(bool automatic) {
   portalAutomatic = automatic;
   portalRecoveryTracking = false;
   portalStarted = millis();
+  portalStationPaused = !ready;
+  portalStationProbe = false;
+  portalRadioStarted = portalStarted;
 }
 
 void closePortal() {
@@ -1079,9 +1101,47 @@ void closePortal() {
   portalActive = false;
   portalAutomatic = false;
   portalRecoveryTracking = false;
+  portalStationPaused = false;
+  portalStationProbe = false;
   touched = false;
   nextWifi = millis();
   Serial.println("Setup AP closed; saved settings retained");
+}
+
+// AP and STA share one radio. During an outage, provide a stable setup
+// channel between bounded station attempts, and never scan under an AP client.
+void servicePortalRadio(uint32_t now) {
+  if (!portalActive || otaActive.load()) return;
+  if (stationReady()) {
+    portalStationPaused = portalStationProbe = false;
+    return;
+  }
+  unsigned clients = WiFi.softAPgetStationNum();
+  if (portalStationPaused) {
+    if (clients) portalRadioStarted = now;
+    else if (now - portalRadioStarted >= PortalApOnlyInterval &&
+             config["ssid"].is<const char *>() && String(config["ssid"] | "").length()) {
+      if (WiFi.mode(WIFI_AP_STA)) {
+        WiFi.begin(config["ssid"].as<const char *>(), config["password"] | "");
+        portalStationPaused = false;
+        portalStationProbe = true;
+        portalRadioStarted = millis();
+        Serial.println("Setup AP: bounded saved-network probe started");
+      } else portalRadioStarted = now;
+    }
+    return;
+  }
+  if (clients || !portalStationProbe || now - portalRadioStarted >= PortalProbeWindow) {
+    WiFi.setAutoReconnect(false);
+    WiFi.disconnect(false, false); // eraseap=false: preserve saved driver/config data.
+    if (WiFi.mode(WIFI_AP)) {
+      esp_wifi_set_channel(1, WIFI_SECOND_CHAN_NONE);
+      portalStationPaused = true;
+      portalStationProbe = false;
+      portalRadioStarted = millis();
+      Serial.println("Setup AP: station paused for stable local access");
+    }
+  }
 }
 
 void checkTouch(uint32_t now) {
@@ -1192,7 +1252,7 @@ bool checkOta() {
     auto &stream = http.getStream();
     int available = stream.available();
     if (available <= 0) {
-      if (WiFi.status() != WL_CONNECTED || !http.getStream().connected()) {
+      if (!stationReady() || !http.getStream().connected()) {
         Serial.printf("OTA connection closed: remaining=%d\n", remaining);
         break;
       }
@@ -1272,6 +1332,8 @@ void setup() {
   if (storageReady) nextSequence = scanLog().maxSequence + 1;
   else Serial.println("LittleFS unavailable; see first-flash instructions");
   WiFi.persistent(false);
+  // The loop owns bounded retries; background scans must not starve setup.
+  WiFi.setAutoReconnect(false);
   WiFi.mode(WIFI_STA);
   portal.on("/", HTTP_GET, [] {
     if (portal.client().localIP() != WiFi.softAPIP()) { portal.send(403); return; }
@@ -1323,7 +1385,10 @@ void setup() {
     status["timeIst"] = timeInIst(time(nullptr));
     status["pending"] = storageReady ? scanLog().pendingCount : 0;
     bool reported = lastCloudSuccess.load() && millis()-lastCloudSuccess.load() < CloudTimeout;
-    status["connection"] = reported ? "Cloud connected" : WiFi.status()==WL_CONNECTED ? "Wi-Fi connected; cloud pending" : "Wi-Fi reconnecting";
+    status["connection"] = stationReady() && reported ? "Cloud connected" : stationReady() ? "Wi-Fi connected; cloud pending" : portalStationPaused ? "Setup available; saved Wi-Fi retries paused" : "Wi-Fi reconnecting";
+    status["wifiReady"] = stationReady();
+    status["portalStationPaused"] = portalStationPaused;
+    status["apClients"] = WiFi.softAPgetStationNum();
     String response;
     serializeJson(status, response);
     portal.sendHeader("Cache-Control", "no-store");
@@ -1371,7 +1436,7 @@ void setup() {
     esp_task_wdt_add(nullptr);
     for (;;) {
       esp_task_wdt_reset();
-      if (WiFi.status() == WL_CONNECTED) {
+      if (stationReady()) {
         if (due(millis(), nextUpload)) uploadOne();
         esp_task_wdt_reset();
         if (!pendingVerification.load() && time(nullptr) >= 1577836800 && due(millis(), nextOta)) {
@@ -1396,7 +1461,7 @@ void setup() {
     esp_task_wdt_add(nullptr);
     for (;;) {
       esp_task_wdt_reset();
-      if (!otaActive.load() && WiFi.status() == WL_CONNECTED && due(millis(), nextHeartbeat)) sendHeartbeat();
+      if (!otaActive.load() && stationReady() && due(millis(), nextHeartbeat)) sendHeartbeat();
       vTaskDelay(pdMS_TO_TICKS(50));
     }
   }, "fleetStatus", 16384, nullptr, 1, &heartbeatTaskHandle, 1);
@@ -1407,7 +1472,7 @@ void setup() {
     bool on;
     if (portalActive.load()) on = phase % 250 < 125;
     else if (!currentReading().valid || !storageReady) on = phase < 100 || (phase >=200 && phase<300) || (phase>=400 && phase<500);
-    else if (WiFi.status() != WL_CONNECTED) on = phase % 1000 < 500;
+    else if (!stationReady()) on = phase % 1000 < 500;
     else if (!reported) on = phase < 120 || (phase >=250 && phase <370);
     else on = true;
     digitalWrite(StatusLed, on ? HIGH : LOW);
@@ -1422,7 +1487,7 @@ void loop() {
   uint32_t now = millis();
   serviceSensor(now);
   if (pendingVerification) {
-    if (storageReady && sensorAddress && cloudHealthy && WiFi.status() == WL_CONNECTED &&
+    if (storageReady && sensorAddress && cloudHealthy && stationReady() &&
         time(nullptr) >= 1577836800 && now - verificationStarted >= 20000) {
       pendingVerification = esp_ota_mark_app_valid_cancel_rollback() != ESP_OK;
       if (!pendingVerification) Serial.println("OTA boot confirmed: storage, sensor and cloud heartbeat healthy");
@@ -1448,24 +1513,27 @@ void loop() {
 #ifdef FLEET_PORTAL_RECOVERY_BENCH
   if (benchWifiDropped && due(now, benchWifiResumeAt)) {
     benchWifiDropped = false;
-    WiFi.setAutoReconnect(true);
+    WiFi.setAutoReconnect(false);
     nextWifi = now;
   }
 #endif
-  if (WiFi.status() == WL_CONNECTED) {
+  if (stationReady()) {
     wifiLostAt = 0;
     serviceDiscovery();
     if (!ntpStarted) { configTzTime("IST-5:30", "pool.ntp.org", "time.google.com"); ntpStarted = true; }
-  } else if (due(now, nextWifi) && config["ssid"].is<const char *>()) {
+  } else if (!portalActive && due(now, nextWifi) && config["ssid"].is<const char *>()) {
+    // Clear a stale associated/no-IP state before retrying DHCP. Never erase NVS.
+    WiFi.disconnect(false, false);
     WiFi.begin(config["ssid"].as<const char *>(), config["password"] | "");
-    nextWifi = now + 30000;
+    nextWifi = millis() + 30000;
   }
-  if (WiFi.status() != WL_CONNECTED) {
+  if (!stationReady()) {
     if (!wifiLostAt) wifiLostAt = now;
     if (!portalActive && now - wifiLostAt > 30000) startPortal(true);
   }
+  servicePortalRadio(millis());
   if (portalActive && portalAutomatic && !restartAt && !otaActive.load()) {
-    if (WiFi.status() != WL_CONNECTED) portalRecoveryTracking = false;
+    if (!stationReady()) portalRecoveryTracking = false;
     else {
       if (!portalRecoveryTracking) {
         portalRecoveryTracking = true;

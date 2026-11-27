@@ -38,6 +38,8 @@ Per-axis calibration is stored separately from network settings and survives app
 
 ## Timing
 
+Candidate note: [fallback AP availability work](FALLBACK-AP-AVAILABILITY.md) adds valid-IPv4 readiness and protected AP-only periods with bounded station probes. It is under isolated Node 4 bench validation; the production fleet remains on the dated release below until finalized and published. See that record for station-pause/client behavior and release state.
+
 - Touch activates setup after four continuous seconds.
 - The AP expires after 15 minutes and accepts one client.
 - From `d05bb40`, an automatically opened fallback AP closes after fifteen seconds of continuous Wi-Fi recovery plus a fresh cloud success since reconnecting. AP-client association, explicit USB setup or a touch hold preserves manual setup instead. Recovery timers reset on disconnect; restart/OTA activity defers auto-close. See [implementation validation](PORTAL-RECOVERY-FIX.md).

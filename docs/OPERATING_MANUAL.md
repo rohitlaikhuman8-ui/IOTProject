@@ -34,6 +34,8 @@ The red power LED only indicates supply power. The controllable status LED and t
 
 Existing credentials are reused automatically. A new node, or a configured node whose Wi-Fi remains unavailable after about 30 seconds, opens its setup AP. It continues attempting the saved network connection.
 
+Candidate behavior under validation: [stable fallback AP scheduling](FALLBACK-AP-AVAILABILITY.md) pauses station retries during an offline setup-client session, allowing reliable local access. Once the client leaves, a sixty-second AP-only interval precedes a fifteen-second saved-network probe; explicit portal close resumes normal station retries immediately. A valid IP address is required for Wi-Fi/cloud readiness. This candidate is not yet the fleet release; consult its validation/release record before relying on the changed timing.
+
 The status task runs independently of telemetry uploads and OTA downloads. Heartbeats are scheduled every five seconds. The browser refreshes every three seconds. After 90 seconds without an accepted cloud report, it shows Last seen with the last server timestamp in IST. If the browser itself loses contact, the page indicates stale or unavailable status.
 
 ![Live dashboard with IST notification history](images/dashboard-ist-history.png)

@@ -1,0 +1,18 @@
+{
+  "production": {
+    "bytes": 1236000,
+    "sha256": "e46b329d7fde2a760b1c5c64954d267d3bcab9e42ef5d135efe1e6154860a1c3",
+    "benchCommandPresent": false
+  },
+  "bench": {
+    "bytes": 1187872,
+    "sha256": "2bbd80e30fd66ee8263e689ed5f9d09baca86ccb28d65b8e02c79b4b72a2b0f7",
+    "benchCommandPresent": true
+  },
+  "finalProductionCandidate": {
+    "version": "usb-ap-availability-candidate",
+    "bytes": 1236000,
+    "sha256": "b06cbcd5eec7817447bee001a56370220531a6d39596353f59e2c75648513ac4",
+    "benchCommandPresent": false
+  }
+}

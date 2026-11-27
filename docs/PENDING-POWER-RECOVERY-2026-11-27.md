@@ -2,7 +2,7 @@
 
 ## Scope and current state
 
-**Preflight complete; no test power cut performed.** The prior [network-only test](QUEUED-DATA-RETRY-2026-11-27.md) passed ten selected records. This separate phase checks whether a fixed set of already-committed, unsent records survives removal of USB power and subsequently reaches Atlas unchanged. Manual removal is not synchronized to a flash write, so even a pass cannot establish interrupted-write or measured brownout safety.
+**Fixed pending-record baseline saved; physical power-cycle confirmation pending.** The prior [network-only test](QUEUED-DATA-RETRY-2026-11-27.md) passed ten selected records. This separate phase checks whether a fixed set of already-committed, unsent records survives removal of USB power and subsequently reaches Atlas unchanged. Manual removal is not synchronized to a flash write, so even a pass cannot establish interrupted-write or measured brownout safety.
 
 The operator confirmed Node 4 is USB-only powered, with its ADXL345 powered from that same ESP32 and no other powered interconnection. Keep Nodes 1–3 powered and connected throughout. Do not move sensor wiring, short pins, adjust supplies or press BOOT/EN/RESET. No firmware/settings/calibration changes or erase are planned.
 
@@ -19,6 +19,18 @@ The [fleet preflight](calibration/node4-pending-power-fleet-before-2026-11-27.js
 7. Close only this test's setup session if still active, restore laptop Wi-Fi and remove temporary profiles. Archive results under `docs/`, update README and verification records, and push finalized evidence. Keep any failed attempt distinct.
 
 ## Acceptance limits and next phases
+
+## Before-cut isolation and baseline — completed
+
+After the operator confirmed Node 4 blocked, the observation boundary was **10:57:13.756 IST**. Its last cloud report remained **10:56:59.218 IST**, while the other three kept fresh reports and unchanged boots. The [isolation snapshot](calibration/node4-pending-power-isolation-fleet-2026-11-27.json) is a cloud observation; its target pending value is stale and must not be substituted for the fresh local queue count.
+
+Local HTTP export at approximately **11:05:05 IST** contained 256 distinct records, with **47 pending before / 48 after**, and `Wi-Fi reconnecting` status. The capture interval was longer than the planned roughly 100-second observation and is recorded as actually observed. Ten periodic records captured **11:03:07–11:04:38 IST** were selected on the expected original boot, firmware and revision. [Baseline metadata](calibration/node4-pending-power-before-2026-11-27.json) retains complete original fields, IDs and per-record hashes; the [raw full export](retention/node4-pending-power-before-2026-11-27.ndjson) has SHA-256 `11bfa11891ebfa337c06a29273f5d3c4c9277fba52cb0e8383fc799fbe9a07fc`.
+
+The [Atlas absence query](calibration/node4-pending-power-absence-2026-11-27.json) returned zero documents for all ten selected IDs, with no applied limits, before the physical power-cycle instruction. The laptop returned to Sensor Testing and the temporary profile was removed. No serial handle is left open by the capture. The operator was then asked to remove only Node 4's USB for ten seconds and reconnect, **keeping its hotspot entry blocked**. No completion is assumed until confirmed and checked.
+
+Post-cycle local payload/hash survival, a new boot, later Atlas delivery, journal integrity, final health and queue drainage are still pending. No power-loss acceptance pass is claimed.
+
+## Remaining acceptance limits
 
 Pending-record persistence and subsequent delivery are separate assertions; record both. Matching record counts alone is insufficient. The 256-record journal is finite, and all-pending capacity can stop new logging. This test does not establish indefinite retention, a quantified reconnect deadline, survival of an uncommitted sample, flash-write interruption, supply voltage thresholds, deliberate OTA failure/rollback or long-term endurance.
 

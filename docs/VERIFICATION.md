@@ -325,6 +325,8 @@ Production build and bench build passed. The published artifact for **`d05bb40d0
 
 ## Node 4 network-only queued delivery — November 27
 
+Follow-up: [committed pending-record power-loss preflight](PENDING-POWER-RECOVERY-2026-11-27.md) verified the healthy fleet, Node 4 USB identity/full local export and operator-confirmed USB-only supply. The power-loss test itself remains pending; preserve this distinction from the completed network-only result below.
+
 The [clean retry](QUEUED-DATA-RETRY-2026-11-27.md) passed delivery of ten immutable selected samples. Full local export during the hotspot block had 256 records and 19–20 pending; all ten selected IDs were absent from Atlas before restoration. After operator unblocking, each appeared once with every original field unchanged, server receipt time retained separately. Node 4 eventually resumed normal reporting, and its queue reached zero by 10:51:05 IST. Final cloud snapshots showed all four healthy/running/time-synchronized with zero queues and unchanged boots, release and revisions. USB confirmed Node 4's exact calibration readback, valid IP, portal inactive, 256 local records and zero pending.
 
 The manual portal expired normally, and recovery needed no reset/settings/firmware intervention. A transient connected flag with IP `0.0.0.0` and delayed reporting was observed before recovery; physical unblocking time was not instrumented. The planned short interval expanded awaiting operator restoration. This passes eventual selected-record network recovery on Node 4, not a bounded reconnect deadline, fleet-wide queue continuity, queue-full behavior, pending-write/brownout/intentional rollback or endurance acceptance. The prior November 26 disturbed attempt remains inconclusive.

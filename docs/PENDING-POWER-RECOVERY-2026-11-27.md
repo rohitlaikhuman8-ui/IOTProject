@@ -58,6 +58,14 @@ The [fresh local baseline](calibration/node4-pending-power-repeat2-before-2026-1
 
 The operator confirmed **“Node 4 unplugged, LEDs off.”** For this fresh repeat, [enumeration at 12:28:14 IST](calibration/node4-pending-power-repeat2-disconnected-2026-11-27.json) verified COM6 absent while COM5/COM8/COM9 remained present. The operator was then asked to reconnect the same cable **keeping Node 4 blocked**. Reconnection, a new boot and exact local survival of the ten fixed records remain pending. No retention pass is assumed from indicator extinction or port disappearance alone.
 
+### Repeat reconnection: local AP capture incomplete
+
+The operator confirmed **“Repeat Node 4 reconnected, still blocked.”** COM6 returned, but the [post-cut capture](calibration/node4-pending-power-repeat2-after-incomplete-2026-11-27.json) failed because the laptop could not join the expected setup AP. It restored Sensor Testing and removed its temporary profile successfully. No full post-cut log was obtained, so the fixed local payload/hash comparison is not passed.
+
+[Read-only USB status](calibration/node4-pending-power-repeat2-reconnected-usb-2026-11-27.json) reverified Node 4, saved calibration/release, responding sensor/storage, 256 indexed records and 45 pending. Automatic fallback setup was marked active, but the AP was absent from the subsequent visible network list. The station flag was `wifiConnected=true` with IP `0.0.0.0`, no cloud success and time awaiting synchronization. These observations do not establish the underlying AP/DHCP fault or prove a new boot ID; no reset, reflash or configuration write was attempted.
+
+To avoid extending the outage, the operator was asked to unblock Node 4 with power unchanged. The [subsequent cloud query](calibration/node4-pending-power-repeat2-post-cut-cloud-query-2026-11-27.json) still found zero selected IDs, target last-seen stale and all peers fresh. It occurred after the unblock request, not an instrumented physical restore time. Operator restoration confirmation, new-boot reporting, selected-record delivery, queue drainage and final health are pending. The complete local post-cut comparison remains incomplete regardless of later cloud recovery.
+
 ## Physical identity check before any repeat
 
 After the inconclusive attempt was closed and all queues cleared, COM6 was reverified as Node 4 using complete USB status. Saved calibration, Wi-Fi and storage were healthy, no OTA boot awaited confirmation, and setup was initially inactive. The verified board was temporarily placed in manual setup solely to identify its GPIO2 status LED: firmware drives a 250 ms period with 125 ms on, approximately four flashes per second. [Identity evidence](calibration/node4-physical-identification-2026-11-27.json) preserves before/after status with unchanged calibration and zero pending after activation. No credential or settings write was made, and the laptop was not switched to the AP.

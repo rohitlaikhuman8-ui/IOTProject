@@ -1,0 +1,71 @@
+{
+  "checkedAt": "2026-11-27T07:00:48.249Z",
+  "note": "After request to restore network; physical unblock timing not instrumented",
+  "events": {
+    "documents": [],
+    "queryResultsCount": 0,
+    "appliedLimits": []
+  },
+  "fleet": {
+    "documents": [
+      {
+        "lastSeen": {
+          "$date": "2026-11-27T07:00:36.882Z"
+        },
+        "nodeId": "esp32-d01de2f4e9d4",
+        "sensorReady": true,
+        "storageReady": true,
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "bootId": "2bafa2042999f3a08fcdd118cb315b04",
+        "mode": "running",
+        "pendingRecords": 0,
+        "timeSynced": true,
+        "calibrationRevision": "n1-20261125-v1"
+      },
+      {
+        "bootId": "91f9f2dba5fb2342fdcaa0b37c9ea5d8",
+        "lastSeen": {
+          "$date": "2026-11-27T07:00:37.115Z"
+        },
+        "mode": "running",
+        "nodeId": "esp32-7839a3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "calibrationRevision": "n2-20261126-v2"
+      },
+      {
+        "bootId": "92f7cd38625af9887022fc09be19997e",
+        "lastSeen": {
+          "$date": "2026-11-27T07:00:36.690Z"
+        },
+        "mode": "running",
+        "nodeId": "esp32-986aa3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "calibrationRevision": "n3-20261126-v1"
+      },
+      {
+        "bootId": "37212d91d5f36dac9aa791dcb212d5a8",
+        "lastSeen": {
+          "$date": "2026-11-27T06:51:48.118Z"
+        },
+        "mode": "setup",
+        "nodeId": "esp32-3013a5f4e9d4",
+        "pendingRecords": 4,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "calibrationRevision": "n4-20261126-v1"
+      }
+    ],
+    "queryResultsCount": 4,
+    "appliedLimits": []
+  }
+}

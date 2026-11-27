@@ -1,0 +1,8 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "scope": "Post-power-cut local comparison while network remains blocked",
+  "startedEpoch": 1795762745.2008235,
+  "result": "INCOMPLETE: Laptop did not join Node 4 AP",
+  "originalNetworkRestored": true,
+  "completedEpoch": 1795762772.4480581
+}

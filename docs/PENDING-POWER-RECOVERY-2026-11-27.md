@@ -46,6 +46,12 @@ Node 4's queue decreased through 148, 147, 93, 57 and 9, then reached zero. [Fin
 
 ## Remaining acceptance limits
 
+## Physical identity check before any repeat
+
+After the inconclusive attempt was closed and all queues cleared, COM6 was reverified as Node 4 using complete USB status. Saved calibration, Wi-Fi and storage were healthy, no OTA boot awaited confirmation, and setup was initially inactive. The verified board was temporarily placed in manual setup solely to identify its GPIO2 status LED: firmware drives a 250 ms period with 125 ms on, approximately four flashes per second. [Identity evidence](calibration/node4-physical-identification-2026-11-27.json) preserves before/after status with unchanged calibration and zero pending after activation. No credential or settings write was made, and the laptop was not switched to the AP.
+
+The operator has been asked to identify and label the rapidly blinking board and visually trace its USB cable without disconnecting it. Physical identification is pending; no repeat power cut is authorized by this checkpoint alone. If multiple boards blink similarly, do not guess—use a fresh identity indication after returning this session to normal. Close only this test's manual setup session once identification is complete. Supply-path verification and a fresh pending-record baseline must follow as separate staged steps.
+
 Pending-record persistence and subsequent delivery are separate assertions; record both. Matching record counts alone is insufficient. The 256-record journal is finite, and all-pending capacity can stop new logging. This test does not establish indefinite retention, a quantified reconnect deadline, survival of an uncommitted sample, flash-write interruption, supply voltage thresholds, deliberate OTA failure/rollback or long-term endurance.
 
 Measured brownout and write-interruption tests need suitable isolated power-switching/measurement equipment and a separate recovery plan. Failed-image rollback must use an isolated target and preserve the known-good schema-compatible application; never publish a deliberately failing image to the fleet production channel.

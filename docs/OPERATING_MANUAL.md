@@ -406,3 +406,11 @@ The current system is a telemetry prototype undergoing hardware validation. Sens
 ## 25. Change records
 
 For every change, record the affected node IDs, previous firmware/configuration reference, new version or nonsecret settings, reason, operator, verification result, rollback action and IST time. Update this manual and the relevant guides alongside implementation changes. Never place secret values in a public change record.
+
+## 26. Isolated recovery tests and current acceptance limits
+
+The [November 27 fault-check procedure](FAULT-RECOVERY-CHECKS-2026-11-27.md) records Node 4 health-timeout rollback, incomplete-temporary-file/reset recovery, exact record comparisons, cleanup and all retained failures. Normal power-up uses saved settings; these bench checks do not require repeating provisioning. A manual or automatic rollback must be verified from the OTA state/slot, exact record IDs and fresh cloud recovery, not merely an LED or identical version label. An unexpected reset while a new image is unconfirmed should reject it as ABORTED; a failed production health gate invalidates it before selecting the previous confirmed slot.
+
+If serial data is corrupt, stop the current operation, retain the incomplete evidence and verify the target/valid application before a bounded retry. Never format storage or erase settings to conceal a failed check. If a diagnostic probe is used, restore and verify production bytes in both application slots, close only the test's own setup session, restore the laptop network and confirm saved calibration, time/cloud, journal validity and queue drainage. Keep credentials/raw NVS/filesystem backups private.
+
+USB-only bench tests do not measure brownout voltage or establish a power cut during active flash programming. Those remaining checks require a controlled supply/switch and rail/write-phase observation, with the actual supply/backfeed paths understood. Keep brownout/watchdog protection enabled. The isolated Node 4 passes do not certify every node, long-term retention, endurance or installation safety; finish site power/enclosure/mounting, threshold/accuracy, backup and monitoring acceptance before relying on the installation.

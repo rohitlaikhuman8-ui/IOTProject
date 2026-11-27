@@ -1,5 +1,11 @@
 # Verification record
 
+## Latest isolated fault-recovery checkpoint — November 27, 2026
+
+[Node 4 fault-recovery evidence](FAULT-RECOVERY-CHECKS-2026-11-27.md) verifies two separate rollback paths: production health timeout persisted sequence 5 / INVALID, and the synced incomplete-file probe's unconfirmed software restart persisted sequence 7 / ABORTED. Both selected the original sequence 2 / VALID production slot. Phase A preserved all 30 protected records and 112 common records exactly; Phase B preserved its separate 30 protected records and all 238 common records exactly. The incomplete 107-byte synthetic event was absent from committed exports and Atlas. The read-only journal scan passed 256 valid / zero invalid. Existing fleet settings/calibration bytes survived; Phase B additionally allocated a DHCP-state NVS entry, recorded explicitly rather than claiming whole-NVS equality.
+
+Both Node 4 application slots were verified against the published production binary after probe cleanup. The final USB/cloud/dashboard checkpoint found all four running `c0e1dc4`, expected revisions, healthy storage/sensor/time, inactive Node 4 setup and its recovered zero queue on USB; later live cloud/dashboard checkpoints contained 0–1 in-flight records per node, with peer boots unchanged. All failures and private backup boundaries are documented. These are isolated Node 4 bench results, not fleet-wide endurance or production certification. **Measured brownout and physical cut during flash programming remain deferred because only a USB cable is available.** Earlier dated pending-work statements below describe their historical checkpoints.
+
 ## Latest commissioning checkpoint — November 24, 2026
 
 Four nodes are registered with separate secrets on release `408a075`. The fourth, `esp32-3013a5f4e9d4`, was verified online after its November 24 installation: saved settings survived reboot, ADXL345 and storage were healthy, record integrity passed, time was synchronized, the operator's movement was persisted in notification history, and pending uploads were zero. The other three boards were not connected during this check and retained Last-seen histories. See [third-node](NODE-986AA3.md) and [fourth-node](NODE-3013A5.md) records; the older checkpoints below remain historical evidence.

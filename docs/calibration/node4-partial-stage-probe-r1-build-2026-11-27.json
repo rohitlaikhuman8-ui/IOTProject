@@ -1,0 +1,12 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "probeId": "6a9ca8ba9e154154a2b719ab2fdb96fe",
+  "version": "usb-partial-stage-probe",
+  "productionSourceSha256": "33cc5dc65784ee25b7beb51d809e0a0a0492ee6644ad7b4f192af6c344b1322f",
+  "generatedSourceSha256": "511ca1f2fca347b5bc95f523441963e97114c68dc435c21285f72abf42380fa9",
+  "partialBytes": 107,
+  "partialSha256": "0f62718123c4249c62f879221d2cfb644f41ee4ee18c4f768de479a6884c4142",
+  "bytes": 1188640,
+  "sha256": "64317e903f2df479103625d8f4ba3f4dded599b6256ae9d712a1fe300f7f4c16",
+  "scope": "Synced incomplete temporary file then software reset while OTA image pending; no physical flash-write/power interruption"
+}

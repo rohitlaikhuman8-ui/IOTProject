@@ -46,6 +46,9 @@ injection = r'''
     Serial.flush();
     for (;;) { esp_task_wdt_reset(); delay(1000); }
   }
+  Serial.println("BENCH partial-stage armed; waiting ten seconds for passive UART observer");
+  Serial.flush();
+  delay(10000);
   {
     FilesystemLock lock;
     const char *payload = __PARTIAL_LITERAL__;

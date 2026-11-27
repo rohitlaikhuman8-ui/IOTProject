@@ -1,0 +1,61 @@
+{
+  "startedFrom": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 5,
+        "state": 3,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "afterStage": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 5,
+        "state": 3,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "imageBytes": 1188640,
+  "imageSha256": "64317e903f2df479103625d8f4ba3f4dded599b6256ae9d712a1fe300f7f4c16",
+  "knownGoodSha256": "8c0003519dfce3a6c33eeac754b76a974f1523810b0e0e830ae43f53c078a124",
+  "filesystemBackupSha256": "c1b2a4f2618f79c7a38a66567b2046831df9ff554295172a24fbf707c8679115",
+  "result": "STAGED ONLY: inactive application verified; active production and otadata preserved"
+}

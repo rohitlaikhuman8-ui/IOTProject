@@ -1,0 +1,19 @@
+{
+  "checkedAtEpoch": 1795771315.5118551,
+  "probeId": "6a9ca8ba9e154154a2b719ab2fdb96fe",
+  "committedExports": {
+    "before": {
+      "records": 256,
+      "syntheticIdPresent": false,
+      "rawSyntheticBytesPresent": false
+    },
+    "after": {
+      "records": 256,
+      "syntheticIdPresent": false,
+      "rawSyntheticBytesPresent": false
+    }
+  },
+  "atlasExactIdQueryCount": 0,
+  "atlasScope": "Node 4 exact synthetic eventId query after capture network restoration returned zero documents",
+  "scope": "Logical committed records and Atlas; does not assert physical free-space erasure"
+}

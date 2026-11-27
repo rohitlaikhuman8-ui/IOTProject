@@ -1,0 +1,79 @@
+{
+  "startedEpoch": 1795771050.4264112,
+  "messages": [
+    {
+      "hostEpoch": 1795771050.9552338,
+      "message": "Node esp32-3013a5f4e9d4, firmware usb-partial-stage-probe, reset 1"
+    },
+    {
+      "hostEpoch": 1795771062.628739,
+      "message": "BENCH partial-stage armed; waiting ten seconds for passive UART observer"
+    },
+    {
+      "hostEpoch": 1795771072.6230006,
+      "message": "BENCH partial staged: id=6a9ca8ba9e154154a2b719ab2fdb96fe bytes=107 pending=1 slot=app0"
+    },
+    {
+      "hostEpoch": 1795771072.653476,
+      "message": "BENCH software reset before temporary-record commit and app confirmation"
+    },
+    {
+      "hostEpoch": 1795771073.2343373,
+      "message": "Node esp32-3013a5f4e9d4, firmware c0e1dc440b9b24d856098d845483aa49904e6a7e, reset 3"
+    }
+  ],
+  "statuses": [
+    {
+      "hostEpoch": 1795771085.3993022,
+      "status": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": false,
+        "wifiAssociated": false,
+        "wifiMode": 1,
+        "apClients": 0,
+        "portalStationPaused": false,
+        "portalStationProbe": false,
+        "ssid": "Sensor Testing",
+        "rssi": 0,
+        "ip": "0.0.0.0",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 112,
+        "logRecords": 256,
+        "stackFreeBytes": 13596,
+        "freeHeap": 164392,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "Waiting for time sync",
+        "pendingRecords": 4,
+        "lastCloudAgeMs": 0
+      }
+    }
+  ],
+  "partialMarker": {
+    "probeId": "6a9ca8ba9e154154a2b719ab2fdb96fe",
+    "bytes": 107,
+    "pending": true,
+    "slot": "app0"
+  },
+  "result": "OBSERVED: synced partial temporary record, software reset and confirmed production return; inspect metadata and records separately",
+  "completedEpoch": 1795771085.3993022
+}

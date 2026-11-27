@@ -1,0 +1,37 @@
+{
+  "result": "PASS: synced incomplete temporary file/reset observed; persisted ABORTED probe and original confirmed production selected; journal/cloud checks separate",
+  "metadata": {
+    "checkedAtEpoch": 1795771102.0452218,
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 7,
+        "state": 4,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "confirmedSectorByteUnchanged": true,
+  "nvsByteUnchanged": false,
+  "bootloaderAndPartitionBytesUnchanged": true,
+  "nvsChangedByteCount": 28,
+  "nvsDifferenceScope": "28 bytes: newly allocated WIFI_STA_DEF entry in dhcp_state namespace and its allocation bitmap; every other NVS byte unchanged, including existing fleet settings/calibration",
+  "nvsUnchangedExceptNewDhcpStateEntry": true
+}

@@ -7,9 +7,9 @@ The operator requested the remaining checks and confirmed **USB cable only**. No
 | Check | Current scope/status |
 | --- | --- |
 | Committed pending records across observed USB power removal | Passed separately for ten fixed Node 4 records |
-| Health-timeout rollback | Persisted INVALID rejection/original VALID selection verified; network/data recovery pending |
-| Staged incomplete temporary file followed by software reset | Isolated probe built; actual recovery test pending |
-| Unexpected reset of an unconfirmed image | Planned with the staged-file probe; bootloader must mark it ABORTED and select confirmed production |
+| Health-timeout rollback | Persisted INVALID/original VALID selection, exact protected-record continuity and healthy zero-queue recovery verified |
+| Staged incomplete temporary file followed by software reset | Passed: synced partial temporary record ignored; exact protected-record continuity and normal recovery |
+| Unexpected reset of an unconfirmed image | Passed: sequence 7 ABORTED; original sequence 2 VALID selected |
 | Physical cut during active flash programming | Deferred: USB hand unplug does not establish write-phase timing |
 | Measured brownout threshold/recovery | Deferred: no controllable supply, rail measurement or trigger equipment available |
 
@@ -61,6 +61,10 @@ The preceding paragraph preserves the activation checkpoint. The [passive observ
 
 The operator was asked to unblock Node 4 with USB unchanged. Saved settings/cloud recovery, journal integrity, exact protected-record comparison and queue drainage remain pending; no full end-to-end rollback acceptance is claimed until they complete. The stable manifest and all other nodes remain on production `c0e1dc4`.
 
+The operator then confirmed **“Node 4 rollback network restored.”** [USB recovery evidence](calibration/node4-health-rollback-recovery-usb-2026-11-27.json) verified the exact saved calibration, production release, valid network, setup inactive and no pending boot validation. The [after-rollback export](retention/node4-health-rollback-after-2026-11-27.ndjson) and [capture metadata](calibration/node4-health-rollback-after-2026-11-27.json) contain 256 distinct valid committed JSON records. [Exact comparison](calibration/node4-health-rollback-record-comparison-2026-11-27.json) passed all original thirty protected records, zero missing/changed protected IDs and all **112 common records** byte-identical. The 1,901-second export interval includes planned USB-loader maintenance; old acknowledged records outside the protected set rotated and are listed separately. This does not establish indefinite full-history retention.
+
+The backlog declined from 43 through the capture's 21/6 snapshots to zero; a fresh cloud checkpoint showed all four healthy/running/time-synchronized on `c0e1dc4`, with zero queues and unchanged peer boots. An intermediate Atlas connector query failed while laptop networking was transitioning for capture; the retry after restoration succeeded. It is retained as a verification transport failure, not a diagnosed node upload fault. **The health-timeout rollback and protected-record recovery criteria are passed.** This tests USB-staged application selection and the production health gate, not an intentionally corrupted network download or physical flash-write interruption.
+
 Example staged commands, after installing the documented Python dependencies and using a new private evidence directory:
 
 ```powershell
@@ -79,9 +83,43 @@ The [probe builder](../scripts/build-partial-write-probe.py) generates a separat
 
 On its first pending boot, before ordinary logging/network workers start, it writes **107 bytes** of deliberately incomplete JSON to `/littlefs/new.tmp`, flushes, syncs and closes it, then reports the unique synthetic event ID and slot over USB and calls `ESP.restart()` before rename/commit or app confirmation. The expected behavior is bootloader ABORTED rejection, confirmed production selected, committed records unchanged, partial probe absent from committed exports/Atlas, and normal logging recovery. Because the partial bytes are deliberately synced before the software reset, this is a staging-boundary robustness test, not loss of power during physical flash programming.
 
-The probe compiled successfully in `.build/partial-stage-probe-20261127`, version `usb-partial-stage-probe`, with synthetic ID `6a9ca8ba9e154154a2b719ab2fdb96fe`. Binary/patch metadata are kept with that ignored build. Installation/execution remains pending. Never publish the image or merge a test configuration into production. After the test, replace any inactive probe bytes with the verified production image while preserving the active valid image and retaining the observed rejection state for the audit.
+The probe compiled successfully in `.build/partial-stage-probe-20261127`, version `usb-partial-stage-probe`, with synthetic ID `6a9ca8ba9e154154a2b719ab2fdb96fe`. Binary/patch metadata are kept with that ignored build. At this original-build checkpoint installation/execution was pending; this first build was never installed. Never publish the image or merge a test configuration into production. After the test, replace any inactive probe bytes with the verified production image while preserving the active valid image and retaining the observed rejection state for the audit.
 
 [Sanitized build metadata](calibration/node4-partial-stage-probe-build-2026-11-27.json) records the 1,188,528-byte probe, its SHA-256 and the exact 107-byte partial payload hash. Production source files are unchanged.
+
+A [revised observer-attachment build](calibration/node4-partial-stage-probe-r1-build-2026-11-27.json) adds a ten-second armed delay before staging, still before normal workers/commit/confirmation. It is **1,188,640 bytes**, SHA-256 `64317e903f2df479103625d8f4ba3f4dded599b6256ae9d712a1fe300f7f4c16`; the partial payload and its hash are unchanged. Activation in `--test-mode partial-stage-reset --probe-id <exact-id>` attaches a passive UART observer inside the same process after the final selection write. It requires the 107-byte/pending/slot marker, software-reset marker and confirmed production return. This scenario deliberately keeps normal network access available; it does not use a false network-block confirmation. The original probe build was never installed; the revised build below is the executed image.
+
+A fresh [pre-probe capture](calibration/node4-partial-stage-before-2026-11-27.json) and [original log bytes](retention/node4-partial-stage-before-2026-11-27.ndjson) preserve a separate acknowledged thirty-record baseline. That preflight checkpoint preceded the revised image staging/activation below; another complete private filesystem backup was verified before writing only the inactive slot.
+
+### Observed incomplete-file/reset result — passed
+
+[Staging evidence](calibration/node4-partial-stage-staging-2026-11-27.json) verifies the 1,441,792-byte private filesystem backup, complete probe image and unchanged active production/selection. One inactive section stopped responding; its one bounded retry succeeded. The first activation preflight read then returned corrupt serial data and stopped **before any selection write**, resuming confirmed production. The retry reused only the verified staged image/metadata in a fresh evidence directory and independently verified both applications before activation. [USB failure summary](calibration/node4-partial-stage-usb-failures-2026-11-27.json) preserves these transport failures; incomplete dumps are not accepted as evidence.
+
+[Activation](calibration/node4-partial-stage-activation-2026-11-27.json) wrote sequence 7 / NEW in the opposite sector. The integrated [passive UART observation](calibration/node4-partial-stage-observation-2026-11-27.json) recorded the armed delay, exact synthetic ID `6a9ca8ba9e154154a2b719ab2fdb96fe`, **107 bytes / pending=1 / app0**, software-reset marker and return to production `c0e1dc4` with no pending validation. No loader/reset intervened in that observed transition. The subsequent metadata inspection was a separate planned maintenance reset.
+
+[Persisted state and byte comparison](calibration/node4-partial-stage-state-result-2026-11-27.json) found **sequence 7 / ABORTED (4) / app0**, valid CRC and original **sequence 2 / VALID (2) / app1 selected**. The confirmed sector, bootloader and partition table were byte-identical. Whole NVS equality was initially checked and failed: **28 bytes** differ, confined exactly to a newly allocated `WIFI_STA_DEF` entry in namespace `dhcp_state` and its allocation bitmap. Every other NVS byte, including existing fleet settings/calibration, is unchanged. Final device readback independently confirms the exact saved correction and working Wi-Fi/cloud configuration. Do not rewrite this as whole-NVS equality.
+
+The [after export](retention/node4-partial-stage-after-2026-11-27.ndjson), [capture metadata](calibration/node4-partial-stage-after-2026-11-27.json) and [independent comparison](calibration/node4-partial-stage-record-comparison-2026-11-27.json) verify both exports contain 256 valid distinct records, **all 30 protected records unchanged, all 238 common records byte-identical, zero missing protected IDs and zero changed common IDs**, over 562.092 seconds. Older acknowledged records rotated normally. [Synthetic-record exclusion](calibration/node4-partial-stage-synthetic-exclusion-2026-11-27.json) verifies the probe ID is absent from both committed exports and an exact Node 4 Atlas query. This tests logical commitment and delivery, not physical deletion of free flash blocks.
+
+The [post-probe journal scan](calibration/node4-partial-stage-storage-check-2026-11-27.json) found **256 valid / zero invalid**, completing in 26,382 ms. Sensor/storage were healthy, Wi-Fi had a valid address, IST/cloud recovered, setup was closed, the exact `n4-20261126-v1` correction remained installed and the queue reached zero. The diagnostic is read-only but may delay acquisition/uploads while inspecting flash.
+
+### Cleanup and final fleet checkpoint
+
+[Cleanup evidence](calibration/node4-partial-stage-cleanup-2026-11-27.json) verifies both application slots against the **same published 1,235,856-byte production image**, with the inactive probe removed. Boot/NVS/partition/OTA bytes stayed unchanged during cleanup; the recorded ABORTED rejection state is retained for audit and can be reused by a future normal OTA. Cleanup uses deliberate loader resets after the test and does not represent another automatic rollback. The stable OTA channel and `firmware/` source were never modified for the probe.
+
+[Final Node 4 USB readback](calibration/node4-fault-final-usb-2026-11-27.json) and [fresh cloud checkpoint](calibration/node4-fault-final-fleet-2026-11-27.json) confirm normal production, exact saved calibration, no pending boot, setup closed and synchronized time. Final USB readback observed Node 4 drain from one pending record to zero; subsequent live cloud/dashboard checkpoints show 0–1 pending per node during ordinary ongoing acquisition, not a claim of simultaneous zero in every view. Nodes 1–3 kept their original boots throughout Node 4 maintenance. The [authenticated dashboard screenshot](images/dashboard-fault-recovery-2026-11-27.png) and [dashboard API checkpoint](calibration/node4-fault-final-dashboard-2026-11-27.json) show the resulting four-node state. The laptop returned to Sensor Testing after exports; no new Wi-Fi credentials, registration or portal configuration was needed.
+
+### Repeating the isolated staged-file test
+
+Use a fresh ignored build/evidence directory and a new unique 32-character lowercase hexadecimal probe ID. Keep production cloud access available. First export an acknowledged baseline and verify the target MAC, partitions, valid production image/hash and backup gates. Never reuse an activation directory after a selection write.
+
+```powershell
+python scripts/build-partial-write-probe.py --node esp32-3013a5f4e9d4 --output .build/new-partial-probe --probe-id <unique-probe-id>
+python scripts/isolated-ota-check.py --action stage --port COM6 --node esp32-3013a5f4e9d4 --known-good <verified-production.bin> --known-good-sha256 <production-sha256> --image .build/new-partial-probe/.pio/build/esp32dev/firmware.bin --image-sha256 <build-metadata-sha256> --output work/new-partial-trial --test-mode partial-stage-reset --probe-id <unique-probe-id>
+python scripts/isolated-ota-check.py --action activate --port COM6 --node esp32-3013a5f4e9d4 --known-good <verified-production.bin> --known-good-sha256 <production-sha256> --output work/new-partial-trial --test-mode partial-stage-reset --probe-id <unique-probe-id>
+```
+
+After the observer completes, inspect persisted state with `--action inspect --label partial-reset-after` and the same identity/known-good/output arguments. Require ABORTED/original VALID selection, protected raw-record equality, synthetic exclusion, valid journal and saved-settings/network recovery. Then run `--action restore-inactive` with those same arguments, require both production image verifications and final fleet recovery. Do not use a network-block confirmation for this scenario, reset during the passive observation, format LittleFS, erase NVS, or publish probe artifacts to the normal release channel. If a guard/USB/observer fails, preserve evidence, allow the harness to resume the valid image, verify actual state and do not claim a pass.
 
 ## C. Equipment needed before physical write/brownout acceptance
 

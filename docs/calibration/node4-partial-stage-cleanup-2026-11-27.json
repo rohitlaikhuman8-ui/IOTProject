@@ -1,0 +1,61 @@
+{
+  "checkedAtEpoch": 1795771432.9061549,
+  "before": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 7,
+        "state": 4,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "after": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 7,
+        "state": 4,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "knownGoodSha256": "8c0003519dfce3a6c33eeac754b76a974f1523810b0e0e830ae43f53c078a124",
+  "bothApplicationImagesVerified": true,
+  "bootNvsPartitionAndOtaBytesUnchanged": true,
+  "result": "Both slots verified against production; inactive probe removed and rejection state retained"
+}

@@ -1,0 +1,14 @@
+{
+  "nodeId": "esp32-3013a5f4e9d4",
+  "inactiveSectionWriteFailure": {
+    "offset": "0x90000",
+    "error": "The chip stopped responding",
+    "boundedRetry": "Succeeded; whole inactive image and unchanged active production/selection subsequently verified"
+  },
+  "firstActivationPreflight": {
+    "error": "Corrupt data, expected 0x1000 bytes but received 0x10 bytes",
+    "result": "Activation aborted before selection write; confirmed production resumed; incomplete read retained privately"
+  },
+  "retry": "Reused hash-verified staged image and staging metadata in a new evidence directory; reverified both application images before final selection write",
+  "scope": "These were USB transport failures, not device journal corruption; no failed trial is overwritten"
+}

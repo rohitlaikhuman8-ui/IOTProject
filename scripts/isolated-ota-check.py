@@ -1,7 +1,9 @@
 """Classic ESP32 Node 4-only acceptance harness; never changes the fleet manifest.
 
 Stage/verify an image in the inactive slot while preserving a hash-verified VALID
-production slot, then explicitly activate NEW only after operator network isolation.
+production slot, then explicitly activate NEW for the chosen acceptance scenario.
+Health-timeout activation requires operator-confirmed network isolation; the
+partial-stage/reset probe keeps network access available for recovery.
 Private boot/NVS/filesystem backups must remain outside Git. Uses ESP-IDF 4.4's
 two-sector otadata layout and CRC, independently checked against actual entries.
 """
@@ -27,13 +29,17 @@ parser.add_argument('--image-sha256')
 parser.add_argument('--output', required=True)
 parser.add_argument('--label', default='inspection')
 parser.add_argument('--network-block-confirmed', action='store_true')
+parser.add_argument('--test-mode', choices=['health-timeout', 'partial-stage-reset'], default='health-timeout')
+parser.add_argument('--probe-id')
 args = parser.parse_args()
 if args.node != 'esp32-3013a5f4e9d4':
     parser.error('This acceptance harness is restricted to the isolated Node 4')
 if not re.fullmatch(r'[A-Za-z0-9_-]+', args.label):
     parser.error('Invalid evidence label')
-if args.action == 'activate' and not args.network_block_confirmed:
+if args.action == 'activate' and args.test_mode == 'health-timeout' and not args.network_block_confirmed:
     parser.error('Activate only after the operator confirms Node 4 blocked')
+if args.test_mode == 'partial-stage-reset' and not re.fullmatch(r'[0-9a-f]{32}', args.probe_id or ''):
+    parser.error('Partial-stage reset requires the exact synthetic probe ID')
 root = Path(args.output).resolve()
 workspace = Path(__file__).resolve().parent.parent
 if not root.is_relative_to(workspace / 'work'):
@@ -137,6 +143,60 @@ def backup_filesystem():
     run(['verify_flash', '0x290000', str(backup)], 'filesystem-backup-verify')
     return backup
 
+def observe_partial_reset():
+    # Attach inside the activation process, without another ROM-loader connect.
+    # The isolated image waits ten seconds before staging the partial bytes.
+    import serial
+    port = serial.Serial(port=None, baudrate=115200, timeout=0)
+    port.port = args.port
+    port.dtr = False
+    port.rts = False
+    port.open()
+    buffer = bytearray()
+    evidence = {'startedEpoch': time.time(), 'messages': [], 'statuses': []}
+    partial_seen = reset_seen = False
+    next_status = 0
+    try:
+        end = time.monotonic() + 120
+        while time.monotonic() < end:
+            if time.monotonic() >= next_status:
+                port.write(b'\nstatus\n')
+                next_status = time.monotonic() + 3
+            buffer.extend(port.read(port.in_waiting or 1))
+            while b'\n' in buffer:
+                line, _, remainder = buffer.partition(b'\n')
+                buffer[:] = remainder
+                text = line.decode(errors='replace').strip()
+                if text.startswith(('BENCH ', 'Node esp32-')):
+                    evidence['messages'].append({'hostEpoch': time.time(), 'message': text})
+                    print(text, flush=True)
+                marker = re.fullmatch(r'BENCH partial staged: id=([0-9a-f]{32}) bytes=(\d+) pending=(\d+) slot=(app[01])', text)
+                if marker:
+                    assert marker[1] == args.probe_id and int(marker[2]) == 107 and marker[3] == '1'
+                    partial_seen = True
+                    evidence['partialMarker'] = {'probeId': marker[1], 'bytes': int(marker[2]), 'pending': True, 'slot': marker[4]}
+                if text == 'BENCH software reset before temporary-record commit and app confirmation':
+                    reset_seen = True
+                try:
+                    status = json.loads(text)
+                except ValueError:
+                    continue
+                if isinstance(status, dict) and 'nodeId' in status:
+                    assert status['nodeId'] == args.node
+                    evidence['statuses'].append({'hostEpoch': time.time(), 'status': status})
+                    if partial_seen and reset_seen and status.get('version') == 'c0e1dc440b9b24d856098d845483aa49904e6a7e' and not status.get('pendingVerification', True):
+                        evidence['result'] = 'OBSERVED: synced partial temporary record, software reset and confirmed production return; inspect metadata and records separately'
+                        return evidence
+            time.sleep(.03)
+        raise RuntimeError('Partial-stage marker/reset/production return not observed within bounded window')
+    except BaseException as error:
+        evidence['result'] = 'INCOMPLETE: ' + str(error)
+        raise
+    finally:
+        port.close()
+        evidence['completedEpoch'] = time.time()
+        (root / 'partial-observation.json').write_text(json.dumps(evidence, indent=2), encoding='utf-8')
+
 resumed = False
 try:
     if args.action == 'stage':
@@ -171,6 +231,8 @@ try:
         assert layout['active'] == stage['startedFrom']['active'] and layout['active']['state'] == 2
         staged = root / 'staged-image.bin'
         assert hashlib.sha256(staged.read_bytes()).hexdigest() == stage['imageSha256']
+        if args.test_mode == 'partial-stage-reset':
+            assert b'usb-partial-stage-probe' in staged.read_bytes() and args.probe_id.encode() in staged.read_bytes()
         run(['verify_flash', hex(layout['activeAddress']), str(known)], 'active-before-activate-verify')
         run(['verify_flash', hex(layout['inactiveAddress']), str(staged)], 'inactive-before-activate-verify')
         target_sector = 1 - layout['active']['sector']
@@ -193,7 +255,8 @@ try:
         preserved_offset = 0xe000 + layout['active']['sector'] * 4096
         assert updated[preserved_offset:preserved_offset + 4096] == boot[preserved_offset:preserved_offset + 4096]
         assert selected['active']['state'] == 0 and selected['active']['slot'] != layout['active']['slot']
-        metadata = {'activationEpoch': time.time(), 'networkBlockOperatorConfirmed': True,
+        metadata = {'activationEpoch': time.time(), 'networkBlockOperatorConfirmed': args.network_block_confirmed,
+                    'testMode': args.test_mode, 'probeId': args.probe_id,
                     'previous': layout, 'plannedNew': selected, 'knownGoodSectorPreservedInPlannedWrite': True,
                     'verificationMethod': 'esptool write_flash built-in hash verification; no subsequent loader reconnect before observation'}
         (root / 'activation.json').write_text(json.dumps(metadata, indent=2), encoding='utf-8')
@@ -203,6 +266,8 @@ try:
         metadata['selectionSectorWriteVerified'] = True
         (root / 'activation.json').write_text(json.dumps(metadata, indent=2), encoding='utf-8')
         print('NEW image selected; observe first boot without another reset', flush=True)
+        if args.test_mode == 'partial-stage-reset':
+            observe_partial_reset()
     elif args.action == 'inspect':
         _, layout = read_boot(args.label, 'hard_reset')
         resumed = True
@@ -210,10 +275,18 @@ try:
         (root / (args.label + '.json')).write_text(json.dumps(metadata, indent=2), encoding='utf-8')
         print(json.dumps(metadata), flush=True)
     else:
-        _, layout = read_boot('before-restore-inactive')
+        boot, layout = read_boot('before-restore-inactive')
         assert layout['active']['state'] == 2
         run(['verify_flash', hex(layout['activeAddress']), str(known)], 'active-before-cleanup-verify')
         write_image(known, layout['inactiveAddress'], 'restore-inactive')
+        restored_boot, restored_layout = read_boot('after-restore-inactive')
+        assert restored_boot == boot, 'Boot/NVS/partition/OTA bytes changed during inactive cleanup'
+        run(['verify_flash', hex(layout['activeAddress']), str(known)], 'active-after-cleanup-verify')
+        cleanup = {'checkedAtEpoch': time.time(), 'before': layout, 'after': restored_layout,
+                   'knownGoodSha256': args.known_good_sha256, 'bothApplicationImagesVerified': True,
+                   'bootNvsPartitionAndOtaBytesUnchanged': True,
+                   'result': 'Both slots verified against production; inactive probe removed and rejection state retained'}
+        (root / 'cleanup.json').write_text(json.dumps(cleanup, indent=2), encoding='utf-8')
         run(['read_mac'], 'resume-after-cleanup', 'hard_reset')
         resumed = True
         print('Inactive application restored to known production bytes; rejection state retained', flush=True)

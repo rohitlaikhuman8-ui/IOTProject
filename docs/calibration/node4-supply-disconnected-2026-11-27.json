@@ -1,0 +1,38 @@
+{
+  "checkedAtEpoch": 1795762077.4702663,
+  "operatorReport": "Node 4 unplugged, LEDs off",
+  "expectedAbsentPort": "COM6",
+  "com6Absent": true,
+  "ports": [
+    {
+      "port": "COM5",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM5)",
+      "vid": 4292,
+      "pid": 60000
+    },
+    {
+      "port": "COM3",
+      "description": "Standard Serial over Bluetooth link (COM3)",
+      "vid": null,
+      "pid": null
+    },
+    {
+      "port": "COM4",
+      "description": "Standard Serial over Bluetooth link (COM4)",
+      "vid": null,
+      "pid": null
+    },
+    {
+      "port": "COM8",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM8)",
+      "vid": 4292,
+      "pid": 60000
+    },
+    {
+      "port": "COM9",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM9)",
+      "vid": 4292,
+      "pid": 60000
+    }
+  ]
+}

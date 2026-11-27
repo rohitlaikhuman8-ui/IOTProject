@@ -14,7 +14,7 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
-The [fresh pending-data power-cut repeat on the repaired portal](docs/PENDING-POWER-REPEAT-2026-11-27.md) has completed Node 4's production identity/local-access preflight. A new blocked-network baseline, verified USB removal and exact local/cloud comparisons are staged; no new power-cut pass is claimed yet.
+The [fresh pending-data power-cut repeat on the repaired portal](docs/PENDING-POWER-REPEAT-2026-11-27.md) has saved ten fixed pending samples while Node 4 is blocked, all confirmed absent from Atlas, with a complete 256-record before-cut export. Verified USB removal and post-cut local/cloud comparisons remain pending; no new power-cut pass is claimed yet.
 
 **Current production: `c0e1dc4` on all four nodes, adopted through OTA with confirmed healthy boots and exact saved calibrations.** The [fallback AP availability fix](docs/FALLBACK-AP-AVAILABILITY.md) passed simulated and real blocked-hotspot startup checks: complete 256-record export, stable client access, valid-IP readiness and recovery. Node 4's first OTA download was safely rejected when incomplete; its automatic retry succeeded. No bench firmware remains. The [13:30 IST dashboard screenshot](docs/images/dashboard-ap-availability-release-2026-11-27.png) shows all four online, zero queues and reciprocal peer discovery. Earlier inconclusive power-cut evidence remains unchanged; interrupted-write, measured brownout, intentional rollback and endurance acceptance remain open.
 

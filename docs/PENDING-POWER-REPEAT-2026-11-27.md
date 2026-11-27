@@ -1,6 +1,6 @@
 # Pending-data power-cut repeat on repaired portal — November 27, 2026
 
-## State: preflight passed; isolation and power cut pending
+## State: fixed pending-record baseline saved; physical removal pending
 
 This is a fresh test on production **`c0e1dc440b9b24d856098d845483aa49904e6a7e`**, after the [fallback AP repair](FALLBACK-AP-AVAILABILITY.md). The [earlier power-cut attempts](PENDING-POWER-RECOVERY-2026-11-27.md) remain unchanged: one lacked restart evidence; another delivered selected pre-cut samples but lacked the required isolated post-cut local export. Neither is silently converted into this test's result.
 
@@ -19,5 +19,13 @@ The public capture helper now buffers partial USB lines until newline rather tha
 5. Allow at least the automatic fallback startup period. Read USB identity/status without resetting or changing settings, then join the repaired AP and export all 256 records while still blocked. Require all selected IDs present with identical original fields and raw hashes, and exactly one new boot absent from the entire before-cut archive. New-boot records must use the expected firmware/revision. Keep the same **3–64** bounded queue criterion. Records generated before NTP returns may legitimately lack device capture time; server receipt time remains separate.
 6. Only after local survival is verified, ask the operator to unblock Node 4. Verify every selected ID reaches Atlas once with original fields unchanged, a fresh new-boot heartbeat/telemetry, saved Wi-Fi/time/calibration/firmware, healthy sensor/storage, a readable journal and queue drainage. Check peers' boots/revisions remain unchanged.
 7. End only the test's portal session, restore laptop networking, remove temporary profiles/private XML, archive failures/results under `docs/`, update README/verification and push finalized documentation. If access fails, power changes unexpectedly, isolation is not verified or the bounded queue criterion fails, stop the acceptance attempt and restore connectivity promptly; do not extend the outage or erase/reflash to hide evidence.
+
+## Isolation and immutable baseline completed
+
+The operator confirmed **“Node 4 blocked for repaired-portal power test.”** The fresh boundary was **13:42:16.108 IST** (`1795767136.1080053`). Node 4's cloud report stayed at **13:41:31.003 IST**, while all peers continued fresh reports with unchanged boots. The [isolation fleet snapshot](calibration/node4-pending-power-repeat3-isolation-fleet-2026-11-27.json) retains those cloud observations; its stale target pending count is not the current local backlog.
+
+The [before-cut metadata](calibration/node4-pending-power-repeat3-before-2026-11-27.json) and [full raw export](retention/node4-pending-power-repeat3-before-2026-11-27.ndjson) preserve 256 distinct same-node records, per-record hashes and ten selected fresh periodic payloads on the reference boot/production release/saved revision. Local status showed **16 pending before / 17 after**, no usable station IP, station retries paused and a real AP client. The export completed by **13:44:39 IST**; laptop Wi-Fi returned to Sensor Testing and the temporary profile was deleted.
+
+The [Atlas query](calibration/node4-pending-power-repeat3-absence-2026-11-27.json) found zero documents for every fixed selected ID, with no applied limits, before requesting any power change. No IDs were replaced after that query. The operator was then asked to remove USB from the identified board, keep it unplugged and report both LEDs off. Physical removal, new boot, post-cut exact local survival and later cloud delivery remain pending.
 
 **No power-cut result yet.** All physical steps await their explicit operator checkpoints. A pass would establish exact survival/delivery of the fixed already-committed records in this test, not survival of an in-progress write, zero loss during an indefinite outage, a measured brownout threshold, intentional OTA rollback or endurance acceptance. Flash-write interruption and measured supply tests require separate equipment/procedures.

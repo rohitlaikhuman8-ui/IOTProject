@@ -1,0 +1,63 @@
+{
+  "checkedAt": "2026-11-27T08:16:03.527Z",
+  "documents": [
+    {
+      "lastSeen": {
+        "$date": "2026-11-27T08:15:58.320Z"
+      },
+      "nodeId": "esp32-d01de2f4e9d4",
+      "sensorReady": true,
+      "storageReady": true,
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "bootId": "a35383434f10eb86d0536bed3a204fec",
+      "mode": "running",
+      "pendingRecords": 0,
+      "timeSynced": true,
+      "calibrationRevision": "n1-20261125-v1"
+    },
+    {
+      "bootId": "71bb2ca59515ae346d6c2635be87d3ef",
+      "lastSeen": {
+        "$date": "2026-11-27T08:16:01.776Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-7839a3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n2-20261126-v2"
+    },
+    {
+      "bootId": "b55f4c8f74cf569fe7a3aac19bf4ea85",
+      "lastSeen": {
+        "$date": "2026-11-27T08:16:03.180Z"
+      },
+      "mode": "running",
+      "nodeId": "esp32-986aa3f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n3-20261126-v1"
+    },
+    {
+      "bootId": "169f2b979be96f2ef4a46e83a27f8a86",
+      "lastSeen": {
+        "$date": "2026-11-27T08:11:31.003Z"
+      },
+      "mode": "setup",
+      "nodeId": "esp32-3013a5f4e9d4",
+      "pendingRecords": 0,
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "queryResultsCount": 4,
+  "appliedLimits": []
+}

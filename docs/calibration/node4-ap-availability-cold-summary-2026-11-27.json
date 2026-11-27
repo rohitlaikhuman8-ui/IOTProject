@@ -1,0 +1,26 @@
+{
+  "newBoot": "2030e2b0d0602bcad00de1320b402d73",
+  "newBootRecordCount": 7,
+  "localRecords": 256,
+  "bytes": 107032,
+  "sha256": "e965f3cdb1a39c36dab6752901df6b47edaa3409ea980522d7875f7524c3a1c1",
+  "statusBefore": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "timeIst": "Waiting for time sync",
+    "pending": 14,
+    "connection": "Setup available; saved Wi-Fi retries paused",
+    "wifiReady": false,
+    "portalStationPaused": true,
+    "apClients": 1
+  },
+  "statusAfter": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "timeIst": "Waiting for time sync",
+    "pending": 15,
+    "connection": "Setup available; saved Wi-Fi retries paused",
+    "wifiReady": false,
+    "portalStationPaused": true,
+    "apClients": 1
+  },
+  "originalNetworkRestored": true
+}

@@ -50,7 +50,13 @@ Node 4's queue decreased through 148, 147, 93, 57 and 9, then reached zero. [Fin
 
 The [new local preflight](calibration/node4-pending-power-repeat2-preflight-2026-11-27.json) completed a full 256-record export and 30-recent-ID check after the verified restart. Setup was initially inactive; the helper opened a manual session, kept it available explicitly for this repeat, restored laptop Wi-Fi and deleted its temporary profile. The saved AP credential stays private. Separate before/after evidence directories are prepared so the earlier failed trial cannot be overwritten.
 
-The repeat retains the same fixed-ID/payload/hash, Atlas-absence, new-boot and bounded-pending checks. The pre-cut expected boot is now `37212d91d5f36dac9aa791dcb212d5a8`. Capture cleanup no longer reuses the SSID variable for a record, and the post-cut response is archived before validation. The operator has been asked to block only Node 4 while leaving USB connected; no repeat boundary, pending selection or power cut is recorded until confirmed.
+The repeat retains the same fixed-ID/payload/hash, Atlas-absence, new-boot and bounded-pending checks. The pre-cut expected boot is now `37212d91d5f36dac9aa791dcb212d5a8`. Capture cleanup no longer reuses the SSID variable for a record, and the post-cut response is archived before validation.
+
+After the operator confirmed **“Node 4 blocked for repeat,”** a fresh selection boundary was saved at **12:22:01.453 IST** (`1795762321.4529657`). Node 4's cloud report remained at **12:21:48.118 IST**, while peers kept reporting with unchanged boots. The [isolation fleet checkpoint](calibration/node4-pending-power-repeat2-isolation-fleet-2026-11-27.json) preserves the cloud state; its target pending count is historical, not the current local count.
+
+The [fresh local baseline](calibration/node4-pending-power-repeat2-before-2026-11-27.json) exported 256 records with **16 pending before / 17 after**, `Wi-Fi reconnecting`, and ten selected fresh periodic records on the expected pre-cut boot/firmware/calibration. The [original bytes](retention/node4-pending-power-repeat2-before-2026-11-27.ndjson) and per-record hashes are archived. An [Atlas query](calibration/node4-pending-power-repeat2-absence-2026-11-27.json) found zero documents for every selected ID, without applied limits, before requesting any power change. Laptop Wi-Fi was restored and its temporary profile removed.
+
+The operator is now asked to unplug USB at the physically identified Node 4 and report its LEDs off, **leaving it unplugged**. Verify COM6 absent before requesting reconnection, with the hotspot entry still blocked throughout. No repeat power-cycle completion or retention pass is assumed yet.
 
 ## Physical identity check before any repeat
 

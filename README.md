@@ -14,7 +14,7 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
-Candidate work: the [fallback AP availability fix](docs/FALLBACK-AP-AVAILABILITY.md) has passed a complete simulated hardware trial on Node 4, including a 256-record export, client scan protection and automatic recovery. Node 4 temporarily runs the isolated OTA-disabled bench image; Nodes 1–3 remain on production `d05bb40`. The real blocked-hotspot startup check and production rollout remain pending. Work stays on `codex/fallback-ap-availability` until finalized.
+The [fallback AP availability fix](docs/FALLBACK-AP-AVAILABILITY.md) passed complete simulated hardware validation and a real blocked-hotspot startup check: 256-record AP export, client scan protection, new-boot reporting and recovery with saved calibration intact. The source is finalized after branch validation. Production publication and actual fleet adoption are tracked separately in that record; the bench image is never a fleet release.
 
 The [committed pending-record power-loss attempt](docs/PENDING-POWER-RECOVERY-2026-11-27.md) is inconclusive: the operator confirmed a cycle, but no new boot was found and the queue exceeded the planned bound. All ten fixed selected records remained locally byte-identical and later reached Atlas once each with unchanged original fields. The journal scan passed 256 valid/zero invalid, the queue cleared and all four finished healthy/online. Identify the physical board and actual supply path before repeating; this is not a power-loss/interrupted-write/brownout/rollback pass.
 

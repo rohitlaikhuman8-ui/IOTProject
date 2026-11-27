@@ -1,0 +1,88 @@
+{
+  "checkedAtEpoch": 1795765500.1923459,
+  "observations": [
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "usb-ap-availability-bench",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "revision": "n4-20261126-v1",
+        "bias": [
+          0.251419,
+          0.376085,
+          -0.468513
+        ],
+        "scale": [
+          0.977386,
+          0.963646,
+          0.997382
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": false,
+      "wifiAssociated": false,
+      "wifiMode": 2,
+      "apClients": 0,
+      "portalStationPaused": true,
+      "portalStationProbe": false,
+      "ssid": "Sensor Testing",
+      "rssi": 0,
+      "ip": "0.0.0.0",
+      "portalActive": true,
+      "portalAutomatic": false,
+      "touchRaw": 111,
+      "logRecords": 256,
+      "stackFreeBytes": 12492,
+      "freeHeap": 152228,
+      "pendingVerification": false,
+      "ledOn": false,
+      "timeIst": "Waiting for time sync",
+      "pendingRecords": 24,
+      "lastCloudAgeMs": 0
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "usb-ap-availability-bench",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "revision": "n4-20261126-v1",
+        "bias": [
+          0.251419,
+          0.376085,
+          -0.468513
+        ],
+        "scale": [
+          0.977386,
+          0.963646,
+          0.997382
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": false,
+      "wifiAssociated": false,
+      "wifiMode": 2,
+      "apClients": 0,
+      "portalStationPaused": true,
+      "portalStationProbe": false,
+      "ssid": "Sensor Testing",
+      "rssi": 0,
+      "ip": "0.0.0.0",
+      "portalActive": true,
+      "portalAutomatic": true,
+      "touchRaw": 110,
+      "logRecords": 256,
+      "stackFreeBytes": 12492,
+      "freeHeap": 160428,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "Waiting for time sync",
+      "pendingRecords": 25,
+      "lastCloudAgeMs": 0
+    }
+  ],
+  "manualPortalClosedForCleanup": true
+}

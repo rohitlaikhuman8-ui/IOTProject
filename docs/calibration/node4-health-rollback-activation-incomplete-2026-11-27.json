@@ -1,0 +1,23 @@
+{
+  "result": "INCONCLUSIVE for health timeout; observed loader-induced unconfirmed-reset rollback",
+  "cause": "Separate USB loader verification connections after NEW selection can reset first boot and cause ABORTED before the timeout observation",
+  "stagingEvidenceDirectory": "node4-health-rollback-retry1-20261127",
+  "entries": [
+    {
+      "sector": 0,
+      "sequence": 3,
+      "state": 4,
+      "crcValid": true,
+      "slot": 0
+    },
+    {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    }
+  ],
+  "stableManifestChanged": false,
+  "activeKnownGoodSectorPreserved": true
+}

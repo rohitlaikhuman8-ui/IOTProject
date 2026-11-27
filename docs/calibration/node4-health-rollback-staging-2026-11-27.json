@@ -1,0 +1,73 @@
+{
+  "startedFrom": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 1,
+        "state": 4294967295,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "afterStage": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 1,
+        "state": 4294967295,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "imageBytes": 1235856,
+  "imageSha256": "8c0003519dfce3a6c33eeac754b76a974f1523810b0e0e830ae43f53c078a124",
+  "knownGoodSha256": "8c0003519dfce3a6c33eeac754b76a974f1523810b0e0e830ae43f53c078a124",
+  "filesystemBackupSha256": "67e8cc10b4a8cc178ac105316ec65468ad24134354fab0aa74896f74860b6dd6",
+  "result": "STAGED ONLY: inactive application verified; active production and otadata preserved",
+  "chunkReadFailures": [
+    {
+      "logName": "filesystem-00070000-0.log",
+      "error": "Serial read failed; independent chunk retry succeeded before full-backup verification"
+    },
+    {
+      "logName": "filesystem-00080000-0.log",
+      "error": "Serial read failed; independent chunk retry succeeded before full-backup verification"
+    }
+  ],
+  "filesystemBackupVerifiedAgainstFlash": true,
+  "phase": "Staged inactive image only; activation observed separately"
+}

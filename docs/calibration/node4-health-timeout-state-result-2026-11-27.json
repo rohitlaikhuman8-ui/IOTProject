@@ -1,0 +1,37 @@
+{
+  "result": "PASS: persisted health-timeout rejection and rollback selection; final network/data recovery pending",
+  "metadata": {
+    "checkedAtEpoch": 1795770072.5467772,
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 5,
+        "state": 3,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "confirmedSectorByteUnchanged": true,
+  "nvsByteUnchanged": true,
+  "bootloaderAndPartitionBytesUnchanged": true,
+  "observedPendingSeconds": 159.40599999995902,
+  "activationToPendingClearSeconds": 204.37927103042603,
+  "note": "The firmware health timer starts in setup before the first host status sample; observe durations separately."
+}

@@ -1,0 +1,61 @@
+{
+  "activationEpoch": 1795769837.2447045,
+  "networkBlockOperatorConfirmed": true,
+  "previous": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 3,
+        "state": 4,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 1,
+      "sequence": 2,
+      "state": 2,
+      "crcValid": true,
+      "slot": 1
+    },
+    "activeAddress": 1376256,
+    "inactiveAddress": 65536
+  },
+  "plannedNew": {
+    "entries": [
+      {
+        "sector": 0,
+        "sequence": 5,
+        "state": 0,
+        "crcValid": true,
+        "slot": 0
+      },
+      {
+        "sector": 1,
+        "sequence": 2,
+        "state": 2,
+        "crcValid": true,
+        "slot": 1
+      }
+    ],
+    "active": {
+      "sector": 0,
+      "sequence": 5,
+      "state": 0,
+      "crcValid": true,
+      "slot": 0
+    },
+    "activeAddress": 65536,
+    "inactiveAddress": 1376256
+  },
+  "knownGoodSectorPreservedInPlannedWrite": true,
+  "verificationMethod": "esptool write_flash built-in hash verification; no subsequent loader reconnect before observation",
+  "selectionSectorWriteVerified": true
+}

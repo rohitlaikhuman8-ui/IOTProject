@@ -1,0 +1,11 @@
+{
+  "result": "PASS",
+  "checks": [
+    "real confirmed slot/CRC selection",
+    "reject wrong app partition address",
+    "reject both OTA CRCs corrupted",
+    "ignore newer rejected state 3",
+    "ignore newer rejected state 4"
+  ],
+  "scope": "Actual parser extracted from harness, fault-injected copies of private partition metadata; no device mutation"
+}

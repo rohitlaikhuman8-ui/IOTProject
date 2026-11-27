@@ -1,0 +1,9 @@
+{
+  "scope": "Read-only filesystem backup failure before staging",
+  "result": "INCOMPLETE: whole filesystem serial read failed before any inactive application or selection write",
+  "error": "Corrupt data, expected 0x1000 bytes but received 0x10 bytes",
+  "knownGoodActiveVerifiedBeforeRead": true,
+  "resumeKnownProductionSucceeded": true,
+  "privateLogsPreserved": true,
+  "noAcceptancePassClaimed": true
+}

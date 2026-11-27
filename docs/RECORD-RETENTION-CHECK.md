@@ -37,6 +37,8 @@ python scripts/compare-local-logs.py --before work/retention-new-before --after 
 
 The helper is a hardware integration operation: it briefly changes laptop Wi-Fi, opens/closes manual setup and archives local data. It rejects an existing output directory, verifies hardware identity and complete log count, and restores the original network/profile during cleanup. A failed or partially restored capture is not acceptance evidence. Capture files contain sensor data and identifiers, not configuration secrets; review before publishing. Do not repeatedly reopen setup for ordinary logging—these sessions are solely to obtain the local retention evidence.
 
+For a separately planned follow-up test, explicit `--keep-portal-open` leaves only this helper's newly opened setup session active after restoring laptop Wi-Fi. Normal default cleanup still closes it; existing manual sessions are not taken over. The normal fifteen-minute lifetime applies. November 27's [queued-data retry preflight](QUEUED-DATA-RETRY-2026-11-27.md) exercised this option with a complete real hardware export.
+
 ## Completed comparison and retained failure
 
 The operator confirmed **“Node 4 retention power-cycle done.”** The first post-cycle attempt stopped before export because its zero-pending checkpoint was not reached. [Incomplete evidence](calibration/node4-retention-after-incomplete-2026-11-26.json) is retained and excluded. No records/settings were deleted or changed; laptop Wi-Fi was restored.

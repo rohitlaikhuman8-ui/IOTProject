@@ -32,3 +32,5 @@ The experimental outage option for the capture helper was not hardware-validated
 6. Only after a clean retry should pending-record power-cut/write-interruption, measured brownout and isolated failed-image rollback tests proceed. Never publish a failing test image to the production fleet.
 
 **A clean retry has not started.** Leave Node 4 online and powered while the local access prerequisite is prepared. The rolling 256-record store is finite; this run does not establish retention capacity or indefinite no-loss behavior.
+
+A subsequent [November 27 short retry preflight](QUEUED-DATA-RETRY-2026-11-27.md) verified all four current USB identities and Node 4's full local HTTP export before asking for any new pause. Its manual setup session was deliberately left available for a short network-only test. This does not change the diagnostic classification of the November 26 attempt.

@@ -19,6 +19,7 @@ parser.add_argument('--port', required=True)
 parser.add_argument('--node', required=True)
 parser.add_argument('--output', required=True, help='New evidence directory')
 parser.add_argument('--post-cycle-baseline', help='Existing acknowledged baseline metadata; permits queued records in post-cycle export')
+parser.add_argument('--keep-portal-open', action='store_true', help='Keep this capture session open for a separately controlled follow-up test; default closes it')
 args = parser.parse_args()
 if not re.fullmatch(r'esp32-[a-f0-9]{12}', args.node):
     parser.error('Invalid Node ID')
@@ -165,7 +166,8 @@ except BaseException as error:
     metadata['result'] = 'INCOMPLETE: ' + str(error)
     raise
 finally:
-    if portal_opened:
+    metadata['portalLeftOpenForFollowup'] = portal_opened and args.keep_portal_open
+    if portal_opened and not args.keep_portal_open:
         port.write(b'portal-close\n')
         drain(2)
     if port.is_open:

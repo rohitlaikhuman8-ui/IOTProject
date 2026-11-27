@@ -1,0 +1,38 @@
+[
+  {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+    "calibration": {
+      "enabled": true,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "revision": "n4-20261126-v1",
+      "bias": [
+        0.251419,
+        0.376085,
+        -0.468513
+      ],
+      "scale": [
+        0.977386,
+        0.963646,
+        0.997382
+      ]
+    },
+    "storageReady": true,
+    "sensorAddress": 83,
+    "wifiConnected": true,
+    "ssid": "Sensor Testing",
+    "rssi": 0,
+    "ip": "0.0.0.0",
+    "portalActive": false,
+    "portalAutomatic": false,
+    "touchRaw": 109,
+    "logRecords": 256,
+    "stackFreeBytes": 12508,
+    "freeHeap": 159464,
+    "pendingVerification": false,
+    "ledOn": false,
+    "timeIst": "2026-11-27 10:47:45 IST",
+    "pendingRecords": 41,
+    "lastCloudAgeMs": 410333
+  }
+]

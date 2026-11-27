@@ -1,6 +1,8 @@
 # Short queued-data retry — November 27, 2026
 
-## Preflight completed; isolation not yet started
+## Result: selected network-only queue delivery passed
+
+Node 4 retained ten fixed periodic samples during a verified reporting outage and delivered every original payload after hotspot access was restored. Every selected ID was absent from Atlas before restoration and appeared exactly once afterward. Its queue reached zero without a changed boot, firmware or calibration. This result covers the selected records in this network-only trial; interrupted-write, brownout, deliberate OTA rollback and endurance acceptance remain open.
 
 The [previous diagnostic attempt](QUEUED-DATA-RECOVERY.md) remains inconclusive and is not overwritten. No node should be blocked until the local access path and capture steps are ready. This retry excludes power/cable/button changes; it tests network-only buffering and later delivery of a fixed local record set.
 
@@ -19,4 +21,22 @@ Node 4's pre-retry cloud boot is **`9057c927c8ad28fec57364286a49d892`**. Other p
 5. Ask the operator to unpause Node 4 only. Verify every selected ID arrives once with the original payload fields, using server receipt times separately from device capture times. Observe queue drainage and unchanged target/peer boots, firmware, calibrations and sensor/storage/time health. A reset invalidates a no-reset isolation result.
 6. Close only the test's manual portal after recovery, retain failures and update docs. No deliberate flash/write interruption or failed-image firmware is part of this phase. This is a bounded selected-queue delivery test, not an indefinite capacity or zero-loss guarantee.
 
-**Current result: preflight only.** The actual pause, local queued-record selection, Atlas absence and post-restoration delivery checks are pending operator action.
+## Isolation and fixed selection completed
+
+The operator confirmed Node 4 blocked. The fixed selection boundary was **10:41:59 IST** (`1795756319.3956199`). Its cloud last-seen remained **10:40:55.465 IST** while all three peers continued fresh reports with unchanged boots. The [isolation fleet snapshot](calibration/node4-queue-retry-isolation-fleet-2026-11-27.json) records that distinction.
+
+The already-open AP returned a complete **256-record** log with **19 pending before / 20 after** export and status `Wi-Fi reconnecting`. Ten periodic samples from **10:42:22 through 10:43:52 IST**, all on the unchanged preflight boot, firmware and calibration, were fixed before restoration. [Baseline metadata](calibration/node4-queue-retry-baseline-2026-11-27.json) preserves their original fields and raw-record hashes. The laptop returned to Sensor Testing and its temporary profile was deleted.
+
+An Atlas query for all ten exact IDs returned **zero documents**, without applied result limits, while Node 4 remained blocked. The [absence evidence](calibration/node4-queue-retry-absence-2026-11-27.json) was saved before asking the operator to unblock it. No selected IDs were discarded or replaced.
+
+## Restoration and delivery verified
+
+After the operator confirmed unblocking, initial cloud queries still showed Node 4 stale and zero selected IDs stored. At **10:47:45 IST**, [read-only USB status](calibration/node4-queue-retry-usb-transient-2026-11-27.json) showed 41 pending, a transient `wifiConnected=true` with IP `0.0.0.0`, and approximately 410 seconds since the last cloud success. Its manual portal had expired and was inactive. No reset, settings write or portal-close command was issued to force recovery. The exact physical unblock time was not instrumented; this trial establishes eventual recovery, not a bounded reconnection latency.
+
+By **10:48:50.150 IST**, Node 4 again reported to Atlas with the original boot and 47 pending. All ten fixed IDs were received **10:49:26.429–10:49:36.428 IST**. The [delivery evidence](calibration/node4-queue-retry-delivery-2026-11-27.json) includes the returned documents and per-ID comparison: one stored document per ID, every original field equal, no query limits applied. Server-added `receivedAt` was excluded from the original-payload comparison and preserved separately. The selected samples' capture-to-receipt delays were **344.428–424.429 seconds**; these include time intentionally left blocked while awaiting operator restoration and are not reconnection-only measurements.
+
+The queue decreased through 22 and 19, then reached **zero** by the **10:51:05 IST** cloud report. The [final fleet snapshot](calibration/node4-queue-retry-final-fleet-2026-11-27.json) showed all four fresh, running, sensor/storage healthy and time-synchronized, with all queues zero and unchanged boots, firmware and revisions. [Final USB readback](calibration/node4-queue-retry-usb-final-2026-11-27.json) independently confirmed Node 4's complete calibration matches preflight, valid IP, setup inactive, 256 local records, no pending OTA verification and zero queued records.
+
+The [original full log export](retention/node4-queue-retry-baseline-2026-11-27.ndjson) is archived without Git newline conversion. Its complete-file SHA-256 is `af27fe2e8ad0bf86842a96cda06a65c14f81dfffbe0a377fa4e747bef4328212`; compare with baseline metadata before reusing evidence. The setup session expired normally; no new portal was opened after the trial. Laptop Wi-Fi remains Sensor Testing. No firmware, saved network settings or calibration was changed.
+
+**Final result: PASS for the ten fixed selected records and eventual no-reboot network recovery on Node 4.** The planned short interval expanded while waiting for operator restoration. This is neither an uninterrupted-write/power-fault test nor proof that every sample from an indefinite outage survives the finite journal. Other nodes' individual offline delivery, precise reconnect timing, queue-full behavior, pending-record interrupted-write/brownout, isolated rollback, quantified motion thresholds and endurance remain separate checks.

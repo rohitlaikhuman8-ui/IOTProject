@@ -27,7 +27,7 @@ See the [complete operations and safety manual](OPERATING_MANUAL.md) for the ful
 | Device stays offline | Check 2.4 GHz network, SSID/password, signal, router, DHCP |
 | Touch responds late | Local flash writes or a slow portal client can delay the main loop; check storage and serial diagnostics |
 
-If USB shows a connected flag with IP `0.0.0.0`, the node has no usable IPv4 connection: do not treat association as internet or cloud readiness. Record the IP, portal flags, MAC/Node ID, pending count and actual AP visibility. Do not erase/reprovision as the first response. A [candidate fix and isolated test](FALLBACK-AP-AVAILABILITY.md) address this readiness check and setup access during station retries; its production release status is tracked explicitly.
+If older firmware shows a connected flag with IP `0.0.0.0`, the node has no usable IPv4 connection: do not treat association as internet or cloud readiness. Production **`c0e1dc4`** separates `wifiAssociated` from IP-ready `wifiConnected` and provides [stable fallback AP periods](FALLBACK-AP-AVAILABILITY.md). Record the IP, `wifiMode`, portal/pause/client flags, MAC/Node ID, pending count and actual AP visibility. While connected to an offline setup AP, station retries are intentionally paused; leave it to permit the next probe or close setup when finished. Do not erase/reprovision as the first response.
 
 ## Uploads
 

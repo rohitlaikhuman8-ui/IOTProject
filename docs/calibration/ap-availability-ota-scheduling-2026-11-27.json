@@ -1,0 +1,187 @@
+{
+  "targetVersion": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+  "startedEpoch": 1795765941.880981,
+  "nodes": [
+    {
+      "nodeId": "esp32-d01de2f4e9d4",
+      "port": "COM9",
+      "before": {
+        "nodeId": "esp32-d01de2f4e9d4",
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-d01de2f4e9d4",
+          "revision": "n1-20261125-v1",
+          "bias": [
+            0.124301,
+            -0.196011,
+            -1.757719
+          ],
+          "scale": [
+            0.990319,
+            0.971404,
+            1.026839
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "ssid": "Sensor Testing",
+        "rssi": -56,
+        "ip": "10.157.182.128",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 98,
+        "logRecords": 256,
+        "stackFreeBytes": 13196,
+        "freeHeap": 103136,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:22:25 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 3460
+      },
+      "action": "OTA check scheduled over identity-verified USB",
+      "acknowledged": true,
+      "messages": [
+        "OTA check scheduled"
+      ]
+    },
+    {
+      "nodeId": "esp32-7839a3f4e9d4",
+      "port": "COM5",
+      "before": {
+        "nodeId": "esp32-7839a3f4e9d4",
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-7839a3f4e9d4",
+          "revision": "n2-20261126-v2",
+          "bias": [
+            -0.288439,
+            0.106403,
+            -2.478975
+          ],
+          "scale": [
+            0.980068,
+            0.984107,
+            1.026941
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "ssid": "Sensor Testing",
+        "rssi": -51,
+        "ip": "10.157.182.5",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 105,
+        "logRecords": 256,
+        "stackFreeBytes": 13356,
+        "freeHeap": 100188,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:22:31 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 258
+      },
+      "action": "OTA check scheduled over identity-verified USB",
+      "acknowledged": true,
+      "messages": [
+        "OTA check scheduled"
+      ]
+    },
+    {
+      "nodeId": "esp32-986aa3f4e9d4",
+      "port": "COM8",
+      "before": {
+        "nodeId": "esp32-986aa3f4e9d4",
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-986aa3f4e9d4",
+          "revision": "n3-20261126-v1",
+          "bias": [
+            0.015584,
+            -0.127486,
+            -1.603618
+          ],
+          "scale": [
+            0.977145,
+            0.978043,
+            1.005285
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "ssid": "Sensor Testing",
+        "rssi": -56,
+        "ip": "10.157.182.86",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 109,
+        "logRecords": 256,
+        "stackFreeBytes": 13100,
+        "freeHeap": 109776,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:22:37 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 339
+      },
+      "action": "OTA check scheduled over identity-verified USB",
+      "acknowledged": true,
+      "messages": [
+        "OTA check scheduled"
+      ]
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "port": "COM6",
+      "before": {
+        "nodeId": "esp32-3013a5f4e9d4",
+        "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+        "calibration": {
+          "enabled": true,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "revision": "n4-20261126-v1",
+          "bias": [
+            0.251419,
+            0.376085,
+            -0.468513
+          ],
+          "scale": [
+            0.977386,
+            0.963646,
+            0.997382
+          ]
+        },
+        "storageReady": true,
+        "sensorAddress": 83,
+        "wifiConnected": true,
+        "ssid": "Sensor Testing",
+        "rssi": -38,
+        "ip": "10.157.182.153",
+        "portalActive": false,
+        "portalAutomatic": false,
+        "touchRaw": 111,
+        "logRecords": 256,
+        "stackFreeBytes": 13500,
+        "freeHeap": 109960,
+        "pendingVerification": false,
+        "ledOn": true,
+        "timeIst": "2026-11-27 13:22:44 IST",
+        "pendingRecords": 0,
+        "lastCloudAgeMs": 4927
+      },
+      "action": "OTA check scheduled over identity-verified USB",
+      "acknowledged": true,
+      "messages": [
+        "OTA check scheduled"
+      ]
+    }
+  ],
+  "completedEpoch": 1795765970.783108
+}

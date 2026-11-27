@@ -38,12 +38,12 @@ Per-axis calibration is stored separately from network settings and survives app
 
 ## Timing
 
-Candidate note: [fallback AP availability work](FALLBACK-AP-AVAILABILITY.md) adds valid-IPv4 readiness and protected AP-only periods with bounded station probes. It is under isolated Node 4 bench validation; the production fleet remains on the dated release below until finalized and published. See that record for station-pause/client behavior and release state.
+Production release **`c0e1dc4`** adds valid-IPv4 readiness and protected AP-only periods with bounded station probes. It is verified on all four nodes through OTA, including Node 4's automatic retry after an incomplete download. See [fallback AP validation and release evidence](FALLBACK-AP-AVAILABILITY.md).
 
 - Touch activates setup after four continuous seconds.
 - The AP expires after 15 minutes and accepts one client.
 - From `d05bb40`, an automatically opened fallback AP closes after fifteen seconds of continuous Wi-Fi recovery plus a fresh cloud success since reconnecting. AP-client association, explicit USB setup or a touch hold preserves manual setup instead. Recovery timers reset on disconnect; restart/OTA activity defers auto-close. See [implementation validation](PORTAL-RECOVERY-FIX.md).
-- Wi-Fi reconnects start every 30 seconds.
+- Outside setup, Wi-Fi retries start approximately every 30 seconds. Offline setup uses sixty-second AP-only periods with fifteen-second saved-network probes; connected setup clients pause those probes until they leave. Wi-Fi/cloud readiness requires a valid station IPv4 address, not association alone.
 - Upload failures retry from five seconds to five minutes with jitter.
 - The first OTA check is scheduled around 60–120 seconds after boot.
 - Successful OTA checks schedule the next check after 15 minutes plus up to 30 seconds of jitter.

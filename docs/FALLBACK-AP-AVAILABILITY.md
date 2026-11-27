@@ -1,14 +1,16 @@
 # Fallback AP availability — November 27, 2026
 
+**Completed:** production release `c0e1dc440b9b24d856098d845483aa49904e6a7e` is running on all four nodes after OTA adoption and boot validation. The real blocked-startup AP export and recovery passed. Saved calibrations remain exact; no OTA-disabled bench image remains. The 13:30 IST dashboard checkpoint shows all four online with zero queues. Build, failed attempts, retry and adoption evidence are retained below.
+
 ## Problem and scope
 
 During the [pending-record power-cycle repeat](PENDING-POWER-RECOVERY-2026-11-27.md), Node 4 returned on USB with healthy storage/sensor and unchanged calibration, but the laptop could not join its fallback AP while the hotspot entry remained blocked. Status simultaneously showed `wifiConnected=true` and station IP `0.0.0.0`. The isolated post-cut local comparison was therefore incomplete. Later network recovery, a new boot and delivery of all ten original pre-cut payloads were verified separately. Preserve that failed capture; do not retrospectively mark it passed.
 
 Code inspection found a definite readiness bug: association status alone gated network workers and recovery. The shared-radio effect of repeated station connection attempts is a plausible contributor to AP unavailability, not an electrically or RF-instrumented diagnosis. [Espressif's version-matched Wi-Fi guide](https://docs.espressif.com/projects/esp-idf/en/v4.4.4/esp32/api-guides/wifi.html) distinguishes the got-IP phase from association and describes the shared home channel in AP/STA coexistence. The installed Arduino core source was also inspected locally.
 
-## Candidate behavior
+## Released behavior
 
-The candidate is developed on `codex/fallback-ap-availability`. It is not released to the fleet until hardware validation is complete.
+The change was developed and hardware-validated on `codex/fallback-ap-availability` before finalization on main. The publication/adoption section below records the actual production artifact and rollout.
 
 - Network readiness requires STA mode, connected status and a nonzero/nonbroadcast IPv4 address. Uploads, heartbeats, OTA, discovery, time startup, boot validation, recovery and LED status use this check. Serial retains a separate `wifiAssociated` flag so an associated/no-IP condition is visible.
 - Application-controlled station retries replace background auto-reconnect. Outside setup, a failed/no-IP connection is explicitly disconnected without erasing settings and retried approximately every thirty seconds.
@@ -19,7 +21,7 @@ The candidate is developed on `codex/fallback-ap-availability`. It is not releas
 
 Serial diagnostics add `wifiAssociated`, `wifiMode`, `apClients`, `portalStationPaused` and `portalStationProbe`. Portal `/status` adds IP readiness, client count and station-pause state, with a plain-language explanation while retries are paused. A recent historical cloud success must not be shown as connected when station IP readiness has been lost.
 
-## Validation in progress
+## Build and bench validation record
 
 Production and isolated bench candidates compile for the pinned classic ESP32/Arduino 2.0.17 target. The production image excludes bench commands by default. A dedicated Node 4 image identifies itself as `usb-ap-availability-bench`, defines `FLEET_PORTAL_RECOVERY_BENCH`, and disables OTA. Never publish this image or its OTA-disabled header to the stable fleet channel.
 
@@ -33,7 +35,7 @@ python scripts/test-fallback-ap.py --port COM6 --node esp32-3013a5f4e9d4 --revis
 
 It rejects existing evidence paths, checks identity/version/revision, uses a bench-only timed disconnect, joins the real fallback AP, verifies a complete 256-record HTTP export, stays joined beyond the sixty-second retry interval, and requires station scans to remain paused. It then restores the laptop's original network and checks manual portal ownership across station/cloud recovery. A second timed disconnect without a client checks automatic recovery and portal closure. It removes temporary profiles/private XML and records failures without exposing AP credentials. These are hardware simulation checks; actual blocked-hotspot cold-boot access and physical touch takeover need separate evidence.
 
-**Current release status: candidate/bench validation only.** No main/fleet release is claimed, and Node 4 must be returned to production OTA behavior before treating the work as complete. Measured brownout, flash-write interruption, intentional rollback, capacity and endurance remain separate acceptance work.
+**Historical pre-publication checkpoint:** at this stage only candidate/bench validation was complete and production restoration/publication was pending. The completed rollout below supersedes this checkpoint. Measured brownout, flash-write interruption, intentional rollback, capacity and endurance remain separate acceptance work.
 
 ## First hardware trial retained
 
@@ -49,7 +51,7 @@ The [second trial](calibration/node4-ap-availability-trial2-2026-11-27.json) pas
 
 While the client remained attached, AP-only mode and station pause held and no IP readiness was falsely reported. After the laptop returned to Sensor Testing, Node 4 resumed saved-network/cloud operation while retaining manual portal ownership. A second timed disconnect without a client opened fallback, reconnected and closed it automatically. Final USB status had a valid station IP, setup inactive, healthy sensor/storage, 256 local records and unchanged calibration, with 26 pending at that instant. Later cloud preflight showed that backlog cleared; do not equate test completion with an always-zero queue. The calibration also matched the independent pre-install production snapshot exactly.
 
-The final production candidate was rebuilt with version `usb-ap-availability-candidate` and no bench/OTA-disable flags; [build evidence](calibration/ap-availability-candidate-builds-2026-11-27.json) retains its separate size/hash and verifies the bench command is absent. Node 4 still runs the isolated bench image for the final real-network test, with OTA intentionally disabled. Nodes 1–3 remain on production `d05bb40`. No main/release change has occurred.
+The final production candidate was rebuilt with version `usb-ap-availability-candidate` and no bench/OTA-disable flags; [build evidence](calibration/ap-availability-candidate-builds-2026-11-27.json) retains its separate size/hash and verifies the bench command is absent. At this checkpoint Node 4 still ran the isolated bench image for the final real-network test, with OTA intentionally disabled, while Nodes 1–3 remained on production `d05bb40`. Publication occurred only after that test and recovery passed.
 
 ## Real blocked-hotspot startup test prepared
 
@@ -66,3 +68,19 @@ The laptop returned to Sensor Testing and the temporary profile/private XML were
 [USB recovery observations](calibration/node4-ap-availability-cold-recovery-usb-2026-11-27.json) then verified a valid IP, fresh cloud success, automatic closure message and setup inactive without another close command. [Cloud checkpoints](calibration/node4-ap-availability-cold-recovery-cloud-2026-11-27.json) verified new boot `2030e2b0d0602bcad00de1320b402d73`, matching the local export, expected revision/version, healthy synchronized running state and unchanged peer boots. The queue decreased from the high twenties through 21 to one in-flight record; the separate snapshots are retained honestly.
 
 The actual blocked-startup AP export and subsequent recovery are validated. The source is finalized for publication after the simulated and real hardware checks. Production build/bench-command exclusion passed. **Release steps still pending:** main publication, artifact/manifest verification and actual fleet adoption. Node 4's OTA-disabled bench image will first be replaced with the hash-verified known-good production image, preserving settings/filesystem, so it can receive the new release through normal OTA along with Nodes 1–3. No failing test image will be published.
+
+## Completed publication and four-node OTA adoption
+
+The preceding paragraph preserves the pre-publication checkpoint. The finalized branch was fast-forwarded to main at **`c0e1dc440b9b24d856098d845483aa49904e6a7e`**, triggering [GitHub Actions run 45961105346](https://github.com/rohitlaikhuman8-ui/IOTProject/actions/runs/45961105346), which succeeded. [Published-artifact verification](calibration/ap-availability-production-release-2026-11-27.json) checked **1,235,856 bytes**, SHA-256 **`8c0003519dfce3a6c33eeac754b76a974f1523810b0e0e830ae43f53c078a124`**, matching the live manifest. The full release version is embedded in the downloaded image; the bench command is absent. CI generated only the version header, retaining normal OTA behavior.
+
+Node 4 was restored over identity/MAC-guarded USB to the hash-verified previous production `d05bb40` application before this rollout. Application sections and the whole image were verified; NVS/LittleFS and saved calibration were retained, with no BOOT intervention. This removed the OTA-disabled bench image before the new production OTA installation.
+
+[Scheduling evidence](calibration/ap-availability-ota-scheduling-2026-11-27.json) shows all four exact USB identities acknowledged one `ota-check`. It schedules the existing verified-HTTPS manifest/image path; it is not a USB installation of the new release. Nodes 1–3 adopted and confirmed their OTA boots. Node 4's first download timed out with **7,056 bytes remaining** and failed hash validation. The partial image was aborted, and it remained on the known-good production image. [Initial observations](calibration/ap-availability-initial-ota-observations-2026-11-27.json) retain that failure; one malformed repeated USB line was excluded rather than treated as device evidence.
+
+Node 4's normal scheduled retry, without another `ota-check`, reset or reflash, downloaded and verified all 1,235,856 bytes, restarted into the release, and completed boot-health validation. [Automatic retry evidence](calibration/ap-availability-node4-auto-retry-2026-11-27.json) preserves download progress, verification, new version and `pendingVerification=false`. This is actual incomplete-download rejection and retry recovery, not a deliberately failed-image rollback test.
+
+[Final USB checks](calibration/ap-availability-final-usb-2026-11-27.json) verified **all four** exact release versions, `pendingVerification=false`, valid saved-network IPs, healthy responding ADXL345/storage, setup inactive, and exact calibration coefficients matching each pre-OTA snapshot. [Fleet adoption evidence](calibration/ap-availability-fleet-adoption-2026-11-27.json) records new boots, fresh cloud heartbeats and two recent stored periodic samples per node, 256 indexed local records each and reciprocal three-peer discovery on channel 11. An Atlas connector internal error affected an intermediate query; its successful retry established the actual Node 2 samples. It is not classified as a node upload failure.
+
+At approximately **13:30 IST**, the authenticated dashboard/API showed **4 of 4 online**, expected release/revisions, and queues **0/0/0/0**. [Dashboard checkpoint data](calibration/ap-availability-dashboard-checkpoint-2026-11-27.json) and the [reviewed screenshot](images/dashboard-ap-availability-release-2026-11-27.png) preserve that instant. Earlier serial pending values of 1/1/1/2 are retained as separate in-flight snapshots. The first screenshot attempt used an unset local browser-cache path and failed before capture; the corrected local path produced the reviewed image without app changes.
+
+**Final outcome:** fallback AP availability fix published and adopted through OTA on all four nodes, saved calibrations intact, normal logging/reporting and production OTA enabled everywhere. No bench image remains, no production portal session remains active, laptop Wi-Fi is Sensor Testing, and temporary setup profiles/private XML are removed. Earlier inconclusive power-cut/local-export evidence remains unchanged. Interrupted-write safety, measured brownout, isolated intentional rollback, quantified motion sensitivity/false alarms, capacity and endurance still require their own acceptance tests.

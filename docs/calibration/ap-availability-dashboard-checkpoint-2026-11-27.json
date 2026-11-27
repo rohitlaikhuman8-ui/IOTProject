@@ -1,0 +1,82 @@
+{
+  "serverTime": 1795766415357,
+  "screenshot": "docs/images/dashboard-ap-availability-release-2026-11-27.png",
+  "nodes": [
+    {
+      "nodeId": "esp32-d01de2f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n1-20261125-v1",
+      "lastSeen": "2026-11-27T08:00:13.978Z",
+      "lastMeasurementAt": "2026-11-27T08:00:12.959Z",
+      "pendingRecords": 0,
+      "mode": "running",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ]
+    },
+    {
+      "nodeId": "esp32-7839a3f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n2-20261126-v2",
+      "lastSeen": "2026-11-27T08:00:11.082Z",
+      "lastMeasurementAt": "2026-11-27T08:00:06.797Z",
+      "pendingRecords": 0,
+      "mode": "running",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-d01de2f4e9d4",
+        "esp32-3013a5f4e9d4",
+        "esp32-986aa3f4e9d4"
+      ]
+    },
+    {
+      "nodeId": "esp32-986aa3f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n3-20261126-v1",
+      "lastSeen": "2026-11-27T08:00:12.297Z",
+      "lastMeasurementAt": "2026-11-27T08:00:07.451Z",
+      "pendingRecords": 0,
+      "mode": "running",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-d01de2f4e9d4",
+        "esp32-7839a3f4e9d4",
+        "esp32-3013a5f4e9d4"
+      ]
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibrationRevision": "n4-20261126-v1",
+      "lastSeen": "2026-11-27T08:00:13.793Z",
+      "lastMeasurementAt": "2026-11-27T08:00:13.793Z",
+      "pendingRecords": 0,
+      "mode": "running",
+      "sensorReady": true,
+      "storageReady": true,
+      "timeSynced": true,
+      "logRecords": 256,
+      "channel": 11,
+      "neighbors": [
+        "esp32-d01de2f4e9d4",
+        "esp32-986aa3f4e9d4",
+        "esp32-7839a3f4e9d4"
+      ]
+    }
+  ]
+}

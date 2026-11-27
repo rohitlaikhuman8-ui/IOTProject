@@ -1,0 +1,213 @@
+{
+  "completedEpoch": 1795766124.1244426,
+  "latest": {
+    "esp32-3013a5f4e9d4": {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "revision": "n4-20261126-v1",
+        "bias": [
+          0.251419,
+          0.376085,
+          -0.468513
+        ],
+        "scale": [
+          0.977386,
+          0.963646,
+          0.997382
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "ssid": "Sensor Testing",
+      "rssi": -45,
+      "ip": "10.157.182.153",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 112,
+      "logRecords": 256,
+      "stackFreeBytes": 13500,
+      "freeHeap": 108392,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-27 13:25:13 IST",
+      "pendingRecords": 0,
+      "lastCloudAgeMs": 3066
+    },
+    "esp32-986aa3f4e9d4": {
+      "nodeId": "esp32-986aa3f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-986aa3f4e9d4",
+        "revision": "n3-20261126-v1",
+        "bias": [
+          0.015584,
+          -0.127486,
+          -1.603618
+        ],
+        "scale": [
+          0.977145,
+          0.978043,
+          1.005285
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "wifiAssociated": true,
+      "wifiMode": 1,
+      "apClients": 0,
+      "portalStationPaused": false,
+      "portalStationProbe": false,
+      "ssid": "Sensor Testing",
+      "rssi": -52,
+      "ip": "10.157.182.86",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 107,
+      "logRecords": 256,
+      "stackFreeBytes": 13484,
+      "freeHeap": 108740,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-27 13:25:14 IST",
+      "pendingRecords": 0,
+      "lastCloudAgeMs": 3476
+    },
+    "esp32-7839a3f4e9d4": {
+      "nodeId": "esp32-7839a3f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-7839a3f4e9d4",
+        "revision": "n2-20261126-v2",
+        "bias": [
+          -0.288439,
+          0.106403,
+          -2.478975
+        ],
+        "scale": [
+          0.980068,
+          0.984107,
+          1.026941
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "wifiAssociated": true,
+      "wifiMode": 1,
+      "apClients": 0,
+      "portalStationPaused": false,
+      "portalStationProbe": false,
+      "ssid": "Sensor Testing",
+      "rssi": -49,
+      "ip": "10.157.182.5",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 105,
+      "logRecords": 256,
+      "stackFreeBytes": 13644,
+      "freeHeap": 105240,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-27 13:25:14 IST",
+      "pendingRecords": 1,
+      "lastCloudAgeMs": 4844
+    },
+    "esp32-d01de2f4e9d4": {
+      "nodeId": "esp32-d01de2f4e9d4",
+      "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-d01de2f4e9d4",
+        "revision": "n1-20261125-v1",
+        "bias": [
+          0.124301,
+          -0.196011,
+          -1.757719
+        ],
+        "scale": [
+          0.990319,
+          0.971404,
+          1.026839
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "wifiAssociated": true,
+      "wifiMode": 1,
+      "apClients": 0,
+      "portalStationPaused": false,
+      "portalStationProbe": false,
+      "ssid": "Sensor Testing",
+      "rssi": -53,
+      "ip": "10.157.182.128",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 98,
+      "logRecords": 256,
+      "stackFreeBytes": 13436,
+      "freeHeap": 108100,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-27 13:25:13 IST",
+      "pendingRecords": 0,
+      "lastCloudAgeMs": 407
+    }
+  },
+  "messages": [
+    {
+      "hostEpoch": 1795766035.1265297,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "message": "OTA download timeout: remaining=7056"
+    },
+    {
+      "hostEpoch": 1795766035.1265297,
+      "nodeId": "esp32-3013a5f4e9d4",
+      "message": "OTA validation failed: remaining=7056 hashMatch=0 flashError=0"
+    },
+    {
+      "hostEpoch": 1795766035.1877916,
+      "nodeId": "esp32-986aa3f4e9d4",
+      "message": "OTA boot confirmed: storage, sensor and cloud heartbeat healthy"
+    },
+    {
+      "hostEpoch": 1795766098.8900964,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "message": "OTA checking manifest"
+    },
+    {
+      "hostEpoch": 1795766100.6342592,
+      "nodeId": "esp32-986aa3f4e9d4",
+      "message": "OTA checking manifest"
+    },
+    {
+      "hostEpoch": 1795766101.3098826,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "message": "OTA HTTPS hop=0 status=200 length=-1"
+    },
+    {
+      "hostEpoch": 1795766101.3407438,
+      "nodeId": "esp32-d01de2f4e9d4",
+      "message": "OTA manifest version=c0e1dc440b9b24d856098d845483aa49904e6a7e running=c0e1dc440b9b24d856098d845483aa49904e6a7e"
+    },
+    {
+      "hostEpoch": 1795766102.9932666,
+      "nodeId": "esp32-986aa3f4e9d4",
+      "message": "OTA HTTPS hop=0 status=200 length=-1"
+    },
+    {
+      "hostEpoch": 1795766103.0242097,
+      "nodeId": "esp32-986aa3f4e9d4",
+      "message": "OTA manifest version=c0e1dc440b9b24d856098d845483aa49904e6a7e running=c0e1dc440b9b24d856098d845483aa49904e6a7e"
+    }
+  ],
+  "discardedMalformedSerialMessages": 1,
+  "note": "Malformed repeated serial fragments excluded from evidence; complete identity-verified JSON snapshots and cloud versions establish adoption."
+}

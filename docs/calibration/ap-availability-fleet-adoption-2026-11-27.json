@@ -1,0 +1,328 @@
+{
+  "checkedAt": "2026-11-27T07:59:47.363Z",
+  "targetVersion": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+  "fleet": {
+    "documents": [
+      {
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T07:57:27.233Z"
+        },
+        "logRecords": 256,
+        "neighbors": [
+          "esp32-986aa3f4e9d4",
+          "esp32-7839a3f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-d01de2f4e9d4",
+        "sensorReady": true,
+        "storageReady": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "lastMeasurementAt": {
+          "$date": "2026-11-27T07:57:23.951Z"
+        },
+        "bootId": "a35383434f10eb86d0536bed3a204fec",
+        "mode": "running",
+        "pendingRecords": 0,
+        "timeSynced": true,
+        "calibrationRevision": "n1-20261125-v1"
+      },
+      {
+        "bootId": "71bb2ca59515ae346d6c2635be87d3ef",
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T07:57:26.853Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "neighbors": [
+          "esp32-d01de2f4e9d4",
+          "esp32-986aa3f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-7839a3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "lastMeasurementAt": {
+          "$date": "2026-11-27T07:57:25.222Z"
+        },
+        "calibrationRevision": "n2-20261126-v2"
+      },
+      {
+        "bootId": "b55f4c8f74cf569fe7a3aac19bf4ea85",
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T07:57:29.896Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "neighbors": [
+          "esp32-d01de2f4e9d4",
+          "esp32-7839a3f4e9d4",
+          "esp32-3013a5f4e9d4"
+        ],
+        "nodeId": "esp32-986aa3f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "lastMeasurementAt": {
+          "$date": "2026-11-27T07:57:26.046Z"
+        },
+        "calibrationRevision": "n3-20261126-v1"
+      },
+      {
+        "bootId": "169f2b979be96f2ef4a46e83a27f8a86",
+        "channel": 11,
+        "lastSeen": {
+          "$date": "2026-11-27T07:57:30.095Z"
+        },
+        "logRecords": 256,
+        "mode": "running",
+        "neighbors": [
+          "esp32-d01de2f4e9d4",
+          "esp32-986aa3f4e9d4",
+          "esp32-7839a3f4e9d4"
+        ],
+        "nodeId": "esp32-3013a5f4e9d4",
+        "pendingRecords": 0,
+        "sensorReady": true,
+        "storageReady": true,
+        "timeSynced": true,
+        "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e",
+        "lastMeasurementAt": {
+          "$date": "2026-11-27T07:57:25.212Z"
+        },
+        "calibrationRevision": "n4-20261126-v1"
+      }
+    ],
+    "queryResultsCount": 4,
+    "appliedLimits": []
+  },
+  "newBootSamples": [
+    {
+      "nodeId": "esp32-d01de2f4e9d4",
+      "documents": [
+        {
+          "acceleration": {
+            "x": 4.232605,
+            "y": 7.360791,
+            "z": 5.103777
+          },
+          "bootId": "a35383434f10eb86d0536bed3a204fec",
+          "calibrationRevision": "n1-20261125-v1",
+          "eventId": "5fc871062407c84a6dc9f35df9a1e880",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-d01de2f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:58:32.773Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766311,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 311893,
+          "value": 9.906802,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        },
+        {
+          "acceleration": {
+            "x": 4.270481,
+            "y": 7.397943,
+            "z": 5.064504
+          },
+          "bootId": "a35383434f10eb86d0536bed3a204fec",
+          "calibrationRevision": "n1-20261125-v1",
+          "eventId": "4925bb064d6504d73fe8bc8b04e6e3c9",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-d01de2f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:58:23.194Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766301,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 301887,
+          "value": 9.930547,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        }
+      ],
+      "queryResultsCount": 31,
+      "appliedLimits": []
+    },
+    {
+      "nodeId": "esp32-7839a3f4e9d4",
+      "documents": [
+        {
+          "acceleration": {
+            "x": 5.530396,
+            "y": -6.126806,
+            "z": -5.152398
+          },
+          "bootId": "71bb2ca59515ae346d6c2635be87d3ef",
+          "calibrationRevision": "n2-20261126-v2",
+          "eventId": "ab50f2871cb78f57fceac7393934ba48",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-7839a3f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:59:06.956Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766344,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 340339,
+          "value": 9.729862,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        },
+        {
+          "acceleration": {
+            "x": 5.455429,
+            "y": -6.05153,
+            "z": -5.113121
+          },
+          "bootId": "71bb2ca59515ae346d6c2635be87d3ef",
+          "calibrationRevision": "n2-20261126-v2",
+          "eventId": "a917e3ae17d61e7745c1e9f69e2b995d",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-7839a3f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:58:55.930Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766334,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 330322,
+          "value": 9.619081,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        }
+      ],
+      "queryResultsCount": 34,
+      "appliedLimits": []
+    },
+    {
+      "nodeId": "esp32-986aa3f4e9d4",
+      "documents": [
+        {
+          "acceleration": {
+            "x": -9.133953,
+            "y": -2.231902,
+            "z": 3.303807
+          },
+          "bootId": "b55f4c8f74cf569fe7a3aac19bf4ea85",
+          "calibrationRevision": "n3-20261126-v1",
+          "eventId": "97fe21d32081fe6562769fd620d3c8ee",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-986aa3f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:58:26.203Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766305,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 301627,
+          "value": 9.966225,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        },
+        {
+          "acceleration": {
+            "x": -9.208696,
+            "y": -2.194496,
+            "z": 3.342256
+          },
+          "bootId": "b55f4c8f74cf569fe7a3aac19bf4ea85",
+          "calibrationRevision": "n3-20261126-v1",
+          "eventId": "7a3f078adb6b1f1116950fac40f849a3",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-986aa3f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:58:17.200Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766295,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 291732,
+          "value": 10.03925,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        }
+      ],
+      "queryResultsCount": 30,
+      "appliedLimits": []
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "documents": [
+        {
+          "acceleration": {
+            "x": -5.217412,
+            "y": -8.028366,
+            "z": -1.668879
+          },
+          "bootId": "169f2b979be96f2ef4a46e83a27f8a86",
+          "calibrationRevision": "n4-20261126-v1",
+          "eventId": "ca9beb1a94944c3e87c057d47419bd5c",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:58:29.486Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766302,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 90878,
+          "value": 9.719115,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        },
+        {
+          "acceleration": {
+            "x": -5.217412,
+            "y": -8.028366,
+            "z": -1.707024
+          },
+          "bootId": "169f2b979be96f2ef4a46e83a27f8a86",
+          "calibrationRevision": "n4-20261126-v1",
+          "eventId": "0ce896b6fe360ed4e0c9669901d08e00",
+          "kind": "sample",
+          "movementDelta": 0,
+          "nodeId": "esp32-3013a5f4e9d4",
+          "receivedAt": {
+            "$date": "2026-11-27T07:58:15.158Z"
+          },
+          "resetReason": 3,
+          "sampledAt": 1795766292,
+          "sensitivity": 1,
+          "sensor": "ADXL345",
+          "unit": "m/s2",
+          "uptimeMs": 80868,
+          "value": 9.725739,
+          "version": "c0e1dc440b9b24d856098d845483aa49904e6a7e"
+        }
+      ],
+      "queryResultsCount": 9,
+      "appliedLimits": []
+    }
+  ]
+}

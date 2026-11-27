@@ -6,6 +6,8 @@
 
 Subsequent repair: [fallback AP availability release `c0e1dc4`](FALLBACK-AP-AVAILABILITY.md) passed a separate real blocked-hotspot startup log export and recovery, then rolled out through OTA to all four nodes with exact calibrations preserved. This addresses the access failure for future checks; it does not retroactively supply the missing post-cut export or turn the earlier power-loss procedure into a pass.
 
+A separate [fresh repeat on the repaired production portal](PENDING-POWER-REPEAT-2026-11-27.md) now preserves its own preflight and fixed criteria. Follow that record for the current attempt; retain all failures and classifications in this historical record.
+
 **Power-loss result inconclusive; network restored, selected records delivered and queue cleared.** The prior [network-only test](QUEUED-DATA-RETRY-2026-11-27.md) passed ten selected records. This separate phase checks whether a fixed set of already-committed, unsent records survives removal of USB power and subsequently reaches Atlas unchanged. Manual removal is not synchronized to a flash write, so even a pass cannot establish interrupted-write or measured brownout safety.
 
 The operator confirmed Node 4 is USB-only powered, with its ADXL345 powered from that same ESP32 and no other powered interconnection. Keep Nodes 1–3 powered and connected throughout. Do not move sensor wiring, short pins, adjust supplies or press BOOT/EN/RESET. No firmware/settings/calibration changes or erase are planned.

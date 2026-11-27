@@ -36,6 +36,7 @@ if args.post_cycle_baseline:
         raise RuntimeError('Post-cycle capture requires an existing same-node acknowledged baseline')
     metadata['postCycleBaseline'] = str(Path(args.post_cycle_baseline))
 credentials = {}
+serial_buffer = bytearray()
 port = serial.Serial(port=None, baudrate=115200, timeout=.2)
 port.port = args.port
 port.dtr = False
@@ -56,7 +57,15 @@ def drain(seconds):
     deadline = time.monotonic() + seconds
     states = []
     while time.monotonic() < deadline:
-        line = port.readline().decode(errors='replace').strip()
+        if b'\n' not in serial_buffer:
+            serial_buffer.extend(port.read(port.in_waiting or 1))
+        if b'\n' not in serial_buffer:
+            if len(serial_buffer) > 8192:
+                raise RuntimeError('Unterminated USB diagnostic exceeds buffer bound')
+            continue
+        raw, _, remainder = serial_buffer.partition(b'\n')
+        serial_buffer[:] = remainder
+        line = raw.decode(errors='replace').strip()
         match = re.match(r'Setup Wi-Fi (\S+) password (\S+), open ', line)
         if match:
             credentials.update(ssid=match.group(1), password=match.group(2))

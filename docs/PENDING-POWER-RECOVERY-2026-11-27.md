@@ -2,7 +2,7 @@
 
 ## Scope and current state
 
-**Fixed pending-record baseline saved; physical power-cycle confirmation pending.** The prior [network-only test](QUEUED-DATA-RETRY-2026-11-27.md) passed ten selected records. This separate phase checks whether a fixed set of already-committed, unsent records survives removal of USB power and subsequently reaches Atlas unchanged. Manual removal is not synchronized to a flash write, so even a pass cannot establish interrupted-write or measured brownout safety.
+**Power-loss result inconclusive; network restored, selected records delivered and queue cleared.** The prior [network-only test](QUEUED-DATA-RETRY-2026-11-27.md) passed ten selected records. This separate phase checks whether a fixed set of already-committed, unsent records survives removal of USB power and subsequently reaches Atlas unchanged. Manual removal is not synchronized to a flash write, so even a pass cannot establish interrupted-write or measured brownout safety.
 
 The operator confirmed Node 4 is USB-only powered, with its ADXL345 powered from that same ESP32 and no other powered interconnection. Keep Nodes 1–3 powered and connected throughout. Do not move sensor wiring, short pins, adjust supplies or press BOOT/EN/RESET. No firmware/settings/calibration changes or erase are planned.
 
@@ -18,8 +18,6 @@ The [fleet preflight](calibration/node4-pending-power-fleet-before-2026-11-27.js
 6. Only after the post-cut local comparison succeeds, ask the operator to unblock Node 4. Require each fixed ID stored once in Atlas with unchanged original fields, excluding server-added receipt metadata. Verify new-boot reporting, saved Wi-Fi/calibration/firmware, healthy sensor/storage/time, a readable journal and queue drainage. Verify peers' boots remain unchanged.
 7. Close only this test's setup session if still active, restore laptop Wi-Fi and remove temporary profiles. Archive results under `docs/`, update README and verification records, and push finalized evidence. Keep any failed attempt distinct.
 
-## Acceptance limits and next phases
-
 ## Before-cut isolation and baseline — completed
 
 After the operator confirmed Node 4 blocked, the observation boundary was **10:57:13.756 IST**. Its last cloud report remained **10:56:59.218 IST**, while the other three kept fresh reports and unchanged boots. The [isolation snapshot](calibration/node4-pending-power-isolation-fleet-2026-11-27.json) is a cloud observation; its target pending value is stale and must not be substituted for the fresh local queue count.
@@ -28,7 +26,23 @@ Local HTTP export at approximately **11:05:05 IST** contained 256 distinct recor
 
 The [Atlas absence query](calibration/node4-pending-power-absence-2026-11-27.json) returned zero documents for all ten selected IDs, with no applied limits, before the physical power-cycle instruction. The laptop returned to Sensor Testing and the temporary profile was removed. No serial handle is left open by the capture. The operator was then asked to remove only Node 4's USB for ten seconds and reconnect, **keeping its hotspot entry blocked**. No completion is assumed until confirmed and checked.
 
-Post-cycle local payload/hash survival, a new boot, later Atlas delivery, journal integrity, final health and queue drainage are still pending. No power-loss acceptance pass is claimed.
+## Operator-confirmed cycle and inconclusive local result
+
+The operator confirmed **“Node 4 blocked power-cycle done.”** The first HTTP read found all ten selected IDs with identical payloads and raw hashes, but failed the required new-boot check. It did not archive the complete response before that assertion. A helper bug reused the original SSID variable for a selected record, causing its Wi-Fi restoration cleanup to raise a type error. The laptop was explicitly returned to Sensor Testing, verified connected, and the temporary profile/private XML removed. [First-attempt metadata](calibration/node4-pending-power-after-incomplete-2026-11-27.json) records these failures; this is not firmware evidence of data loss.
+
+A separate retry corrected the variable shadowing and archived the response before validation, retaining the original acceptance checks. It read 256 records, **139 pending**, and `Wi-Fi reconnecting` at **11:21:42 IST**. This exceeded the predeclared 3–64 pending bound. The [retry metadata](calibration/node4-pending-power-after-retry1-2026-11-27.json), [full raw export](retention/node4-pending-power-after-retry1-2026-11-27.ndjson) and [independent offline comparison](calibration/node4-pending-power-local-diagnostic-2026-11-27.json) are retained. All ten selected records remained byte-identical, but the archive contained only original boot `9057c927c8ad28fec57364286a49d892`, with latest uptime approximately 3,184 seconds. **No new boot was observed.** The operator-confirmed physical action and the lack of restart evidence are both recorded; no particular wiring/power/operator cause is established.
+
+The attempt was stopped and the operator asked to unblock Node 4, then confirmed restoration. At **11:23:33 IST**, fresh reporting resumed with 148 pending and the original boot. The verified COM6 setup session was closed without reset or settings changes; [USB recovery evidence](calibration/node4-pending-power-restored-usb-2026-11-27.json) retains that intervention. This attempt does not pass power-loss retention; another attempt must first identify the physical board and verify that the intended power removal actually restarts it.
+
+## Separate delivery and journal checks
+
+All ten selected samples subsequently appeared exactly once in Atlas, with every original payload field equal and server-added receipt time preserved separately. The [delivery evidence](calibration/node4-pending-power-delivery-diagnostic-2026-11-27.json) records all returned documents, per-ID comparisons and no query limits. This verifies those records' eventual delivery after the extended network outage, not their survival across a verified power cut.
+
+The [read-only journal scan](calibration/node4-pending-power-storage-diagnostic-2026-11-27.json) validated **256 records, zero invalid**, in **32,969 ms**. Both archived 256-record exports were independently checked against complete-file and per-record hashes. These checks do not convert the missing new-boot evidence into a power-loss pass.
+
+Node 4's queue decreased through 148, 147, 93, 57 and 9, then reached zero. [Final USB readback](calibration/node4-pending-power-final-usb-2026-11-27.json) confirmed exact saved calibration/firmware matches, healthy sensor/storage, setup inactive and zero pending. At approximately **11:28:15 IST**, the [final fleet checkpoint](calibration/node4-pending-power-final-fleet-2026-11-27.json) showed all four fresh/running/healthy/synchronized with zero queues and unchanged boot IDs, firmware and revisions. Laptop Wi-Fi is Sensor Testing; temporary setup profiles/private XML were removed. No firmware/settings/calibration writes, erase or commanded reset occurred.
+
+**Final classification: inconclusive for power-loss survival; selected local continuity and later delivery verified during an extended network outage.** Before repeating, positively identify Node 4 and confirm that disconnecting its actual sole supply extinguishes its indicators and produces a new boot on reconnection. Do not infer the power path from a cable label alone. If indicators remain lit, stop and identify an alternate supply/backfeed path before another cut. Keep a fresh, short immutable pending-data baseline for the repeat rather than reusing this disturbed trial.
 
 ## Remaining acceptance limits
 

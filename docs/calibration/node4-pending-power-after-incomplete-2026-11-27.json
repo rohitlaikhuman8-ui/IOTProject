@@ -1,0 +1,5 @@
+{
+  "result": "INCOMPLETE: selected payload/hash checks passed in memory, but no new boot record was found; full body not archived by original helper",
+  "secondaryFailure": "Helper variable original shadowed original SSID during record comparison; finally restoration raised TypeError. Explicit Sensor Testing restoration and temporary profile removal requested afterward.",
+  "observedAtEpoch": 1795758680.2230008
+}

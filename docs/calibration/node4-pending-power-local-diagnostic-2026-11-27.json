@@ -1,0 +1,152 @@
+{
+  "result": "INCONCLUSIVE: no new boot found; retry pending count outside predeclared 3..64 bound",
+  "beforePending": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "timeIst": "2026-11-27 11:05:05 IST",
+    "pending": 48,
+    "connection": "Wi-Fi reconnecting"
+  },
+  "afterStatus": {
+    "nodeId": "esp32-3013a5f4e9d4",
+    "timeIst": "2026-11-27 11:21:42 IST",
+    "pending": 139,
+    "connection": "Wi-Fi reconnecting"
+  },
+  "checks": [
+    {
+      "eventId": "55e1fd0c57b9ee082e42540595d6ee2a",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "339e702503c26c242d0ec7059f5b7045",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "7538849673d9f833d6ea4fdc015a72de",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "ce41f8f37c409da1526d626302169617",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "19da463890f4be7c716c264c613e520d",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "e9b690db7a304fdf4a31d38a5dc57f5d",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "3ce9ff9ccfcd7436a20f4d17779c068e",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "d00b0da6069d8567ae0a090388e55a75",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "3fc2d3abab8e1042d2ec5d50be55ee1b",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    },
+    {
+      "eventId": "c62694acb8f172346e0d7274ab493cf4",
+      "present": true,
+      "payloadMatch": true,
+      "rawHashMatch": true
+    }
+  ],
+  "priorBoots": [
+    "9057c927c8ad28fec57364286a49d892",
+    "b91c4d50bb6c88a11fe6878e2c134fb6"
+  ],
+  "afterBoots": [
+    "9057c927c8ad28fec57364286a49d892"
+  ],
+  "newBoots": [],
+  "lastThreeRecords": [
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "eventId": "6c416ef89f3073d8f06d8de924aca6ff",
+      "bootId": "9057c927c8ad28fec57364286a49d892",
+      "kind": "sample",
+      "movementDelta": 0,
+      "uptimeMs": 3164133,
+      "sampledAt": 1795758681,
+      "value": 9.807063,
+      "sensor": "ADXL345",
+      "unit": "m/s2",
+      "acceleration": {
+        "x": -5.479079,
+        "y": -7.880944,
+        "z": -2.012191
+      },
+      "sensitivity": 1,
+      "resetReason": 1,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n4-20261126-v1"
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "eventId": "a18e68776709faac74044b5d46b3e23d",
+      "bootId": "9057c927c8ad28fec57364286a49d892",
+      "kind": "sample",
+      "movementDelta": 0,
+      "uptimeMs": 3174146,
+      "sampledAt": 1795758691,
+      "value": 9.732466,
+      "sensor": "ADXL345",
+      "unit": "m/s2",
+      "acceleration": {
+        "x": -5.479079,
+        "y": -7.807232,
+        "z": -1.935899
+      },
+      "sensitivity": 1,
+      "resetReason": 1,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n4-20261126-v1"
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "eventId": "577c3cff12eba87c7ae9b84995b74880",
+      "bootId": "9057c927c8ad28fec57364286a49d892",
+      "kind": "sample",
+      "movementDelta": 0,
+      "uptimeMs": 3184158,
+      "sampledAt": 1795758701,
+      "value": 9.711471,
+      "sensor": "ADXL345",
+      "unit": "m/s2",
+      "acceleration": {
+        "x": -5.441698,
+        "y": -7.807232,
+        "z": -1.935899
+      },
+      "sensitivity": 1,
+      "resetReason": 1,
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibrationRevision": "n4-20261126-v1"
+    }
+  ],
+  "afterArchiveSha256": "c65681f8a9b0d5deb7ca075f8390ac86a91d4721f51cb10822507892793e5010",
+  "originalNetworkRestored": true
+}

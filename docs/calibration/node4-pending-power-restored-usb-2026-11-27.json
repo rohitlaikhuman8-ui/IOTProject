@@ -1,0 +1,77 @@
+{
+  "checkedAtEpoch": 1795758839.2224379,
+  "states": [
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "revision": "n4-20261126-v1",
+        "bias": [
+          0.251419,
+          0.376085,
+          -0.468513
+        ],
+        "scale": [
+          0.977386,
+          0.963646,
+          0.997382
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "ssid": "Sensor Testing",
+      "rssi": -36,
+      "ip": "10.157.182.153",
+      "portalActive": true,
+      "portalAutomatic": false,
+      "touchRaw": 109,
+      "logRecords": 256,
+      "stackFreeBytes": 12460,
+      "freeHeap": 97328,
+      "pendingVerification": false,
+      "ledOn": false,
+      "timeIst": "2026-11-27 11:23:56 IST",
+      "pendingRecords": 147,
+      "lastCloudAgeMs": 3080
+    },
+    {
+      "nodeId": "esp32-3013a5f4e9d4",
+      "version": "d05bb40d0aa60753ce58f1caa75c7e0c397d0edf",
+      "calibration": {
+        "enabled": true,
+        "nodeId": "esp32-3013a5f4e9d4",
+        "revision": "n4-20261126-v1",
+        "bias": [
+          0.251419,
+          0.376085,
+          -0.468513
+        ],
+        "scale": [
+          0.977386,
+          0.963646,
+          0.997382
+        ]
+      },
+      "storageReady": true,
+      "sensorAddress": 83,
+      "wifiConnected": true,
+      "ssid": "Sensor Testing",
+      "rssi": -36,
+      "ip": "10.157.182.153",
+      "portalActive": false,
+      "portalAutomatic": false,
+      "touchRaw": 110,
+      "logRecords": 256,
+      "stackFreeBytes": 12460,
+      "freeHeap": 105704,
+      "pendingVerification": false,
+      "ledOn": true,
+      "timeIst": "2026-11-27 11:23:58 IST",
+      "pendingRecords": 147,
+      "lastCloudAgeMs": 5171
+    }
+  ]
+}

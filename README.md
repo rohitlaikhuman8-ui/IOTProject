@@ -14,7 +14,7 @@ The [November 26 post-calibration group check](docs/GROUP-CHECK-2026-11-26.md) v
 
 ## Connected node and wiring
 
-The next [committed pending-record power-loss test](docs/PENDING-POWER-RECOVERY-2026-11-27.md) has completed Node 4's healthy fleet/local-access preflight and archived ten fixed unsent samples, all absent from Atlas while blocked. USB-only power was confirmed. Physical power-cycle confirmation and post-cut survival/delivery checks remain pending; no interrupted-write/brownout/rollback pass is implied.
+The [committed pending-record power-loss attempt](docs/PENDING-POWER-RECOVERY-2026-11-27.md) is inconclusive: the operator confirmed a cycle, but no new boot was found and the queue exceeded the planned bound. All ten fixed selected records remained locally byte-identical and later reached Atlas once each with unchanged original fields. The journal scan passed 256 valid/zero invalid, the queue cleared and all four finished healthy/online. Identify the physical board and actual supply path before repeating; this is not a power-loss/interrupted-write/brownout/rollback pass.
 
 The first [queued-data/network-outage attempt](docs/QUEUED-DATA-RECOVERY.md) remains diagnostic. The [November 27 clean retry](docs/QUEUED-DATA-RETRY-2026-11-27.md) passed selected-record delivery on Node 4: ten fixed local samples were absent from Atlas while blocked, then each arrived once with every original field unchanged after unblocking. Its queue drained to zero without a reboot or firmware/calibration change; all four nodes finished online and healthy. Recovery was eventual, with no instrumented unblock-to-reconnect latency guarantee. Interrupted-write, brownout and intentional rollback acceptance remain open.
 

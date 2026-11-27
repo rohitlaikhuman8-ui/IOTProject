@@ -1,0 +1,28 @@
+{
+  "checkedAtEpoch": 1795762693.9509919,
+  "operatorReport": "Node 4 unplugged, LEDs off",
+  "com6Absent": true,
+  "ports": [
+    {
+      "port": "COM5",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM5)"
+    },
+    {
+      "port": "COM3",
+      "description": "Standard Serial over Bluetooth link (COM3)"
+    },
+    {
+      "port": "COM4",
+      "description": "Standard Serial over Bluetooth link (COM4)"
+    },
+    {
+      "port": "COM8",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM8)"
+    },
+    {
+      "port": "COM9",
+      "description": "Silicon Labs CP210x USB to UART Bridge (COM9)"
+    }
+  ],
+  "phase": "Fresh pending-record repeat; hotspot remains blocked per staged instructions"
+}

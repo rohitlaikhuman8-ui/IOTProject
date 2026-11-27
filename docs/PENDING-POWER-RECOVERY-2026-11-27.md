@@ -56,7 +56,7 @@ After the operator confirmed **“Node 4 blocked for repeat,”** a fresh select
 
 The [fresh local baseline](calibration/node4-pending-power-repeat2-before-2026-11-27.json) exported 256 records with **16 pending before / 17 after**, `Wi-Fi reconnecting`, and ten selected fresh periodic records on the expected pre-cut boot/firmware/calibration. The [original bytes](retention/node4-pending-power-repeat2-before-2026-11-27.ndjson) and per-record hashes are archived. An [Atlas query](calibration/node4-pending-power-repeat2-absence-2026-11-27.json) found zero documents for every selected ID, without applied limits, before requesting any power change. Laptop Wi-Fi was restored and its temporary profile removed.
 
-The operator is now asked to unplug USB at the physically identified Node 4 and report its LEDs off, **leaving it unplugged**. Verify COM6 absent before requesting reconnection, with the hotspot entry still blocked throughout. No repeat power-cycle completion or retention pass is assumed yet.
+The operator confirmed **“Node 4 unplugged, LEDs off.”** For this fresh repeat, [enumeration at 12:28:14 IST](calibration/node4-pending-power-repeat2-disconnected-2026-11-27.json) verified COM6 absent while COM5/COM8/COM9 remained present. The operator was then asked to reconnect the same cable **keeping Node 4 blocked**. Reconnection, a new boot and exact local survival of the ten fixed records remain pending. No retention pass is assumed from indicator extinction or port disappearance alone.
 
 ## Physical identity check before any repeat
 

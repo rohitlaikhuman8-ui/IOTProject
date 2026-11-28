@@ -64,5 +64,14 @@
     "sha256": "bf79c0c3e3e36f77f4e9260cbcac8a91ea432f4e3b4ed75017f95f117fa41001",
     "readbackExact": true,
     "method": "Authorized Drive connector upload, metadata readback, full raw download and independent SHA-256 comparison; not a scheduled-job receipt"
+  },
+  "googlePreparedProject": {
+    "url": "https://script.google.com/home/projects/1Gmonp8RUhPc_a_XQqYBI5j1J01JqkWB5sm44zCY7PZoUhNwoJSCh7O4K/edit",
+    "name": "ESP32 daily data backup",
+    "codeSaved": true,
+    "selectedFunction": "configureFleetExport",
+    "observedState": "Review permissions prompt; owner approval required",
+    "triggerInstalledVerified": false,
+    "realJobReceiptVerified": false
   }
 }

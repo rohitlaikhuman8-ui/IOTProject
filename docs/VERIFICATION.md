@@ -1,5 +1,9 @@
 # Verification record
 
+## Daily export checkpoint — November 28, 2026
+
+[Daily export validation and operating procedure](DAILY-EXPORTS.md) records a production deployment, authenticated browser download, seven-page complete API export and independent Atlas comparison for November 27: **6,307 unique readings / 62 movements / all four Node IDs**, 2,177,581 bytes. All-node and per-node routes, authentication isolation, IST boundaries, pagination and CSV safety passed their recorded checks. A first CSV was copied to the private Google Drive folder and metadata read back. **Automatic Google scheduling is pending the user's Google authorization, trigger installation and first actual job verification**; no synthetic success receipt was inserted. Firmware remained unchanged. The November 28 dashboard showed November 27 Last-seen values for all four nodes, so historical export success is not a claim that the hardware is currently online.
+
 ## Latest isolated fault-recovery checkpoint — November 27, 2026
 
 [Node 4 fault-recovery evidence](FAULT-RECOVERY-CHECKS-2026-11-27.md) verifies two separate rollback paths: production health timeout persisted sequence 5 / INVALID, and the synced incomplete-file probe's unconfirmed software restart persisted sequence 7 / ABORTED. Both selected the original sequence 2 / VALID production slot. Phase A preserved all 30 protected records and 112 common records exactly; Phase B preserved its separate 30 protected records and all 238 common records exactly. The incomplete 107-byte synthetic event was absent from committed exports and Atlas. The read-only journal scan passed 256 valid / zero invalid. Existing fleet settings/calibration bytes survived; Phase B additionally allocated a DHCP-state NVS entry, recorded explicitly rather than claiming whole-NVS equality.

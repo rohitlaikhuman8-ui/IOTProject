@@ -14,8 +14,26 @@ const payload = (Date.now()+3600000) + '.' + crypto.randomBytes(16).toString('he
 const cookie = 'fleet_session=' + payload + '.' + crypto.createHmac('sha256',env.DASHBOARD_PASSWORD).update(payload).digest('hex');
 const auth = {Authorization:'Bearer '+env.EXPORT_JOB_SECRET};
 const checks = {};
+function httpGet(url,headers){
+  // Fresh sockets avoid this Windows/hotspot's intermittent pooled-fetch stalls.
+  return new Promise((resolve,reject)=>{
+    const transport=require(url.startsWith('https:')?'node:https':'node:http');
+    const request=transport.get(url,{headers,agent:false,timeout:20000},response=>{
+      const chunks=[];response.on('data',x=>chunks.push(x));response.on('end',()=>{
+        const body=Buffer.concat(chunks).toString('utf8');
+        resolve({status:response.statusCode,text:async()=>body,json:async()=>JSON.parse(body)});
+      });response.on('error',reject);
+    });
+    request.on('timeout',()=>request.destroy(new Error('HTTP timeout')));request.on('error',reject);
+  });
+}
 async function expectStatus(url,status,headers) {
-  const r=await fetch(origin+url,{headers});assert.equal(r.status,status,url);return r;
+  let r;
+  for(let attempt=0;attempt<3;attempt++){
+    try{r=await httpGet(origin+url,headers);break;}
+    catch(error){if(attempt===2)throw new Error('Network failure at '+url.split('?')[0]);await new Promise(resolve=>setTimeout(resolve,500));}
+  }
+  assert.equal(r.status,status,url);return r;
 }
 function csvRows(text) {
   const rows=[];let row=[],cell='',quoted=false;

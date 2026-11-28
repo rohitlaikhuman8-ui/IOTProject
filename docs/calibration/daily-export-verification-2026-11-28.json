@@ -1,0 +1,68 @@
+{
+  "checkedAtUtc": "2026-11-28T03:51:24.194Z",
+  "origin": "https://esp32-fleet-iot-project3.vercel.app",
+  "date": "2026-11-27",
+  "snapshot": "2026-11-28T03:51:05.239Z",
+  "rows": 6307,
+  "pages": 7,
+  "nodes": [
+    "esp32-7839a3f4e9d4",
+    "esp32-3013a5f4e9d4",
+    "esp32-986aa3f4e9d4",
+    "esp32-d01de2f4e9d4"
+  ],
+  "bytes": 2177581,
+  "sha256": "bf79c0c3e3e36f77f4e9260cbcac8a91ea432f4e3b4ed75017f95f117fa41001",
+  "checks": {
+    "authorizationAndValidation": true,
+    "dashboardForm": true,
+    "privateSetupSyntax": true,
+    "atlasCountMatches": true,
+    "completePaginatedDownload": true,
+    "uniqueRows": true,
+    "nodeFilter": true,
+    "automaticPlan": true
+  },
+  "driveAuthorization": "Not exercised by this API test",
+  "independentAtlasComparison": {
+    "groupedCounts": {
+      "esp32-3013a5f4e9d4": 1446,
+      "esp32-7839a3f4e9d4": 1621,
+      "esp32-986aa3f4e9d4": 1615,
+      "esp32-d01de2f4e9d4": 1625
+    },
+    "source": "MongoDB Atlas connector independent captured-day/fallback query; 6307 total",
+    "csvGroupedCounts": {
+      "esp32-7839a3f4e9d4": 1621,
+      "esp32-3013a5f4e9d4": 1446,
+      "esp32-986aa3f4e9d4": 1615,
+      "esp32-d01de2f4e9d4": 1625
+    }
+  },
+  "browserDownload": {
+    "date": "2026-11-27",
+    "rows": 6307,
+    "result": "Rendered Downloaded 6,307 readings; screenshot archived",
+    "screenshot": "docs/images/dashboard-daily-exports-2026-11-28.png"
+  },
+  "firstDeploymentAttempt": {
+    "id": "dpl_9Fjfo9ZPZG8yMJTXQouBGk9GBaQD",
+    "result": "Failed before traffic switch: uploaded flat files but project root directory was dashboard"
+  },
+  "productionDeployment": {
+    "id": "dpl_BXbhFbpXfWUPTqE2XfzbGfFpHRmi",
+    "state": "READY",
+    "sourceCommit": "3ef9b83",
+    "rootDirectory": "dashboard"
+  },
+  "verificationTransport": "Initial Node pooled-fetch checks failed/stalled; fresh-socket bounded HTTP retry completed. Browser download and independent Atlas comparison also passed.",
+  "googleAutomaticStatus": "Pending Google Apps Script authorization/trigger and first actual job readback receipt; connector-created copy is separate",
+  "initialDriveCopy": {
+    "fileId": "1XE-Xc0bPG6QKmKBXXfSIrJvU0GFRhJme",
+    "folderId": "1LS4ujcesuNqdK9BGF88hMt_6bEfhb6y8",
+    "bytes": 2177581,
+    "sha256": "bf79c0c3e3e36f77f4e9260cbcac8a91ea432f4e3b4ed75017f95f117fa41001",
+    "readbackExact": true,
+    "method": "Authorized Drive connector upload, metadata readback, full raw download and independent SHA-256 comparison; not a scheduled-job receipt"
+  }
+}

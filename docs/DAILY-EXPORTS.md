@@ -93,6 +93,7 @@ Build and checks from the repository root, with Node/npm available:
 ```powershell
 npm ci --prefix dashboard
 node scripts/test-daily-exports.cjs
+node scripts/test-export-routes.cjs
 npm run build --prefix dashboard
 ```
 
@@ -129,3 +130,15 @@ To rotate the export token: replace `EXPORT_JOB_SECRET` in Vercel, redeploy, dow
 The production build and focused tests pass for IST midnight/date validation, formula-safe CSV, distinct magnitude/scaled values, late and unsynchronized timestamps, ingestion-schema compatibility, paginated Google-job collection, Drive hash readback, failed-count/cursor preservation, watermark retry behavior and zero-row files. Google services in these focused tests are mocks; this does not establish Google authorization or a real installed trigger.
 
 Dependency checks initially found existing Zod/PostCSS advisories. Zod was updated to the patched 4.x line and PostCSS overridden to a patched compatible 8.x line; the locked install now reports zero known audit vulnerabilities. Ingestion schema acceptance/rejection and the production TypeScript/build checks were rerun. The live deployment/export result and Google activation status are recorded below as they are verified.
+
+### Live deployment and actual daily file — verified
+
+Production deployment `dpl_BXbhFbpXfWUPTqE2XfzbGfFpHRmi`, source commit `3ef9b83`, reached READY and serves the existing production domains. The first deployment `dpl_9Fjfo9ZPZG8yMJTXQouBGk9GBaQD` failed before switching traffic because uploaded source files were flattened while the project expected root directory `dashboard`; the retry preserved that directory. No firmware source/channel was changed.
+
+The authenticated [browser screenshot](images/dashboard-daily-exports-2026-11-28.png) records a completed **6,307-reading November 27 download** and the explicit awaiting-authorization backup state. The independent seven-page API export produced **2,177,581 bytes**, SHA-256 `bf79c0c3e3e36f77f4e9260cbcac8a91ea432f4e3b4ed75017f95f117fa41001`. Every CSV row parsed into the expected 20 columns with unique node/event IDs and the requested date. Separate Atlas aggregation matched per-node counts: Node 1 **1,625**, Node 2 **1,621**, Node 3 **1,615**, Node 4 **1,446**. There were **62 movement rows**. Counts represent received historical data, not uninterrupted 24-hour coverage.
+
+Anonymous export/setup/status requests were rejected; the job token could not download private setup, and a dashboard session could not access the job-only plan. Invalid dates/nodes and cross-date cursors were rejected. Node-filtered export and actual automatic-plan queries succeeded. The focused actual-route tests separately checked the 1,001-record page boundary and tied receipt-time cursor ordering. Initial Node pooled-fetch verification failed/stalled; the fresh-socket bounded HTTP test completed. The browser download and independent Atlas result are separate confirmations. [Sanitized validation evidence](calibration/daily-export-verification-2026-11-28.json) retains the results and deployment failure.
+
+A first real [November 27 CSV](https://drive.google.com/file/d/1XE-Xc0bPG6QKmKBXXfSIrJvU0GFRhJme/view?usp=drivesdk) was uploaded through the authorized Drive connector into the dedicated folder. Connector metadata readback confirmed its filename, CSV MIME type, parent folder and 2,177,581-byte size. A full raw Drive download then matched the original SHA-256 exactly. This initial connector copy **does not create an automatic-job success receipt or prove a scheduled trigger**. Google Apps Script authorization, trigger installation and the first real job hash-readback receipt remain pending. The dashboard intentionally continues to display that pending state.
+
+At this November 28 checkpoint the dashboard showed all four nodes with last-seen timestamps from approximately **14:57 IST on November 27**. It did not show them online; this export verification uses historical records and makes no new hardware-connectivity claim. Bring them online for new collection when ready. No device was reset/reconfigured for this feature.

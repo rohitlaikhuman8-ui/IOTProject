@@ -1,9 +1,11 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { randomBytes } from 'node:crypto';
-import { nodeId, secretMatches } from '../lib/fleet';
+import { nodeId, nodeSecrets, secretMatches } from '../lib/fleet';
 import { signature, authenticated } from '../lib/session';
 import Topology from './topology';
+import DailyExports from './daily-exports';
+import { istDate } from '../lib/export-format';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,6 +41,8 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ n
   return <main>
     <form action={signOut}><button>Sign out</button></form>
     <h1>ESP32 fleet</h1>
+    <DailyExports today={istDate()} yesterday={istDate(new Date(istDate() + 'T00:00:00+05:30').getTime() - 1)}
+      nodeIds={Object.keys(nodeSecrets())} selectedNode={selected.success ? selected.data : undefined} />
     <Topology selectedNode={selected.success ? selected.data : undefined} />
   </main>;
 }

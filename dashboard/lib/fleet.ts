@@ -25,7 +25,7 @@ export const event = z.object({
   }).optional(),
 });
 
-type TelemetryRecord = z.infer<typeof event> & { _id: string; receivedAt: Date };
+export type TelemetryRecord = z.infer<typeof event> & { _id: string; receivedAt: Date };
 export const heartbeat = z.object({
   nodeId,
   uptimeMs: z.number().int().nonnegative(),
@@ -64,6 +64,10 @@ function database() {
 export function events() { return database().collection<TelemetryRecord>('events'); }
 export function nodes() { return database().collection<NodeState>('nodes'); }
 export function notifications() { return database().collection<Notice>('notifications'); }
+export function exportBackups() { return database().collection<{
+  _id: string; date: string; snapshot: string; rows: number; bytes: number;
+  sha256: string; fileId: string; verifiedAt: Date;
+}>('daily_export_backups'); }
 export const ONLINE_TIMEOUT_MS = 90000;
 
 export function nodeSecrets(): Record<string, string> {

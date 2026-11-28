@@ -239,6 +239,8 @@ The latest 100 notifications and 100 telemetry events are displayed. Older histo
 
 ## 18. View and export local logs
 
+For full daily cloud history, use **Daily data files** on the dashboard. The [daily export procedure](DAILY-EXPORTS.md) covers IST boundaries, all/per-node CSV downloads, automatic Google Drive authorization and operation, delayed uploads, credential rotation, backfill and troubleshooting. Google authorization/trigger installation is a separate one-time step; do not infer successful automatic backup from a created folder or installed code. Local log export below remains limited to the device's retained records.
+
 In the portal, status and the latest 30 committed records refresh every three seconds. Download local log exports all retained pending and acknowledged records as NDJSON.
 
 The full download streams the retained records directly with a known byte count. Avoid repeated parallel downloads and keep the client connected until completion. If a client leaves setup Wi-Fi, cancels or stops reading, the transfer is stopped without deleting history. Retry an interrupted download rather than treating a partial file as a complete backup.

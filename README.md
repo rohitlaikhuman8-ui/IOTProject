@@ -2,6 +2,8 @@
 
 An ESP32 connects to Wi-Fi, records telemetry locally, uploads it over HTTPS, and receives firmware releases through OTA. A Next.js application on Vercel authenticates each node, writes samples to MongoDB Atlas, and provides a password-protected dashboard.
 
+**Daily files:** [Daily CSV downloads and Google Drive setup](docs/DAILY-EXPORTS.md) provides full IST-day exports for all nodes or a selected node, including capture/receipt times, acceleration, movement and firmware/calibration IDs. The cloud job refreshes older days for delayed uploads. Google authorization and a verified first copy are required before automatic Drive saving is active; the dashboard shows that status explicitly.
+
 The hardware target is a **classic ESP32 DevKit with 4 MB flash** and an ADXL345 connected over I²C. X/Y/Z acceleration is reported in m/s², and the summary value is acceleration magnitude multiplied by sensitivity. GPIO 4 remains the capacitive setup input.
 
 Four registered boards have been commissioned on release `408a075`, retaining separate identities and credentials. Online/Last-seen reflects each board's actual reporting. Captive-portal saving, 30 recent local records, and a complete 256-record download were verified on `esp32-7839a3f4e9d4`. See the [verification record](docs/VERIFICATION.md) for dated checkpoints and remaining hardware acceptance checks.
